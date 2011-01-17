@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+Copyright (c) 2008-2010 Sun Microsystems, Inc.
+ 
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to 
+deal in the Software without restriction, including without limitation the 
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or 
+sell copies of the Software, and to permit persons to whom the Software is 
+furnished to do so, subject to the following conditions:
+ 
+The above copyright notice and this permission notice shall be included in 
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+DEALINGS IN THE SOFTWARE.
+
+-->
+
+<project basedir="." default="help" name="GeigerDemo">
+
+    <property name="user.properties.file" value="build.properties"/>
+    <property file="${user.home}/.sunspot.properties"/>
+    <import file="${sunspot.home}/build.xml"/>
+
+    <target name="-post-deploy" depends="disableota">
+        <echo>*** Disabling OTA ***</echo>
+        <echo>*** Setting system property "spot.start.manifest.daemons" to false, do "ant reset" to clear it ***</echo>
+	<antcall target="set-system-property">
+    	    <param name="key" value="spot.start.manifest.daemons"/>
+    	    <param name="value" value="false"/>
+	</antcall>
+    </target>
+
+    <target name="reset" depends="enableota">
+        <echo>*** Reenabling OTA ***</echo>
+        <echo>*** Deleting system property "spot.start.manifest.daemons" ***</echo>
+	<antcall target="delete-system-property">
+    	    <param name="key" value="spot.start.manifest.daemons"/>
+	</antcall>
+    </target>
+
+
+
+</project>

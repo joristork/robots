@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.7.1
+Created-By: 1.5.0_21-b01 (Sun Microsystems Inc.)
+MIDlet-Name: WoTlib-common
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: Oracle
+MicroEdition-Profile: IMP-1.0
+MicroEdition-Configuration: CLDC-1.1
+

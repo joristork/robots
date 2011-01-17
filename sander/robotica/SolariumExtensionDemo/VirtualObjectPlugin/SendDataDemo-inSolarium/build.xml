@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><project basedir="." default="host-compile" name="SendDataDemo_inSolarium">
+
+    <property name="user.properties.file" value="build.properties"/>
+    <property file="${user.home}/.sunspot.properties"/>
+    <import file="${sunspot.home}/build.xml"/>
+
+    <target name="-post-host-compile">
+    	<echo message="Creating SendDataVO.jar"/>
+        <copy file="images/eSPOTV2-Mask2.gif" todir="build/images"/>
+        <copy file="images/sendDataSPOTV2.png" todir="build/images"/>
+        <jar destfile="SendDataVO.jar"
+             basedir="${build.dir}"
+             includes="org/sunspotworld/*.class,
+                       images/eSPOTV2-Mask2.gif,
+                       images/sendDataSPOTV2.png">
+            <manifest>
+                <attribute name="VO-Name" value="org.sunspotworld.SendDataSpot" />
+                <attribute name="DeviceType" value="1" />
+                <attribute name="SubType" value="4" />
+                <attribute name="Supported-Views" value="org.sunspotworld.PVSendDataSpot, org.sunspotworld.TVSendDataSpot" />
+                <attribute name="Solarium-version-major" value="2" />
+                <attribute name="Solarium-version-minor" value="3" />
+            </manifest>
+        </jar>
+        <copy file="SendDataVO.jar" todir="${sunspot.lib}/SPOTWorld/virtualObjects/" />
+    </target>
+
+</project>

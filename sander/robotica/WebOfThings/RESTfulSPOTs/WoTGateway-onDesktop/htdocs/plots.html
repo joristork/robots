@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<title>Web of Things</title>
+<link href="fixed.css" rel="stylesheet" type="text/css">
+<script src="/doc/js/common.js" type="text/javascript"></script>
+<script src="/doc/js/plots.js" type="text/javascript"></script>
+<!-- <script src="/doc/js/jquery.min.js" type="text/javascript"></script> -->
+</head>
+<body id="home" onload="showPlots()">
+<div id="container">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="layout">
+    <tr>
+      <td colspan="3" id="header"><div class="right">
+          <div class="divider"><img src="images/logo.gif" width="48"></div>
+          <h1>Web of Things</h1>
+        </div></td>
+    </tr>
+    <tr>
+      <td id="nav">
+	<ul>
+	    <li>Home</li>
+	    <li><a href="intro.html">Introduction</a></li>
+	    <li><a href="http://sensor.network.com/spotservices/index.jsp">API</a>
+	    <br><br><br>
+
+            <li><a href="contact.html">Contact us</a></li>
+        </ul>
+      </td>
+      <td id="content">
+	 <h2>Readings</h2>
+     <p>
+        The table below shows "live" readings from Sun SPOT
+        devices registered at this gateway. 
+        </p>
+        Devices found: <span id="devlistsize">0</span> <span id="checking"></span> <br/><br/>
+        <div id="plots"></div><br/><br/>
+        <a href="index.html">List</a> <br/><br/>
+        <input type="button" value="Refresh" name="Refresh" onclick="showPlots()" />
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" frameborder=0 id="footer"><p>&copy;2009 Sun Microsystems, Inc. - <a href="contact.html">Contact Us</a>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+temp = importdata('tone_3.csv');
+ts = temp(:,1);
+V = temp(:,2);
+start = 1;
+figure;stem(ts,V,'.');
+axis tight;
+title('tone 1');
+N=length(ts);
+Pxx = abs (fft (V))/N;
+dts = ts(2) - ts(1);
+dF = 1/(N*dts);
+F = dF*(0:(N-1)/2)';
+genoeg = 40;
+figure;stem (F,Pxx(1:length(F)),'.');
+title('FFT van tone 1');

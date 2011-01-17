@@ -1,0 +1,59 @@
+    private static int MAX_BUF_SIZE = 2048;
+
+    private int handlers = 0;
+
+
+    private int parseInt(String intStr) {
+        int result = 0;
+        try {
+            result = Integer.parseInt(intStr);
+        } catch (NumberFormatException nfe) {
+        }
+
+        return result;
+    }
+
+    public void addHandler(String desc) {
+        Thread handler = null;
+        int port = 0;
+
+        if (started) {
+            System.err.println("Cannot add new handler to already running " +
+                    "server.");
+            return;
+        }
+
+        try {
+            if (desc.startsWith("tcp6://")) {
+                port = parseInt(desc.substring("tcp6://".length()));
+                if (port > 0) {
+
+                }
+            } else if (desc.startsWith("udp6://")) {
+                port = parseInt(desc.substring("udp6://".length()));
+                if (port > 0) {
+                    handler = new UDP6Handler(port, this);
+                    ConnectionHandlers[handlers++] = handler;
+                    System.out.println("Added UDP6 handler on port " + port);
+                }
+//            } else if (desc.startsWith("tcp://")) {
+//                port = parseInt(desc.substring("tcp://".length()));
+//                if (port > 0) {
+//                    handler = new TCPHandler(port, this);
+//                    ConnectionHandlers[handlers++] = handler;
+//                    System.out.println("Added TCP handler on port " + port);
+//                }
+            } else {
+                System.err.println("Unsupported handler description " + desc);
+            }
+        } catch (Exception e) {
+            System.err.println("Could not add handler " + desc);
+            e.printStackTrace();
+        }
+    }
+
+    public void serve() {
+        for (int i = 0; i < handlers; i++) {
+            ConnectionHandlers[i].start();
+        }
+    }

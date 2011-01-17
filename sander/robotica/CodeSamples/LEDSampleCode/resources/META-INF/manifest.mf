@@ -1,0 +1,6 @@
+MIDlet-Name: LED sample code
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: Oracle
+MIDlet-1: LED sample code, , org.sunspotworld.demo.LEDSampleCode
+MicroEdition-Profile: IMP-1.0
+MicroEdition-Configuration: CLDC-1.1

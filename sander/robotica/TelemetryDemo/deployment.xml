@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment name="TelemetryDemo" divider="563" width="574" height="824" zoom="1.0" scroll-x="0" scroll-y="0" expand-description="true">
+  <description>
+    <![CDATA[This is a demo application that provides the basic framework for 
+collecting data on a remote SPOT and passing it over the radio to 
+a host application that can record and display it. It was written 
+with the hope that it could be easily modified by people developing 
+new SPOT applications.
+
+Please see the README.txt file for more details.
+
+To run in the Emulator just click on the "Deploy & Run All" button 
+below. This will start up both the SPOT & host applications, which
+will connect to each other in a few seconds. Click the "Collect Data" 
+button to start plotting accelerometer readings from the SPOT.
+
+In the main Solarium window right click on the virtual SPOT, choose 
+"Display sensor panel" to open up a multi-tabbed panel that allows 
+you to manipulate various sensor readings experienced by the
+virtual SPOT. Select the tab marked "Accel".
+
+As you change the acceleration values by moving the X, Y, and Z 
+sliders in the "accel" tab of the sensor panel, you'll see a 
+dynamically updated plot of the accelerometer readings along all 
+three axis (X in green, Y in blue, Z in red and the total acceleration 
+in orange).]]>
+  </description>
+  <spots>
+    <role name="Report accelerometer readings" show-role="true" expand-description="false">
+      <project file="Telemetry-onSpot/build.xml"/>
+      <description>
+        <![CDATA[The SPOT application consists of two Java classes: one to handle the
+radio connection to the host application, and the second to read the
+accelerometer and send the data to the host application.]]>
+      </description>
+    <spot address="VirtualSPOT" collapsed="false" show-status="true">
+        <map-position x="200" y="300"/>
+        <location value="in emulator"/>
+      </spot>
+    </role>
+  </spots>
+  <host-apps>
+    <host-app  name="TelemetryDemo" collapsed="false">
+      <role name="Display telemetry data" show-role="true" expand-description="false">
+        <project file="Telemetry-onDesktop/build.xml"/>
+        <description>
+          <![CDATA[The host application consists of three main Java classes: one to
+handle the radio connection to the remote SPOT, one to display the
+data collected, and the third to manage the GUI.]]>
+        </description>
+      </role>
+      <map-position x="200" y="300"/>
+      <command name="ant host-run"/>
+    </host-app>
+  </host-apps>
+</deployment>

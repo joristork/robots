@@ -1,0 +1,602 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>SPOT SSL Library</title>
+        <style type="text/css" media=screen>
+            <!--
+            body { font-family:Arial, Helvetica, sans-serif; font-size:80%; color:#333; padding:0; margin:0; }
+            body .warn { color:#F75D59; }
+
+            /* Sun dark blue is #304C60, sun dark orange is #E76F00 #52AA65*/
+            h1, h2, h3, h4, h5, h6 { font-size:100%; color:#008521; padding:0 0 2px 0; margin:0; font-weight:normal; }
+            h1 { font-size:130%; font-weight:bold; display:inline; position:absolute; top:30px; left:176px; color:#666; width:650px; }
+            h2 {font-size: 24px; color: #304C60;}
+            h3 { font-size:110%; font-weight:bold; margin-top:18px; color:#304C60; }
+            h3 a { color:#52AA65; text-decoration:none; }
+            p, #content li { line-height:130%; }
+            .quote { padding:8px; font-size:80%; }
+            a img { border:none; }
+
+            #container { background:white; }
+            #layout td { padding:10px; vertical-align:top; }
+            #tabtable td { padding:0px; }
+            #apptabtable td { padding:0px; font-size: 75%; }
+            #apptabtable th { padding:0px; font-size: 75%; }
+            tr.dark { background: #cccccc; }
+            tr.light { background: #eeeeee; }
+
+            #header img { padding:15px 0 12px 0px; }
+            #header .divider { border-bottom:1px solid #CCC; margin:0 10px 0 10px; }
+
+            td#nav { width:138px; padding-top:0; }
+
+            #nav ul { margin:0; padding:0; }
+            #nav li { list-style-type:none; padding:0 5px 13px 0; margin:0;  }
+            #nav li.header { border-top:1px solid #E8E8E8; margin-top:5px; padding-top:10px; padding-bottom:0; }
+            #nav li.current { font-weight:bold; }
+            #nav li.last { border-bottom:1px solid #E8E8E8; padding-bottom:5px; }
+            #nav ul ul { padding-left:7px; padding-top:10px; }
+            #nav li.initiatives { padding:4px 0 0 0;}
+            #nav li.sub { padding:1px 0 0 7px;}
+            #nav li.first { margin-top:15px; }
+            .nav_header { font-weight:bold; color: #008521;}
+
+            td#content { border-left:1px solid #E8E8E8; padding-top:0; }
+            td#modules { width:177px; padding-top:0; display:none; }
+            #home td#modules { display:block; }
+
+            td#footer { text-align:center; padding-top:0 }
+
+            #footer p { border-top:1px solid #CCC; padding-top:10px; }
+
+            #content .left { float:left; margin-right:10px; }
+            #content .right { float:right; margin-left:10px; }
+
+            -->
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" id="layout">
+                <tr>
+                    <td colspan="3" id="header">
+                        <div class="right">
+                            <div class="divider">
+                                <center>
+                                    <!--<img src="http://httpd.apache.org/images/httpd_logo_wide.gif" height="50"> -->
+          <!-- SSL Library for Sun SPOTs -->
+                                </center>
+                            </div>
+                            <!-- <h1>Sensor.Network</h1>  -->
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="nav">
+                        <ul>
+                            <li><strong>See Also</strong>
+                                <ul>
+                                    <li><a href="http://en.wikipedia.org/wiki/Secure_Sockets_Layer">What is SSL?</a></li>
+                                    <li><a href="https://spots-security.dev.java.net/">spots-security</a></li>
+                                    <li><a href="http://www.sunspotworld.com/">Sun SPOT World</a></li>
+                                    <br />
+                                    <br />
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                    <td id="content">
+                        <h2>SSL Library for Sun SPOTs</h2>
+
+                        <h3>Overview</h3>
+                        The <a href="https://spots-security.dev.java.net/source/browse/spots-security/trunk/SSL/">SSL library</a>
+                        for the Sun SPOTs is based on the
+                        <a href="https://phoneme.dev.java.net/source/browse/phoneme/builds/phoneme_feature-mr1-rc-b04/restricted_crypto/src/ssl/reference/classes/com/sun/midp/ssl/">code</a>
+                        in Sun's reference implementation of Java ME for cell
+                        phones which, in turn, was derived from KSSL (see IEEE
+                        Communications, Dec 2001 "<a href="http://paginas.fe.up.pt/~ee97115/projecto/Magazines/Communications/com_2001/Dec/68gupta.pdf">Securing the Wireless Internet</a>"
+                        by Vipul Gupta and Sumit Gupta). The Sun SPOT SSL
+                        library includes the following additional enhancements:
+
+                        <ol>
+                            <li>
+                                Support for <a href="http://www.ietf.org/rfc/rfc2246.txt">TLS 1.0</a>
+                                (but the rest of this document continues to
+                                refer to this code as the SSL library)
+                            </li>
+                            <li>
+                                Support for server-side SSL/TLS
+                            </li>
+                            <li>
+                                Support for <a href="http://www.ietf.org/rfc/rfc4492.txt">Elliptic Curve Cryptography cipher suites</a>
+                                (for now, only ECDH-ECDSA-RC4-SHA and secp160r1
+                                are supported).
+                            </li>
+                            [<strong>NOTE:</strong> Client-side authentication
+                            at the SSL layer is currently not implemented.]
+                        </ol>
+
+                        SPOT applications built using this library have access
+                        to new GCF connection types:
+                        <ol>
+                            <li>
+                                "sradiostream" for secure stream oriented
+                                communication between two SPOTs. It is to a
+                                radiostream what HTTPS is to HTTP. This uses
+                                ECC ciphers only because running the server
+                                side on a SPOT using RSA would be much slower.
+                            </li>
+                            <li>
+                                "sslsocket", secure version of "socket", which
+                                can be used to create a client-side SSL
+                                connection to an Internet host acting as an
+                                SSL server. Supports both RSA and ECC
+                                ciphers.
+                            </li>
+                            <li>
+                                "https", secure version of "http", which can
+                                be used to create a client-side HTTPS
+                                connection to an Internet host acting as an
+                                HTTPS server. Supports both RSA and ECC
+                                ciphers.
+                            </li>
+                            [<b>NOTE</b>: for an SSL handhshake to succeed, the
+                            client side must trust the enitity that issued the
+                            server's certificate (recall, that our
+                            implementation currently does not include client
+                            auth). Each SPOT maintains a store where it keeps
+                            certificates of all the entities it trusts. This
+                            "trusted keystore" can be manipulated using the 
+                            listtrustedkeys, addtrustedkey, deletetrustedkey
+                            targets in the ant scripts included with the
+                            SPOT SDK. Details below.]
+                        </ol>
+                        <h3>How to use it</h3>
+                        You will need to rebuild the SPOT library code to 
+                        include SSL and the SPOT-side code implementing new
+                        crypto related management commands. You will also need
+                        to install new code to extend SpotClient (the host-side
+                        portion of management commands) to match.
+
+                        <p>
+                        Next, we go through the steps necessary to accomplish
+                        this.
+                        </p>
+                        <ol>
+                            <li>
+                                Connect each of your SPOTs via a USB cable and 
+                                do "ant deletepublickey" to put it in a
+                                keyless state.
+                            </li>
+                            <li>
+                                Next, we'll modify <tt>.sunspot.properties</tt>
+                                file which is created in the user's home
+                                directory as part of the SDK installation
+                                process. On some operating system
+                                platforms, native file browsing tools may not
+                                display filenames that start with a dot, e.g.
+                                on Windows, you may need to use the commandline
+                                shell to edit this file. As you make your edits,
+                                make sure that no extraneous line breaks are
+                                inserted in the process.
+                                <p>
+                                    Replace the existing line in this file that
+                                    defines spot.library.addin.jars with the
+                                    following lines:
+                                </p>
+                                <div style="width:600px;background:#EEEED1;overflow:scroll;">
+                                <code>
+#---------------------------------<br/>
+# This line lists all of the JAR files that are used to create the SPOT<br/>
+# library in response to the 'ant library' command. Modify the<br/>
+<br/>
+spot.library.addin.jars=${sunspot.lib}/multihop_common.jar${path.separator}${sunspot.lib}/transducer_device.jar${path.separator}${sunspot.lib}/SSL_device.jar<br/>
+<br/>
+# The next two lines add new crypto related management commands on the<br/>
+# host side. The SPOT-side code for these commands is already in SSL_device.jar<br/>
+spotclient.addin.jars=${sunspot.lib}/spotclient_crypto.jar${path.separator}${sunspot.lib}/crypto_common.jar<br/>
+spotclient.addin.classes=com.sun.spot.client.command.crypto.SpotClientCryptoExtension<br/>
+<br/>
+# This line exposes crypto related management functionality via new 'ant'<br/>
+# commands. This file is part of the SpotClientCryptoExtensions module.<br/>
+user.import.paths=${sunspot.lib}/crypto-extensions.xml<br/>
+#-----------------------------------<br/>
+                                </code>
+                                </div>
+                                <p/>
+                            </li>
+                            <!--
+                            <li>
+                                <p>
+                                The latest version of the SDK already includes
+                                crypto_common.jar, SSL_device.jar and
+                                spotclient_crypt.jar in SDK_HOME/lib so this
+                                step and the next should be skipped unless you
+                                are using the latest code downloaded from the
+                                spots-security SVN directory (see link in the
+                                side bar).
+
+                                </p>
+
+                                <p>
+                                Build a new SPOT library that includes crypto
+                                code. Depending on where
+                                you've unpacked the CryptoLibrary and SSL modules, you may need to
+                                pass a different argument to the cd command.
+                                <pre>
+     % cd CryptoLibrary
+     % ant jar-app
+     // this will create crypto_common.jar in the sunspot.lib directory
+     // (typically SDK_HOME/lib)
+
+     % cd SSL
+     % ant jar-app
+     // this will create SSL_device.jar in the sunspot.lib directory
+     // (typically SDK_HOME/lib) it will include crypto_common.jar
+                                </pre>
+                            </li>
+                            <li>
+                                Build the host-side library jar. Depending on where
+                                you've unpacked the SpotClientCryptoExtensions module, you may need to
+                                pass a different argument to the cd command.
+                                <pre>
+     % cd SpotClientCryptoExtensions
+     % ant make-host-jar
+                                </pre>
+                            </li>
+                            -->
+                            <li>
+                                Build a new library including SSL_device.jar
+                                (this JAR already contains crypto_common.jar)
+                                and flash it on the two free-range SPOTs
+                                included in your SPOT kit over a USB connection.
+                                <pre>
+     % cd SDK_HOME   // here SDK_HOME refers to SDK installation directory
+     % ant library   // this only needs to be done once
+     % ant resetlibrary // repeat this for each SPOT to be updated (connect SPOT via USB)
+                                </pre>
+                            </li>
+                            <li>
+                                Let's modify BounceDemo to use secure
+                                radiostreams.
+                                <pre>
+    % cd SDK_HOME/Demos/BounceDemo/BounceDemo-onSPOT
+                                </pre>
+                                Inside <code>src/org/sunspotworld/demo/utilities/RadioDataIOStream.java</code>,
+                                modify the line (around line 57)
+                                <pre>
+         String url = "radiostream://" + addr + ":" + p;
+                                </pre>
+                                to
+                                <pre>
+         String url = "sradiostream://" + addr + ":" + p;
+                                </pre>
+                                Execute the command
+                                <pre>
+    % ant deploy run  // once for each of the two SPOTs to be updated
+                                </pre>
+                                to deploy and run the
+                                SSL enabled version of BounceDemo on the two
+                                SSL enabled SPOTs. The deploy and run commands
+                                should work both over USB as well as 
+                                over-the-air but it might be simplest to do so
+                                via USB.
+
+                                <p>
+                                    The deployment process will force the SPOT
+                                    to generate its own key pair, acquire the
+                                    SDK's key and a certificate containing its
+                                    own public key signed by the SDK's private
+                                    key. See slides 25-29 in
+                                    <a href="http://research.sun.com/projects/SecureAdhocComm/PortfolioReviewTechPresentationExternal.pdf">this
+                                    presentation</a> for details.
+                                </p>
+                                <p>
+                                    "Uncorking" the LEDs will cause an SSL 
+                                    handshake to occur and any data exchanged
+                                    over the sradiostream connection will be
+                                    encrypted.
+                                </p>
+                                <p>
+                                    You can verify this by starting up the
+                                    PacketSniffer application on a third
+                                    SPOT (this application resides in 
+                                    SDK_HOME/SPOT-Utilities in the latest SDK).
+                                    You can even run the PacketSniffer on the
+                                    "basestation" SPOT by attaching the latter
+                                    to your host via a USB cable and executing
+                                    'ant -Dport=&lt;<i>usb_port_of_basestation</i>&gt; 
+                                    deploy run' from the PacketSniffer directory
+                                    (Note: you'll need to update the library on 
+                                    the basestation using 'ant resetlibrary' and
+                                    later, when you need to restore the
+                                    basestation functionality, you'll need to 
+                                    use the 'ant startbasestation' command).
+                                    Every time the two SPOTs running the
+                                    modified BounceDemo-onSPOT application
+                                    exchange the "LED ball", the PacketSniffer
+                                    will print radio traffic that looks like:
+                                </p>
+                                <pre>
+     RP: rssi: 4 dat  radiostream  port: 43 seq: 240 (81 bytes)
+         from 3 : 144f01000006ca to 3 : 144f0100000faf
+     0000 - 49 00 17 03 01 00 4b fc-79 7d 82 80 06 3b 18 b5   I.....K.y}...;..
+     0010 - 28 de 27 28 fe eb b0 93-b4 f1 80 8e 27 65 a7 d8   (.'(........'e..
+     0020 - f7 6f a6 37 c3 ce 4f df-2a 35 49 14 87 42 14 17   .o.7..O.*5I..B..
+     0030 - b5 fc 14 7d 0c 1e 23 d1-fc f4 7e e9 5c ff 7b 0c   ...}..#...~.\.{.
+     0040 - 56 46 4d 86 08 eb d6 85-fd bd 7a db 2f 82         VFM.......z./.
+     RP: rssi: -7 ack  seq: 240
+     RP: rssi: 4 dat  radiostream  port: 43 seq: 241 (9 bytes)
+         from 3 : 144f01000006ca to 3 : 144f0100000faf
+     0000 - 4a 00 94 67 fb eb                                 J..g..
+     RP: rssi: -8 ack  seq: 241
+     RP: rssi: -8 dat  radiostream  port: 43 seq: 65 (81 bytes)
+         from 3 : 144f0100000faf to 3 : 144f01000006ca
+     0000 - 4c 00 17 03 01 00 4c 6e-5c b2 7e 99 b8 5e 45 98   L.....Ln\.~..^E.
+     0010 - 1c 5a 04 63 b7 0e d9 6a-53 a7 bc e3 54 3e 56 ec   .Z.c...jS...T>V.
+     0020 - 76 50 1f ca 03 6b 56 40-8a c3 5a e5 7e 15 1e ea   vP...kV@..Z.~...
+     0030 - 8e 93 eb df 1f ac 44 4d-ce 5b 53 1c 58 86 36 87   ......DM.[S.X.6.
+     0040 - 5a 3b 84 2c 97 73 06 aa-4a 3f 69 2d 80 48         Z;.,.s..J?i-.H
+     RP: rssi: 4 ack  seq: 65
+                                </pre>
+                                <p>
+                                    If you were to run the unmodified
+                                    BounceDemo-onSPOT application on those
+                                    very SPOTs, the PacketSniffer output would 
+                                    show equivalent messages in the clear, e.g.
+                                </p>
+                                <pre>
+     RP: rssi: -10 dat  radiostream  port: 43 seq: 189 (60 bytes)
+         from 3 : 144f01000006ca to 3 : 144f0100000faf
+     0000 - 01 00 00 35 74 61 6b 65-42 61 6c 6c 20 31 2e 30   ...5takeBall 1.0
+     0010 - 37 36 31 35 31 35 39 34-31 36 33 33 37 32 31 20   761515941633721
+     0020 - 30 2e 31 32 30 32 31 30-38 37 34 31 38 30 33 32   0.12021087418032
+     0030 - 33 33 38 20 34 20 31 30-30                        338 4 100
+     RP: rssi: -6 ack  seq: 189
+     RP: rssi: -6 dat  radiostream  port: 43 seq: 246 (5 bytes)
+         from 3 : 144f0100000faf to 3 : 144f01000006ca
+     0000 - 00 01                                             ..
+     RP: rssi: -10 ack  seq: 246
+     RP: rssi: -4 dat  radiostream  port: 43 seq: 247 (60 bytes)
+         from 3 : 144f0100000faf to 3 : 144f01000006ca
+     0000 - 01 00 00 35 74 61 6b 65-42 61 6c 6c 20 31 2e 30   ...5takeBall 1.0
+     0010 - 30 33 39 36 33 35 36 39-35 36 32 35 30 37 35 20   039635695625075
+     0020 - 30 2e 31 31 30 37 36 30-32 39 39 34 30 38 31 34   0.11076029940814
+     0030 - 38 32 37 20 34 20 31 30-30                        827 4 100
+     RP: rssi: -10 ack  seq: 247
+                                </pre>
+                                <p>
+                                    The BounceDemo-onSPOT application also uses 
+                                    radiogram communication, e.g. for
+                                    broadcasts. Since radiograms aren't
+                                    secured by SSL, you'll still see
+                                    these messages in the clear. <br/>
+                                    Hint: look for the string 'PingForColor' in
+                                    the PacketSniffer output.
+                                </p>
+                            </li>
+
+                            <li>
+                                The BounceDemo with sradiostream just works
+                                because each SPOT has a certificate signed by a
+                                common SDK that each one of them trusts. For a
+                                SPOT to establish a secure connection with an
+                                Internet host, we need to ensure that the entity
+                                (often called a Certificate Authority or CA)
+                                that issued the host's certificate is trusted
+                                by the SPOT, e.g. the certificate for
+                                https://login.yahoo.com/ is signed by the 
+                                Equifax Secure Certificate Authority. So, in
+                                order to complete a successful SSL handshake
+                                with this site, we'll need to add this CAs to
+                                the SPOT's trusted key store. The
+                                crypto-enhanced version of spotclient implements
+                                special commands for manipulating the trusted 
+                                keystore. These are illustrated below:
+                                <pre>
+       % cd SDK_HOME    // here SDK_HOME refers to SDK installation directory
+       % cd Demos/CryptoDemos/SSLClient
+                                </pre>
+                                First, let's see what's already in the trusted
+                                key store. Be sure to use the correct Id for
+                                your SPOT when using the following commands.
+                                <pre>
+       % ant startbasestation // needed to restore the basestation if you
+                              // were previously running the PacketSniffer on it
+       % ant -DremoteId=0014.4F01.0000.020B listtrustedkeys
+                                </pre>
+                                produces an output like:
+                                <pre>
+     [java] SPOT serial number = 0014.4F01.0000.020B
+     [java] Nickname      Subject                 Issuer             Flags
+     [java] *MyCert       CN=0014.4F01.0000.020B  CN=SDK-04ddb829    s
+     [java] owner         CN=SDK-04ddb829         CN=SDK-04ddb829    o
+                                </pre>
+                                The first two entries correspond to the SPOT's 
+                                own certificate and that of its 'owner' SDK.
+                                These entries were created automatically as part
+                                of Step 4. The flag 's' indicates self and 'o'
+                                indicates owner. (Currently, our implementation
+                                is incomplete and does not really make use of
+                                flags. In the future, these flags will be used
+                                to associate different privileges with different
+                                trusted keys.)
+
+                                Next, let's add Equifax to the trusted key store
+                                <p/>
+                                <div style="width:600px;background:#EEEED1;overflow:scroll;">
+                                <pre>
+      % ant -DremoteId=0014.4f01.0000.020b -Dnickname=Equifax -Dcert=Certs/equifaxSecureCA.der -DtrustFlags=w addtrustedkey
+                                </pre>
+                                </div>
+                                <p/>
+                                [The w flag is meant to indicate "trust this 
+                                key for signing certs used by secure Web servers
+                                running on the Internet"]
+                                <p/>
+                                Now, the list of trusted keys looks as follows
+                                <pre>
+       % ant -DremoteId=0014.4F01.0000.020B listtrustedkeys
+                                </pre>
+                                produces an output like:
+                                <p/>
+                                <div style="width:600px;background:#EEEED1;overflow:scroll;">
+                                <pre>
+     [java] Nickname      Subject                 Issuer             Flags
+     [java] *MyCert       CN=0014.4F01.0000.020B  CN=SDK-04ddb829    s
+     [java] owner         CN=SDK-04ddb829         CN=SDK-04ddb829    o
+     [java] Equifax       C=US;O=Equifax;OU=Equifax Secure Certificate Authority C=US;O=Equifax;OU=Equifax Secure Certificate Authority w
+                                </pre>
+                                </div>
+                                <p/>
+                            </li>
+                            <li>
+                                Start the socket proxy on a host machine in a
+                                different terminal window
+                                <pre>
+       % ant socket-proxy-gui 
+                                </pre>
+                                Don't forget to click the 'Start' button.
+                                <p/>
+                            </li>
+                            <li>
+                                Now, connect the SPOT to which we added the
+                                Equifax certificate via a second USB cable and
+                                deploy and run the SSLClient application.
+                                <pre>
+       % cd SDK_HOME/Demos/CryptoDemos/SSLClient
+       % ant deploy run
+                                </pre>
+                            </li>
+                            <li>
+                                You should see the SPOT establishing a successful secure connection to
+                                an SSL-enabled Internet host -- login.yahoo.com -- since it presents
+                                a certificate signed by an entity the SPOT trusts. If you delete the
+                                entry for Equifax, connection attempt to login.yahoo.com will fail
+                                with an error message indicating that the certificate is issued by
+                                an unrecognized entity.
+                                <p/>
+                                <div style="width:600px;background:#EEEED1;overflow:scroll;">
+                                <pre>
+       % ant -DremoteId=0014.4F01.0000.020B -Dnickname=Equifax deletetrustedkey
+       % ant -DremoteId=0014.4F01.0000.020B listtrustedkeys
+                  ...
+     [java] Nickname      Subject                 Issuer             Flags
+     [java] *MyCert       CN=0014.4F01.0000.020B  CN=SDK-04ddb829    s
+     [java] owner         CN=SDK-04ddb829         CN=SDK-04ddb829    o
+                  ...
+
+
+      % ant run
+
+       ...
+
+       Caught java.io.IOException: Certificate was issued by an unrecognized entity
+                                </pre>
+                                </div>
+                                <p/>
+                            </li>
+                            <li>
+
+                                The complete list of commands for manipulating the trusted key store on
+                                a SPOT is:
+                                <pre>
+    listtrustedkey
+    listtrustedkeys
+    addtrustedkey
+    deletetrustedkey
+    cleartrustedkeys
+    genspotkeysncert
+    deletespotkeysncert
+                                </pre>
+                                The following examples illustrate how these
+                                commands are used. <p/>
+                                
+                                <h5>Example 1:</h5>
+
+                                Add the entity whose certificate is in secp160r1TestCA.der as a
+                                trusted CA for issuing web site certificates.
+                                <p/>
+                                <div style="width:600px;background:#EEEED1;overflow:scroll;">
+                                <pre>
+  % ant -DremoteId=0014.4F01.0000.020B addtrustedkey -Dcert=Certs/secp160r1TestCA.der -Dnickname=TestCA -DtrustFlags=w
+                                </pre>
+                                </div>
+                                <p/>
+
+                                <h5>Example 2:</h5>
+
+                                List all of the keys trusted by a SPOT:
+                                <pre>
+  % ant -DremoteId=0014.4F01.0000.020B listtrustedkeys
+                                </pre>
+                                produces an output like:
+                                <p/>
+                                <div style="width:600px;background:#EEEED1;overflow:scroll;">
+                                <pre>
+      
+     [java] Nickname      Subject                 Issuer             Flags
+     [java] *MyCert       CN=0014.4F01.0000.020B  CN=SDK-04ddb829    s
+     [java] owner         CN=SDK-04ddb829         CN=SDK-04ddb829    o
+     [java] TestCA        C=US;ST=CA;L=Mountain View;O=Sun Microsystems, Inc.;OU=Sun Microsystems Laboratories;CN=Test CA (Elliptic curve secp160r1)C=US;ST=CA;L=Mountain View;O=Sun Microsystems, Inc.;OU=Sun Microsystems Laboratories;CN=Test CA (Elliptic curve secp160r1)w
+
+     
+                                </pre>
+                                </div>
+                                <p/>
+                                The first two entries correspond to the SPOT's own certificate and
+                                that of its 'owner' SDK.
+                                <p/>
+
+                                <h5>Example 3:</h5>
+
+                                Get details on a specific key
+                                <pre>
+  % ant -DremoteId=0014.4F01.0000.020B -Dnickname=TestCA listtrustedkey
+                                </pre>
+                                produces an output like:
+                                <p/>
+                                <div style="width:600px;background:#EEEED1;overflow:scroll;">
+                                <pre>
+Querying spot key store for nickname: TestCA
+     [java] -----------------------
+     [java] [Type: X.509v1
+     [java] Serial number: 30:30:3A:46:30:3A:39:35:3A:42:38:3A:39:31:3A:38:44:3A:43:41:3A:42:45:3A:44:32
+     [java] Issuer: C=US;ST=CA;L=Mountain View;O=Sun Microsystems, Inc.;OU=Sun Microsystems Laboratories;CN=Test CA (Elliptic curve secp160r1)
+     [java] Subject: C=US;ST=CA;L=Mountain View;O=Sun Microsystems, Inc.;OU=Sun Microsystems Laboratories;CN=Test CA (Elliptic curve secp160r1)
+     [java] Valid from 6/20/2007 0:28:59 GMT until 7/29/2011 0:28:59 GMT
+     [java] ECPublicKey: (CurveId: secp160r1, W:04efa2705a160d024f01b8369801e39452a71578117e1ab87fb3c964d5ebcf6654567f195382c7f22c)
+     [java] Signature Algorithm: None
+     [java] ]
+     [java] -----------------------
+                                </pre>
+                                </div>
+                                <p/>
+                                <h5>Example 4:</h5>
+
+                                Delete a key you no longer wish to trust:
+                                <pre>
+  % ant -DremoteId=0014.4F01.0000.020B -Dnickname=TestCA deletetrustedkey
+                                </pre>
+
+                            </li>
+                        </ol>
+                        <p/>
+                        <h3>Troubleshooting</h3>
+
+                        If you still have unanswered questions or encounter
+                        problems while following these instructions, please
+                        contact us through the
+                        <a href="http://www.sunspotworld.com/forums">forums</a>
+                        at sunspotworld.com.
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" id="footer"><p>Last updated on Jun 19, 2009 by Vipul Gupta</td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

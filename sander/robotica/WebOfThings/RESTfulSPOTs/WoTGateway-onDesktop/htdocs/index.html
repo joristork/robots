@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<title>Web of Things</title>
+<link href="fixed.css" rel="stylesheet" type="text/css">
+<script src="/doc/js/common.js" type="text/javascript"></script>
+<script src="/doc/js/devices.js" type="text/javascript"></script>
+<!-- <script src="/doc/js/jquery.min.js" type="text/javascript"></script> -->
+</head>
+<body id="home" onload="showDevices()">
+<div id="container">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="layout">
+    <tr>
+      <td colspan="3" id="header"><div class="right">
+          <div class="divider"><img src="images/logo.gif" width="48"></div>
+          <h1>Web of Things</h1>
+        </div></td>
+    </tr>
+    <tr>
+      <td id="nav">
+	<ul>
+	    <li>Home</li>
+	    <li><a href="intro.html">Introduction</a></li>
+	    <li><a href="http://sensor.network.com/spotservices/index.jsp">API</a>
+	    <br><br><br>
+
+            <li><a href="contact.html">Contact us</a></li>
+        </ul>
+      </td>
+      <td id="content">
+	 <h2>Available SPOTs</h2>
+     <p>
+        The table below lists Sun SPOT devices that have been discovered
+        in the vicinity of this gateway. <!-- Each device exposes
+        a set of web resources, e.g. its sensors, actuators and other
+        configuration parameters that can be manipulated using HTTP
+        requests as documented <a href="http://sensor.network.com/spotservices/index.jsp">here</a>.
+	</p>
+	<p>
+	Click on the <a href="intro.html">Introduction</a> link for an overview of the Web 
+        of Things vision.
+        -->
+        </p>
+        Devices found: <span id="devlistsize">0</span> <span id="checking"></span> <br/><br/>
+        <div id="devlist"></div><br/><br/>
+        <a href="Dashboard/index.html">Dashboard</a><br/><br/>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" frameborder=0 id="footer"><p>&copy;2009 Sun Microsystems, Inc. - <a href="contact.html">Contact Us</a>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

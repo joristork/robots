@@ -1,0 +1,20 @@
+<project name="WoTlibs" default="build-libs" basedir=".">
+  <description>
+        Common, device- and host- libraries for the Web-of-Things demo.
+  </description>
+
+  <target name="build-libs">
+	<ant dir="lib/CHTTPlib" antfile="build.xml" target="jar-app"/>
+        <ant dir="lib/WoTlib-common" antfile="build.xml" target="jar-app"/>
+        <ant dir="lib/WoTlib-device" antfile="build.xml" target="jar-app"/>
+	<ant dir="lib/WoTlib-host" antfile="build.xml" target="make-host-jar"/>
+  </target>
+
+  <target name="clean-libs">
+	<ant dir="lib/CHTTPlib" antfile="build.xml" target="clean"/>
+        <ant dir="lib/WoTlib-common" antfile="build.xml" target="clean"/>
+        <ant dir="lib/WoTlib-device" antfile="build.xml" target="clean"/>
+	<ant dir="lib/WoTlib-host" antfile="build.xml" target="clean"/>
+  </target>
+
+</project>

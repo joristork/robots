@@ -1,0 +1,11 @@
+MIDlet-Name: EmulatorDemo
+MIDlet-Version: 1.1.0
+MIDlet-Vendor: Oracle
+MIDlet-Description: Some simple midlets that use the LEDs & switches for demonstrating the new emulator
+MIDlet-1: Check various SPOT sensors and display their values, , org.sunspotworld.SensorChecker
+MIDlet-2: Display a Sawtooth pattern, , org.sunspotworld.Sawtooth
+MIDlet-3: Count when switch is pressed, , org.sunspotworld.Count
+MIDlet-4: Count when switch is pressed on any other SPOT, , org.sunspotworld.BroadcastCount
+MIDlet-5: Count when switch is pressed on our paired SPOT, , org.sunspotworld.UnicastCount
+MicroEdition-Profile: IMP-1.0
+MicroEdition-Configuration: CLDC-1.1

@@ -1,0 +1,296 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+        <title>Web of Things Dashboard</title>
+        <link href="../fixed.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="js/common.js"></script>
+        <script type="text/javascript" src="js/constants.js"></script>
+        <!-- We need the following library for Protovis graphics -->
+        <script type="text/javascript" src="http://vis.stanford.edu/protovis/protovis-r3.2.js"></script>
+        <!--
+             This does not seem to work, why?
+         <script type="text/javascript" src="file:///Users/vgupta/SVNModules/Java.net/spots-sdk-demos/Demos/WebOfThings/RESTfulSPOTs/WoTGateway-onDesktop/htdocs/Dashboard/js/protovis-r3.2.js"></script>
+        -->
+        <script type="text/javascript+protovis">
+            function drawTile(deviceObj, div) {
+                var now = new Date();
+                var vis = new pv.Panel()
+                .canvas(div)
+                .width(TILE_WIDTH)
+                .height(TILE_HEIGHT);
+
+                // Add a label for the Id
+                //vis.add(pv.Label)
+                //.top(0)
+                //.left(TILE_WIDTH/2)
+                //.textAlign("center")
+                //.textBaseline("top")
+                //.text(deviceObj.id)
+                //.textStyle("black");
+
+                // Add a label for the name
+                vis.add(pv.Label)
+                .top(TEXT_TOP_OFFSET)
+                .left(TILE_WIDTH/2)
+                .font("14px sans-serif")
+                .textAlign("center")
+                .textBaseline("top")
+                .text(deviceObj.name == "" ? "-" : deviceObj.name)
+                .textStyle("black");
+
+                // Add a label for routing mode
+                vis.add(pv.Label)
+                    .top(TEXT_TOP_OFFSET)
+                    .right(0)
+                    .font("12px sans-serif")
+                    .textAlign("right")
+                    .textBaseline("top")
+                    .text((deviceObj.isEndNode ? "" : "?"))
+                    .textStyle("black");
+
+                // Some place where we can attach the changeName function
+                //vis.add(pv.Image)
+                //    .top(TEXT_TOP_OFFSET + PEN_IMAGE_HEIGHT/2 - 3)
+                //    .right(0)
+                //    .url("images/pen.jpg")
+                //    .height(PEN_IMAGE_HEIGHT)
+                //    .width(PEN_IMAGE_WIDTH)
+                //    .event("click", function() changeName(deviceObj.id));
+                    
+
+                // Add label for last successful response
+                if (deviceObj.lastHeard != null) {
+                    vis.add(pv.Label)
+                        .top(BATTERY_BAR_TOP_OFFSET + (BATTERY_BAR_HEIGHT/2) + 4)
+                        .right(0)
+                        .textAlign("right")
+                        .font("12px sans-serif")
+                        .textBaseline("center")
+                        .text(millisToHHMMSS(deviceObj.lastHeard))
+                        .textStyle((now.getTime() - deviceObj.lastHeard) > DELAY_THRESHOLD ?
+                            "red" : "green");
+                }
+
+                // Add a label for success ratio
+                vis.add(pv.Label)
+                .top(BATTERY_BAR_TOP_OFFSET + BATTERY_BAR_HEIGHT + 2*BATTERY_BAR_HEIGHT)
+                .right(0)
+                .textAlign("right")
+                .textBaseline("center")
+                .font("12px sans-serif")
+                .text(deviceObj.successfulRequests + "/" +
+                    (deviceObj.successfulRequests + deviceObj.failedRequests));
+
+                if (deviceObj.battery != null) {
+                    // Add a battery bar
+                    var batteryOutline = vis.add(pv.Bar)
+                        .width(BATTERY_BAR_WIDTH)
+                        .height(BATTERY_BAR_HEIGHT)
+                        .left(BATTERY_BAR_LEFT_OFFSET)
+                        .top(BATTERY_BAR_TOP_OFFSET)
+                        .strokeStyle("#777")
+                        .lineWidth(1)
+                        .fillStyle("#fff");
+
+                    // Battery cap
+                    vis.add(pv.Rule)
+                        .lineWidth(2.5)
+                        .left(BATTERY_BAR_LEFT_OFFSET + BATTERY_BAR_WIDTH + 1)
+                        .top(BATTERY_BAR_TOP_OFFSET + BATTERY_BAR_HEIGHT/3)
+                        .strokeStyle("#777")
+                        .height(BATTERY_BAR_HEIGHT/3);
+
+                    // Fill out the battery level ...
+                    var batterybar = vis.add(pv.Bar)
+                        .width((BATTERY_BAR_WIDTH - 3) * 1.0 * deviceObj.battery/100.0)
+                        .height(BATTERY_BAR_HEIGHT - 3)
+                        .left(BATTERY_BAR_LEFT_OFFSET + 1.5)
+                        .top(BATTERY_BAR_TOP_OFFSET + 1.5)
+                        .fillStyle((deviceObj.battery > 20) ? "#0f0" : "#f33");
+
+                    // Add the battery label
+                    vis.add(pv.Label)
+                        .left(BATTERY_BAR_LEFT_OFFSET + BATTERY_BAR_WIDTH + 3)
+                        .top(BATTERY_BAR_TOP_OFFSET + (BATTERY_BAR_HEIGHT/2) + 4)
+                        .textAlign("left")
+                        .textBaseline("center")
+                        .font("12px sans-serif")
+                        .text(deviceObj.battery + "%")
+                        .textStyle((deviceObj.battery > 20) ? "#000" : "#f00");
+
+                    //alert(deviceObj.id + " charging " + deviceObj.isCharging);
+
+                    // Add an indicator for charging ...
+                    if (deviceObj.isCharging) {
+                        vis.add(pv.Dot)
+                            .size(CHARGING_INDICATOR_SIZE)
+                            .lineWidth(0.5)
+                            .left(BATTERY_BAR_LEFT_OFFSET + BATTERY_BAR_WIDTH/2)
+                            .top(BATTERY_BAR_TOP_OFFSET + BATTERY_BAR_HEIGHT/2)
+                            .shape("triangle")
+                            .strokeStyle("#222")
+                            .fillStyle("#222")
+                            .angle(Math.PI*3/2);
+                    }
+                }
+
+
+                // Add the horizontal rules for the light plot
+                vis.add(pv.Rule)
+                .data([0, 0.25, 0.5, 0.75, 1.0])
+                .bottom(function(d) d*PLOT_HEIGHT + PLOT_BOTTOM_OFFSET - 1)
+                .left(PLOT_LEFT_OFFSET)
+                .width(PLOT_WIDTH)
+                .strokeStyle(function(d) d ? "#ccc" : "#aaa");
+
+                if (deviceObj.light != null) {
+                    // Add a bar for the light level
+                    vis.add(pv.Bar)
+                        .data(deviceObj.light.value)
+                        .bottom(PLOT_BOTTOM_OFFSET - 1)
+                        .left(function () PLOT_LEFT_OFFSET + LIGHT_BAR_OFFSET + (this.index * (LIGHT_BAR_WIDTH + LIGHT_BAR_GAP)))
+                        .height(function (d) (d == null) ? 0 : (d/READING1_FACTOR))
+                        .width(LIGHT_BAR_WIDTH)
+                        .fillStyle("#aaa");
+
+                    // Add a light label
+                    vis.add(pv.Label)
+                        .data(deviceObj.light.value)
+                        .bottom(function (d) (d == null) ? 0 : 
+                            (LIGHT_LABEL_GAP + PLOT_BOTTOM_OFFSET + d/READING1_FACTOR))
+                        .left(function () PLOT_LEFT_OFFSET + LIGHT_BAR_OFFSET + LIGHT_BAR_WIDTH/2 + (this.index * (LIGHT_BAR_WIDTH + LIGHT_BAR_GAP)))
+                        .text(function (d) (d == null) ? "" : d)
+                        .textAlign("center")
+                        .textBaseline("bottom")
+
+                // Add the line for the light plot
+                //                vis.add(pv.Line)
+                //                .data([500, 72, 358, 0, 500])
+                //                .bottom(function(d) (d/READING1_FACTOR) + PLOT_BOTTOM_OFFSET)
+                //                .left(function() this.index * GAP_IN_READINGS + PLOT_LEFT_OFFSET)
+                //                .strokeStyle("#555");
+                }
+
+
+                if ((deviceObj.led.r != null) && (deviceObj.led.g != null) &&
+                        (deviceObj.led.b != null)) {
+                    // Add the LED bar ...
+                    var ledbar = vis.add(pv.Bar)
+                        .width(LED_BAR_WIDTH)
+                        .height(LED_BAR_HEIGHT)
+                        .left(LED_BAR_LEFT_OFFSET)
+                        .bottom(LED_BAR_BOTTOM_OFFSET)
+                        .lineWidth(0.5)
+                        .strokeStyle("#000")
+                   //     .event("click", function() changeColor(deviceObj.id))
+                        .fillStyle("rgb(" + deviceObj.led.r + "," + deviceObj.led.g +
+                            "," + deviceObj.led.b + ")");
+
+                    // Background for the label
+                    var ledbar = vis.add(pv.Bar)
+                        .width(LED_BAR_WIDTH - 50)
+                        .height(LED_BAR_HEIGHT - 12)
+                        .left(LED_BAR_LEFT_OFFSET + 25)
+                        .bottom(LED_BAR_BOTTOM_OFFSET + 6)
+                        .fillStyle("white");
+
+                    // RGB label
+                    ledbar.add(pv.Label)
+                        .bottom(LED_BAR_BOTTOM_OFFSET + LED_BAR_HEIGHT/2 - 3)
+                        .left(LED_BAR_LEFT_OFFSET + LED_BAR_WIDTH/2)
+                        .textAlign("center")
+                        .textBaseline("center")
+                        .text("(" + deviceObj.led.r + "," + deviceObj.led.g +
+                         "," + deviceObj.led.b + ")")
+                }
+               
+                vis.render();
+            }
+        </script>
+
+        <link rel="stylesheet" href="css/example.css" TYPE="text/css" MEDIA="screen">
+        <link rel="stylesheet" href="css/example-print.css" TYPE="text/css" 
+              MEDIA="print">
+        <script type="text/javascript">
+            /* Optional: Temporarily hide the "tabber" class so it does not
+             * "flash" on the page as plain HTML. After tabber runs, the
+             * class is changed to "tabberlive" and it will appear.
+             */
+            document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+        </script>
+        <script type="text/javascript" src="js/device.js"></script>
+        <script type="text/javascript" src="js/model.js"></script>
+        <script type="text/javascript" src="js/view.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/tabber-minimized.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/dropdownmenu.css">
+        <script type="text/javascript" src="js/dropdownmenu.js"></script>
+    </head>
+    <body id ="home" onLoad="main()">
+        <div id="container">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" id="layout">
+                <tr>
+                    <td colspan="3" id="header"><div class="right">
+                            <div class="divider"><img src="../images/logo.gif" width="48"></div>
+                            <h1>Web of Things</h1>
+                        </div></td>
+                </tr>
+                <tr>
+                    <td id="nav">
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="../intro.html">Introduction</a></li>
+                            <li><a href="http://sensor.network.com/spotservices/index.jsp">API</a>
+                                <br><br><br>
+
+                            <li><a href="../contact.html">Contact us</a></li>
+                        </ul>
+                    </td>
+                    <td id="content">
+                        <h2>Dashboard</h2>
+                        Started: <span id="starttime"></span>, 
+                        Updated: <span id="updatetime"></span> 
+                        Found: <span id="devicecnt">0</span> devices (<span id="activedevicecnt">0</span> active)
+                        <br/>
+                        <span style="float: right">
+                            <input type="checkbox" name="autorefresh" value="ON" checked="checked" onchange="AUTO_REFRESH=this.checked;updateStatus('Auto refresh ' + (AUTO_REFRESH ? 'en' : 'dis') + 'abled.');"/> Auto-update
+                            (once every <select name="refreshperiod" onchange="updateModelRefreshPeriod(this.value * 1000);">
+                                <option value="10">10</option>
+                                <option value="30" selected="true">30</option>
+                                <option value="60">60</option>
+                                <option value="120">120</option>
+                            </select> sec) &nbsp;&nbsp;
+                            <input type="checkbox" name="autoscroll" value="ON" checked="checked" onchange="AUTO_SCROLL=this.checked;updateStatus('Auto scroll ' + (AUTO_SCROLL ? 'en' : 'dis') + 'abled.');"/> Auto-cycle through tabs
+                        </span>
+                        <div class="tabber" id="dashboard"></div>
+                        <div id="dashboardstatusbar"></div>
+                        <p>
+                            Each SPOT is represented by a small graphic showing 
+                            its Id, name (value assigned to the property
+                            spot.name), battery level, last heard time,
+                            ratio of successful to total requests,
+                            recent light readings and LED setting.
+                        </p>
+                        <p>
+                            LED settings and name can be changed by using the
+                            dropdown menu on the SPOT Id.
+                        </p>
+                        <p> The graphics on this page need the Protovis
+                            visualization libraries from Stanford so you must
+                            have Internet connectivity to view them.
+                        </p>
+                        <!--
+                        <a href="WoTViz/WoTVisualizationDemo.html">New Plots</a>
+                        -->
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" frameborder=0 id="footer"><p>&copy;2009-2010 Sun Microsystems, Inc. - <a href="../contact.html">Contact Us</a>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

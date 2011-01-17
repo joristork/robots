@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <title>Web of Things</title>
+        <link href="fixed.css" rel="stylesheet" type="text/css">
+    </head>
+    <body id="home">
+        <div id="container">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" id="layout">
+                <tr>
+                    <td colspan="3" id="header"><div class="right">
+                            <div class="divider"><img src="images/logo.gif" width="48"></div>
+                            <h1>Web of Things</h1>
+                        </div></td>
+                </tr>
+                <tr>
+                    <td id="nav">
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li>Introduction</li>
+                            <li><a href="http://sensor.network.com/spotservices/index.jsp">API</a>
+                                <br><br><br>
+
+                            <li><a href="contact.html">Contact us</a></li>
+                        </ul>
+                    </td>
+                    <td id="content">
+                        <h2>Introduction</h2>
+                        <p>
+                            The Web of Things is a vision where everyday devices (like home appliances,
+                            health and energy monitoring devices, sensors etc) are fully integrated into
+                            the Web by reusing the its architectural styles (<a
+                                href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a>),
+                            and well-known technologies (URL, HTTP).
+                        </p>
+
+                        <div style="width:550px;background:#EEEED1;">
+                            "The main idea of REST is to design applications which implement
+                            their functionality completely as a set of URI-addressable
+                            resources, with HTTP being the [uniform] access method for
+                            interacting with them. In such an application, there is no
+                            need for any special interface, the application fully blends
+                            into the Web ..." <br/><br/>
+                            -- Eric Wilde, Putting things to REST
+                            <br/>
+                        </div>
+
+                <p>
+                    As a first step towards implementing this vision on the Sun SPOTs,
+                    we have developed a framework for easily building RESTful applications
+                    on Sun SPOTs. A key component of this framework is a "nano" application
+                    server -- a small footprint (~40KB) "application server" (think of this
+                    as a stripped down version of Tomcat or GlassFish). The nano app
+                    server hosts
+                    multiple "WebApplications" created by an application developer. Each
+                    "WebApplication" can be registered to handle HTTP requests directed
+                    at a specific portion of the URL subspace, e.g. an application called
+                    MemoryInfo may be registered with the top level URL "/mem" and it will
+                    be responsible for HTTP requests to "/mem" as well as /mem/free and
+                    /mem/total. It can support both uncompressed and compressed HTTP requests
+                    (as defined in the
+                    <a href="http://tools.ietf.org/html/draft-frank-6lowapp-chopan-00">chopan</a>
+                    draft)
+                </p>
+
+                <p>
+                    A distinguishing aspect of the NanoAppServer is its ability to process
+                    HTTP requests over different channels. Traditional application servers
+                    typically run over TCP, bind to a specific port and handle HTTP requests
+                    sent to that TCP port. The NanoAppServer can sit atop multiple TCP as
+                    well as UDP connections (note that compressed HTTP often results in
+                    messages small enough to be carried inside a single UDP datagram) and
+                    even a Reverse-HTTP connection (as described in http://tools.ietf.org/
+                    html/draft-lentczner-rhttp-00). The ability to handle HTTP
+                    requests over an RHTTP connection implies that the NanoAppServer
+                    could be running behind a firewall/NAT and still be accessible via an
+                    RHTTP gateway. We run such a gateway (from Yaler.org) at
+                    sensor.network.com on port 1234.
+                </p>
+
+                <p>
+                    Another interesting feature of the NanoAppServer is that it
+                    automatically furnishes meta-information about itself under
+                    /.well-known (see <a href="http://www.ietf.org/rfc/rfc5785.txt">RFC 5785</a>),
+                    e.g. registered webapplications are listed under
+                    /.well-known/r and one can even search for specific
+                    webapplications, e.g. doing a GET on /.well-known/r?sh=s
+                    will return the web application which has registered "s"
+                    as a short URL where it listens for requests.
+                </p>
+
+                <p>
+                    The latest release of the Sun SPOT SDK (after Jul, 2010)
+                    includes a new demo "WebOfThings" showcasing this work.
+                    Please refer to the README file in the WebOfThings folder
+                    on how to use the demo. This demo was also used as the basis
+                    for a hands-on lab at JavaOne 2010 as described in
+                    <a href="http://blogs.sun.com/vipul/entry/the_web_of_things_and">this</a>
+                    blog post.
+                </p>
+
+                </td>
+                </tr>
+                <tr>
+                    <td colspan="3" frameborder=0 id="footer"><p>&copy;2009 Sun Microsystems, Inc. - <a href="contact.html">Contact Us</a>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

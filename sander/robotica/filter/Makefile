@@ -1,0 +1,2 @@
+compile:
+	pdflatex report.tex

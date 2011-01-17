@@ -1,0 +1,73 @@
+The following directions are for using this demo via a unix like command line.<br> 
+If you are more accustomed to using a GUI for development, both the YggdrasilSPOT and YggdrasilHost can be opened as Netbeans projects, first deploy and run the YggdrasilSPOT app to any SunSPOTs that you want to use, then the YggdrasilHost app.<br> 
+
+<h2><a name="Running_host_app"></a> Running SunSPOT app </h2>
+connect your sunspot to the host via usb and then do the following
+
+<pre>cd YggdrasilSPOT
+ant deploy run
+</pre>
+after the standard deploy messages you should see some message like this when the spots start running
+<pre>     [java] Squawk VM Starting (blue-080827)...
+     [java] Our radio address = 0014.4F01.0000.01B3
+     [java]  __   __            _             _ _        _   __ 
+     [java]  \ \ / /_ _ __ _ __| |_ _ __ _ __(_) | __ __/ | /  \
+     [java]   \ V / _` / _` / _` | '_/ _` (_-&lt; | | \ V /| || () |
+     [java]    |_|\__, \__, \__,_|_| \__,_/__/_|_|  \_(_)_(_)__/
+     [java]       |___/|___/ 
+ </pre>
+<p>
+You can deploy to as many SPOTs as you want to.
+</p><p>
+When you remove the SPOT from the usb cable you should notice that it is sleeping most of the time, and waking up every 20 seconds to sample the sensors, then once a minute it will wake up for a longer period of time to send back the samples taken. 
+</p><p>
+</p><h2><a name="Running_host_app"></a> Running host app </h2>
+Make sure that you have a basestation connected to your host
+
+<pre>cd ../YggdrasilHost
+ant host-run
+</pre>
+<p>
+you should see message like the following at first ... 
+</p><pre>     [java] Sample received from: 0014.4F01.0000.01B3
+     [java] Could not locate sensor
+     [java] Sample received from: 0014.4F01.0000.01B3
+     [java] Could not locate sensor
+     [java] Sample received from: 0014.4F01.0000.01B3
+     [java] Could not locate sensor
+</pre>
+<p>
+Then after a little while ( the data arrives on the minute boundary ) 
+</p><p>
+</p><pre>     [java] Sample received from: 0014.4F01.0000.01B3
+     [java] 
+     [java] Name: eDemoSensors
+     [java] Description: a sensor to read a bunch of values from the eDemoBoard
+     [java] Column Name: temperature
+     [java] 32.5
+     [java] 
+     [java] Column Name: light
+     [java] 29.0
+     [java] 
+     [java] Column Name: acceleration
+     [java] 0.9435212920476148
+     [java] 
+  </pre> 
+<p>
+</p><h2><a name="Whats_going_on"></a> Whats going on </h2> <ul>
+
+<li> SPOT send samples to host
+</li> <li> host doesnt recognize the Sensor
+</li> <li> host sends query to SPOT
+</li> <li> SPOT responds with some handshake info, and metadata about sensor
+</li> <li> host now knows about the Sensor
+</li> <li> host prints out sample data as it arrives
+
+</li></ul> 
+<p>
+</p><h2><a name="What_to_try_next"></a> What to try next </h2>
+<p> </p><ul>
+<li> Try turning on logging in the <span class="twikiNewLink">SensorFramework<a href="/bin/edit/Mobileandembedded/SensorFramework?topicparent=Mobileandembedded.QuickStart" rel="nofollow" title="Create this topic"><sup>?</sup></a></span>, <span class="twikiNewLink">TaskManager<a href="/bin/edit/Mobileandembedded/TaskManager?topicparent=Mobileandembedded.QuickStart" rel="nofollow" title="Create this topic"><sup>?</sup></a></span>, and Switchboard classes to see more about the flow ( see <span class="twikiNewLink">LoggerFactory<a href="/bin/edit/Mobileandembedded/LoggerFactory?topicparent=Mobileandembedded.QuickStart" rel="nofollow" title="Create this topic"><sup>?</sup></a></span>.java )
+
+</li> <li> Try adding another field to the <span class="twikiNewLink">EDemoSensor<a href="/bin/edit/Mobileandembedded/EDemoSensor?topicparent=Mobileandembedded.QuickStart" rel="nofollow" title="Create this topic"><sup>?</sup></a></span>.java class, you will need to modify the initialize(), writeSample() and readSample() methods. 
+</li>

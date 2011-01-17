@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><project basedir="." default="host-run" name="HostQuerySpotsDemo">
+
+    <property name="user.properties.file" value="build.properties"/>
+    <property file="${user.home}/.sunspot.properties"/>
+    <import file="${sunspot.home}/build.xml"/>
+
+</project>

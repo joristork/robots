@@ -1,0 +1,76 @@
+body { font-family:Arial, Helvetica, sans-serif; font-size:83%; color:#333; padding:0; margin:0; }
+body .warn { color:#ff0000; }
+
+/* Sun dark blue is #304C60, sun dark orange is #E76F00 */
+h1, h2, h3, h4, h5, h6 { font-size:100%; color:#008521; padding:0 0 2px 0; margin:0; font-weight:normal; }
+h1 { font-size:130%; font-weight:bold; display:inline; position:absolute; top:30px; left:176px; color:#666; width:650px; }
+h2 {font-size: 24px; color: #E76F00;}
+h3 { font-size:110%; font-weight:bold; margin-top:18px; color:#52AA65; }
+h3 a { color:#52AA65; text-decoration:none; }
+p, #content li { line-height:130%; }
+.quote { padding:8px; font-size:80%; }
+a img { border:none; }
+
+#container { background:white; }
+#layout td { padding:15px; vertical-align:top; }
+#tabtable td { padding:0px; }
+#apptabtable td { padding:0px; font-size: 75%; }
+#apptabtable th { padding:0px; font-size: 75%; }
+tr.dark { background: #cccccc; }
+tr.light { background: #eeeeee; }
+
+td#header { background:url(images/blue_top_bg.png) top repeat-x; padding:0 0 10px 0; }
+
+#header img { padding:15px 0 12px 0px; }
+#header .divider { border-bottom:1px solid #CCC; margin:0 10px 0 10px; }
+
+#header .right { background:url(images/blue_top_bg.png) top right no-repeat; }
+
+td#nav { width:138px; padding-top:0; }
+
+#nav ul { margin:0; padding:0; }
+#nav li { list-style-type:none; padding:0 5px 13px 0; margin:0;  }
+#nav li.header { border-top:1px solid #E8E8E8; margin-top:5px; padding-top:10px; padding-bottom:0; }
+#nav li.current { font-weight:bold; }
+#nav li.last { border-bottom:1px solid #E8E8E8; padding-bottom:5px; }
+#nav ul ul { padding-left:7px; padding-top:10px; }
+#nav li.initiatives { padding:4px 0 0 0;}
+#nav li.sub { padding:1px 0 0 7px;}
+#nav li.first { margin-top:15px; }
+.nav_header { font-weight:bold; color: #008521;}
+
+td#content { border-left:1px solid #E8E8E8; padding-top:0; }
+td#modules { width:177px; padding-top:0; display:none; }
+#home td#modules { display:block; }
+
+.indent { margin-left:2em; }
+.feed ul { margin:0; padding:5px 0 10px 0; }
+.feed ul li { list-style-type:none; padding:3px 3px 3px 5px; font-size:90%; }
+.feed h4 { margin-top:0; font-size:110%; font-weight:bold; margin-top:18px; color:#52AA65; border:1px double #E8E8E8; border-width:3px; padding:5px; }
+.feed a.subscribe { float:right; display:block; background:url(images/subscribe.gif) no-repeat; height:15px; width:15px; margin:9px 8px 0 0; } 
+.picasa ul li { float:left; }
+.picasa img { border:1px solid #999; }
+.feed .more { background:url(images/video.gif) no-repeat 100% 60%; text-align:right; margin:0 0 10px 0; padding-right:15px; clear:both; }
+
+td#footer { text-align:center; padding-top:0 }
+
+#footer p { border-top:1px solid #CCC; padding-top:10px; }
+
+.posted-by { color:#999; font-size:90%; margin:0; padding:0; background:url(images/page.gif) no-repeat; padding-left:13px; }
+
+#content .left { float:left; margin-right:10px; }
+#content .right { float:right; margin-left:10px; }
+#content .media { padding:8px; border:1px solid #999; background:#E8E8E8; font-size:80%; }
+#content .roster { margin:0; padding:0; }
+#content .roster li { list-style-type:none; float:left; width:130px; padding:5px; text-align:center; border:1px solid #E8E8E8; background:white; margin:-1px 0 0 -1px; }
+
+/* Car Site Styling */
+
+.car h2, .car h3 { color:#000; }
+.car h3 { color:#52AA65; }
+.car td#header { background:url(images/blue_top_bg.gif) top repeat-x;}
+.car #header .right { background:url(images/stripes_car.gif) top right no-repeat; }
+.car td#modules { width:340px; }
+
+.car #map { width:330px; height:220px; margin:10px 0 0 5px; font-size:90%; }
+.car .cite { font-size:90%; font-style:italic; margin-left:5px; }

@@ -1,0 +1,66 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage{float}
+\usepackage{graphicx}
+
+\title{Analog digital converter}
+\author{Joris Stork (6185320) \and Lucas Swartsenburg (6174388) \and Sander van
+Veen (6167969)}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\pagebreak
+
+\section{Analog-digital converter} % {{{
+\label{sec:Analog-digital converter}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|} \hline
+potentiometer & voltage (Volt) & binary    & decimal & value / voltage\\ \hline
+ 0            & 0.00           & 0000 0000 & 0       & 0.0000         \\ \hline
+ 1            & 0.02           & 0000 0001 & 1       & 0.0200         \\ \hline
+ 2            & 0.09           & 0000 0010 & 2       & 0.0450         \\ \hline
+ 3            & 0.29           & 0000 0011 & 3       & 0.0966         \\ \hline
+ 4            & 0.52           & 0000 0110 & 6       & 0.0866         \\ \hline
+ 5            & 0.74           & 0000 1111 & 15      & 0.0493         \\ \hline
+ 6            & 0.98           & 0001 1000 & 24      & 0.0408         \\ \hline
+ 7            & 1.38           & 0001 1111 & 31      & 0.0445         \\ \hline
+ 8            & 2.19           & 0011 0011 & 51      & 0.0429         \\ \hline
+ 9            & 3.42           & 0100 1111 & 79      & 0.0432         \\ \hline
+10            & 4.77           & 0111 0001 & 113     & 0.0422         \\ \hline
+\end{tabular}
+\caption{Potentiometer's value compared the measured voltage and binary value.}
+\end{table}
+
+Uit bovenstaande tabel valt op te maken dat de relatie ongeveer 0.40v/bit is.
+Bij de lagere voltages zien we wat onnauwkeurigheid, maar zodra we richting
+de 1.00 volt gaan zien we dat de relatie overeenkomt met 0.40v/bit.\\
+\\
+De SAR heeft 256 bits en aangezien er net aangetoond is dat 1 bit ongeveer
+overeenkomt met 40mv, is het bereik van de SAR ongeveer $256 * 0.04V = 10.24
+ V$.
+
+\begin{figure}[H]
+\includegraphics[width=12cm]{plot}
+\caption{Values of the potentiometer compared the corresponding voltage.}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+% }}}
+
+\end{document}
+% vim: foldmethod=marker:

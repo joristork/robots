@@ -1,0 +1,19 @@
+<html>
+<body>
+This is a demo application that provides the basic framework for collecting data on a remote SPOT 
+and passing it over the radio to a host application that can record and display it.
+<p>
+The framework shows how the remote SPOT and the host application can locate each other by the 
+use of broadcast packets. A point-to-point radio connection is then established and used to 
+pass commands and replies between the host application and the remote SPOT.
+<p> 
+The SPOT application consists of two Java classes: one to handle the radio connection 
+to the host application, and the second to read the accelerometer and send the data to the host
+application. 
+<p>
+Several auxiliary classes are also used: one to provide a basic application framework, another
+to locate a service, one to receive packets and dispatch them to the appropriate handler, one
+to queue and send packets back to the host application, and one last class to execute a 
+periodic task.
+</body>
+</html>

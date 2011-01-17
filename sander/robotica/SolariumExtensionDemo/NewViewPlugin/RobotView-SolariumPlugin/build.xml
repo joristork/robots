@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+Copyright (c) 2009 Sun Microsystems, Inc.
+ 
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to 
+deal in the Software without restriction, including without limitation the 
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or 
+sell copies of the Software, and to permit persons to whom the Software is 
+furnished to do so, subject to the following conditions:
+ 
+The above copyright notice and this permission notice shall be included in 
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+DEALINGS IN THE SOFTWARE.
+
+-->
+
+<project default="host-compile" basedir="." name="RobotView-SolariumPlugin">
+    
+    <property name="user.properties.file" value="build.properties"/>
+    <property file="${user.home}/.sunspot.properties"/>
+    <property file="${sunspot.lib}/SPOTWorld/solarium.version.properties"/>
+
+    <import file="${sunspot.home}/build.xml"/>
+    
+    <target name="-post-host-compile">
+        <echo message="creating MyRobotView jar files"/>
+        <copy todir="${build.dir}/org/sunspotworld/demo/robotview/images">
+            <fileset dir="src/org/sunspotworld/demo/robotview/images"/>
+        </copy>
+        <jar destfile="${sunspot.lib}/SPOTWorld/views/MyRobotView.jar"
+             basedir="${build.dir}"
+             includes="org/sunspotworld/demo/robotview/**">
+            <manifest>
+                <attribute name="View-Name" value="org.sunspotworld.demo.robotview.RobotView" />
+                <attribute name="SPOTWorld-Name" value="My Robot View" />
+                <attribute name="Solarium-version-major" value="${version.major}" />
+                <attribute name="Solarium-version-minor" value="${version.minor}" />
+            </manifest>
+        </jar>
+    </target>
+    	
+</project>
