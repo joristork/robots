@@ -1,0 +1,15 @@
+<uVM-STUDIO>
+
+	<DEBUG-CHANNEL>
+		<COMM>1</COMM>
+		<BAUD>57600</BAUD>
+	</DEBUG-CHANNEL>
+
+	<SOURCEPATH>
+ 		<PATH>.</PATH>
+		<PATH>.\examples</PATH>
+		<!--BEGINTEMP--><PATH></PATH><!--ENDTEMP-->
+
+	</SOURCEPATH>
+
+</uVM-STUDIO>

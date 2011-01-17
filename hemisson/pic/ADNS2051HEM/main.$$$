@@ -1,0 +1,1477 @@
+ //-----------------------------------------------------------------------  A    1 :V17
+//  A    2 :
+// Filename 	:	main.c                                              A    3 :
+// Revision 	:	1.0                                                     A    4 :
+// Created  	:	08-06-2006                                              A    5 :
+// Project  	:	Optical mouse sensor for Hemisson                                                A    6 :
+// Device		:	PIC16F877                                            A    7 :
+// Development	:	MPLAB / CCS PCM   A    8 :
+// Tab setting	:	3                                                  A    9 :
+//                                                                     A   10 :
+// Author		:	E.H. Steffens  A   11 :
+// Department	:	Instituut voor Informatica, Faculteit NWI  A   12 :
+// Copyright	:	Universiteit van Amsterdam  A   13 :
+//   A   14 :
+//	Description	:	Serial communication ADNS-2051 optical mouse sensor                          A   15 :
+//-----------------------------------------------------------------------  A   16 :
+#device PIC16F877 *=16 ADC=8	// Use 16 bit pointer for ram address > 255 and ADC = 8 bits resolution  A   17 :
+  A   18 :
+// -- Global Header files (Must be placed at beginning of file)  A   19 :
+#include "16F877.H" A   20 :
+ ////////////////////////////////////////////////////////////////////////////////  B    1 :I1
+/*!   \file 16f877.h  B    2 :
+      \brief All processor registers adresses are defined in this file  B    3 :
+*/  B    4 :
+////////////////////////////////////////////////////////////////////////////////  B    5 :
+  B    6 :
+//////// Standard Header file for the PIC16F877 device ////////////////  B    7 :
+//#device PIC16F877  B    8 :
+#nolist  B    9N:X0
+//////// Program memory: 8192x14  Data RAM: 367  Stack: 8  B   10N:
+//////// I/O: 33   Analog Pins: 8  B   11N:
+//////// Data EEPROM: 256  B   12N:
+//////// C Scratch area: 77   ID Location: 2000  B   13N:
+//////// Fuses: LP,XT,HS,RC,NOWDT,WDT,NOPUT,PUT,PROTECT,PROTECT_5%  B   14N:
+//////// Fuses: PROTECT_50%,NOPROTECT,NOBROWNOUT,BROWNOUT,LVP,NOLVP,CPD  B   15N:
+//////// Fuses: NOCPD,WRT,NOWRT  B   16N:
+////////  B   17N:
+////////////////////////////////////////////////////////////////// I/O  B   18N:
+// Discrete I/O Functions: SET_TRIS_x(), OUTPUT_x(), INPUT_x(),  B   19N:
+//                         PORT_B_PULLUPS(), INPUT(),  B   20N:
+//                         OUTPUT_LOW(), OUTPUT_HIGH(),  B   21N:
+//                         OUTPUT_FLOAT(), OUTPUT_BIT()  B   22N:
+// Constants used to identify pins in the above are:  B   23N:
+  B   24N:
+#define PIN_A0  40  B   25N:
+#define PIN_A1  41  B   26N:
+#define PIN_A2  42  B   27N:
+#define PIN_A3  43  B   28N:
+#define PIN_A4  44  B   29N:
+#define PIN_A5  45  B   30N:
+  B   31N:
+#define PIN_B0  48  B   32N:
+#define PIN_B1  49  B   33N:
+#define PIN_B2  50  B   34N:
+#define PIN_B3  51  B   35N:
+#define PIN_B4  52  B   36N:
+#define PIN_B5  53  B   37N:
+#define PIN_B6  54  B   38N:
+#define PIN_B7  55  B   39N:
+  B   40N:
+#define PIN_C0  56  B   41N:
+#define PIN_C1  57  B   42N:
+#define PIN_C2  58  B   43N:
+#define PIN_C3  59  B   44N:
+#define PIN_C4  60  B   45N:
+#define PIN_C5  61  B   46N:
+#define PIN_C6  62  B   47N:
+#define PIN_C7  63  B   48N:
+  B   49N:
+#define PIN_D0  64  B   50N:
+#define PIN_D1  65  B   51N:
+#define PIN_D2  66  B   52N:
+#define PIN_D3  67  B   53N:
+#define PIN_D4  68  B   54N:
+#define PIN_D5  69  B   55N:
+#define PIN_D6  70  B   56N:
+#define PIN_D7  71  B   57N:
+  B   58N:
+#define PIN_E0  72  B   59N:
+#define PIN_E1  73  B   60N:
+#define PIN_E2  74  B   61N:
+  B   62N:
+////////////////////////////////////////////////////////////////// Useful defines  B   63N:
+#define FALSE 0  B   64N:
+#define TRUE 1  B   65N:
+  B   66N:
+#define BYTE int  B   67N:
+#define BOOLEAN short int  B   68N:
+  B   69N:
+#define getc getch  B   70N:
+#define fgetc getch  B   71N:
+#define getchar getch  B   72N:
+#define putc putchar  B   73N:
+#define fputc putchar  B   74N:
+#define fgets gets  B   75N:
+#define fputs puts  B   76N:
+  B   77N:
+////////////////////////////////////////////////////////////////// Control  B   78N:
+// Control Functions:  RESET_CPU(), SLEEP(), RESTART_CAUSE()  B   79N:
+// Constants returned from RESTART_CAUSE() are:  B   80N:
+#define WDT_FROM_SLEEP  0  B   81N:
+#define WDT_TIMEOUT     8  B   82N:
+#define MCLR_FROM_SLEEP 16  B   83N:
+#define NORMAL_POWER_UP 24  B   84N:
+  B   85N:
+  B   86N:
+////////////////////////////////////////////////////////////////// Timer 0  B   87N:
+// Timer 0 (AKA RTCC)Functions: SETUP_COUNTERS() or SETUP_TIMER0(),  B   88N:
+//                              SET_TIMER0() or SET_RTCC(),  B   89N:
+//                              GET_TIMER0() or GET_RTCC()  B   90N:
+// Constants used for SETUP_TIMER0() are:  B   91N:
+#define RTCC_INTERNAL   0  B   92N:
+#define RTCC_EXT_L_TO_H 32  B   93N:
+#define RTCC_EXT_H_TO_L 48  B   94N:
+  B   95N:
+#define RTCC_DIV_2      0  B   96N:
+#define RTCC_DIV_4      1  B   97N:
+#define RTCC_DIV_8      2  B   98N:
+#define RTCC_DIV_16     3  B   99N:
+#define RTCC_DIV_32     4  B  100N:
+#define RTCC_DIV_64     5  B  101N:
+#define RTCC_DIV_128    6  B  102N:
+#define RTCC_DIV_256    7  B  103N:
+  B  104N:
+  B  105N:
+#define RTCC_8_BIT      0  B  106N:
+  B  107N:
+// Constants used for SETUP_COUNTERS() are the above  B  108N:
+// constants for the 1st param and the following for  B  109N:
+// the 2nd param:  B  110N:
+  B  111N:
+////////////////////////////////////////////////////////////////// WDT  B  112N:
+// Watch Dog Timer Functions: SETUP_WDT() or SETUP_COUNTERS() (see above)  B  113N:
+//                            RESTART_WDT()  B  114N:
+//  B  115N:
+#define WDT_18MS        8  B  116N:
+#define WDT_36MS        9  B  117N:
+#define WDT_72MS       10  B  118N:
+#define WDT_144MS      11  B  119N:
+#define WDT_288MS      12  B  120N:
+#define WDT_576MS      13  B  121N:
+#define WDT_1152MS     14  B  122N:
+#define WDT_2304MS     15  B  123N:
+  B  124N:
+////////////////////////////////////////////////////////////////// Timer 1  B  125N:
+// Timer 1 Functions: SETUP_TIMER_1, GET_TIMER1, SET_TIMER1  B  126N:
+// Constants used for SETUP_TIMER_1() are:  B  127N:
+//      (or (via |) together constants from each group)  B  128N:
+#define T1_DISABLED         0  B  129N:
+#define T1_INTERNAL         0x85  B  130N:
+#define T1_EXTERNAL         0x87  B  131N:
+#define T1_EXTERNAL_SYNC    0x83  B  132N:
+  B  133N:
+#define T1_CLK_OUT          8  B  134N:
+  B  135N:
+#define T1_DIV_BY_1         0  B  136N:
+#define T1_DIV_BY_2         0x10  B  137N:
+#define T1_DIV_BY_4         0x20  B  138N:
+#define T1_DIV_BY_8         0x30  B  139N:
+  B  140N:
+////////////////////////////////////////////////////////////////// Timer 2  B  141N:
+// Timer 2 Functions: SETUP_TIMER_2, GET_TIMER2, SET_TIMER2  B  142N:
+// Constants used for SETUP_TIMER_2() are:  B  143N:
+#define T2_DISABLED         0  B  144N:
+#define T2_DIV_BY_1         4  B  145N:
+#define T2_DIV_BY_4         5  B  146N:
+#define T2_DIV_BY_16        6  B  147N:
+  B  148N:
+////////////////////////////////////////////////////////////////// CCP  B  149N:
+// CCP Functions: SETUP_CCPx, SET_PWMx_DUTY  B  150N:
+// CCP Variables: CCP_x, CCP_x_LOW, CCP_x_HIGH  B  151N:
+// Constants used for SETUP_CCPx() are:  B  152N:
+#define CCP_OFF                         0  B  153N:
+#define CCP_CAPTURE_FE                  4  B  154N:
+#define CCP_CAPTURE_RE                  5  B  155N:
+#define CCP_CAPTURE_DIV_4               6  B  156N:
+#define CCP_CAPTURE_DIV_16              7  B  157N:
+#define CCP_COMPARE_SET_ON_MATCH        8  B  158N:
+#define CCP_COMPARE_CLR_ON_MATCH        9  B  159N:
+#define CCP_COMPARE_INT                 0xA  B  160N:
+#define CCP_COMPARE_RESET_TIMER         0xB  B  161N:
+#define CCP_PWM                         0xC  B  162N:
+#define CCP_PWM_PLUS_1                  0x1c  B  163N:
+#define CCP_PWM_PLUS_2                  0x2c  B  164N:
+#define CCP_PWM_PLUS_3                  0x3c  B  165N:
+long CCP_1;  B  166N:V18
+#byte   CCP_1    =                      0x15  B  167N:
+#byte   CCP_1_LOW=                      0x15  B  168N:
+#byte   CCP_1_HIGH=                     0x16  B  169N:V19
+long CCP_2;  B  170N:V20V21
+#byte   CCP_2    =                      0x1B  B  171N:
+#byte   CCP_2_LOW=                      0x1B  B  172N:
+#byte   CCP_2_HIGH=                     0x1C  B  173N:V22
+  B  174N:
+////////////////////////////////////////////////////////////////// PSP  B  175N:
+// PSP Functions: SETUP_PSP, PSP_INPUT_FULL(), PSP_OUTPUT_FULL(),  B  176N:
+//                PSP_OVERFLOW(), INPUT_D(), OUTPUT_D()  B  177N:
+// PSP Variables: PSP_DATA  B  178N:
+// Constants used in SETUP_PSP() are:  B  179N:
+#define PSP_ENABLED                     0x10  B  180N:
+#define PSP_DISABLED                    0  B  181N:
+  B  182N:
+#byte   PSP_DATA=                       8  B  183N:V23
+  B  184N:
+////////////////////////////////////////////////////////////////// SPI  B  185N:
+// SPI Functions: SETUP_SPI, SPI_WRITE, SPI_READ, SPI_DATA_IN  B  186N:
+// Constants used in SETUP_SSP() are:  B  187N:
+#define SPI_MASTER       0x20  B  188N:
+#define SPI_SLAVE        0x24  B  189N:
+#define SPI_L_TO_H       0  B  190N:
+#define SPI_H_TO_L       0x10  B  191N:
+#define SPI_CLK_DIV_4    0  B  192N:
+#define SPI_CLK_DIV_16   1  B  193N:
+#define SPI_CLK_DIV_64   2  B  194N:
+#define SPI_CLK_T2       3  B  195N:
+#define SPI_SS_DISABLED  1  B  196N:
+  B  197N:
+#define SPI_SAMPLE_AT_END 0x8000  B  198N:
+#define SPI_XMIT_L_TO_H  0x4000  B  199N:
+  B  200N:
+////////////////////////////////////////////////////////////////// ADC  B  201N:
+// ADC Functions: SETUP_ADC(), SETUP_ADC_PORTS() (aka SETUP_PORT_A),  B  202N:
+//                SET_ADC_CHANNEL(), READ_ADC()  B  203N:
+// Constants used in SETUP_ADC_PORTS() are:  B  204N:
+#define NO_ANALOGS             0x86         // None  B  205N:
+#define ALL_ANALOG             0x80         // RA0 RA1 RA2 RA3 RA5 RE0 RE1 RE2 Ref=Vdd  B  206N:
+#define ANALOG_RA3_REF         0x81         // RA0 RA1 RA2 RA5 RE0 RE1 RE2 Ref=RA3  B  207N:
+#define A_ANALOG               0x82         // RA0 RA1 RA2 RA3 RA5 Ref=Vdd  B  208N:
+#define A_ANALOG_RA3_REF       0x83         // RA0 RA1 RA2 RA5 Ref=RA3  B  209N:
+#define RA0_RA1_RA3_ANALOG     0x84         // RA0 RA1 RA3 Ref=Vdd  B  210N:
+#define RA0_RA1_ANALOG_RA3_REF 0x85         // RA0 RA1 Ref=RA3  B  211N:
+  B  212N:
+#define ANALOG_RA3_RA2_REF              0x88   // RA0 RA1 RA5 RE0 RE1 RE2 Ref=RA2,RA3  B  213N:
+#define ANALOG_NOT_RE1_RE2              0x89   // RA0 RA1 RA2 RA3 RA5 RE0 Ref=Vdd  B  214N:
+#define ANALOG_NOT_RE1_RE2_REF_RA3      0x8A   // RA0 RA1 RA2 RA5 RE0 Ref=RA3  B  215N:
+#define ANALOG_NOT_RE1_RE2_REF_RA3_RA2  0x8B   // RA0 RA1 RA5 RE0 Ref=RA2,RA3  B  216N:
+#define A_ANALOG_RA3_RA2_REF            0x8C   // RA0 RA1 RA5 Ref=RA2,RA3  B  217N:
+#define RA0_RA1_ANALOG_RA3_RA2_REF      0x8D   // RA0 RA1 Ref=RA2,RA3  B  218N:
+#define RA0_ANALOG                      0x8E   // RA0  B  219N:
+#define RA0_ANALOG_RA3_RA2_REF          0x8F   // RA0 Ref=RA2,RA3  B  220N:
+// Constants used for SETUP_ADC() are:  B  221N:
+#define ADC_OFF                0  B  222N:
+#define ADC_CLOCK_DIV_2        1  B  223N:
+#define ADC_CLOCK_DIV_8     0x41  B  224N:
+#define ADC_CLOCK_DIV_32    0x81  B  225N:
+#define ADC_CLOCK_INTERNAL  0xc1  B  226N:
+  B  227N:
+////////////////////////////////////////////////////////////////// INT  B  228N:
+// Interrupt Functions: ENABLE_INTERRUPTS(), DISABLE_INTERRUPTS(),  B  229N:
+//                      EXT_INT_EDGE()  B  230N:
+//  B  231N:
+// Constants used in EXT_INT_EDGE() are:  B  232N:
+#define L_TO_H              0x40  B  233N:
+#define H_TO_L                 0  B  234N:
+// Constants used in ENABLE/DISABLE_INTERRUPTS() are:  B  235N:
+#define GLOBAL                    0x0BC0  B  236N:
+#define INT_RTCC                  0x0B20  B  237N:
+#define INT_RB                    0x0B08  B  238N:
+#define INT_EXT                   0x0B10  B  239N:
+#define INT_AD                    0x8C40  B  240N:
+#define INT_TBE                   0x8C10  B  241N:
+#define INT_RDA                   0x8C20  B  242N:
+#define INT_TIMER1                0x8C01  B  243N:
+#define INT_TIMER2                0x8C02  B  244N:
+#define INT_CCP1                  0x8C04  B  245N:
+#define INT_CCP2                  0x8D01  B  246N:
+#define INT_SSP                   0x8C08  B  247N:
+#define INT_PSP                   0x8C80  B  248N:
+#define INT_BUSCOL                0x8D08  B  249N:
+#define INT_EEPROM                0x8D10  B  250N:
+#define INT_TIMER0                0x0B20  B  251N:
+  B  252N:
+#list  B  253 :X1E
+ B  253 :
+  A   21 :
+// --------------------  A   22 :
+// -- Device options --  A   23 :
+// --------------------  A   24 :
+  A   25 :
+// -- Fuses --  A   26 :
+#fuses HS,NOPROTECT,NOWDT  A   27 :
+  A   28 :
+// -- Processor clock --  A   29 :
+#use delay(clock=20000000)   A   30 :V25V27
+  A   31 :
+// -- RS232 communication options --  A   32 :
+#use rs232(baud=115200, xmit=PIN_C6, rcv=PIN_C7,  bits=8)  A   33 :
+  A   34 :
+// -- IO ports --  A   35 :
+#use fast_io(a)  A   36 :
+#use fast_io(b)  A   37 :
+  A   38 :
+#use fast_io(d)  A   39 :
+#use fast_io(e)  A   40 :
+  A   41 :
+// -- Bootloader Protection --  A   42 :
+#org 0x1F00, 0x1FFF {}                                                               A   43 :V31
+  A   44 :
+// -- Local Header files --  A   45 :
+#include "constants.h" A   46 :
+ //--------------------------------------------------------------------------------// C    1 :I2
+//-                   HemiOs ( Hemisson Operating System )                       -// C    2 :
+//-                                                                              -// C    3 :
+//-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -// C    4 :
+//-  This library is free software; you can redistribute it and/or               -// C    5 :
+//-  modify it under the terms of the GNU Lesser General Public                  -// C    6 :
+//-  License as published by the Free Software Foundation; either                -// C    7 :
+//-  version 2.1 of the License, or any later version.                           -// C    8 :
+//-                                                                              -// C    9 :
+//-  This library is distributed in the hope that it will be useful,             -// C   10 :
+//-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -// C   11 :
+//-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -// C   12 :
+//-  Lesser General Public License for more details.                             -// C   13 :
+//-                                                                              -// C   14 :
+//-  You should have received a copy of the GNU Lesser General Public            -// C   15 :
+//-  License along with this library; if not, write to the Free Software         -// C   16 :
+//-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -// C   17 :
+//-                                                                              -// C   18 :
+//-                               __  __  ________                               -// C   19 :
+//- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -// C   20 :
+//- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -// C   21 :
+//- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -// C   22 :
+//- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -// C   23 :
+//- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -// C   24 :
+//-                                                                              -// C   25 :
+//--------------------------------------------------------------------------------// C   26 :
+ C   26 :
+ C   26 :
+#define INIT_TRISA            0x2F	// b0010 1111 C   29 :
+#define INIT_PORTA            0x10	// b0001 0000 C   30 :
+ C   30 :
+#define INIT_TRISB            0x30	// bXX11 000X C   32 :
+#define INIT_PORTB            0x00	// b0000 0000 C   33 :
+ C   33 :
+#define INIT_TRISC            0xA7	// b1010 0111 C   35 :
+#define INIT_PORTC            0x00	// b0001 1000 C   36 :
+ C   36 :
+#define INIT_TRISD            0x00	// b0000 0000 C   38 :
+#define INIT_PORTD            0x00	// b0000 0000 C   39 :
+ C   39 :
+#define INIT_TRISE            0x0F	// b0000 1111 C   41 :
+#define INIT_PORTE            0x00	// b0000 0000 C   42 :
+ C   42 :
+#define __SERIAL_BUFFER_SIZE  20 //80 C   44 :
+ C   44 :
+#define FRONT                 2 C   46 :
+#define FRONTLEFT             1 C   47 :
+#define FRONTRIGHT            0 C   48 :
+#define LEFT                  4 C   49 :
+#define RIGHT                 5 C   50 :
+#define REAR                  3 C   51 :
+#define GROUNDLEFT            6 C   52 :
+#define GROUNDRIGHT           7 C   53 :
+#define FRONTZONE             0 C   54 :
+#define REARZONE              1 C   55 :
+#define GROUNDZONE            2 C   56 :
+ C   56 :
+#define ENABLE                1 C   58 :
+#define DISABLE               0 C   59 :
+#define FAST                  1 C   60 :
+#define NORMAL                0 C   61 :
+#define MANUAL                0 C   62 :
+#define REFRESH               1 C   63 :
+#define ON                    1 C   64 :
+#define OFF                   0 C   65 :
+ C   65 :
+#define HEMIOS_VERSION        1 C   67 :
+#define HEMIOS_REVISION       50  C   68 :
+  C   69 :
+// Global variables  C   70 :
+  C   71 :
+/* Line following */  C   72 :
+unsigned int GroundRightFree, GroundLeftFree;  C   73 :V32V33
+unsigned int IR_trigger;  C   74 :V34
+unsigned int IR_threshold;  C   75 :V35
+short FreeZone;  C   76 :V36
+short IR_armed;  C   77 :V37
+  C   78 :
+//- Motors  C   79 :
+signed int8 __PwmMotLeft = 0;                                                    // 0 : Stop ; 9 : Max Speed  C   80 :V38
+signed int8 __PwmMotRight = 0;                                                   // 0 : Stop ; 9 : Max Speed  C   81 :V39
+unsigned char __PwmCounter = 0;  C   82 :V40
+  C   83 :
+//- Configuration Bits  C   84 :
+int1 __Auto_Refresh_Sensors = 1;                                                 // 1 : Auto   ; 0 : Manual  C   85 :V41
+int1 __Enable_RS232_Control = 1;                                                 // 1 : Enable ; 0 : Disable  C   86 :V42
+  C   87 :
+//- Flags  C   88 :
+int1 __Sensors_Refreshed_Flag = 0;                                               // 1 : Sensors refreshed  C   89 :V43
+int __BeepMem = 0;  C   90 :V44
+  C   91 :
+//- Time  C   92 :
+unsigned int32 __TimeTip = 0;  C   93 :V45
+char __TimeTipDivider = 0;  C   94 :V46
+  C   95 :
+//- Irs Sensors  C   96 :
+unsigned char __IR_Light[ 8 ];  C   97 :V47
+unsigned char __IR_Proximity[ 8 ];				// 0 : nothing detected ; 255 : obstacle near Hemisson  C   98 :V48
+  C   99 :
+//- Switchs  C  100 :
+char __Switchs[ 4 ];  C  101 :V49
+  C  102 :
+//- Scheduler  C  103 :
+unsigned char __SchedulerTask = 0;  C  104 :V50
+int __Divider = 0;  C  105 :V51
+  C  106 :
+ C  106 :E
+ C  106 :
+#include "ADNS2051.h" A   47 :
+ ///////////////////////////////////////////////////////////////////////////  D    1 :I3
+// Filename 	:	ADSN2051.h                                             D    2 :
+// Revision 	:	1.0                                                     D    3 :
+// Created  	:	03-05-2006                                              D    4 :
+// Project  	:	Optical mouse sensor for Hemisson                                                D    5 :
+// Device		:	PIC16F876                                           D    6 :
+// Development	:	MPLAB/CCSC   D    7 :
+// Tab setting	:	3                                                  D    8 :
+//                                                                     D    9 :
+// Author		:	E.H. Steffens  D   10 :
+// Department	:	Instituut voor Informatica, Faculteit NWI  D   11 :
+// Copyright	:	Universiteit van Amsterdam  D   12 :
+//   D   13 :
+//	Description	:	Serial communication ADNS-2051 optical mouse sensor                          D   14 :
+/////////////////////////////////////////////////////////////////////////  D   15 :
+#define VERSION							0x1  D   16 :
+  D   17 :
+// ADNS2051 registers address  D   18 :
+#define	PRODUCT_ID						0x00  D   19 :
+#define	REVISION_ID			 			0x01  D   20 :
+#define	MOTION				 			0x02  D   21 :
+#define	DELTA_X				 			0x03  D   22 :
+#define	DELTA_Y							0x04  D   23 :
+#define	SURFACE_QUALITY				0x05  D   24 :
+#define	AVERAGE_PIXEL					0x06  D   25 :
+#define	MAXIMUM_PIXEL		 			0x07  D   26 :
+#define	ONFIG_BITS						0X0A  D   27 :
+#define	DATA_OUT_LOWER					0x0C  D   28 :
+#define	DATA_OUT_UPPER					0x0D  D   29 :
+#define	SHUTTER_LOWER					0x0E  D   30 :
+#define	SHUTTER_UPPER					0x0F  D   31 :
+#define	FRAME_PERIOD_LOWER			0x10  D   32 :
+#define	FRAME_PERIOD_UPPER			0x11  D   33 :
+  D   34 :
+// ADNS2051 register bits  D   35 :
+#define	PIX_DUMP							0x08  D   36 :
+#define	LED_MODE_ON						0x40  D   37 :
+#define	RESET								0x80  D   38 :
+  D   39 :
+#define MOTION_OCCURED					0x80  D   40 :
+  D   41 :
+#define	WRITE								0x80  D   42 :
+  D   43 :
+  D   44 :
+// Communications defines  D   45 :
+#define	READ_PRODUCT_ID				'A'  D   46 :
+#define	READ_PRODUCT_VERSION			'B'  D   47 :
+#define	READ_MOTION						'C'  D   48 :
+#define	READ_DELTA_X					'D'  D   49 :
+#define	READ_AVERAGE_PIXEL			'E'  D   50 :
+#define	READ_CONFIG_BITS				'F'  D   51 :
+#define	READ_SHUTTER					'G'  D   52 :
+#define	READ_FRAME_PERIOD				'H'  D   53 :
+#define	READ_PIXEL_DUMP				'I'  D   54 :
+#define	READ_POSITION					'J'  D   55 :
+#define	READ_POS_BUFFER				'K'  D   56 :
+#define	RESET_ADNS2051					'R'  D   57 :
+#define RESET_POSITION					'Q'  D   58 :
+  D   59 :
+  D   60 :
+  D   61 :
+// Other defines  D   62 :
+#define	COMMAND_BITS					8  D   63 :
+#define	DATA_BITS						8  D   64 :
+#define	DELTA_LOG_SIZE					20  D   65 :
+  D   66 :
+// ADNS2051 - PIC connections  D   67 :
+//#define	SCLK								PIN_A1	// ADNS-2051 Serial clock input  D   68 :
+//#define	SDIO								PIN_A2	// ADNS-2051 Data Input/Ouput  D   69 :
+//#define	PD									PIN_A3	// ADNS-2051 Power Down input  D   70 :
+  D   71 :
+#define	SCLK								PIN_C3	// ADNS-2051 Serial clock input  D   72 :
+#define	SDIO								PIN_C4	// ADNS-2051 Data Input/Ouput  D   73 :
+#define	PD									PIN_B0	// ADNS-2051 Power Down input  D   74 :
+  D   75 :E
+ D   75 :
+  A   48 :
+// -- Source File includes --  A   49 :
+#include "uart_int.c" A   50 :
+ /////////////////////////////////////////////////////////////////////////  E    1 :I4
+//  E    2 :
+// Filename 	:	Uart_int.c                                              E    3 :
+// Revision 	:	1.0                                                     E    4 :
+// Created  	:	11-07-2002                                              E    5 :
+// Project  	:	Texture                                                E    6 :
+// Device		:	PIC16F876                                            E    7 :
+// Development	:	MPLAB / CCS PCM   E    8 :
+// Tab setting	:	3                                                  E    9 :
+//                                                                     E   10 :
+// Author		:	E.H. Steffens  E   11 :
+// Department	:	Informatics Institute, Faculteit NWI  E   12 :
+// Copyright	:	Universiteit van Amsterdam  E   13 :
+//   E   14 :
+//	Description	:	Uart interrupt handler                          E   15 :
+//  E   16 :
+// id = "$Id: uart_int.c,v 1.1 2002-07-12 18:38:55+02 edwin Exp edwin $                      E   17 :
+/////////////////////////////////////////////////////////////////////////  E   18 :
+  E   19 :
+// Serial port communications  E   20 :
+#define 	SERIAL_BUFFER_SIZE 	16  E   21 :
+  E   22 :
+short command_in = FALSE;  				// Indicate a command is received and ready for processing  E   23 :V52
+short cmd_incoming = FALSE; 				// Indicates a command is being received  E   24 :V53
+char 	serial_in[SERIAL_BUFFER_SIZE+1];  E   25 :V54
+char 	next_in = 0;  E   26 :V55
+char 	temp = 0;  E   27 :V56
+  E   28 :
+  E   29 :
+// ------------------------------------------------------------------  E   30 :
+// UART receive interrupt handler  E   31 :
+// ------------------------------------------------------------------  E   32 :
+#int_rda  E   33 :
+void uart_receive_handler(void)  E   34 :f364
+{  E   35 :{16
+   E   36 :
+// Put char in temp  E   37 :
+ temp = getc();  E   38 :
+  E   39 :
+// Check if this is a new command  E   40 :
+	if(cmd_incoming == FALSE){  E   41 :
+		cmd_incoming = TRUE;  E   42 :{24
+		next_in = 0;  E   43 :
+	}  E   44 :}25
+	// Check for string terminator  E   45 :
+	if (temp == '\r'){  E   46 :
+	// Set/reset the flags  E   47 :
+ 		cmd_incoming = FALSE;  E   48 :{28
+ 		command_in = TRUE;  E   49 :
+   E   50 :
+	// Append 0 byte to string  E   51 :
+ 		serial_in[next_in] = 0;  E   52 :
+  E   53 :
+		// Reset counter  E   54 :
+ 		next_in = 0;  E   55 :
+	}  E   56 :}29
+	else if(next_in < SERIAL_BUFFER_SIZE){ // Check if buffer is full  E   57 :
+	// Put char in buffer  E   58 :
+  		serial_in[next_in] = temp;  E   59 :{33
+  E   60 :
+		// Point to next character  E   61 :
+  		next_in++;  E   62 :
+	}  E   63 :}34
+}	// End of int_rda  E   64 :}35
+  E   65 :E
+ E   65 :
+#include "hemisson_functions.c" A   51 :
+ //--------------------------------------------------------------------------------//  F    1 :I5
+//-                   HemiOs ( Hemisson Operating System )                       -//  F    2 :
+//										 -//  F    3 :
+//-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  F    4 :
+//-  This library is free software; you can redistribute it and/or               -//  F    5 :
+//-  modify it under the terms of the GNU Lesser General Public                  -//  F    6 :
+//-  License as published by the Free Software Foundation; either                -//  F    7 :
+//-  version 2.1 of the License, or any later version.                           -//  F    8 :
+//-                                                                              -//  F    9 :
+//-  This library is distributed in the hope that it will be useful,             -//  F   10 :
+//-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  F   11 :
+//-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  F   12 :
+//-  Lesser General Public License for more details.                             -//  F   13 :
+//-                                                                              -//  F   14 :
+//-  You should have received a copy of the GNU Lesser General Public            -//  F   15 :
+//-  License along with this library; if not, write to the Free Software         -//  F   16 :
+//-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  F   17 :
+//-                                                                              -//  F   18 :
+//-                               __  __  ________                               -//  F   19 :
+//- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  F   20 :
+//- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  F   21 :
+//- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  F   22 :
+//- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  F   23 :
+//- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  F   24 :
+//-                                                                              -//  F   25 :
+//--------------------------------------------------------------------------------//  F   26 :
+//---------------------------------------------------------------//  F   27 :
+//-                        IR Sensors                           -//  F   28 :
+void __hemisson_refresh_sensors( int zone )  F   29 :f365V59
+{  F   30 :{37
+	switch( zone )  F   31 :
+	{  F   32 :
+		case FrontZone :  F   33 :
+			set_adc_channel( FrontLeft );  F   34 :
+			delay_us( 12 );  F   35 :
+			__IR_Light[ FrontLeft ] = read_adc();  F   36 :
+			set_adc_channel( FrontRight );  F   37 :
+			delay_us( 12 );  F   38 :
+			__IR_Light[ FrontRight ] = read_adc();  F   39 :
+			set_adc_channel( Front );  F   40 :
+			delay_us( 12 );  F   41 :
+			__IR_Light[ Front ] = read_adc();  F   42 :
+			output_high( PIN_B2 );  F   43 :
+			delay_us( 300 );  F   44 :
+			__IR_Proximity[ Front ] = __IR_Light[ Front ] - read_adc();  F   45 :
+			set_adc_channel( FrontLeft );  F   46 :
+			delay_us( 12 );  F   47 :
+			__IR_Proximity[ FrontLeft ] = __IR_Light[ FrontLeft ] - read_adc();  F   48 :
+			set_adc_channel( FrontRight );  F   49 :
+			delay_us( 12 );  F   50 :
+			__IR_Proximity[ FrontRight ] = __IR_Light[ FrontRight ] - read_adc();  F   51 :
+			output_low( PIN_B2 );  F   52 :
+			break;  F   53 :
+		case RearZone :  F   54 :
+			set_adc_channel(Left);  F   55 :
+			delay_us(12);  F   56 :
+			__IR_Light[Left]=read_adc();  F   57 :
+			set_adc_channel(Right);  F   58 :
+			delay_us(12);  F   59 :
+			__IR_Light[Right]= read_adc();  F   60 :
+			set_adc_channel(Rear);  F   61 :
+			delay_us(12);  F   62 :
+			__IR_Light[Rear]= read_adc();  F   63 :
+			output_high(PIN_B3);  F   64 :
+			delay_us(300);  F   65 :
+			__IR_Proximity[Rear]=__IR_Light[Rear]- read_adc();  F   66 :
+			set_adc_channel(Left);  F   67 :
+			delay_us(12);  F   68 :
+			__IR_Proximity[Left]=__IR_Light[Left]- read_adc();  F   69 :
+			set_adc_channel(Right);  F   70 :
+			delay_us(12);  F   71 :
+			__IR_Proximity[Right]=__IR_Light[Right]- read_adc();  F   72 :
+			output_low(PIN_B3);  F   73 :
+			break;  F   74 :
+		case GroundZone :  F   75 :
+			set_adc_channel( GroundLeft );  F   76 :
+			delay_us( 12 );  F   77 :
+			__IR_Light[ GroundLeft ] = read_adc();  F   78 :
+			set_adc_channel( GroundRight );  F   79 :
+			delay_us( 12 );  F   80 :
+			__IR_Light[ GroundRight ] = read_adc();  F   81 :
+			output_high( PIN_B1 );  F   82 :
+			delay_us( 300 );  F   83 :
+			__IR_Proximity[ GroundRight ] = __IR_Light[ GroundRight ] - read_adc();  F   84 :
+			set_adc_channel( GroundLeft );  F   85 :
+			delay_us( 12 );  F   86 :
+			__IR_Proximity[ GroundLeft ] = __IR_Light[ GroundRight ] - read_adc();  F   87 :
+			output_low( PIN_B1 );  F   88 :
+			break;  F   89 :
+	}  F   90 :
+	delay_ms( 5 );  F   91 :
+}  F   92 :}76
+  F   93 :
+  F   94 :
+////////////////////////////////////////////////////////////////////////////////  F   95 :
+  F   96 :
+int1 hemisson_flag_sensors_refreshed(void)  F   97 :f367
+{  F   98 :{78
+   	return __Sensors_Refreshed_Flag;  F   99 :
+}  F  100 :}82
+  F  101 :
+int1 hemisson_flag_rs232_filtering(void)  F  102 :f368
+{  F  103 :{84
+   	return __Enable_RS232_Control;  F  104 :
+}  F  105 :}88
+  F  106 :
+int1 hemisson_get_switch_state(char Switch_Number)  F  107 :f369V63
+{  F  108 :{90
+   	return __Switchs[Switch_Number];  F  109 :
+}  F  110 :}92
+  F  111 :
+void hemisson_set_speed(signed int8 LeftSpeed,signed int8 RightSpeed)  F  112 :f371V65V66
+{  F  113 :{94
+   	__PwmMotLeft = LeftSpeed;  F  114 :
+   	__PwmMotRight = RightSpeed;  F  115 :
+}  F  116 :}96
+  F  117 :
+void hemisson_beep(int1 State)  F  118 :f374V68
+{  F  119 :{98
+   	output_bit(PIN_D4,State);  F  120 :
+}  F  121 :}103
+  F  122 :
+unsigned int32 hemisson_get_time(void)  F  123 :f376
+{  F  124 :{105
+	return __TimeTip;  F  125 :
+}  F  126 :}107
+  F  127 :
+void hemisson_set_time(unsigned int32 Time)  F  128 :f377V71
+{  F  129 :{109
+	__TimeTip = Time;  F  130 :
+}  F  131 :}111
+  F  132 :
+void hemisson_delay_s(int Delay)  F  133 :f379V73
+{  F  134 :{113
+   	int i;  F  135 :V74
+   	for(i = 0; i< Delay; i++)  F  136 :
+   	{  F  137 :
+		delay_ms(1000);  F  138 :{121
+   	}  F  139 :}123
+}  F  140 :}124
+  F  141 :
+void hemisson_delay_ms(int Delay)  F  142 :f382V76
+{  F  143 :{126
+	delay_ms(Delay);  F  144 :
+}  F  145 :}128
+  F  146 :
+  F  147 :
+  F  148 :E
+ F  148 :
+#include "adns2051.c" A   52 :
+ //-----------------------------------------------------------------------  G    1 :I6
+//  G    2 :
+// Filename 	:	ADNS2051.c                                              G    3 :
+// Revision 	:	1.0                                                     G    4 :
+// Created  	:	03-05-2006                                              G    5 :
+// Project  	:	Optical mouse sensor for Hemisson                                                G    6 :
+// Device		:	PIC16F876                                            G    7 :
+// Development	:	MPLAB / CCS PCM   G    8 :
+// Tab setting	:	3                                                  G    9 :
+//                                                                     G   10 :
+// Author		:	E.H. Steffens  G   11 :
+// Department	:	Instituut voor Informatica, Faculteit NWI  G   12 :
+// Copyright	:	Universiteit van Amsterdam  G   13 :
+//   G   14 :
+//	Description	:	Serial communication ADNS-2051 optical mouse sensor                          G   15 :
+//-----------------------------------------------------------------------  G   16 :
+  G   17 :
+  G   18 :
+//----------------------------------------------------------------//  G   19 :
+//-                Conversion Function                           -//  G   20 :
+// -------------------------------------------------------------- //  G   21 :
+char chartohex( char valuetoconvert )  G   22 :f383V78
+{  G   23 :{130
+	char convertedval;  G   24 :V79
+   	if( valuetoconvert >= 'A' ){  G   25 :
+      		convertedval = valuetoconvert-'A'+10;  G   26 :{134
+   	}	  G   27 :}135
+   	else{  G   28 :
+      		convertedval = valuetoconvert -'0';  G   29 :{137
+   	}  G   30 :}138
+   	return convertedval;  G   31 :
+}  G   32 :}139
+  G   33 :
+//-----------------------------------------------------------------------  G   34 :
+//	load_command(command)  G   35 :
+//-----------------------------------------------------------------------  G   36 :
+//  G   37 :
+#use standard_io(c)  G   38 :V80
+void load_command(int j )  G   39 :f387V82
+{  G   40 :{141
+	int i;  G   41 :V83
+	int command;  G   42 :V84
+  G   43 :
+	command = j;  G   44 :
+	  G   45 :
+// Load command  G   46 :
+	for(i=0; i < COMMAND_BITS; i++){  G   47 :
+		  G   48 :
+	// Leading edge of Program clock  G   49 :
+		output_low(SCLK);  G   50 :{149
+		  G   51 :
+	// put here code to shift command bits out on program data pin  G   52 :
+		output_bit(SDIO, shift_left(&command, 1, 0));  G   53 :
+		  G   54 :
+	// Trailling edge of program clock (data is clocked in ADNS-2051)  G   55 :
+		output_high(SCLK);  G   56 :
+	  G   57 :
+	// Delay  G   58 :
+		delay_us(10);  G   59 :
+	}  G   60 :}155
+		  G   61 :
+}  G   62 :}156
+// -- end of load_command --  G   63 :
+  G   64 :
+//-----------------------------------------------------------------------  G   65 :
+//	load_data(int data)  G   66 :
+//-----------------------------------------------------------------------  G   67 :
+//  G   68 :
+void load_data(int data_in)  G   69 :f390V86
+{  G   70 :{158
+	int i;  G   71 :V87
+	int data;  G   72 :V88
+  G   73 :
+	data = data_in;  G   74 :
+  G   75 :
+// Load data  G   76 :
+	for(i=0; i < DATA_BITS; i++){  G   77 :
+  G   78 :
+	// Leading edge of Program clock  G   79 :
+		output_low(SCLK);  G   80 :{166
+		  G   81 :
+	// put here code to shift data out on SDIO  G   82 :
+		output_bit(SDIO, shift_left(&data, 1, 0 ) );  G   83 :
+		  G   84 :
+	// Trailling edge of clock (data is clocked in ADNS-2051)  G   85 :
+		output_high(SCLK);  G   86 :
+		  G   87 :
+	// Delay  G   88 :
+		delay_us(10);  G   89 :
+}  G   90 :}172
+}  G   91 :}173
+  G   92 :
+//-----------------------------------------------------------------------  G   93 :
+//	read_data()  G   94 :
+//-----------------------------------------------------------------------  G   95 :
+//  G   96 :
+long read_data()  G   97 :f393
+{  G   98 :{175
+	int i;  G   99 :V90
+	int data;  G  100 :V91
+	  G  101 :
+// Tri-state the SDIO pin  G  102 :
+	output_float(SDIO);  G  103 :
+  G  104 :
+// Minium delay between address and reading data  G  105 :
+	delay_us(100);  G  106 :
+	  G  107 :
+// Read data  G  108 :
+	for(i=0; i < DATA_BITS; i++){  G  109 :
+  G  110 :
+	// Leading edge of serial clock (data is clocked out ADNS-2051)  G  111 :
+		output_low(SCLK);  G  112 :{184
+		  G  113 :
+	// Some extra delay before read  G  114 :
+		delay_us(10);  G  115 :
+		  G  116 :
+	// put here code to shift data in on B7  G  117 :
+		shift_left(&data, 1, input(SDIO) );  G  118 :
+		  G  119 :
+	// Trailling edge of serial clock   G  120 :
+		output_high(SCLK);  G  121 :
+	}  G  122 :}189
+	return data;  G  123 :
+}  G  124 :}190
+  G  125 :
+  G  126 :
+//-----------------------------------------------------------------------  G  127 :
+//	read_ADNS2051()  G  128 :
+//-----------------------------------------------------------------------  G  129 :
+//  G  130 :
+int read_ADNS2051(int address)  G  131 :f394V93
+{  G  132 :{192
+	int data;  G  133 :V94
+  G  134 :
+// Load register address  G  135 :
+	load_command(address);  G  136 :
+	data = read_data();  G  137 :
+	  G  138 :
+	return data;  G  139 :
+}  G  140 :}194
+// -- end of read_ADNS2051() --  G  141 :
+  G  142 :
+//-----------------------------------------------------------------------  G  143 :
+//	write_ADNS2051()  G  144 :
+//-----------------------------------------------------------------------  G  145 :
+//  G  146 :
+void write_ADNS2051(int address, int data)  G  147 :f396V96V97
+{  G  148 :{196
+// Load register address  G  149 :
+	load_command(WRITE | address);  G  150 :
+	load_data(data);  G  151 :
+	  G  152 :
+}  G  153 :}198
+// -- end of write_ADNS2051() --  G  154 :
+  G  155 :
+//-----------------------------------------------------------------------  G  156 :
+//	convert()  G  157 :
+//-----------------------------------------------------------------------  G  158 :
+//  G  159 :
+char convert(char c)  G  160 :f397V99
+{  G  161 :{200
+	if( c >= '0' && c <= '9'){  G  162 :
+		return (c - 0x30);  G  163 :{206
+	}  G  164 :}207
+	else if( c >='A' && c <= 'Z'){  G  165 :
+		return (c - 0x37);  G  166 :{213
+	}  G  167 :}214
+	else{  G  168 :
+		return (c - 0x57);  G  169 :{216
+	}  G  170 :}217
+  G  171 :
+}// -- end of convert() --  G  172 :}218
+  G  173 :
+  G  174 :
+  G  175 :
+  G  176 :
+  G  177 :
+  G  178 :E
+ G  178 :
+#include "IRleds.c" A   53 :
+ /////////////////////////////////////////////////////////////////////////  H    1 :I7
+//  H    2 :
+// Filename 	:	IRleds.c                                              H    3 :
+// Revision 	:	1.0                                                     H    4 :
+// Created  	:	25-06-2005                                              H    5 :
+// Project  	:	ZoekenSturenBewegen                                                H    6 :
+// Device		:	PIC16F877                                           H    7 :
+// Development	:	MPLAB / CCS PCM / Hemisson  H    8 :
+// Tab setting	:	3                                                  H    9 :
+//                                                                     H   10 :
+// Author		:	E.H. Steffens  H   11 :
+// Department	:	Informatics Institute, Faculteit NWI  H   12 :
+// Copyright	:	Universiteit van Amsterdam  H   13 :
+//   H   14 :
+//	Description	:	   H   15 :
+//  H   16 :
+/////////////////////////////////////////////////////////////////////////  H   17 :
+  H   18 :
+#define THRESHOLD	30		/* Threshold  */  H   19 :
+#define IR_SENSOR_TRIGGER	3		/* Trigger count for IR sensors */  H   20 :
+  H   21 :
+void CheckGroundSensors(void){  H   22 :f401{220
+/* Read downward looking ir sensors */  H   23 :
+//   	__hemisson_refresh_sensors(GroundZone);  H   24 :
+  H   25 :
+	if(__Sensors_Refreshed_Flag == TRUE){  H   26 :
+		  H   27 :
+	/* Find out state of sensors */  H   28 :
+		if( ( __IR_Proximity[ GroundRight ] > GroundRightFree )    H   29 :{226
+		&& 	( __IR_Proximity[ GroundLeft  ] > GroundLeftFree  ) ){  H   30 :
+	  H   31 :
+		/* Increase trigger count */  H   32 :
+			IR_trigger++;  H   33 :{231
+  H   34 :
+		/* Apply a simple filter for false sensor readings */  H   35 :
+			if (IR_trigger > IR_SENSOR_TRIGGER ){   H   36 :
+				FreeZone = FALSE;  H   37 :{234
+				hemisson_set_speed(0,0);  H   38 :
+				putchar('F');  H   39 :
+		   }	  H   40 :}236
+		}  H   41 :}237
+		  H   42 :
+	__Sensors_Refreshed_Flag = FALSE;  H   43 :
+	}  H   44 :}238
+}  H   45 :}239
+  H   46 :
+void CalibrateGroundSensors(void)  H   47 :f402
+{  H   48 :{241
+/* Read downward looking ir sensors */  H   49 :
+	__hemisson_refresh_sensors(GroundZone);  H   50 :
+  H   51 :
+/* Use these values as a reference, expect both sensors are on the free zone */   H   52 :
+	GroundRightFree = __IR_Proximity[ GroundRight ] + IR_threshold ;  H   53 :
+	GroundLeftFree  = __IR_Proximity[ GroundLeft  ] + IR_threshold ;  H   54 :
+	  H   55 :
+	printf("%u %u\n\r", GroundRightFree, GroundLeftFree);  H   56 :V104V105V107V108
+}  H   57 :}265
+  H   58 :
+void ReadGroundSensors(void)  H   59 :f406
+{  H   60 :{267
+/* Read downward looking ir sensors */  H   61 :
+//	__hemisson_refresh_sensors(GroundZone);  H   62 :
+  H   63 :
+//	hemisson_delay_ms(1);  H   64 :
+	if(__Sensors_Refreshed_Flag == TRUE){  H   65 :
+	  H   66 :
+		printf("%u %u\n\r", __IR_Proximity[GroundRight], __IR_Proximity[GroundLeft]);  H   67 :{273
+	}  H   68 :}279
+	__Sensors_Refreshed_Flag = FALSE;  H   69 :
+}  H   70 :}280
+  H   71 :
+/* -- Hemisson Drive functions -- */  H   72 :
+   H   73 :
+void Right90(void){  H   74 :f408{282
+	int i;  H   75 :V112
+	int time;  H   76 :V113
+  H   77 :
+	time = chartohex(serial_in[2]);  H   78 :
+	time = (time<<4) + chartohex(serial_in[3]);  H   79 :
+  H   80 :
+// Turn 90 degrees rightt  H   81 :
+	hemisson_set_speed(5,-5);		// Go straight  H   82 :
+	for(i=0; i<2; i++){  H   83 :
+		hemisson_delay_ms(250);		// Wait s  H   84 :{290
+	}  H   85 :}291
+	hemisson_delay_ms(time);		// Wait s  H   86 :
+	  H   87 :
+	hemisson_set_speed(0,0);		// Stop  H   88 :
+}  H   89 :}292
+  H   90 :
+void Left90(void)  H   91 :f409
+{  H   92 :{294
+	int i;  H   93 :V115
+	int time;  H   94 :V116
+  H   95 :
+	time = chartohex(serial_in[2]);  H   96 :
+	time = (time<<4) + chartohex(serial_in[3]);  H   97 :
+  H   98 :
+  H   99 :
+// Turn 90 degrees left  H  100 :
+	hemisson_set_speed(-5,5);		// Go   H  101 :
+	for(i=0; i<2; i++){  H  102 :
+		hemisson_delay_ms(250);		// Wait s  H  103 :{302
+	}  H  104 :}303
+	hemisson_delay_ms(time);			// Wait s  H  105 :
+	  H  106 :
+	hemisson_set_speed(0,0);		// Stop  H  107 :
+	  H  108 :
+}  H  109 :}304
+  H  110 :
+void Forward (void)  H  111 :f410
+{  H  112 :{306
+  	hemisson_set_speed(5,5);		// Go straight  H  113 :
+	hemisson_delay_s(1);			// Wait s  H  114 :
+	hemisson_set_speed(0,0);  H  115 :
+}  H  116 :}308
+  H  117 :
+  H  118 :
+void Reverse(void)  H  119 :f411
+{  H  120 :{310
+  	hemisson_set_speed(-5,-5);		// Go straight  H  121 :
+	hemisson_delay_s(1);			// Wait s  H  122 :
+ 	hemisson_set_speed(0,0);  H  123 :
+}  H  124 :}312
+  H  125 :
+  H  126 :
+void HalfReverse(void)  H  127 :f412
+{  H  128 :{314
+	int time;  H  129 :V120
+  H  130 :
+	time = chartohex(serial_in[2]);  H  131 :
+	time = (time<<4) + chartohex(serial_in[3]);  H  132 :
+  H  133 :
+  	hemisson_set_speed(-5,-5);		// Go straight  H  134 :
+	hemisson_delay_ms(time);			// Wait s  H  135 :
+ 	hemisson_set_speed(0,0);  H  136 :
+}  H  137 :}316E
+ H  137 :
+  A   54 :
+// -- Globals --  A   55 :
+int adns2051[0x12]; // shadow of ADNS2051 registers  A   56 :V121
+long teller;  A   57 :V122
+signed int16 posX, posY;  A   58 :V123V124
+signed int DeltaX, DeltaY;  A   59 :V125V126
+signed int lastX[DELTA_LOG_SIZE], lastY[DELTA_LOG_SIZE];  A   60 :V127V128
+int teller1;  A   61 :V129
+  A   62 :
+#use fast_io(c)   A   63 :
+//-----------------------------------------------------------//  A   64 :
+//                  Internal Interrupts                     -//  A   65 :
+//-----------------------------------------------------------//  A   66 :
+#INT_TIMER0  A   67 :
+void Scheduler_Interrupt(void)                                                   	  A   68 :f422
+{   A   69 :{318
+// Internal Task Manager, Interrupt every 204.8 us                                                                               		// Sensors Powered during 400us, refreshed every 40ms  A   70 :
+  A   71 :
+// Time function  A   72 :
+// __TimeTip incremented every 1 ms (counter up to 4294967296 ms = 1193 hours ...)  A   73 :
+	__TimeTipDivider++;  A   74 :
+  A   75 :
+	if(__TimeTipDivider == 5){  A   76 :
+		__TimeTipDivider = 0;  A   77 :{322
+		__TimeTip++;                                                               	  A   78 :
+	}  A   79 :}323
+  A   80 :
+// Motor Task, PWM freq 300 Hz  A   81 :
+	if(FreeZone == FALSE && IR_armed == TRUE){  A   82 :
+	// Stop both motors  A   83 :
+		__PwmMotLeft = 0;		  A   84 :{332
+		__PwmMotRight = 0;  A   85 :
+	// De-arm trigger  A   86 :
+		IR_armed = FALSE;  A   87 :
+	}  A   88 :}333
+  A   89 :
+// Left Motor  A   90 :
+	if( __PwmMotLeft >= 0 ){  A   91 :
+		if( ( 15 - __PwmMotLeft + __PwmCounter ) >= 15 ){  A   92 :{336
+			output_bit( PIN_D0 , 0 );  A   93 :{339
+			output_bit( PIN_D1 , 0 );  A   94 :
+		}  A   95 :}342
+		else{  A   96 :
+			output_bit( PIN_D0 , 1 );  A   97 :{344
+			output_bit( PIN_D1 , 0 );  A   98 :
+		}  A   99 :}347
+	}  A  100 :}348
+	else{  A  101 :
+		if( ( 15 - ( - __PwmMotLeft ) + __PwmCounter ) >= 15 ){  A  102 :{350
+			output_bit( PIN_D0 , 0 );  A  103 :{353
+			output_bit( PIN_D1 , 0 );  A  104 :
+		}  A  105 :}356
+		else{  A  106 :
+			output_bit( PIN_D0 , 0 );  A  107 :{358
+			output_bit( PIN_D1 , 1 );  A  108 :
+		}  A  109 :}361
+	}  A  110 :}362
+  A  111 :
+// Right Motor  A  112 :
+	if( __PwmMotRight >= 0 ){  A  113 :
+		if( ( 15 - __PwmMotRight + __PwmCounter ) >= 15 ){  A  114 :{365
+			output_bit( PIN_D2 , 0 );  A  115 :{368
+			output_bit( PIN_D3 , 0 );  A  116 :
+		}  A  117 :}371
+		else{  A  118 :
+			output_bit( PIN_D2 , 1 );  A  119 :{373
+			output_bit( PIN_D3 , 0 );  A  120 :
+		}  A  121 :}376
+	}  A  122 :}377
+	else{  A  123 :
+		if( ( 15 - ( - __PwmMotRight ) + __PwmCounter ) >= 15 ){  A  124 :{379
+			output_bit( PIN_D2 , 0 );  A  125 :{382
+			output_bit( PIN_D3 , 0 );  A  126 :
+		}  A  127 :}385
+		else{  A  128 :
+			output_bit( PIN_D2 , 0 );  A  129 :{387
+			output_bit( PIN_D3 , 1 );  A  130 :
+		}  A  131 :}390
+	}  A  132 :}391
+  A  133 :
+// Counter  A  134 :
+	__PwmCounter++;                                                               		  A  135 :
+	if( __PwmCounter > 15 ){  A  136 :
+		__PwmCounter = 0;  A  137 :{394
+	}  A  138 :}395
+  A  139 :
+// Other Tasks executed every 52.43 milliseconds  A  140 :
+	switch( __SchedulerTask )	{  A  141 :
+	// Brightness measurement zone 1    A  142 :
+		case 1 :                                                                   	  A  143 :
+			if( __Auto_Refresh_Sensors == 1 ){  A  144 :
+				set_adc_channel( GroundLeft );  A  145 :{403
+				delay_us( 12 );  A  146 :
+				__IR_Light[ GroundLeft ] = read_adc();  A  147 :
+				set_adc_channel( GroundRight );  A  148 :
+				delay_us( 12 );  A  149 :
+				__IR_Light[ GroundRight ] = read_adc();  A  150 :
+				output_high( PIN_B1 );  A  151 :
+			}  A  152 :}408
+		break;  A  153 :
+	  A  154 :
+	// Proximity measurement zone 1  A  155 :
+		case 3 :                                                                   	  A  156 :
+			if( __Auto_Refresh_Sensors == 1 ){  A  157 :
+				__IR_Proximity[ GroundRight ] = __IR_Light[ GroundRight ] - read_adc();  A  158 :{414
+				set_adc_channel( GroundLeft );  A  159 :
+				delay_us( 12 );  A  160 :
+				__IR_Proximity[ GroundLeft ] = __IR_Light[ GroundRight ] - read_adc();  A  161 :
+				output_low( PIN_B1 );  A  162 :
+				__Sensors_Refreshed_Flag = 1;  A  163 :
+		}  A  164 :}418
+		break;  A  165 :
+  A  166 :
+		case 100 :  A  167 :
+		/* Check if border line is crossed */  A  168 :
+			if(FreeZone == TRUE){	   A  169 :
+				CheckGroundSensors();  A  170 :{424
+			}  A  171 :}425
+		break;  A  172 :
+	}  A  173 :
+  A  174 :
+// Task Counter  A  175 :
+	__SchedulerTask++;  A  176 :
+  A  177 :
+}  A  178 :}426
+  A  179 :
+//-----------------------------------------------------------------------  A  180 :
+//	timer1_handler()  A  181 :
+//-----------------------------------------------------------------------  A  182 :
+//  A  183 :
+#int_timer1  A  184 :
+void timer1_handler()   A  185 :f423
+{  A  186 :{428
+/* Set interrupt rate */  A  187 :
+   set_timer1(65535 - 62500);  // 0.1 sec   A  188 :
+  A  189 :
+/* Increment interrupt counter */  A  190 :
+   teller++;  A  191 :
+  A  192 :
+/* Check if there was a motion */  A  193 :
+	adns2051[MOTION] = read_ADNS2051(MOTION);  A  194 :
+	  A  195 :
+	if( (adns2051[MOTION] & MOTION_OCCURED) ){  A  196 :
+	/* Read ADNS2051 delta X and Y registers */  A  197 :
+		DeltaX = read_ADNS2051(DELTA_X);  A  198 :{432
+		DeltaY = read_ADNS2051(DELTA_Y);  A  199 :
+	  A  200 :
+	/* Log delta's */  A  201 :
+		lastX[teller1] = DeltaX;  A  202 :
+		lastY[teller1] = DeltaY;  A  203 :
+  A  204 :
+		teller1++;  A  205 :
+		if(teller1 == DELTA_LOG_SIZE){  A  206 :
+			teller1=0;  A  207 :{435
+		}  A  208 :}436
+  A  209 :
+	/* Calculate new position */  A  210 :
+		posX = posX + DeltaX;	  A  211 :
+		posY = posY + DeltaY;  A  212 :
+		  A  213 :
+	/* Goto position ??*/  A  214 :
+		//GotoPosY  A  215 :
+		//GotoPosX  A  216 :
+	}	  A  217 :}437
+}  A  218 :}438
+  A  219 :
+	  A  220 :
+//-----------------------------------------------------------------------  A  221 :
+//	main()  A  222 :
+//-----------------------------------------------------------------------  A  223 :
+//  A  224 :
+  A  225 :
+void main() {  A  226 :f424{440
+	int i;  A  227 :V133
+	int pixel_data, pixel_address;  A  228 :V134V135
+  A  229 :
+	__PwmMotLeft = 0;  A  230 :
+	__PwmMotRight = 0;  A  231 :
+	  A  232 :
+	__IR_Light[ 0 ] = 0;  A  233 :
+	__IR_Light[ 1 ] = 0;  A  234 :
+	__IR_Light[ 2 ] = 0;  A  235 :
+	__IR_Light[ 3 ] = 0;  A  236 :
+	__IR_Light[ 4 ] = 0;  A  237 :
+	__IR_Light[ 5 ] = 0;  A  238 :
+	__IR_Light[ 6 ] = 0;  A  239 :
+	__IR_Light[ 7 ] = 0;  A  240 :
+  A  241 :
+	__IR_Proximity[ 0 ] = 0;  A  242 :
+	__IR_Proximity[ 1 ] = 0;  A  243 :
+	__IR_Proximity[ 2 ] = 0;  A  244 :
+	__IR_Proximity[ 3 ] = 0;  A  245 :
+	__IR_Proximity[ 4 ] = 0;  A  246 :
+	__IR_Proximity[ 5 ] = 0;  A  247 :
+	__IR_Proximity[ 6 ] = 0;  A  248 :
+	__IR_Proximity[ 7 ] = 0;  A  249 :
+	  A  250 :
+	__Switchs[ 0 ] = 0;  A  251 :
+	__Switchs[ 1 ] = 0;  A  252 :
+	__Switchs[ 2 ] = 0;  A  253 :
+	__Switchs[ 3 ] = 0;  A  254 :
+  A  255 :
+	posX = 0;  A  256 :
+	posY = 0;  A  257 :
+  A  258 :
+	DeltaX = 0;  A  259 :
+	DeltaY = 0;  A  260 :
+  A  261 :
+	teller = 0;  A  262 :
+	teller1 = 0;  A  263 :
+  A  264 :
+	for(i=0;i<DELTA_LOG_SIZE;i++){  A  265 :
+		lastX[i] = 0;  A  266 :{449
+		lastY[i] = 0;  A  267 :
+	}  A  268 :}450
+  A  269 :
+// Initialise GroundSensors section  A  270 :
+	IR_trigger = 0;  A  271 :
+	IR_threshold = THRESHOLD;  A  272 :
+	IR_armed = FALSE;  A  273 :
+	FreeZone = TRUE;  A  274 :
+  A  275 :
+// Init 16F877 modules	  A  276 :
+	setup_spi(FALSE);  A  277 :
+	setup_psp(PSP_DISABLED);  A  278 :
+	setup_counters(RTCC_INTERNAL,RTCC_DIV_2);  A  279 :
+ 	setup_timer_1(T1_DISABLED);  A  280 :
+ 	setup_timer_2(T2_DISABLED,0,1);  A  281 :
+ 	setup_ccp1(CCP_OFF);  A  282 :
+	setup_ccp2(CCP_OFF);  A  283 :
+  A  284 :
+// I/O's  A  285 :
+	set_tris_a(INIT_TRISA);  A  286 :
+	set_tris_b(INIT_TRISB);  A  287 :
+//	set_tris_c(INIT_TRISC);  A  288 :
+	set_tris_d(INIT_TRISD);  A  289 :
+	set_tris_e(INIT_TRISE);  A  290 :
+  A  291 :
+	output_a(INIT_PORTA);  A  292 :
+	output_b(INIT_PORTB);  A  293 :
+//	output_c(INIT_PORTC);  A  294 :
+	output_d(INIT_PORTD);  A  295 :
+	output_e(INIT_PORTE);  A  296 :
+  A  297 :
+	port_b_pullups(false);  A  298 :
+  A  299 :
+// Init ADNS-2051 pins  A  300 :
+	output_high(SDIO);  A  301 :
+	output_high(SCLK);  A  302 :
+	output_low(PD);	  A  303 :
+  A  304 :
+// Analog Port  A  305 :
+	setup_adc_ports(ALL_ANALOG);  A  306 :
+	setup_adc(ADC_CLOCK_INTERNAL);  A  307 :
+  A  308 :
+// Timer 0 for Scheduler  A  309 :
+	setup_timer_0 (RTCC_DIV_4);  A  310 :
+	set_timer0(0);  A  311 :
+  A  312 :
+// Timer 1 for mouse sensor   A  313 :
+	setup_timer_1(T1_INTERNAL | T1_DIV_BY_4);  A  314 :
+	set_timer1(0);  A  315 :
+   	  A  316 :
+// Interrupts  A  317 :
+	enable_interrupts(INT_TIMER0);  A  318 :
+	enable_interrupts(INT_TIMER1);  A  319 :
+	enable_interrupts(INT_RDA);  A  320 :
+	enable_interrupts(GLOBAL);  A  321 :
+	  A  322 :
+	delay_ms(10);  A  323 :
+  A  324 :
+// Print alive message  A  325 :
+	printf("ADNS-2051M ");  A  326 :
+	printf(__DATE__);  A  327 :
+	printf(" @ ");  A  328 :
+	printf(__TIME__);  A  329 :
+	printf("\r\n");  A  330 :
+  A  331 :
+// Stop Hemisson  A  332 :
+	hemisson_set_speed(0,0);  A  333 :
+	hemisson_delay_s(1);  A  334 :
+  A  335 :
+// Calibrate Ground sensors  (Sensors required to be above Free Zone)  A  336 :
+	CalibrateGroundSensors();	  A  337 :
+	  A  338 :
+// Begin command loop  A  339 :
+	do{  A  340 :
+// --------------------------------------------------------------------------------		   A  341 :
+// -- 'UART receive command' task manager  A  342 :
+// --------------------------------------------------------------------------------  A  343 :
+	if(command_in == TRUE){   A  344 :{476
+  A  345 :
+		switch(serial_in[0]){  A  346 :{481
+			case READ_PRODUCT_ID :  A  347 :
+			//   A  348 :
+				adns2051[PRODUCT_ID] = read_ADNS2051(PRODUCT_ID);  A  349 :
+				printf("Product_id = %x\n\r", adns2051[PRODUCT_ID]);  A  350 :V144V145
+			break;  A  351 :
+			  A  352 :
+			case READ_PRODUCT_VERSION :  A  353 :
+			//   A  354 :
+				adns2051[REVISION_ID] = read_ADNS2051(REVISION_ID);  A  355 :
+				printf("Product_version = %x\n\r", adns2051[REVISION_ID]);  A  356 :
+			break;  A  357 :
+			  A  358 :
+			case READ_MOTION :  A  359 :
+			//   A  360 :
+				adns2051[MOTION] = read_ADNS2051(MOTION);  A  361 :
+				printf("Motion = %x\n\r", adns2051[MOTION]);  A  362 :
+			break;  A  363 :
+  A  364 :
+			case READ_DELTA_X :  A  365 :
+			//   A  366 :
+				adns2051[DELTA_X] = read_ADNS2051(DELTA_X);  A  367 :
+				printf("Delta_x = %x\n\r", adns2051[DELTA_X]);  A  368 :
+				adns2051[DELTA_Y] = read_ADNS2051(DELTA_Y);  A  369 :
+				printf("Delta_y = %x\n\r", adns2051[DELTA_Y]);  A  370 :
+				adns2051[SURFACE_QUALITY] = read_ADNS2051(SURFACE_QUALITY);  A  371 :
+				printf("SURFACE_QUALITY = %x\n\r", adns2051[SURFACE_QUALITY]);  A  372 :
+			break;  A  373 :
+				  A  374 :
+			case READ_AVERAGE_PIXEL :  A  375 :
+			//   A  376 :
+				adns2051[AVERAGE_PIXEL] = read_ADNS2051(AVERAGE_PIXEL);  A  377 :
+				printf("AVERAGE_PIXEL = %x\n\r", adns2051[AVERAGE_PIXEL]);  A  378 :
+				adns2051[MAXIMUM_PIXEL] = read_ADNS2051(MAXIMUM_PIXEL);  A  379 :
+				printf("MAXIMUM_PIXEL = %x\n\r", adns2051[MAXIMUM_PIXEL]);  A  380 :
+				adns2051[ONFIG_BITS] = read_ADNS2051(ONFIG_BITS);  A  381 :
+				printf("ONFIG_BITS = %x\n\r", adns2051[ONFIG_BITS]);  A  382 :
+			break;  A  383 :
+				  A  384 :
+			case READ_SHUTTER :  A  385 :
+			//   A  386 :
+				adns2051[SHUTTER_UPPER] = read_ADNS2051(SHUTTER_UPPER);  A  387 :
+				printf("SHUTTER_UPPER = %x\n\r", adns2051[SHUTTER_UPPER]);  A  388 :
+				adns2051[SHUTTER_LOWER] = read_ADNS2051(SHUTTER_LOWER);  A  389 :
+				printf("SHUTTER_LOWER = %x\n\r", adns2051[SHUTTER_LOWER]);  A  390 :
+			break;  A  391 :
+  A  392 :
+			case READ_FRAME_PERIOD :  A  393 :
+			//   A  394 :
+				adns2051[FRAME_PERIOD_UPPER] = read_ADNS2051(FRAME_PERIOD_UPPER);  A  395 :
+				printf("FRAME_PERIOD_UPPER = %x\n\r", adns2051[FRAME_PERIOD_UPPER]);  A  396 :
+				adns2051[FRAME_PERIOD_LOWER] = read_ADNS2051(FRAME_PERIOD_LOWER);  A  397 :
+				printf("FRAME_PERIOD_LOWER = %x\n\r", adns2051[FRAME_PERIOD_LOWER]);  A  398 :
+			break;  A  399 :
+  A  400 :
+			case READ_PIXEL_DUMP :  A  401 :
+				write_adns2051(ONFIG_BITS, PIX_DUMP);  A  402 :
+				printf("SOD\n\r");  A  403 :
+				// Read the pixel map  A  404 :
+				for(i=0; i<255; i++){  A  405 :
+					do{  A  406 :{588
+						pixel_data = read_adns2051(DATA_OUT_LOWER);  A  407 :{592
+					}while (pixel_data & 0x80);  A  408 :}593
+	  A  409 :
+					pixel_address = read_adns2051(DATA_OUT_UPPER);   A  410 :
+					printf("Pixel = %x, %x\n\r", pixel_address, pixel_data);   A  411 :
+				}  A  412 :}604
+				printf("EOD\n\r");  A  413 :
+				  A  414 :
+				write_adns2051(ONFIG_BITS, LED_MODE_ON);  A  415 :
+			  A  416 :
+			break;  A  417 :
+  A  418 :
+			case RESET_ADNS2051 :  A  419 :
+				write_adns2051(ONFIG_BITS, RESET);  A  420 :
+				printf("ADNS2051 reset\n\r");  A  421 :
+			break;  A  422 :
+	  A  423 :
+			case READ_POSITION :  A  424 :
+				printf("Pos X,Y : %ld %ld @ %lu\n\r", posX, posY, teller);  A  425 :V164V166
+			break;  A  426 :
+  A  427 :
+			case READ_POS_BUFFER :  A  428 :
+				for(i=0;i<DELTA_LOG_SIZE;i++){  A  429 :
+					disable_interrupts(INT_TIMER1);  A  430 :{663
+					printf("X,Y : %d,%d\n\r", lastX[i], lastY[i]);  A  431 :V169V170
+					enable_interrupts(INT_TIMER1);  A  432 :
+				}  A  433 :}685
+			break;  A  434 :
+  A  435 :
+			case RESET_POSITION :  A  436 :
+				posX = 0;  A  437 :
+				posY = 0;  A  438 :
+			break;  A  439 :
+			  A  440 :
+		// - Recalibrate Ground sensors  A  441 :
+			case '1' :  A  442 :
+				CalibrateGroundSensors();  A  443 :
+			break;  A  444 :
+			  A  445 :
+		// - Read Ground sensors  A  446 :
+			case '2' :  A  447 :
+				ReadGroundSensors();  A  448 :
+			break;  A  449 :
+		  A  450 :
+		// - Right turn over 90 degrees  A  451 :
+			case '3' :  A  452 :
+				Right90();  A  453 :
+			break;  A  454 :
+  A  455 :
+		// - Left turn over 90 degrees  A  456 :
+			case '4' :  A  457 :
+				Left90();  A  458 :
+			break;  A  459 :
+  A  460 :
+		// - Reset to Freezone state	    A  461 :
+			case '5' :  A  462 :
+				FreeZone = TRUE;  A  463 :
+				IR_trigger = 0;  A  464 :
+				IR_armed = TRUE;  A  465 :
+			break;  A  466 :
+  A  467 :
+		// Go forward for x seconds	   	  A  468 :
+			case '6' :  A  469 :
+				Forward();  A  470 :
+			break;  A  471 :
+  A  472 :
+		// Go reverse for x seconds  A  473 :
+			case '7' :  A  474 :
+				Reverse();  A  475 :
+			break;  A  476 :
+  A  477 :
+		// Set trigger level for IR sensors  A  478 :
+			case '8' :  A  479 :
+				IR_threshold = chartohex(serial_in[2]);  A  480 :
+			break;  A  481 :
+  A  482 :
+		// Go reverse for a half block  A  483 :
+			case '9' :  A  484 :
+				HalfReverse();  A  485 :
+			break;  A  486 :
+  A  487 :
+			default:  A  488 :
+				break;  A  489 :
+		}  A  490 :
+	command_in = FALSE;  A  491 :
+	printf("%c\n\r", serial_in[0]);  A  492 :
+	}  A  493 :}702
+  A  494 :
+/* Check if border line is crossed */  A  495 :
+//	if(FreeZone == TRUE){	   A  496 :
+//		CheckGroundSensors();  A  497 :
+//	}  A  498 :
+  A  499 :
+  A  500 :
+  }while(TRUE);  A  501 :}703
+}// -- end of command loop --  A  502 :}704
+  A  503 :
+  A  504 :
+  A  505 :E
+ A  505 :
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="libWindows/comm.jar"/>
+	<classpathentry kind="lib" path="libLinux/comm.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/openVBB.jar"/>
+	<classpathentry kind="lib" path="lib/uvm.jar"/>
+	<classpathentry kind="lib" path="lib/uvmrpc.jar"/>
+	<classpathentry kind="lib" path="lib/wnonstandard.jar"/>
+	<classpathentry kind="lib" path="lib/wsrmi.jar"/>
+	<classpathentry kind="lib" path="lib/wutil.jar"/>
+	<classpathentry excluding="src/" kind="src" path=""/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

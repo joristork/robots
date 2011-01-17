@@ -1,0 +1,633 @@
+<UVM-CONFIG>
+ <SUPPORTED-DEVICES>
+
+   <DEVICE name="uVM-876A">
+	<PARAM name="clock" default="4Mhz" value="4Mhz" type="dropdown" description="Sets the clock frequency used by the device" >
+		<OPTIONS name="clock">
+			<OPTION>4Mhz</OPTION>
+			<OPTION>8Mhz</OPTION>
+			<OPTION>12Mhz</OPTION>
+			<OPTION>16Mhz</OPTION>
+			<OPTION>20Mhz</OPTION>
+		</OPTIONS>
+	</PARAM>
+
+	<PARAM name="uart" default="9600" value="9600" type="dropdown" description="Sets the Baud used by the hardware UART for debugging and System Input/Output" >
+		<OPTIONS>
+			<OPTION>2400</OPTION>
+			<OPTION>4800</OPTION>
+			<OPTION>9600</OPTION>
+			<OPTION>19200</OPTION>
+			<OPTION>33600</OPTION>
+			<OPTION>57600</OPTION>
+		</OPTIONS>
+	</PARAM>
+
+			<PARAM name="slip" default="UART" value="UART" type="dropdown" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			<OPTIONS>
+				<OPTION>UART</OPTION>
+				<OPTION>I2C</OPTION>
+				<OPTION>SPI</OPTION>
+				<OPTION>DISABLED</OPTION>
+			</OPTIONS>
+			<PARAM name="IP Address" default="0.0.0.0" value="0.0.0.0" type="text" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			</PARAM>
+			<PARAM name="Port" default="80" value="80" type="text" description="Sets the Port this device listens on">
+			</PARAM>
+			<PARAM name="Emulation" default="DIRECT" value="DIRECT" type="dropdown" description="Sets the type of slip connection emulation type" >
+				<OPTIONS>
+					<OPTION>DIRECT</OPTION>
+					<OPTION>MODEM</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="Duplex" default="full" value="full" type="dropdown" description="Sets the duplex of the Slip communications. Full duplex allows packets to be sent and received simulataneously. Half duplex waits for full packet to be received before sending a packet">
+				<OPTIONS>
+					<OPTION>full</OPTION>
+					<OPTION>half</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="packetsize" default="600" value="600" type="dropdown" description="Sets the size of the slip packet. Smaller packets are sent faster but don't contain as much information.">
+				<OPTIONS>
+					<OPTION>256</OPTION>
+					<OPTION>300</OPTION>	
+					<OPTION>400</OPTION>	
+					<OPTION>500</OPTION>	
+					<OPTION>600</OPTION>	
+					<OPTION>700</OPTION>	
+					<OPTION>800</OPTION>	
+					<OPTION>900</OPTION>	
+					<OPTION>1000</OPTION>
+				</OPTIONS>
+			</PARAM>
+		</PARAM>
+
+	<PARAM name="adc-port" default="All Digital" value="All Digital" type="dropdown" description="Configures the Analog to Digital Ports of the device" >
+		<OPTIONS>
+			<OPTION description = "AN7=A AN6=A AN5=A AN4=A AN3=A AN2=A AN1=A VREF-HIGH=VDD VREF-LOW=VSS">All Analog</OPTION>  
+			<OPTION description = "AN7=D AN6=D AN5=D AN4=D AN3=D AN2=D AN1=D VREF-HIGH=VDD VREF-LOW=VSS">All Digital</OPTION>
+		</OPTIONS>
+	</PARAM>	
+   </DEVICE>	
+   
+   <DEVICE name="uVM-877A">
+	<PARAM name="clock" default="4Mhz" value="4Mhz" type="dropdown" description="Sets the clock frequency used by the device" >
+		<OPTIONS name="clock">
+			<OPTION>4Mhz</OPTION>
+			<OPTION>8Mhz</OPTION>
+			<OPTION>12Mhz</OPTION>
+			<OPTION>16Mhz</OPTION>
+			<OPTION>20Mhz</OPTION>
+		</OPTIONS>
+	</PARAM>
+
+	<PARAM name="uart" default="9600" value="9600" type="dropdown" description="Sets the Baud used by the hardware UART for debugging and System Input/Output" >
+		<OPTIONS>
+			<OPTION>2400</OPTION>
+			<OPTION>4800</OPTION>
+			<OPTION>9600</OPTION>
+			<OPTION>19200</OPTION>
+			<OPTION>33600</OPTION>
+			<OPTION>57600</OPTION>
+		</OPTIONS>
+	</PARAM>
+
+			<PARAM name="slip" default="UART" value="UART" type="dropdown" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			<OPTIONS>
+				<OPTION>UART</OPTION>
+				<OPTION>I2C</OPTION>
+				<OPTION>SPI</OPTION>
+				<OPTION>DISABLED</OPTION>
+			</OPTIONS>
+			<PARAM name="IP Address" default="0.0.0.0" value="0.0.0.0" type="text" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			</PARAM>
+			<PARAM name="Port" default="80" value="80" type="text" description="Sets the Port this device listens on">
+			</PARAM>
+			<PARAM name="Emulation" default="DIRECT" value="DIRECT" type="dropdown" description="Sets the type of slip connection emulation type" >
+				<OPTIONS>
+					<OPTION>DIRECT</OPTION>
+					<OPTION>MODEM</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="Duplex" default="full" value="full" type="dropdown" description="Sets the duplex of the Slip communications. Full duplex allows packets to be sent and received simulataneously. Half duplex waits for full packet to be received before sending a packet">
+				<OPTIONS>
+					<OPTION>full</OPTION>
+					<OPTION>half</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="packetsize" default="600" value="600" type="dropdown" description="Sets the size of the slip packet. Smaller packets are sent faster but don't contain as much information.">
+				<OPTIONS>
+					<OPTION>256</OPTION>
+					<OPTION>300</OPTION>	
+					<OPTION>400</OPTION>	
+					<OPTION>500</OPTION>	
+					<OPTION>600</OPTION>	
+					<OPTION>700</OPTION>	
+					<OPTION>800</OPTION>	
+					<OPTION>900</OPTION>	
+					<OPTION>1000</OPTION>
+				</OPTIONS>
+			</PARAM>
+		</PARAM>
+
+	<PARAM name="adc-port" default="All Digital" value="All Digital" type="dropdown" description="Configures the Analog to Digital Ports of the device" >
+		<OPTIONS>
+			<OPTION description = "AN7=A AN6=A AN5=A AN4=A AN3=A AN2=A AN1=A VREF-HIGH=VDD VREF-LOW=VSS">All Analog</OPTION>  
+			<OPTION description = "AN7=D AN6=D AN5=D AN4=D AN3=D AN2=D AN1=D VREF-HIGH=VDD VREF-LOW=VSS">All Digital</OPTION>
+		</OPTIONS>
+	</PARAM>	
+   </DEVICE>	
+
+
+	<DEVICE name="uVM-252">
+		<PARAM name="clock" default="4Mhz" value="4Mhz" type="dropdown" description="Sets the clock frequency used by the device" >
+			<OPTIONS>
+				<OPTION>4Mhz</OPTION>
+				<OPTION>8Mhz</OPTION>
+				<OPTION>12Mhz</OPTION>
+				<OPTION>16Mhz</OPTION>
+				<OPTION>20Mhz</OPTION>
+				<OPTION>40Mhz</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="uart" default="9600" value="9600" type="dropdown" description="Sets the Baud used by the hardware UART for debugging and System Input/Output" >
+			<OPTIONS>
+				<OPTION>2400</OPTION>
+				<OPTION>4800</OPTION>
+				<OPTION>9600</OPTION>
+				<OPTION>19200</OPTION>
+				<OPTION>33600</OPTION>
+				<OPTION>57600</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="slip" default="UART" value="UART" type="dropdown" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			<OPTIONS>
+				<OPTION>UART</OPTION>
+				<OPTION>I2C</OPTION>
+				<OPTION>SPI</OPTION>
+				<OPTION>DISABLED</OPTION>
+			</OPTIONS>
+			<PARAM name="IP Address" default="0.0.0.0" value="0.0.0.0" type="text" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			</PARAM>
+			<PARAM name="Port" default="80" value="80" type="text" description="Sets the Port this device listens on">
+			</PARAM>
+			<PARAM name="Emulation" default="DIRECT" value="DIRECT" type="dropdown" description="Sets the type of slip connection emulation type" >
+				<OPTIONS>
+					<OPTION>DIRECT</OPTION>
+					<OPTION>MODEM</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="Duplex" default="full" value="full" type="dropdown" description="Sets the duplex of the Slip communications. Full duplex allows packets to be sent and received simulataneously. Half duplex waits for full packet to be received before sending a packet">
+				<OPTIONS>
+					<OPTION>full</OPTION>
+					<OPTION>half</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="packetsize" default="600" value="600" type="dropdown" description="Sets the size of the slip packet. Smaller packets are sent faster but don't contain as much information.">
+				<OPTIONS>
+					<OPTION>256</OPTION>
+					<OPTION>300</OPTION>	
+					<OPTION>400</OPTION>	
+					<OPTION>500</OPTION>	
+					<OPTION>600</OPTION>	
+					<OPTION>700</OPTION>	
+					<OPTION>800</OPTION>	
+					<OPTION>900</OPTION>	
+					<OPTION>1000</OPTION>
+				</OPTIONS>
+			</PARAM>
+		</PARAM>
+
+	<PARAM name="adc-port" default="All Digital" value="All Digital" type="dropdown" description="Configures the Analog to Digital Ports of the device" >
+		<OPTIONS>
+			<OPTION description = "AN7=A AN6=A AN5=A AN4=A AN3=A AN2=A AN1=A VREF-HIGH=VDD VREF-LOW=VSS">All Analog</OPTION>  
+			<OPTION description = "AN7=D AN6=D AN5=D AN4=D AN3=D AN2=D AN1=D VREF-HIGH=VDD VREF-LOW=VSS">All Digital</OPTION>
+		</OPTIONS>
+	</PARAM>		
+   </DEVICE>	
+   
+   
+   <DEVICE name="uVM-452">
+		<PARAM name="clock" default="4Mhz" value="4Mhz" type="dropdown" description="Sets the clock frequency used by the device" >
+			<OPTIONS>
+				<OPTION>4Mhz</OPTION>
+				<OPTION>8Mhz</OPTION>
+				<OPTION>12Mhz</OPTION>
+				<OPTION>16Mhz</OPTION>
+				<OPTION>20Mhz</OPTION>
+				<OPTION>40Mhz</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="uart" default="9600" value="9600" type="dropdown" description="Sets the Baud used by the hardware UART for debugging and System Input/Output" >
+			<OPTIONS>
+				<OPTION>2400</OPTION>
+				<OPTION>4800</OPTION>
+				<OPTION>9600</OPTION>
+				<OPTION>19200</OPTION>
+				<OPTION>33600</OPTION>
+				<OPTION>57600</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="slip" default="UART" value="UART" type="dropdown" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			<OPTIONS>
+				<OPTION>UART</OPTION>
+				<OPTION>I2C</OPTION>
+				<OPTION>SPI</OPTION>
+				<OPTION>DISABLED</OPTION>
+			</OPTIONS>
+			<PARAM name="IP Address" default="0.0.0.0" value="0.0.0.0" type="text" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			</PARAM>
+			<PARAM name="Port" default="80" value="80" type="text" description="Sets the Port this device listens on">
+			</PARAM>
+			<PARAM name="Emulation" default="DIRECT" value="DIRECT" type="dropdown" description="Sets the type of slip connection emulation type" >
+				<OPTIONS>
+					<OPTION>DIRECT</OPTION>
+					<OPTION>MODEM</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="Duplex" default="full" value="full" type="dropdown" description="Sets the duplex of the Slip communications. Full duplex allows packets to be sent and received simulataneously. Half duplex waits for full packet to be received before sending a packet">
+				<OPTIONS>
+					<OPTION>full</OPTION>
+					<OPTION>half</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="packetsize" default="600" value="600" type="dropdown" description="Sets the size of the slip packet. Smaller packets are sent faster but don't contain as much information.">
+				<OPTIONS>
+					<OPTION>256</OPTION>
+					<OPTION>300</OPTION>	
+					<OPTION>400</OPTION>	
+					<OPTION>500</OPTION>	
+					<OPTION>600</OPTION>	
+					<OPTION>700</OPTION>	
+					<OPTION>800</OPTION>	
+					<OPTION>900</OPTION>	
+					<OPTION>1000</OPTION>
+				</OPTIONS>
+			</PARAM>
+		</PARAM>
+
+	<PARAM name="adc-port" default="All Digital" value="All Digital" type="dropdown" description="Configures the Analog to Digital Ports of the device" >
+		<OPTIONS>
+			<OPTION description = "AN7=A AN6=A AN5=A AN4=A AN3=A AN2=A AN1=A VREF-HIGH=VDD VREF-LOW=VSS">All Analog</OPTION>  
+			<OPTION description = "AN7=D AN6=D AN5=D AN4=D AN3=D AN2=D AN1=D VREF-HIGH=VDD VREF-LOW=VSS">All Digital</OPTION>
+		</OPTIONS>
+	</PARAM>		
+   </DEVICE>
+   
+    <DEVICE name="uVM-2620">
+		<PARAM name="clock" default="4Mhz" value="4Mhz" type="dropdown" description="Sets the clock frequency used by the device" >
+			<OPTIONS>
+				<OPTION>4Mhz</OPTION>
+				<OPTION>8Mhz</OPTION>
+				<OPTION>12Mhz</OPTION>
+				<OPTION>16Mhz</OPTION>
+				<OPTION>20Mhz</OPTION>
+				<OPTION>40Mhz</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="uart" default="9600" value="9600" type="dropdown" description="Sets the Baud used by the hardware UART for debugging and System Input/Output" >
+			<OPTIONS>
+				<OPTION>2400</OPTION>
+				<OPTION>4800</OPTION>
+				<OPTION>9600</OPTION>
+				<OPTION>19200</OPTION>
+				<OPTION>33600</OPTION>
+				<OPTION>57600</OPTION>
+				<OPTION>115200</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="slip" default="UART" value="UART" type="dropdown" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			<OPTIONS>
+				<OPTION>UART</OPTION>
+				<OPTION>I2C</OPTION>
+				<OPTION>SPI</OPTION>
+				<OPTION>DISABLED</OPTION>
+			</OPTIONS>
+			<PARAM name="IP Address" default="0.0.0.0" value="0.0.0.0" type="text" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			</PARAM>
+			<PARAM name="Port" default="80" value="80" type="text" description="Sets the Port this device listens on">
+			</PARAM>
+			<PARAM name="Emulation" default="DIRECT" value="DIRECT" type="dropdown" description="Sets the type of slip connection emulation type" >
+				<OPTIONS>
+					<OPTION>DIRECT</OPTION>
+					<OPTION>MODEM</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="Duplex" default="full" value="full" type="dropdown" description="Sets the duplex of the Slip communications. Full duplex allows packets to be sent and received simulataneously. Half duplex waits for full packet to be received before sending a packet">
+				<OPTIONS>
+					<OPTION>full</OPTION>
+					<OPTION>half</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="packetsize" default="600" value="600" type="dropdown" description="Sets the size of the slip packet. Smaller packets are sent faster but don't contain as much information.">
+				<OPTIONS>
+					<OPTION>256</OPTION>
+					<OPTION>300</OPTION>	
+					<OPTION>400</OPTION>	
+					<OPTION>500</OPTION>	
+					<OPTION>600</OPTION>	
+					<OPTION>700</OPTION>	
+					<OPTION>800</OPTION>	
+					<OPTION>900</OPTION>	
+					<OPTION>1000</OPTION>
+				</OPTIONS>
+			</PARAM>
+		</PARAM>
+
+	<PARAM name="adc-port" default="All Digital" value="All Digital" type="dropdown" description="Configures the Analog to Digital Ports of the device" >
+		<OPTIONS>
+			<OPTION description = "AN7=A AN6=A AN5=A AN4=A AN3=A AN2=A AN1=A VREF-HIGH=VDD VREF-LOW=VSS">All Analog</OPTION>  
+			<OPTION description = "AN7=D AN6=D AN5=D AN4=D AN3=D AN2=D AN1=D VREF-HIGH=VDD VREF-LOW=VSS">All Digital</OPTION>
+		</OPTIONS>
+	</PARAM>		
+   </DEVICE>	
+   
+    <DEVICE name="uVM-4620">
+		<PARAM name="clock" default="4Mhz" value="4Mhz" type="dropdown" description="Sets the clock frequency used by the device" >
+			<OPTIONS>
+				<OPTION>4Mhz</OPTION>
+				<OPTION>8Mhz</OPTION>
+				<OPTION>12Mhz</OPTION>
+				<OPTION>16Mhz</OPTION>
+				<OPTION>20Mhz</OPTION>
+				<OPTION>40Mhz</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="uart" default="9600" value="9600" type="dropdown" description="Sets the Baud used by the hardware UART for debugging and System Input/Output" >
+			<OPTIONS>
+				<OPTION>2400</OPTION>
+				<OPTION>4800</OPTION>
+				<OPTION>9600</OPTION>
+				<OPTION>19200</OPTION>
+				<OPTION>33600</OPTION>
+				<OPTION>57600</OPTION>
+				<OPTION>115200</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="slip" default="UART" value="UART" type="dropdown" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			<OPTIONS>
+				<OPTION>UART</OPTION>
+				<OPTION>I2C</OPTION>
+				<OPTION>SPI</OPTION>
+				<OPTION>DISABLED</OPTION>
+			</OPTIONS>
+			<PARAM name="IP Address" default="0.0.0.0" value="0.0.0.0" type="text" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			</PARAM>
+			<PARAM name="Port" default="80" value="80" type="text" description="Sets the Port this device listens on">
+			</PARAM>
+			<PARAM name="Emulation" default="DIRECT" value="DIRECT" type="dropdown" description="Sets the type of slip connection emulation type" >
+				<OPTIONS>
+					<OPTION>DIRECT</OPTION>
+					<OPTION>MODEM</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="Duplex" default="full" value="full" type="dropdown" description="Sets the duplex of the Slip communications. Full duplex allows packets to be sent and received simulataneously. Half duplex waits for full packet to be received before sending a packet">
+				<OPTIONS>
+					<OPTION>full</OPTION>
+					<OPTION>half</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="packetsize" default="600" value="600" type="dropdown" description="Sets the size of the slip packet. Smaller packets are sent faster but don't contain as much information.">
+				<OPTIONS>
+					<OPTION>256</OPTION>
+					<OPTION>300</OPTION>	
+					<OPTION>400</OPTION>	
+					<OPTION>500</OPTION>	
+					<OPTION>600</OPTION>	
+					<OPTION>700</OPTION>	
+					<OPTION>800</OPTION>	
+					<OPTION>900</OPTION>	
+					<OPTION>1000</OPTION>
+				</OPTIONS>
+			</PARAM>
+		</PARAM>
+
+	<PARAM name="adc-port" default="All Digital" value="All Digital" type="dropdown" description="Configures the Analog to Digital Ports of the device" >
+		<OPTIONS>
+			<OPTION description = "AN7=A AN6=A AN5=A AN4=A AN3=A AN2=A AN1=A VREF-HIGH=VDD VREF-LOW=VSS">All Analog</OPTION>  
+			<OPTION description = "AN7=D AN6=D AN5=D AN4=D AN3=D AN2=D AN1=D VREF-HIGH=VDD VREF-LOW=VSS">All Digital</OPTION>
+		</OPTIONS>
+	</PARAM>		
+   </DEVICE>	
+   
+   <DEVICE name="uVM-8720">
+		<PARAM name="clock" default="4Mhz" value="4Mhz" type="dropdown" description="Sets the clock frequency used by the device" >
+			<OPTIONS>
+				<OPTION>4Mhz</OPTION>
+				<OPTION>8Mhz</OPTION>
+				<OPTION>12Mhz</OPTION>
+				<OPTION>16Mhz</OPTION>
+				<OPTION>20Mhz</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="uart" default="9600" value="9600" type="dropdown" description="Sets the Baud used by the hardware UART for debugging and System Input/Output" >
+			<OPTIONS>
+				<OPTION>2400</OPTION>
+				<OPTION>4800</OPTION>
+				<OPTION>9600</OPTION>
+				<OPTION>19200</OPTION>
+				<OPTION>33600</OPTION>
+				<OPTION>57600</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="slip" default="UART" value="UART" type="dropdown" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			<OPTIONS>
+				<OPTION>UART</OPTION>
+				<OPTION>I2C</OPTION>
+				<OPTION>SPI</OPTION>
+				<OPTION>DISABLED</OPTION>
+			</OPTIONS>
+			<PARAM name="IP Address" default="0.0.0.0" value="0.0.0.0" type="text" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			</PARAM>
+			<PARAM name="Port" default="80" value="80" type="text" description="Sets the Port this device listens on">
+			</PARAM>
+			<PARAM name="Emulation" default="DIRECT" value="DIRECT" type="dropdown" description="Sets the type of slip connection emulation type" >
+				<OPTIONS>
+					<OPTION>DIRECT</OPTION>
+					<OPTION>MODEM</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="Duplex" default="full" value="full" type="dropdown" description="Sets the duplex of the Slip communications. Full duplex allows packets to be sent and received simulataneously. Half duplex waits for full packet to be received before sending a packet">
+				<OPTIONS>
+					<OPTION>full</OPTION>
+					<OPTION>half</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="packetsize" default="600" value="600" type="dropdown" description="Sets the size of the slip packet. Smaller packets are sent faster but don't contain as much information.">
+				<OPTIONS>
+					<OPTION>256</OPTION>
+					<OPTION>300</OPTION>	
+					<OPTION>400</OPTION>	
+					<OPTION>500</OPTION>	
+					<OPTION>600</OPTION>	
+					<OPTION>700</OPTION>	
+					<OPTION>800</OPTION>	
+					<OPTION>900</OPTION>	
+					<OPTION>1000</OPTION>
+				</OPTIONS>
+			</PARAM>
+		</PARAM>
+
+	<PARAM name="adc-port" default="All Digital" value="All Digital" type="dropdown" description="Configures the Analog to Digital Ports of the device" >
+		<OPTIONS>
+			<OPTION description = "AN7=A AN6=A AN5=A AN4=A AN3=A AN2=A AN1=A VREF-HIGH=VDD VREF-LOW=VSS">All Analog</OPTION>  
+			<OPTION description = "AN7=D AN6=D AN5=D AN4=D AN3=D AN2=D AN1=D VREF-HIGH=VDD VREF-LOW=VSS">All Digital</OPTION>
+		</OPTIONS>
+	</PARAM>		
+   </DEVICE>	
+   	
+   	<DEVICE name="uVM-8722">
+		<PARAM name="clock" default="04Mhz" value="40Mhz" type="dropdown" description="Sets the clock frequency used by the device" >
+			<OPTIONS>
+				<OPTION>4Mhz</OPTION>
+				<OPTION>8Mhz</OPTION>
+				<OPTION>12Mhz</OPTION>
+				<OPTION>16Mhz</OPTION>
+				<OPTION>20Mhz</OPTION>
+				<OPTION>32Mhz</OPTION>
+				<OPTION>40Mhz</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="uart" default="115200" value="115200" type="dropdown" description="Sets the Baud used by the hardware UART for debugging and System Input/Output" >
+			<OPTIONS>
+				<OPTION>2400</OPTION>
+				<OPTION>4800</OPTION>
+				<OPTION>9600</OPTION>
+				<OPTION>19200</OPTION>
+				<OPTION>33600</OPTION>
+				<OPTION>57600</OPTION>
+				<OPTION>115200</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="slip" default="UART" value="UART" type="dropdown" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			<OPTIONS>
+				<OPTION>UART</OPTION>
+				<OPTION>I2C</OPTION>
+				<OPTION>SPI</OPTION>
+				<OPTION>DISABLED</OPTION>
+			</OPTIONS>
+			<PARAM name="IP Address" default="0.0.0.0" value="0.0.0.0" type="text" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			</PARAM>
+			<PARAM name="Port" default="80" value="80" type="text" description="Sets the Port this device listens on">
+			</PARAM>
+			<PARAM name="Emulation" default="DIRECT" value="DIRECT" type="dropdown" description="Sets the type of slip connection emulation type" >
+				<OPTIONS>
+					<OPTION>DIRECT</OPTION>
+					<OPTION>MODEM</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="Duplex" default="full" value="full" type="dropdown" description="Sets the duplex of the Slip communications. Full duplex allows packets to be sent and received simulataneously. Half duplex waits for full packet to be received before sending a packet">
+				<OPTIONS>
+					<OPTION>full</OPTION>
+					<OPTION>half</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="packetsize" default="600" value="600" type="dropdown" description="Sets the size of the slip packet. Smaller packets are sent faster but don't contain as much information.">
+				<OPTIONS>
+					<OPTION>256</OPTION>
+					<OPTION>300</OPTION>	
+					<OPTION>400</OPTION>	
+					<OPTION>500</OPTION>	
+					<OPTION>600</OPTION>	
+					<OPTION>700</OPTION>	
+					<OPTION>800</OPTION>	
+					<OPTION>900</OPTION>	
+					<OPTION>1000</OPTION>
+				</OPTIONS>
+			</PARAM>
+		</PARAM>
+
+	<PARAM name="adc-port" default="All Digital" value="All Digital" type="dropdown" description="Configures the Analog to Digital Ports of the device" >
+		<OPTIONS>
+			<OPTION description = "AN7=A AN6=A AN5=A AN4=A AN3=A AN2=A AN1=A VREF-HIGH=VDD VREF-LOW=VSS">All Analog</OPTION>  
+			<OPTION description = "AN7=D AN6=D AN5=D AN4=D AN3=D AN2=D AN1=D VREF-HIGH=VDD VREF-LOW=VSS">All Digital</OPTION>
+		</OPTIONS>
+	</PARAM>	
+
+	</DEVICE>
+
+	<DEVICE name="uVM-6722">
+		<PARAM name="clock" default="04Mhz" value="40Mhz" type="dropdown" description="Sets the clock frequency used by the device" >
+			<OPTIONS>
+				<OPTION>4Mhz</OPTION>
+				<OPTION>8Mhz</OPTION>
+				<OPTION>12Mhz</OPTION>
+				<OPTION>16Mhz</OPTION>
+				<OPTION>20Mhz</OPTION>
+				<OPTION>32Mhz</OPTION>
+				<OPTION>40Mhz</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="uart" default="115200" value="115200" type="dropdown" description="Sets the Baud used by the hardware UART for debugging and System Input/Output" >
+			<OPTIONS>
+				<OPTION>2400</OPTION>
+				<OPTION>4800</OPTION>
+				<OPTION>9600</OPTION>
+				<OPTION>19200</OPTION>
+				<OPTION>33600</OPTION>
+				<OPTION>57600</OPTION>
+				<OPTION>115200</OPTION>
+			</OPTIONS>
+		</PARAM>
+
+		<PARAM name="slip" default="UART" value="UART" type="dropdown" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			<OPTIONS>
+				<OPTION>UART</OPTION>
+				<OPTION>I2C</OPTION>
+				<OPTION>SPI</OPTION>
+				<OPTION>DISABLED</OPTION>
+			</OPTIONS>
+			<PARAM name="IP Address" default="0.0.0.0" value="0.0.0.0" type="text" description="Sets the IP Address for this device. layer for the SLIP TCP/IP Stack" >
+			</PARAM>
+			<PARAM name="Port" default="80" value="80" type="text" description="Sets the Port this device listens on">
+			</PARAM>
+			<PARAM name="Emulation" default="DIRECT" value="DIRECT" type="dropdown" description="Sets the type of slip connection emulation type" >
+				<OPTIONS>
+					<OPTION>DIRECT</OPTION>
+					<OPTION>MODEM</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="Duplex" default="full" value="full" type="dropdown" description="Sets the duplex of the Slip communications. Full duplex allows packets to be sent and received simulataneously. Half duplex waits for full packet to be received before sending a packet">
+				<OPTIONS>
+					<OPTION>full</OPTION>
+					<OPTION>half</OPTION>
+				</OPTIONS>
+			</PARAM>
+			<PARAM name="packetsize" default="600" value="600" type="dropdown" description="Sets the size of the slip packet. Smaller packets are sent faster but don't contain as much information.">
+				<OPTIONS>
+					<OPTION>256</OPTION>
+					<OPTION>300</OPTION>	
+					<OPTION>400</OPTION>	
+					<OPTION>500</OPTION>	
+					<OPTION>600</OPTION>	
+					<OPTION>700</OPTION>	
+					<OPTION>800</OPTION>	
+					<OPTION>900</OPTION>	
+					<OPTION>1000</OPTION>
+				</OPTIONS>
+			</PARAM>
+		</PARAM>
+
+	<PARAM name="adc-port" default="All Digital" value="All Digital" type="dropdown" description="Configures the Analog to Digital Ports of the device" >
+		<OPTIONS>
+			<OPTION description = "AN7=A AN6=A AN5=A AN4=A AN3=A AN2=A AN1=A VREF-HIGH=VDD VREF-LOW=VSS">All Analog</OPTION>  
+			<OPTION description = "AN7=D AN6=D AN5=D AN4=D AN3=D AN2=D AN1=D VREF-HIGH=VDD VREF-LOW=VSS">All Digital</OPTION>
+		</OPTIONS>
+	</PARAM>		
+	
+   </DEVICE>	
+   
+</SUPPORTED-DEVICES>
+</UVM-CONFIG>

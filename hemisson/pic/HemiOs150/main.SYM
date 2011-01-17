@@ -1,0 +1,183 @@
+008     PSP_DATA
+015     CCP_1_LOW
+015-016 CCP_1
+016     CCP_1_HIGH
+01B     CCP_2_LOW
+01B-01C CCP_2
+01C     CCP_2_HIGH
+020     @INTERRUPT_AREA
+021     @INTERRUPT_AREA
+022     @INTERRUPT_AREA
+023     @INTERRUPT_AREA
+024     @INTERRUPT_AREA
+025     @INTERRUPT_AREA
+026     @INTERRUPT_AREA
+027     @INTERRUPT_AREA
+028     @INTERRUPT_AREA
+029     @TRIS_C
+02A     __PwmMotLeft
+02B     __PwmMotRight
+02C     __PwmCounter
+02D.0   __Auto_Refresh_Sensors
+02D.1   __Auto_Refresh_TV_Remote
+02D.2   __Enable_RS232_Control
+02D.3   __Enable_TV_Remote_Control
+02D.4   __Sensors_Refreshed_Flag
+02D.5   __TV_Data_Available
+02D.6   __StartBit1
+02D.7   __StartBit2
+02E     __SerialCounter
+02F.0   __ToggleBit
+02F.1   __SystemBit4
+02F.2   __SystemBit3
+02F.3   __SystemBit2
+02F.4   __SystemBit1
+02F.5   __SystemBit0
+02F.6   __DataBit5
+02F.7   __DataBit4
+030.0   __DataBit3
+030.1   __DataBit2
+030.2   __DataBit1
+030.3   __DataBit0
+031     __TV_DATA
+032     __TV_Counter
+033     __BeepMem
+034-037 __TimeTip
+038     __TimeTipDivider
+039     __SchedulerTask
+03A     __Divider
+03B     @delay_ms1.@delay_ms1.P1
+03B     __hemisson_init.@SCRATCH
+03C     __hemisson_init.@SCRATCH
+041     __TV_Remote_Interrupt.@SCRATCH
+042     Scheduler_Interrupt.@SCRATCH
+043     Scheduler_Interrupt.@SCRATCH
+044     RC5_Decoding_Interrupt.@SCRATCH
+045     RC5_Decoding_Interrupt.@SCRATCH
+046     RC5_Decoding_Interrupt.@SCRATCH
+047     RC5_Decoding_Interrupt.@SCRATCH
+048     RC5_Decoding_Interrupt.@SCRATCH
+049     RC5_Decoding_Interrupt.@SCRATCH
+04A     RC5_Decoding_Interrupt.@SCRATCH
+04B     RC5_Decoding_Interrupt.@SCRATCH
+04C     RC5_Decoding_Interrupt.@SCRATCH
+04D     RC5_Decoding_Interrupt.@SCRATCH
+04E     Serial_Interrupt.__memaddress
+04F     Serial_Interrupt.__rcvalue
+050     Serial_Interrupt.__TempVal
+051     Serial_Interrupt.__i
+052     @PRINTF_U_115200_62_63.@PRINTF_U_115200_62_63.P1
+052     __J.__i
+052     __default.@SCRATCH
+052     __1.@SCRATCH
+052     __2.@SCRATCH
+052     __B.@SCRATCH
+052     Serial_Interrupt.@SCRATCH
+053     @PRINTF_U_115200_62_63.@PRINTF_U_115200_62_63.P1
+053     @PRINTF_D_115200_62_63.@PRINTF_D_115200_62_63.P2
+053     __J.__TempVal
+053     Serial_Interrupt.@SCRATCH
+054     @PRINTF_D_115200_62_63.@PRINTF_D_115200_62_63.P1
+054     @I2C_READU_1_59_60.@I2C_READU_1_59_60.P2
+054     __J.@SCRATCH
+054     Serial_Interrupt.@SCRATCH
+055     @I2C_WRITEU_1_59_60.@I2C_WRITEU_1_59_60.P1
+055     @PRINTF_X_115200_62_63.@PRINTF_X_115200_62_63.P2
+055     @DIV88.@DIV88.P3
+055     __J.@SCRATCH
+055     Serial_Interrupt.@SCRATCH
+056     @DIV88.@DIV88.P1
+056     @PRINTF_X_115200_62_63.@PRINTF_X_115200_62_63.P2
+056     Serial_Interrupt.@SCRATCH
+057     chartohex.valuetoconvert
+057     @DIV88.@SCRATCH
+058     chartohex.convertedval
+059     chartohex.@SCRATCH
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+07B     @SCRATCH
+07F     @INTERRUPT_AREA
+086     TRISB
+08E.0   BOR
+08E.1   POR
+0FF     @INTERRUPT_AREA
+17F     @INTERRUPT_AREA
+1A0-1EF __SerialBuffer
+1D2-1D9 __IR_Light
+1DA-1E1 __IR_Proximity
+1E2-1E5 __Switchs
+1FF     @INTERRUPT_AREA
+27F     @INTERRUPT_AREA
+2FF     @INTERRUPT_AREA
+37F     @INTERRUPT_AREA
+3FF     @INTERRUPT_AREA
+
+0726  @delay_ms1
+053F  @I2C_WRITEU_1_59_60
+054F  @I2C_READU_1_59_60
+034B  hemisson_task1
+034C  hemisson_task2
+034D  hemisson_task3
+034E  hemisson_task4
+060D  chartohex
+1000  __hemisson_init
+004C  @const10052
+049B  @DIV88
+04B0  @PRINTF_D_115200_62_63
+0082  @const10079
+0090  @const10088
+009D  @const10096
+035C  __TV_Remote_Control
+0392  @goto10165
+00F0  __TV_Remote_Interrupt
+0118  Scheduler_Interrupt
+03A7  RC5_Decoding_Interrupt
+048A  @goto10464
+0644  __default
+00C0  @const10470
+0652  __1
+06BD  __2
+0633  __Z
+04F8  __B
+00D9  @const10543
+051E  __E
+0583  __J
+055E  @PRINTF_X_115200_62_63
+061C  __T
+05D8  @PRINTF_U_115200_62_63
+0800  Serial_Interrupt
+1000  hemisson_init
+073C  main
+073C  @cinit
+
+Project Files:
+    n:\Studenten\RoboSys\Hemisson\pic\HemiOs150\main.c
+    n:\Studenten\RoboSys\Hemisson\pic\HemiOs150\hemisson.h
+    n:\Studenten\RoboSys\Hemisson\pic\HemiOs150\16f877.h
+    n:\Studenten\RoboSys\Hemisson\pic\HemiOs150\constants.h
+    n:\Studenten\RoboSys\Hemisson\pic\HemiOs150\variables.c
+    n:\Studenten\RoboSys\Hemisson\pic\HemiOs150\hemisson_task1.c
+    n:\Studenten\RoboSys\Hemisson\pic\HemiOs150\hemisson_task2.c
+    n:\Studenten\RoboSys\Hemisson\pic\HemiOs150\hemisson_task3.c
+    n:\Studenten\RoboSys\Hemisson\pic\HemiOs150\hemisson_task4.c
+    n:\Studenten\RoboSys\Hemisson\pic\HemiOs150\hemisson.c
+
+Compiler Settings:
+    Processor:      PIC16F877
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      13
+    Short,Int,Long: 1,8,16
+
+Output Files:
+    Diagnostics: n:\Studenten\RoboSys\Hemisson\pic\HemiOs150\main.$$$
+    Errors:      n:\Studenten\RoboSys\Hemisson\pic\HemiOs150\main.err
+    INHX8:       main.HEX
+    Symbols:     main.SYM
+    List:        main.LST
+    Debug/eCOD:  main.cod
+    Project:     main.PJT
+    Call Tree:   n:\Studenten\RoboSys\Hemisson\pic\HemiOs150\main.tre

@@ -1,0 +1,89 @@
+<XMLConfig>
+<DEVICE name="uVM-8720">
+		<PARAM name="clock" value="20Mhz">
+			
+		</PARAM>
+
+		<PARAM name="uart" value="57600">
+			
+		</PARAM>
+
+		<PARAM name="slip" value="UART">
+			
+			<PARAM name="IP Address" value="0.0.0.0">
+			</PARAM>
+			<PARAM name="Port" value="80">
+			</PARAM>
+			<PARAM name="Emulation" value="DIRECT">
+				
+			</PARAM>
+			<PARAM name="Duplex" value="full">
+				
+			</PARAM>
+			<PARAM name="packetsize" value="600">
+				
+			</PARAM>
+		</PARAM>
+
+	<PARAM name="adc-port" value="All Analog">
+		
+	</PARAM>		
+   </DEVICE>
+<CLASS name="javaBot.JrTacho.UVMDemo" />
+<CLASS name="java.lang.Exception" />
+<CLASS name="java.lang.Throwable" />
+<CLASS name="java.io.Serializable" />
+<CLASS name="java.lang.Object" />
+<CLASS name="java.lang.Thread" />
+<CLASS name="java.lang.Runnable" />
+<CLASS name="com.muvium.apt.PeriodicTimer" />
+<CLASS name="com.muvium.apt.PeripheralFactory" />
+<CLASS name="javaBot.JrTacho.ChaseBallBehavior" />
+<CLASS name="javaBot.JrTacho.FindBallBehavior" />
+<CLASS name="javaBot.JrTacho.DriveBehavior" />
+<CLASS name="javaBot.JrTacho.MapReaderJrBehavior" />
+<CLASS name="javaBot.JrTacho.CalibrateJrBehavior" />
+<CLASS name="javaBot.JrTacho.BehaviorJunior" />
+<CLASS name="com.muvium.io.PortIO" />
+<CLASS name="java.lang.System" />
+<CLASS name="javaBot.JrTacho.JobotJrBaseController" />
+<CLASS name="com.muvium.apt.ADCReader" />
+<CLASS name="javaBot.JrTacho.ToneGenerator" />
+<CLASS name="com.muvium.apt.PWM" />
+<CLASS name="com.muvium.apt.PeripheralUnavailableException" />
+<CLASS name="com.muvium.aptMuvium.PWMImpl" />
+<CLASS name="com.muvium.aptMuvium.APTImpl" />
+<CLASS name="com.muvium.apt.MultiServoController" />
+<CLASS name="com.muvium.aptMuvium.MultiServoControllerPWMImpl">
+	<PARAM name="include" value="false">
+		
+	</PARAM>
+</CLASS>
+<CLASS name="com.muvium.aptMuvium.MultiServoControllerDirectImpl">
+	<PARAM name="include" value="true">
+		
+	</PARAM>
+	<PARAM name="ServoSignalPins" value="D0D1" />
+</CLASS>
+<CLASS name="com.muvium.apt.TimerListener" />
+<CLASS name="javaBot.JrTacho.AgentWebService" />
+<CLASS name="com.muvium.web.WSDL" />
+<CLASS name="com.muvium.apt.TimerEvent" />
+<CLASS name="com.muvium.apt.EventObject" />
+<CLASS name="javax.servlet.ServletResponse" />
+<CLASS name="java.io.OutputStreamWriter" />
+<CLASS name="java.io.PrintWriter" />
+<CLASS name="java.io.Writer" />
+<CLASS name="java.io.PrintStream" />
+<CLASS name="java.io.FilterOutputStream" />
+<CLASS name="java.io.OutputStream" />
+<CLASS name="com.muvium.apt.DebuggingService" />
+<CLASS name="java.lang.StringBuffer" />
+<CLASS name="java.lang.StringIndexOutOfBoundsException" />
+<CLASS name="java.lang.IndexOutOfBoundsException" />
+<CLASS name="java.lang.RuntimeException" />
+<CLASS name="java.lang.String" />
+<CLASS name="com.muvium.io.UARTOutputStream" />
+<CLASS name="com.muvium.io.UARTInputStream" />
+<CLASS name="java.io.InputStream" />
+<UVMRUNNABLE-FILENAME>D:\MultiMotions\Jobot\jobotSim25\bin\javaBot\JrTacho\UVMDemo.class</UVMRUNNABLE-FILENAME><UVMRUNNABLE-CLASSFILE>javaBot.JrTacho.UVMDemo</UVMRUNNABLE-CLASSFILE><LAUNCHER>REAL</LAUNCHER><PACKAGER /><GATEWAY-PORT /><BOOTLOADER name=""><PARAM name="comm" value="" /><PARAM name="baud" value="" /></BOOTLOADER></XMLConfig>

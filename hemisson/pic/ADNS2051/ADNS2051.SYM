@@ -1,0 +1,140 @@
+008     PSP_DATA
+015     CCP_1_LOW
+015-016 CCP_1
+016     CCP_1_HIGH
+01B-01C CCP_2
+01B     CCP_2_LOW
+01C     CCP_2_HIGH
+020     @INTERRUPT_AREA
+021     @INTERRUPT_AREA
+022     @INTERRUPT_AREA
+023     @INTERRUPT_AREA
+024     @INTERRUPT_AREA
+025     @INTERRUPT_AREA
+026     @INTERRUPT_AREA
+027     @INTERRUPT_AREA
+028     @INTERRUPT_AREA
+029-03A adns2051
+03B-03C teller
+03D-03E posX
+03F-040 posY
+041     DeltaX
+042     DeltaY
+043-056 lastX
+057-06A lastY
+06B     teller1
+06C     @TRIS_C
+06D     main.command_in
+06E     main.i
+06F     main.pixel_data
+070     main.pixel_address
+071     write_ADNS2051.address
+071     @delay_ms1.@delay_ms1.P1
+071     main.@SCRATCH
+072     @PRINTF_X_115200_62_63.@PRINTF_X_115200_62_63.P1
+072-073 @PRINTF_LU_115200_62_63.@PRINTF_LU_115200_62_63.P2
+072     write_ADNS2051.data
+072-073 @PRINTF_LD_115200_62_63.@PRINTF_LD_115200_62_63.P1
+072     main.@SCRATCH
+073     @PRINTF_X_115200_62_63.@PRINTF_X_115200_62_63.P1
+073     load_data.data_in
+073     write_ADNS2051.@SCRATCH
+073     main.@SCRATCH
+074     load_data.i
+074     @PRINTF_D_115200_62_63.@PRINTF_D_115200_62_63.P1
+075     @PRINTF_D_115200_62_63.@PRINTF_D_115200_62_63.P1
+075     load_data.data
+076     @DIV88.@DIV88.P1
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+07B     @SCRATCH
+07C     @DIV88.@DIV88.P1
+07D     @DIV88.@SCRATCH
+07F     @INTERRUPT_AREA
+0A0     @PRINTF_LD_115200_62_63.@SCRATCH
+0A0     @PRINTF_LU_115200_62_63.@SCRATCH
+0A1     @PRINTF_LD_115200_62_63.@SCRATCH
+0A1     @PRINTF_LU_115200_62_63.@SCRATCH
+0A2     @PRINTF_LD_115200_62_63.@SCRATCH
+0A2     @PRINTF_LU_115200_62_63.@SCRATCH
+0A3     @PRINTF_LD_115200_62_63.@SCRATCH
+0A3     @PRINTF_LU_115200_62_63.@SCRATCH
+0A4     @PRINTF_LD_115200_62_63.@SCRATCH
+0A4     @PRINTF_LU_115200_62_63.@SCRATCH
+0A5     @PRINTF_LD_115200_62_63.@SCRATCH
+0A5     @PRINTF_LU_115200_62_63.@SCRATCH
+0AC     read_ADNS2051.address
+0AC     timer1_handler.@SCRATCH
+0AD     read_ADNS2051.data
+0AE     load_command.j
+0AE     read_data.i
+0AF     load_command.i
+0AF     read_data.data
+0B0     load_command.command
+0FF     @INTERRUPT_AREA
+17F     @INTERRUPT_AREA
+1FF     @INTERRUPT_AREA
+27F     @INTERRUPT_AREA
+2FF     @INTERRUPT_AREA
+37F     @INTERRUPT_AREA
+3FF     @INTERRUPT_AREA
+
+02C1  @delay_ms1
+020A  load_command
+0309  load_data
+0239  read_data
+0270  read_ADNS2051
+02F9  write_ADNS2051
+027D  timer1_handler
+0800  main
+0035  @const10118
+0044  @const10122
+0052  @const10131
+005F  @const10148
+02D6  @PRINTF_X_115200_62_63
+0075  @const10163
+0090  @const10170
+00A2  @const10177
+00B5  @const10183
+00C8  @const10189
+00E3  @const10196
+00FC  @const10202
+0115  @const10208
+012B  @const10215
+0144  @const10221
+015D  @const10228
+017B  @const10234
+0199  @const10241
+01A3  @const10259
+01B8  @const10268
+01C2  @const10273
+01D7  @const10278
+0330  @PRINTF_LD_115200_62_63
+03A0  @PRINTF_LU_115200_62_63
+01F5  @const10328
+0402  @DIV88
+0417  @PRINTF_D_115200_62_63
+0800  @cinit
+
+Project Files:
+    n:\Projects\RoboSys\Hemisson\pic\ADNS2051\ADNS2051.c
+    C:\PROGRA~1\PICC\devices\16F877.H
+    C:\PROGRA~1\PICC\drivers\CTYPE.H
+    n:\Projects\RoboSys\Hemisson\pic\ADNS2051\ADNS2051.h
+
+Compiler Settings:
+    Processor:      PIC16F877
+    Pointer Size:   8
+    ADC Range:      0-255
+    Opt Level:      13
+    Short,Int,Long: 1,8,16
+
+Output Files:
+    Diagnostics: n:\Projects\RoboSys\Hemisson\pic\ADNS2051\ADNS2051.$$$
+    Errors:      n:\Projects\RoboSys\Hemisson\pic\ADNS2051\ADNS2051.err
+    INHX8:       ADNS2051.HEX
+    Symbols:     ADNS2051.SYM
+    List:        ADNS2051.LST

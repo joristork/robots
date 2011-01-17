@@ -1,0 +1,54 @@
+Port pin 16F877
+
+RA0	Dist1
+RA1	Dist2
+RA2	Dist3
+RA3	Dist4
+RA4	Led4
+RA5	Dist5
+
+RB0	
+RB1	IR_GND1
+RB2	IR_GND2
+RB3	IR_GND3
+RB4	Led_TV
+RB5	PGM_EXEC
+RB6	na
+RB7	na
+
+RE0	Dist6
+RE1	Lig1
+RE2	Lig2
+
+
+RD0	Mot1A
+RD1	Mot1B
+RD2	Mot2A
+RD3	Mot2B
+RD4	H
+RD5	Led1
+RD6	Led2
+RD7	Led3
+
+
+RC0	Inter1
+RC1	Inter2
+RC2	Inter3
+RC3	SCL
+RC4	SDA
+RC5	Inter4
+RC6	TX
+RC7	RX
+
+
+Expansion Port J2
+1	VCC
+2	+9V
+3	+5V	
+4	+5V
+5	SDA
+6	SCL
+7	RB0
+8	RB6
+9	RB7
+10	GND

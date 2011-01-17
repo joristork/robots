@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="JobotSim26/src"/>
+	<classpathentry kind="lib" path="JobotSim26/comm.jar"/>
+	<classpathentry kind="lib" path="JobotSim26/lib/junit.jar"/>
+	<classpathentry kind="lib" path="JobotSim26/lib/openVBB.jar"/>
+	<classpathentry kind="lib" path="JobotSim26/lib/uvm.jar"/>
+	<classpathentry kind="lib" path="JobotSim26/lib/uvmnew.jar"/>
+	<classpathentry kind="lib" path="JobotSim26/lib/uvmrpc.jar"/>
+	<classpathentry kind="lib" path="JobotSim26/lib/wnonstandard.jar"/>
+	<classpathentry kind="lib" path="JobotSim26/lib/wsrmi.jar"/>
+	<classpathentry kind="lib" path="JobotSim26/lib/wutil.jar"/>
+	<classpathentry kind="lib" path="JobotSim26/libLinux/comm.jar"/>
+	<classpathentry kind="lib" path="JobotSim26/libWindows/comm.jar"/>
+	<classpathentry kind="lib" path="uVMDK_1_0_26/lib/comm.jar"/>
+	<classpathentry kind="lib" path="uVMDK_1_0_26/lib/linux/comm.jar"/>
+	<classpathentry kind="lib" path="uVMDK_1_0_26/lib/uvm.jar"/>
+	<classpathentry kind="lib" path="uVMDK_1_0_26/lib/wsrmi.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

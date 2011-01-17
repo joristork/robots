@@ -1,0 +1,5 @@
+>>> Warning 203 "n:\Projects\RoboSys\Hemisson\pic\ADNS2051\ADNS2051.c" Line 368(1,1): Condition always TRUE
+>>> Warning 216 "n:\Projects\RoboSys\Hemisson\pic\ADNS2051\ADNS2051.c" Line 374(0,1): Interrupts disabled during call to prevent re-entrancy:  load_command
+>>> Warning 216 "n:\Projects\RoboSys\Hemisson\pic\ADNS2051\ADNS2051.c" Line 374(0,1): Interrupts disabled during call to prevent re-entrancy:  read_ADNS2051
+--- Info 300 "n:\Projects\RoboSys\Hemisson\pic\ADNS2051\ADNS2051.c" Line 374(0,1): More info:   File access denied
+*** Error 44 "n:\Projects\RoboSys\Hemisson\pic\ADNS2051\ADNS2051.c" Line 374(0,1): Internal Error - Contact CCS  OUTPUT FILE

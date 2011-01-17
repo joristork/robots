@@ -1,0 +1,185 @@
+[Workspace Header]
+Version = 711
+Pathname = "/n/Projects/RoboSys/Hemisson/cvi/HemiGUI/HemiGUI.cws"
+CVI Dir = "/c/program files/national instruments/cvi 7.1.1/cvi71"
+IVI Standard Root Dir = "/C/Program Files/IVI"
+VXIplug&play Framework Dir = "/C/VXIPNP/winnt"
+Number of Projects = 1
+Active Project = 1
+Project 0001 = "HemiGUI.prj"
+Drag Bar Left = 160
+Window Top = 409
+Window Left = 0
+Window Bottom = 1215
+Window Right = 1600
+Maximized = True
+Maximized Children = False
+Max Number Of Errors = 10
+Track Include File Dependencies = True
+Prompt For Missing Includes = True
+Stop On First Error File = False
+Bring Up Err Win For Warnings = True
+Show Build Dialog = False
+Save Changes Before Running = "Ask"
+Hide Windows = False
+Global Hot Key = False
+Break At First Statement = False
+Sort Type = "File Name"
+Number of Opened Files = 6
+Window Confinement Region Enabled = True
+MainColumnWidth = 141
+FileDateColumnWidth = 70
+FileSizeColumnWidth = 70
+StatusColumnWidth = 70
+
+[Project Header 0001]
+Version = 711
+Platform Code = 4
+Build Configuration = "Debug"
+Warn User If Debugging Release = 1
+Batch Build Release = False
+Batch Build Debug = False
+
+[File 0001]
+Path = "/n/Projects/RoboSys/Hemisson/cvi/HemiGUI/CallBack.c"
+File Type = "CSource"
+Disk Date = 3176462932
+In Projects = "1,"
+Window Top = 25
+Window Left = 6
+Window Z-Order = 6
+Source Window State = "1,0,0,0,0,0,0,0,0,86,0,0,0,0,0,25,0,0,0,0,323,634,1,0,"
+
+[File 0002]
+Path = "/n/Projects/RoboSys/Hemisson/cvi/HemiGUI/Command.c"
+File Type = "CSource"
+Disk Date = 3176973434
+In Projects = "1,"
+Window Top = 48
+Window Left = 18
+Window Z-Order = 5
+Source Window State = "1,0,0,0,0,0,0,0,0,86,0,0,0,0,0,25,0,0,0,0,323,634,1,0,"
+
+[File 0003]
+Path = "/n/Projects/RoboSys/Hemisson/cvi/HemiGUI/HemiGUI.c"
+File Type = "CSource"
+Disk Date = 3176975224
+In Projects = "1,"
+Window Top = 71
+Window Left = 30
+Window Z-Order = 4
+Source Window State = "1,0,0,0,0,0,0,0,0,86,0,0,0,0,0,25,0,0,0,0,323,634,1,0,"
+
+[File 0004]
+Path = "/n/Projects/RoboSys/Hemisson/cvi/HemiGUI/Menu.c"
+File Type = "CSource"
+Disk Date = 3184832182
+In Projects = "1,"
+Window Top = 94
+Window Left = 42
+Window Z-Order = 3
+Source Window State = "1,0,0,0,0,0,0,0,0,86,0,0,0,0,0,25,0,0,0,0,323,634,1,0,"
+
+[File 0005]
+Path = "/n/Projects/RoboSys/Hemisson/cvi/HemiGUI/serial.c"
+File Type = "CSource"
+Disk Date = 3050402488
+In Projects = "1,"
+Window Top = 117
+Window Left = 54
+Window Z-Order = 2
+Source Window State = "1,0,0,0,0,0,0,0,0,86,0,0,0,0,0,25,0,0,0,0,323,634,1,0,"
+
+[File 0006]
+Path = "/n/Projects/RoboSys/Hemisson/cvi/HemiGUI/about.uir"
+File Type = "User Interface Resource"
+Disk Date = 3176452596
+In Projects = "1,"
+Window Top = 186
+Window Left = 90
+Window Height = 374
+Window Width = 592
+
+[File 0007]
+Path = "/n/Projects/RoboSys/Hemisson/cvi/HemiGUI/globalDefine.h"
+File Type = "Include"
+Disk Date = 3176973158
+In Projects = "1,"
+Window Top = 71
+Window Left = 30
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0008]
+Path = "/n/Projects/RoboSys/Hemisson/cvi/HemiGUI/HemiGUI.h"
+File Type = "Include"
+Disk Date = 3184832160
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0009]
+Path = "/n/Projects/RoboSys/Hemisson/cvi/HemiGUI/HemiGUI.uir"
+File Type = "User Interface Resource"
+Disk Date = 3184832160
+In Projects = "1,"
+Window Top = 71
+Window Left = 30
+Window Height = 744
+Window Width = 845
+Window Z-Order = 1
+
+[File 0010]
+Path = "/n/Projects/RoboSys/Hemisson/cvi/HemiGUI/Prototype.h"
+File Type = "Include"
+Disk Date = 3176351904
+In Projects = "1,"
+Window Top = 454
+Window Left = 603
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0011]
+Path = "/n/Projects/RoboSys/Hemisson/cvi/HemiGUI/serial.h"
+File Type = "Include"
+Disk Date = 3175683080
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0012]
+Path = "/n/Projects/RoboSys/Hemisson/cvi/HemiGUI/serial.uir"
+File Type = "User Interface Resource"
+Disk Date = 3202116640
+In Projects = "1,"
+Window Top = 278
+Window Left = 138
+Window Height = 374
+Window Width = 592
+
+[Build Options 0001]
+Generate Browse Info = True
+Enable Uninitialized Locals Runtime Warning = True
+Debugging Level = "Standard"
+Break On Library Errors = True
+Break On First Chance Exceptions = False
+Enable Remote Debugging = False
+Remote Debugger Address = "localhost"
+Remote Target Address = ""
+Remote Debugging Port = 3291
+
+[SCC Options 0001]
+Use global settings = True
+SCC Provider = ""
+SCC Project = ""
+Local Path = ""
+Auxiliary Path = ""
+Perform Same Action For .h File As For .uir File = "Ask"
+Username = ""
+Comment = ""
+Use Default Username = False
+Use Default Comment = False
+Suppress CVI Error Messages = False
+
+[DLL Debugging Support 0001]
+External Process Path = ""
+
+[Command Line Args 0001]
+Command Line Args = ""
+

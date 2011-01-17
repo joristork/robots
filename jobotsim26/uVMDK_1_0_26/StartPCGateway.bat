@@ -1,0 +1,1 @@
+java -cp uvm.jar;comm.jar; com.muvium.web.services.gateway.SlipSocketGateway 80

@@ -1,0 +1,65 @@
+<muvium>
+
+	<uVMJIT-SERVER>
+		<IP-ADDRESS>www.muvium.com</IP-ADDRESS>
+		<PORT>4243</PORT>
+	</uVMJIT-SERVER>b
+	<DEVICE core= "uVM-452"/>
+	<CLOCK f="20" k="mhz"/> 
+	<UART baud="57600"/>
+	<SLIP emulation="direct" duplex="full" packetsize="256" ipaddress="10.1.1.7" bootport="1" />
+	<ADC-PORT configuration="0"/>
+	<DEBUGGER enabled="true" port="81" />
+
+
+	<CLASS name="com.muvium.aptMuvium.SerialPortSPIImpl">
+
+		<PARAM name="include" value="false" />
+
+		<PARAM name="syncronous" value="true" />
+	
+	</CLASS>
+
+	<CLASS name="com.muvium.aptMuvium.MultiServoControllerDirectImpl">
+
+		<PARAM name="include" value="true" />
+
+		<PARAM name="ServoSignalPins" value="C1C2C3" />
+	
+	</CLASS>
+
+	<CLASS name="com.muvium.aptMuvium.MultiServoControllerPWMImpl">
+
+		<PARAM name="include" value="false" />
+
+	
+	</CLASS>
+
+	<CLASS name="com.muvium.aptMuvium.PS2MousePolledImpl">
+		<PARAM name="include" value="false">
+		
+		</PARAM>
+		<PARAM name="Clock Pin" value="H6" />
+		<PARAM name="Data Pin" value="H7" />
+		<PARAM name="screensize" value="128X64">
+		
+		</PARAM>
+	</CLASS>
+
+ <CLASS name="com.muvium.aptMuvium.SerialPortVirtualPortImpl">
+  	<PARAM name="include" value="true" /> 
+ </CLASS>
+ 
+ <CLASS name="com.muvium.aptMuvium.SerialPortVirtualImpl">
+  	<PARAM name="include" value="true" /> 
+ </CLASS>
+ 
+ <CLASS name="com.muvium.aptMuvium.SerialPortUARTImpl">
+  	<PARAM name="include" value="true" /> 
+ </CLASS>
+ 
+  <CLASS name="com.muvium.aptMuvium.SerialPortUARTPortImpl">
+  	<PARAM name="include" value="true" /> 
+ </CLASS>
+ 
+</muvium>

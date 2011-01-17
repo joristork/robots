@@ -1,0 +1,118 @@
+<project name="Project" default="compile" basedir=".">
+    <description>
+	This build file is used for building Project
+    </description>
+  <!-- set global properties for this build -->
+  <property name="src"    location="${basedir}/src/JobotSim/src" /> 
+  <property name="build"  location="${basedir}/build" />
+  <property name="test"   location="${build}/javaBot/tests" />
+  <property name="lib"    location="${basedir}/lib" />
+  <property name="report" location="${basedir}/www" />
+  <property name="dist"   location="${basedir}/dist" />
+  <property name="cobertura" location="${basedir}/cobertura" />
+  <property name="instrumented" location="${basedir}/instrumented" />
+  
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}" />
+    <path id="lib.classpath">
+        <pathelement location="${lib}/junit.jar" />
+        <pathelement location="${lib}/xalan.jar" />
+        <pathelement location="${lib}/xercesImpl.jar" />
+        <pathelement location="${lib}/xml-apis.jar" />
+	<pathelement location="${lib}/jakarta-oro-2.0.8.jar" />
+    </path>
+    
+    <path id="test.classpath">
+	<pathelement location="${dist}/build.jar" />
+	<path refid="lib.classpath" />
+    </path>
+    
+    <path id="cobertura.classpath">
+        <fileset dir="${cobertura}">
+	    <include name="cobertura.jar" />
+	    <include name="lib/**/*.jar" />
+	</fileset>
+    </path>
+    
+    <taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+ </target>
+
+
+  <target name="compile" depends="init" description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" destdir="${build}" debug="true" debuglevel="lines,vars,source">
+         <classpath refid="lib.classpath" />
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile">
+    <jar jarfile="${dist}/build.jar" basedir="${build}" includes="**/*.*"
+     />
+  </target>
+				 
+ <target name="test-all" depends="jar" description="run all tests found in test-packages">
+  <junit fork="yes" printsummary="yes" haltonfailure="no">
+   <sysproperty key="net.sourceforge.cobertura.datafile" file="${basedir}/cobertura.ser" />                                                  
+     <classpath location="${instrumented}" />                                                                                              
+     <classpath refid="cobertura.classpath" />     
+     <classpath refid="test.classpath" />
+     <formatter type="xml" />
+     <batchtest toDir="${report}/log">
+	<fileset dir="${build}" includes="**/tests/*.class" excludes="**/tests/JobotTestController.class" />
+     </batchtest>
+  </junit>
+</target>
+
+<target name="test-report" depends="test-all" description="generates test report">
+  <junitreport todir="${report}">
+ 	<fileset dir="${report}/log">
+		  <include name="TEST-*.xml" />
+	</fileset>
+	<report format="frames" todir="${report}" />
+  </junitreport>
+</target>
+
+<target name="test-report-mail" depends="test-report" description="generates test report">
+  <junitreport todir="${report}">
+ 	<fileset dir="${report}/log">
+		  <include name="TEST-*.xml" />
+	</fileset>
+	<report format="noframes" todir="${report}" />
+  </junitreport>
+</target>
+
+<target name="mail" depends="test-report-mail">
+    <mimemail messageMimeType="text/html"  mailhost="192.168.0.1" 
+	mailport="25" subject="Nightly build ${TODAY}" 
+	from="sven@langenhuisen.nl" 
+	tolist="sven@langenhuisen.nl, m.w.bredenoord@student.uva.nl, arnold.lankamp@gmail.com, YukaGoran@Yahoo.com, info@fighterz.net, razzie@quicknet.nl, jwillege@science.uva.nl, jan.derriks@student.uva.nl, bhoof@science.uva.nl, dvrancke@science.uva.nl, jooms@science.uva.nl, mpater@science.uva.nl, bhaak@science.uva.nl, p.g.prijn@student.uva.nl, jjjong@science.uva.nl, riaz_g@hotmail.com, j.j.b.rentrop@student.uva.nl, jwitkamp@science.uva.nl" 
+	messageFile="${report}/junit-noframes.html" />
+</target>
+		
+
+<delete file="cobertura.ser" />
+
+<target name="cobertura-instrument">
+<cobertura-instrument todir="${instrumented}">
+    <ignore regex="org.apache.log4j.*" /> 
+    <classpath refid="cobertura.classpath" />
+    <fileset dir="${build}">
+	<include name="**/*.class" />
+	<exclude name="**/*Test.class" />
+    </fileset>
+</cobertura-instrument>
+</target>
+
+<target name="cobertura-report" depends="init, compile, cobertura-instrument, mail">
+<cobertura-report format="html" destdir="${report}/coverage" >
+    <classpath refid="cobertura.classpath" /> 
+    <fileset dir="${src}">
+        <include name="**/*.java" />
+    </fileset>
+</cobertura-report>
+</target>
+
+</project>

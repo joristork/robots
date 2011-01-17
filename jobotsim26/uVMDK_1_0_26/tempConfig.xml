@@ -1,0 +1,27 @@
+<muvium>
+	<uVMJIT-SERVER>
+		<IP-ADDRESS>www.muvium.com</IP-ADDRESS>
+		<PORT>4222</PORT>
+	</uVMJIT-SERVER>
+
+<BOOTLOADER-VERSION>11</BOOTLOADER-VERSION>
+	<DEVICE core="uVM-452" />
+	<CLOCK f = "20" k="mhz"/>
+	<UART baud = "57600"/>
+	<SLIP emulation="DIRECT" duplex = "full" packetsize ="600" ipaddress = "0.0.0.0"/>
+	<ADC-PORT configuration = "0"/>
+	<DEBUGGER enabled="false" port="81" />
+	<RESOURCES>
+	</RESOURCES>
+<CLASS name="com.muvium.aptMuvium.MultiServoControllerPWMImpl">
+	<PARAM name="include" value="false">
+		
+	</PARAM>
+</CLASS>
+<CLASS name="com.muvium.aptMuvium.MultiServoControllerDirectImpl">
+	<PARAM name="include" value="true">
+		
+	</PARAM>
+	<PARAM name="ServoSignalPins" value="B0B1B2B3" />
+</CLASS>
+</muvium>

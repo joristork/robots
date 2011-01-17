@@ -1,0 +1,172 @@
+//--------------------------------------------------------------------------------//
+//-                             HemLinCam Lib. 1.4                               -//
+//-																							         -//
+//-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//
+//-  This library is free software; you can redistribute it and/or               -//
+//-  modify it under the terms of the GNU Lesser General Public                  -//
+//-  License as published by the Free Software Foundation; either                -//
+//-  version 2.1 of the License, or any later version.                           -//
+//- 																										-//
+//-  This library is distributed in the hope that it will be useful,					-//
+//-  but WITHOUT ANY WARRANTY; without even the implied warranty of					-//
+//-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//
+//-  Lesser General Public License for more details.                             -//
+//-                                                                              -//
+//-  You should have received a copy of the GNU Lesser General Public            -//
+//-  License along with this library; if not, write to the Free Software         -//
+//-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//
+//-																							         -//
+//-																							         -//
+//-                               __  __  ________					                  -//
+//- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//
+//- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//
+//- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//
+//- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//
+//- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//
+//-																							         -//
+//--------------------------------------------------------------------------------//
+
+
+#define HEMLINCAM_I2C_ADDRESS 0xC0
+
+//unsigned char HemLinCam_Pixels_Zone1[34];
+//unsigned char HemLinCam_Pixels_Zone2[34];
+//unsigned char HemLinCam_Pixels_Zone3[34];
+
+unsigned char HemLinCam_Pixels_Zone1[8];
+unsigned char HemLinCam_Pixels_Zone2[8];
+unsigned char HemLinCam_Pixels_Zone3[8];
+
+void HemLinCam_Init( void )
+{
+  delay_ms(1000);
+}
+
+char HemLinCam_Read_Version( void )
+{
+      unsigned char value = 0x00;
+      i2c_start();                                                // I2C Start Sequence
+      i2c_write(HEMLINCAM_I2C_ADDRESS);                           // HemLinCam I2C Address
+      i2c_write(0x00);                                            // Firmware version Register
+      i2c_start();
+      i2c_write(HEMLINCAM_I2C_ADDRESS + 1 );                      // HemLinCam I2C Read Address
+      value = i2c_read(0);
+      i2c_stop();                                                 // I2C Stop Sequence
+      return value;
+}
+
+//----------------------------------------------------------------//
+//-                Settings Functions                            -//
+
+void HemLinCam_Set_Threshold( unsigned char value)
+{
+      i2c_start();                                                // I2C Start Sequence
+      i2c_write(HEMLINCAM_I2C_ADDRESS);                           // HemLinCam I2C Address
+      i2c_write(0x20);                                            // Threshold Register
+      i2c_write(value);
+      i2c_stop();                                                 // I2C Stop Sequence
+      delay_ms(1);
+}
+
+unsigned char HemLinCam_Read_Threshold( void )
+{
+      unsigned char value = 0x00;
+      i2c_start();                                                // I2C Start Sequence
+      i2c_write(HEMLINCAM_I2C_ADDRESS);                           // HemLinCam I2C Address
+      i2c_write(0x20);                                            // Exposition Time Register
+      i2c_start();
+      i2c_write(HEMLINCAM_I2C_ADDRESS + 1 );                      // HemLinCam I2C Read Address
+      value = i2c_read(0);
+      i2c_stop();                                                 // I2C Stop Sequence
+      delay_ms(1);
+      return value;
+}
+
+void HemLinCam_Set_Exposition_Time( unsigned char value)
+{
+      i2c_start();                                                // I2C Start Sequence
+      i2c_write(HEMLINCAM_I2C_ADDRESS);                           // HemLinCam I2C Address
+      i2c_write(0x21);                                            // Exposition Time Register
+      i2c_write(value);
+      i2c_stop();                                                 // I2C Stop Sequence
+      delay_ms(1);
+}
+
+unsigned char HemLinCam_Read_Exposition_Time( void )
+{
+      unsigned char value = 0x00;
+      i2c_start();                                                // I2C Start Sequence
+      i2c_write(HEMLINCAM_I2C_ADDRESS);                           // HemLinCam I2C Address
+      i2c_write(0x21);                                            // Exposition Time Register
+      i2c_start();
+      i2c_write(HEMLINCAM_I2C_ADDRESS + 1 );                      // HemLinCam I2C Read Address
+      value = i2c_read(0);
+      i2c_stop();                                                 // I2C Stop Sequence
+      delay_ms(1);
+      return value;
+}
+
+void HemLinCam_Read_Pixels( void )
+{
+      int i;
+      delay_ms(HemLinCam_Read_Exposition_Time());
+      i2c_start();                                                // I2C Start Sequence
+      i2c_write(HEMLINCAM_I2C_ADDRESS);                           // HemLinCam I2C Address
+      i2c_write(0x10);
+      i2c_start();
+      i2c_write(HEMLINCAM_I2C_ADDRESS + 1 );                      // HemLinCam I2C Read Address
+      for( i = 0 ; i < 34 ; i++ )
+      {
+         HemLinCam_Pixels_Zone1[i] = i2c_read();
+      }
+      for( i = 0 ; i < 34 ; i++ )
+      {
+         HemLinCam_Pixels_Zone2[i] = i2c_read();
+      }
+      for( i = 0 ; i < 33 ; i++ )
+      {
+         HemLinCam_Pixels_Zone3[i] = i2c_read();
+      }
+//      HemLinCam_Pixels_Zone3[33] = i2c_read(0);
+      i2c_stop();
+      delay_ms(1);
+}
+
+void HemLinCam_Read_Pixels_Thresholded( void )
+{
+      int i;
+      delay_ms(HemLinCam_Read_Exposition_Time());
+      i2c_start();                                                // I2C Start Sequence
+      i2c_write(HEMLINCAM_I2C_ADDRESS);                           // HemLinCam I2C Address
+      i2c_write(0x11);
+      i2c_start();
+      i2c_write(HEMLINCAM_I2C_ADDRESS + 1 );                      // HemLinCam I2C Read Address
+      for( i = 0 ; i < 34 ; i++ )
+      {
+         HemLinCam_Pixels_Zone1[i] = i2c_read();
+      }
+      for( i = 0 ; i < 34 ; i++ )
+      {
+         HemLinCam_Pixels_Zone2[i] = i2c_read();
+      }
+      for( i = 0 ; i < 33 ; i++ )
+      {
+         HemLinCam_Pixels_Zone3[i] = i2c_read();
+      }
+//      HemLinCam_Pixels_Zone3[33] = i2c_read(0);
+      i2c_stop();
+      delay_ms(1);
+}
+
+void HemLinCam_Set_Led_State( char value)
+{
+      i2c_start();                                                // I2C Start Sequence
+      i2c_write(HEMLINCAM_I2C_ADDRESS);                           // HemLinCam I2C Address
+      i2c_write(0x30);                                            // Led Register
+      i2c_write(value);
+      i2c_stop();                                                 // I2C Stop Sequence
+      delay_ms(1);
+}
+
+#ifdef 1
+#endif

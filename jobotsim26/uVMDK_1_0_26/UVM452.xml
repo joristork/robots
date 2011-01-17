@@ -1,0 +1,138 @@
+<XMLConfig>
+<DEVICE name="uVM-452">
+		<PARAM name="clock" value="20Mhz">
+			
+		</PARAM>
+
+		<PARAM name="uart" value="57600">
+			
+		</PARAM>
+
+		<PARAM name="slip" value="UART">
+			
+			<PARAM name="IP Address" value="0.0.0.0">
+			</PARAM>
+			<PARAM name="Port" value="80">
+			</PARAM>
+			<PARAM name="Emulation" value="DIRECT">
+				
+			</PARAM>
+			<PARAM name="Duplex" value="full">
+				
+			</PARAM>
+			<PARAM name="packetsize" value="600">
+				
+			</PARAM>
+		</PARAM>
+
+	<PARAM name="adc-port" value="All Analog">
+		
+	</PARAM>		
+   </DEVICE><BOOTLOADER name="SerialBootloader">
+	<PARAM name="connection" type="dropdown" default="HardBootSerialPort" value="HardBootSerialPort" description="Connection type of Bootloader">
+		<OPTIONS>
+			<OPTION>HardBootSerialPort</OPTION>
+			<OPTION>SoftBootSerialPort</OPTION>
+		</OPTIONS>
+	</PARAM>
+	<PARAM name="comm" type="dropdown" default="COM5" value="COM1" description="SerialPort of bootloader">
+		<OPTIONS>
+			<OPTION>COM3</OPTION>
+			<OPTION>COM6</OPTION>
+			<OPTION>COM7</OPTION>
+			<OPTION>COM10</OPTION>
+			<OPTION>COM11</OPTION>
+			<OPTION>COM12</OPTION>
+			<OPTION>COM13</OPTION>
+			<OPTION>COM14</OPTION>
+			<OPTION>COM20</OPTION>
+			<OPTION>COM21</OPTION>
+			<OPTION>COM40</OPTION>
+			<OPTION>COM41</OPTION>
+			<OPTION>COM1</OPTION>
+			<OPTION>COM24</OPTION>
+		</OPTIONS>
+	</PARAM>
+	<PARAM name="baud" type="dropdown" default="115200" value="57600" description="Baud Rate of bootloader">
+		<OPTIONS>
+			<OPTION>9600</OPTION>
+			<OPTION>19200</OPTION>
+			<OPTION>28800</OPTION>
+			<OPTION>33600</OPTION>
+			<OPTION>57600</OPTION>
+			<OPTION>115200</OPTION>
+		</OPTIONS>
+	</PARAM>
+	<PARAM name="version" type="dropdown" default="14" value="11" description="Version of bootloader">
+		<OPTIONS>
+			<OPTION>11</OPTION>
+			<OPTION>12</OPTION>
+			<OPTION>13</OPTION>
+			<OPTION>14</OPTION>
+			<OPTION>15</OPTION>
+		</OPTIONS>
+	</PARAM>
+
+</BOOTLOADER>
+
+<CLASS name="javaBot.UVM.UVMDemo" />
+<CLASS name="java.lang.Exception" />
+<CLASS name="java.lang.Throwable" />
+<CLASS name="java.lang.Object" />
+<CLASS name="java.lang.Thread" />
+<CLASS name="java.lang.Runnable" />
+<CLASS name="com.muvium.apt.PeriodicTimer" />
+<CLASS name="com.muvium.apt.PeripheralFactory" />
+<CLASS name="java.lang.System" />
+<CLASS name="com.muvium.io.PortIO" />
+<CLASS name="javaBot.UVM.WallHugBehavior" />
+<CLASS name="javaBot.UVM.FleeBehavior" />
+<CLASS name="javaBot.UVM.CuriousBehavior" />
+<CLASS name="javaBot.UVM.MapReaderBehavior" />
+<CLASS name="javaBot.UVM.CalibrateBehavior" />
+<CLASS name="javaBot.UVM.Behavior" />
+<CLASS name="javaBot.UVM.JobotBaseController" />
+<CLASS name="javaBot.UVM.ServoLinearizator" />
+<CLASS name="com.muvium.apt.ADCReader" />
+<CLASS name="com.muvium.driver.opticalMouse.Agilent2051" />
+<CLASS name="com.muvium.apt.Time" />
+<CLASS name="com.muvium.aptMuvium.TimeImpl" />
+<CLASS name="com.muvium.apt.SPIMaster" />
+<CLASS name="com.muvium.io.PinIO" />
+<CLASS name="com.muvium.apt.MultiServoController" />
+<CLASS name="com.muvium.aptMuvium.MultiServoControllerPWMImpl">
+	<PARAM name="include" value="false">
+		
+	</PARAM>
+</CLASS>
+<CLASS name="com.muvium.aptMuvium.MultiServoControllerDirectImpl">
+	<PARAM name="include" value="true">
+		
+	</PARAM>
+	<PARAM name="ServoSignalPins" value="D0D1D2" />
+</CLASS>
+<CLASS name="com.muvium.apt.TimerListener" />
+<CLASS name="javaBot.UVM.AgentWebService" />
+<CLASS name="com.muvium.web.WSDL" />
+<CLASS name="com.muvium.apt.TimerEvent" />
+<CLASS name="com.muvium.apt.EventObject" />
+<CLASS name="com.muvium.apt.DeviceInfo" />
+<CLASS name="com.muvium.apt.PeripheralFactoryImpl" />
+<CLASS name="javax.servlet.ServletResponse" />
+<CLASS name="java.io.OutputStreamWriter" />
+<CLASS name="java.io.Writer" />
+<CLASS name="java.io.PrintStream" />
+<CLASS name="java.io.FilterOutputStream" />
+<CLASS name="java.io.OutputStream" />
+<CLASS name="com.muvium.apt.PeripheralUnavailableException" />
+<CLASS name="com.muvium.apt.DebuggingService" />
+<CLASS name="java.lang.StringBuffer" />
+<CLASS name="java.io.Serializable" />
+<CLASS name="java.lang.StringIndexOutOfBoundsException" />
+<CLASS name="java.lang.IndexOutOfBoundsException" />
+<CLASS name="java.lang.RuntimeException" />
+<CLASS name="java.lang.String" />
+<CLASS name="com.muvium.io.UARTOutputStream" />
+<CLASS name="com.muvium.io.UARTInputStream" />
+<CLASS name="java.io.InputStream" />
+<UVMRUNNABLE-FILENAME>D:\MultiMotions\Jobot\JobotSim26\bin\javaBot\UVM\UVMDemo.class</UVMRUNNABLE-FILENAME><UVMRUNNABLE-CLASSFILE>javaBot.UVM.UVMDemo</UVMRUNNABLE-CLASSFILE><LAUNCHER>REAL</LAUNCHER><PACKAGER /><GATEWAY-PORT /></XMLConfig>
