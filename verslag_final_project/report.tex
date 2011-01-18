@@ -1,19 +1,95 @@
 \documentclass[a4paper, 12pt, titlepage]{article}
-\usepackage{listings,amssymb, amsmath, amsthm, graphicx, float}
+\usepackage{hyperref, listings,amssymb, amsmath, amsthm, graphicx, float}
 \author{Joris Stork: 6185320 \and Lucas Swartsenburg: 6174388 \and Sander van
-Veen: 6167969 \and Harm Dubois: }
+Veen: 6167969 \and Harm Dubois: 0527963}
 \title{Laboratory log book: Robotics final project}
 \begin{document}
 \maketitle
 
 \section{Objective} % {{{
-Our objective is
+
+Our objective was to combine the functionality of SunSpot wireless sensor
+motes with that of the ``jobot'' devices provided by the University of
+Amsterdam. In order to demonstrate some of the key capabilities achieved in this
+way, we aimed to configure and program the devices to carry out a ``game''
+involving multiple mobile autonomous agents.
+
 % }}}
 
 \section{Method} % {{{
+
+\subsection{Writing the jobot drivers} % {{{
+
+\subsubsection{Day 1: COM vintage} % {{{
+
+We wanted to avoid re-inventing the wheel. Our department provided a
+pre-existing driver for the Hemisson device, also provided, which sports a
+microcontroller similar to that found on the jobot. The two devices have similar
+functionality. Our intention was to alter the drivers for the Hemisson to work
+with the jobot.
+
+Our first challenge was to establish a connection between our PCs and the
+Hemisson via the device's serial port. Since none of our PCs had a ``COM'' port,
+we procured a USB to COM port adapter. During the first day our attempts to
+establish a connection with the Hemisson device through this adapter failed. Our
+attempts involved both a Linux PC and a Windows PC.
+
+% }}}
+
+\subsubsection{Day 2: Getting to grips} % {{{
+Early during our second day we established that the COM port for the USB to
+serial adapter needed to be set in the Windows device driver list. We split our
+group into two: Lucas and Harm were assigned the task of configuring the
+SunSpots, and Sander and Joris were to port the C code that drives the Hemisson
+to the jobots. 
+
+% }}}
+
+% }}}
+
 % }}}
 
 \section{Hardware}
+\begin{itemize}
+    \item SunSpots: Wireless Sensor Network motes. See also 
+    \href{http://en.wikipedia.org/wiki/Sun_SPOT}
+        {this wikipedia article} - which includes some useful links. The sunspot
+        includes the following:
+        \subitem Microcontroller: 180 MHz 32 bit ARM920T core - 512K RAM - 4M
+        Flash;
+        \subitem 2.4 GHz IEEE 802.15.4 radio with integrated antenna;
+        \subitem AT91 timer chip;
+        \subitem USB interface;
+        \subitem 2G/6G three-axis accelerometer;
+        \subitem Temperature sensor;
+        \subitem Light sensor;
+        \subitem 8 tri-color LEDs;
+        \subitem 6 analog inputs;
+        \subitem 2 momentary switches;
+        \subitem 5 general purpose I/O pins;
+        \subitem 4 high current output pins;
+        \subitem 3.7V rechargeable 750 mAh lithium-ion battery;
+    \item jobot: 
+    \item Hemisson: Predesigned robot with two wheels for mobility, that includes:
+        \subitem a PIC16F877 microcontroller 20MHz CPU clock, 8bit, 8K words
+        program memory;
+        \subitem two DC motors for independent control of two wheel. Open loop
+        control without encoders;
+        \subitem eight IR ambient light sensors;
+        \subitem six IR obstacle detection sensors;
+        \subitem two line detection sensors;
+        \subitem a standard 9V (PP3) battery connector;
+        \subitem serial port with DB9 connector;
+        \subitem a TV remote receiver;
+        \subitem a buzzer;
+        \subitem four LEDs;
+        \subitem four programmable switches;
+        \subitem an extension bus for extra modules;
+    \item Linux, Mac OS X, Windows XP and Windows 7 driven PCs;
+    \item USB to RS232 / DB9 converter. Make: K\"onig;
+        
+
+\end{itemize}
 
 \section{Software}
 % }}}
@@ -40,4 +116,3 @@ Our objective is
 % }}}
 
 \end{document}
-% vim: foldmethod=marker:

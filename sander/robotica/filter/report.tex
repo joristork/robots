@@ -1,6 +1,5 @@
 \documentclass[10pt,a4paper]{article}
 \usepackage{float}
-\usepackage{graphicx}
 
 \title{Digital signal processing}
 \author{Lucas Swartsenburg (6174388) \and Sander van Veen (6167969)}
@@ -8,9 +7,9 @@
 \begin{document}
 
 \maketitle
+\tableofcontents
 
-
-\newpage
+\pagebreak
 
 \section*{Opgave 1} % {{{
 \label{sec:Opgave 1}
@@ -35,27 +34,7 @@
     \frac{200 \pi}{12800} \]
 
     \noindent Dus tussen de derde en vierde harmonische trilling.
-    De pieken vinden plaats op de harmonische trilling.\\
-    \item Filled in table:
-    
-    \begin{tabular}{|r|l|l|l|} \hline
-        f & $\Omega$ met $T_s = 0.001$  & Periode $N$ & ?de harm $< \Omega<$ ?de
-        harm \\ \hline
-        $20 Hz$ & $0.04\pi$ & $50$ & 2de $< \Omega <$ 3de \\ \hline 
-        $30 Hz$ & $0.06\pi$ & $33\frac{1}{3}$ & 3de $< \Omega <$ 4de \\ \hline 
-    \end{tabular}
-    \item De pieken in de spectra zijn te vinden op de plaatsen waartussen de harmonischen te vinden zijn.
-
-    \begin{figure}[H]
-    \includegraphics[scale=0.5]{1000_20.JPG}
-    \caption{$f=20Hz$ $T_{s}=0.001$}
-    \end{figure}
-    \begin{figure}[H]
-    \includegraphics[scale=0.5]{1000_30.JPG}
-    \caption{$f=30Hz$ $T_{s}=0.001$}
-    \end{figure}
-
-
+    De pieken vinden plaats op de harmonische trilling.
 \end{enumerate}
 
 % }}}
@@ -67,7 +46,7 @@
     \item $ \Omega = 2\pi * f * T_s = 2\pi * 20 Hz * \frac{1}{500} \; samples
         \; s^{-1} = 0.08 \pi $.
 
-    \noindent $ N = \frac{500}{20} = 25 $.
+    \noindent $ N = \frac{500}{20} = 100 $.
 
     \[ 5 \times \frac{50 \pi}{3200} < \frac{256 \pi}{3200} < 6 \times
     \frac{50 \pi}{3200} \]
@@ -77,33 +56,13 @@
     \item $ \Omega = 2\pi * f * T_s = 2\pi * 30 Hz * \frac{1}{500} \; samples
         \; s^{-1} = 0.12 \pi  $.
 
-    \noindent $ N = \frac{500}{30} = 16\frac{2}{3} $.
+    \noindent $ N = \frac{500}{30} = 66 \frac{2}{3} $.
 
     \[ 7 \times \frac{50 \pi}{3200} < \frac{384 \pi}{3200} < 8 \times
     \frac{50 \pi}{3200} \]
 
     \noindent Dus tussen de zevende en achtste harmonische trilling.
-    De pieken vinden plaats op de harmonische trilling.\\
-
-    \begin{tabular}{|r|l|l|l|} \hline
-        f & $\Omega$ met $T_s = 0.001$  & Periode $N$ & ?de harm $< \Omega<$ ?de
-        harm \\ \hline
-        $20 Hz$ & $0.08\pi$ & $25$ & 5de $< \Omega <$ 6de \\ \hline
-        $30 Hz$ & $0.12\pi$ & $16\frac{2}{3}$ & 7de $< \Omega <$ 8ste \\ \hline 
-    \end{tabular}
-    \item De pieken in de spectra zijn te vinden op de plaatsen waartussen de harmonischen te vinden zijn.
-
-    \begin{figure}[H]
-    \includegraphics[scale=0.5]{500_20.JPG}
-    \caption{$f=20Hz$ $T_{s}=0.002$}
-    \end{figure}
-    \begin{figure}[H]
-    \includegraphics[scale=0.5]{500_30.JPG}
-    \caption{$f=30Hz$ $T_{s}=0.002$}
-    \end{figure}
-
-
-
+    De pieken vinden plaats op de harmonische trilling.
 \end{enumerate}
 
 % }}}
@@ -142,12 +101,6 @@ for(i = 1; i < arrayLength; i++) {
     \item $H(1) = 0.5 \frac{1}{1 - 0.9} = 5 $
 
     \item Het lowpassfilter is correct.
-
-    \begin{figure}[H]
-    \includegraphics[scale=0.5]{blok_1000_20.JPG}
-    \caption{Blok signal met $f=20Hz$ $T_{s}=0.001$}
-    \end{figure}
- 
 
 \end{enumerate}
 
@@ -200,11 +153,6 @@ for(i = 1; i < arrayLength; i++) {
     Hieruit volgt: $|H(z_0)| \approx 5.823974$ en $|H(z_1)| \approx 7.319089$
 \end{enumerate}
 
-    \begin{figure}[H]
-    \includegraphics[scale=0.5]{ramp_filter_1000_20.JPG}
-    \caption{Ramp signal met $f=20Hz$ $T_{s}=0.001$}
-    \end{figure}
- 
 % }}}
 
 \section*{Opgave 5} % {{{
@@ -229,9 +177,6 @@ for(i = 1; i < arrayLength; i++) {
     60 Hz & $ \frac{3\pi}{25}$ & 0.042560     \\ \hline
     \end{tabular}
     \end{table}
-
-\item Uit onze resultaten blijkt dat het signaal bij 50hz er bijna niet meer is. We kunnen concluderen dat het filter de 50hz frequenties wegfiltert.
-
 \end{enumerate}
 
 % }}}

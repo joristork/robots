@@ -12,7 +12,7 @@
     terminators.  It is also important to make sure you have the correct
     type of cable.  See the LabWindows/CVI documenation for more details
     on cabling and handshaking.
-    */
+*/
 
 #include <cvirte.h>    /* Needed if linking in external compiler; harmless otherwise */
 #include <userint.h>
@@ -82,8 +82,9 @@ void ActivateSendControls (int);
 void SendAscii (void);
 void SendByte (void);
 
-
-void SetConfigParms (void) {
+ 
+void SetConfigParms (void)
+{
     SetCtrlVal (config_handle, CONFIG_COMPORT, comport);
     SetCtrlVal (config_handle, CONFIG_BAUDRATE, baudrate);
     SetCtrlVal (config_handle, CONFIG_PARITY, parity);
@@ -99,7 +100,8 @@ void SetConfigParms (void) {
 
 /********************************************************************/
 
-void GetConfigParms (void) {
+void GetConfigParms (void)
+{
     GetCtrlVal (config_handle, CONFIG_COMPORT, &comport);
     GetCtrlVal (config_handle, CONFIG_BAUDRATE, &baudrate);
     GetCtrlVal (config_handle, CONFIG_PARITY, &parity);
@@ -108,80 +110,84 @@ void GetConfigParms (void) {
     GetCtrlVal (config_handle, CONFIG_INPUTQ, &inputq);
     GetCtrlVal (config_handle, CONFIG_OUTPUTQ, &outputq);
     GetCtrlIndex (config_handle, CONFIG_COMPORT, &portindex);
-#ifdef _NI_unix_
-    devicename[0]=0;
-#else
-    GetLabelFromIndex (config_handle, CONFIG_COMPORT, portindex,
-            devicename);
-#endif
+    #ifdef _NI_unix_
+        devicename[0]=0;
+    #else
+        GetLabelFromIndex (config_handle, CONFIG_COMPORT, portindex,
+                       devicename);
+    #endif                   
 }
 
 
 
-void SetSerialConfig(void) {
-    config_handle = LoadPanel (panel_handle, "serial.uir", CONFIG);
-    RecallPanelState(config_handle, "serial.uir", CONFIG);
+void SetSerialConfig(void)
+ {
+     config_handle = LoadPanel (panel_handle, "serial.uir", CONFIG);
+     RecallPanelState(config_handle, "serial.uir", CONFIG);
+     
+     InstallPopup (config_handle);
 
-    InstallPopup (config_handle);
-
-    /*  If user already has done configuration, then
-        display those new parameters.  If entering
-        configuration for 1st time, set config_flag
-        and use default settings.
-        */
-    if (config_flag)    /* Configuration done at least once.*/
-        SetConfigParms ();
-    else                /* 1st time.*/
-        config_flag = 1;
-}
+            /*  If user already has done configuration, then
+                display those new parameters.  If entering
+                configuration for 1st time, set config_flag
+                and use default settings.
+            */
+            if (config_flag)    /* Configuration done at least once.*/
+                SetConfigParms ();
+            else                /* 1st time.*/
+                config_flag = 1;
+ }    
 
 /********************************************************************/
 
-int CVICALLBACK CloseConfigCallback(int panel, int control, int event, void *callbackData, int eventData1, int eventData2) {
+int CVICALLBACK CloseConfigCallback(int panel, int control, int event, void *callbackData, int eventData1, int eventData2)
+{
     switch (event) {
         case EVENT_COMMIT :
 
-            SavePanelState(config_handle, "serial.uir", CONFIG);
-            OpenSerial();
-
+				SavePanelState(config_handle, "serial.uir", CONFIG); 
+				OpenSerial();
+				
             break;
 
-    }
+        }
     return(0);
 }
 
-void OpenSerial(void) {
-    port_open = 0;  /* initialize flag to 0 - unopened */
-    RecallPanelState(config_handle, "serial.uir", CONFIG);
+void OpenSerial(void)
+{
+   port_open = 0;  /* initialize flag to 0 - unopened */
+   RecallPanelState(config_handle, "serial.uir", CONFIG);
+   
+   GetConfigParms ();
 
-    GetConfigParms ();
+   DisableBreakOnLibraryErrors ();
+   RS232Error = OpenComConfig (comport, devicename, baudrate, parity, databits, stopbits, inputq, outputq);
+   EnableBreakOnLibraryErrors ();
 
-    DisableBreakOnLibraryErrors ();
-    RS232Error = OpenComConfig (comport, devicename, baudrate, parity, databits, stopbits, inputq, outputq);
-    EnableBreakOnLibraryErrors ();
+   if (RS232Error) DisplayRS232Error ();
 
-    if (RS232Error) DisplayRS232Error ();
+   if (RS232Error == 0) {
 
-    if (RS232Error == 0) {
+       port_open = 1;
 
-        port_open = 1;
+       GetCtrlVal (config_handle, CONFIG_XMODE, &xmode);
+       SetXMode (comport, xmode);
 
-        GetCtrlVal (config_handle, CONFIG_XMODE, &xmode);
-        SetXMode (comport, xmode);
+       GetCtrlVal (config_handle, CONFIG_CTSMODE, &ctsmode);
+       SetCTSMode (comport, ctsmode);
 
-        GetCtrlVal (config_handle, CONFIG_CTSMODE, &ctsmode);
-        SetCTSMode (comport, ctsmode);
+       GetCtrlVal (config_handle, CONFIG_TIMEOUT, &timeout);
+       SetComTime (comport, timeout);
 
-        GetCtrlVal (config_handle, CONFIG_TIMEOUT, &timeout);
-        SetComTime (comport, timeout);
+       }
 
-    }
-
-    DiscardPanel (config_handle);
-}
+   DiscardPanel (config_handle);
+}	
 /********************************************************************/
 
-int CVICALLBACK GetInQCallBack(int panel, int control, int event, void *callbackData, int eventData1, int eventData2) {
+int CVICALLBACK GetInQCallBack(int panel, int control, int event, void *callbackData, int eventData1, int eventData2)
+{
     switch (event) {
         case EVENT_COMMIT :
             inqlen = GetInQLen (comport);
@@ -197,35 +203,38 @@ int CVICALLBACK GetInQCallBack(int panel, int control, int event, void *callback
 
 //void EnablePanelControls (int enable)
 //{
-//   SetCtrlAttribute (panel_handle, SERIAL_SEND, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_READ, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_READ_COUNT, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_TBOX_READ, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_BYTES, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_ERROR, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_FLUSHINQ, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_FLUSHOUTQ, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_GETINQ, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_GETOUTQ, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_COMSTATUS, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_READTERM, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_SENDMODE, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_RCV_HELP_MSG, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_TRANS_HELP_MSG, ATTR_DIMMED, enable);
-//   SetCtrlAttribute (panel_handle, SERIAL_CLEARBOX, ATTR_DIMMED, enable);
-//   ActivateSendControls (enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_SEND, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_READ, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_READ_COUNT, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_TBOX_READ, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_BYTES, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_ERROR, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_FLUSHINQ, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_FLUSHOUTQ, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_GETINQ, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_GETOUTQ, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_COMSTATUS, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_READTERM, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_SENDMODE, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_RCV_HELP_MSG, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_TRANS_HELP_MSG, ATTR_DIMMED, enable);
+ //   SetCtrlAttribute (panel_handle, SERIAL_CLEARBOX, ATTR_DIMMED, enable);
+ //   ActivateSendControls (enable);
 //}
+
+
 
 /********************************************************************/
 
-void DisplayRS232Error (void) {
+void DisplayRS232Error (void)
+{
     char ErrorMessage[200];
     switch (RS232Error) {
         default :
             if (RS232Error < 0) {   /* Bug? ComWrtByte sets rs232error if sent a byte out? */
                 Fmt (ErrorMessage, "%s<RS232 error number %i", RS232Error);
                 MessagePopup ("RS232 Message", ErrorMessage);
-            }
+                }
             break;
 
         case 0  :
@@ -239,14 +248,14 @@ void DisplayRS232Error (void) {
 
         case -3 :
             Fmt (ErrorMessage, "%s", "No port is open.\n"
-                    "Check COM Port setting in Configure.");
+                 "Check COM Port setting in Configure.");
             MessagePopup ("RS232 Message", ErrorMessage);
             break;
         case -99 :
             Fmt (ErrorMessage, "%s", "Timeout error.\n\n"
-                    "Either increase timeout value,\n"
-                    "       check COM Port setting, or\n"
-                    "       check device.");
+                 "Either increase timeout value,\n"
+                 "       check COM Port setting, or\n"
+                 "       check device.");
 
             MessagePopup ("RS232 Message", ErrorMessage);
             break;
