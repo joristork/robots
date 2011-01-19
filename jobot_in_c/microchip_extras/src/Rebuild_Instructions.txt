@@ -1,0 +1,51 @@
+MPLAB C18 Run-Time Library Source Code
+
+Directory structure:
+
+lib			Installed library binaries
+h			Installed header files
+src			Library source code
+  traditional		Non-extended mode library source code
+  extended		Extended mode library source code
+  pmc_common		Micro controller Peripheral library source common to
+			extended and non-extended modes.
+
+Build scripts:
+
+src/makeall.bat		Rebuild all extended and non-extended mode libraries.
+			This invokes make_genericlibs_e.bat,
+			make_genericlibs_t.bat, make_one_device_e.bat and 
+			make_one_device_t.bat for all supported devices
+
+src/make_one_device_<mode>.bat  
+         (where <mode> is 'e' for extended or 't' for non-extended)
+			Rebuild and install the extended or non-extended 
+                        processor specific library for the device specified 
+                        as the first (and only) command line argument to the 
+                        script. This builds startup libraries, and processor 
+                        specific libraries for chosen processor.
+
+src/make_genericlibs_<mode>.bat
+         (where <mode> is 'e' for extended or 't' for non-extended)
+			Rebuild and install the Start-Up code and the 
+			processor-independent library which includes the 
+			compiler math library, the delay library, and the 
+			Standard C Library .
+
+src/make_one_subsystem_<mode>.bat
+         (where <mode> is 'e' for extended or 't' for non-extended)
+			internally used by other batch files, must NOT
+			be invoked on its own.
+
+
+NOTE: Before invoking these batch files, verify that the following tools are in 
+your path: 
+
+         MPLAB C18 (mcc18.exe)
+         MPASM assembler (mpasm.exe)
+         MPLIB librarian (mplib.exe)
+
+Also prior to invoking these batch files, be sure that the environment 
+variable MCC_INCLUDE is set to the path of the MPLAB C18 include files 
+(e.g., c:\mcc18\h). 
+

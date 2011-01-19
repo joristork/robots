@@ -1,0 +1,23 @@
+APPLICATION:  USING EEDATA AND MULTIPLE INTERRUPT SOURCES
+
+The following sample application will rotate the LEDs of the
+PIC18Fxx20 64/80L TQFP demo board, which are attached to PORTD.  The initial
+direction to rotate the LEDs is read from EEDATA.  When the lower left button
+is pushed, the direction that the LEDs are rotating will reverse, and the
+updated direction variable is written to EEDATA.  Analog Channel 0 (AN0) for
+the ADC is attached to the POT, which can be used to control the speed of the
+rotating LEDs. The command line used to build this application is:
+
+mcc18 -p 18f8720 -I c:\mcc18\h example3.c
+
+where c:\mcc18 is the directory in which the compiler is installed.
+This application is designed for use with the MPLAB ICD2, the
+PIC18Fxx20 64/80L TQFP demo board, and the PIC18F8720 device.   This sample
+covers the following items:
+1.  Reading from and writing to EEDATA
+2.  Mixing interrupt driven and polling peripheral access
+3.  The use of interrupt priority (#pragma interrupt, #pragma interruptlow,
+    interrupt vectors, and interrupt service routines)
+4.  Setting configuration bits via C code
+5.  #pragma sectiontype
+6.  Inline assembly
