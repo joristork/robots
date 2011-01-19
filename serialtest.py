@@ -1,7 +1,7 @@
 from serial import Serial, PARITY_NONE, EIGHTBITS, STOPBITS_ONE
 from time import sleep
 
-class HemissionException(Exception):
+class HemissonException(Exception):
     def __init__(self, value):
         self.value = value
 
@@ -21,10 +21,10 @@ class Hemisson:
         self.serial.setBaudrate(115200)
 
         print 'i Initialised serial connection "%s".' % self.serial.portstr
-        print '< %s\r' % self.serial.readline()
-        print '< %s\r' % self.serial.readline()
-        print '< %s\r' % self.serial.readline()
         self.serial.write(chr(254)+'\r')
+        self.readline()
+        self.readline()
+        self.readline()
 
     def __delete__(self):
         """
@@ -44,7 +44,7 @@ class Hemisson:
             raise HemissionException('Beep state should be 0 (Off) or 1 (On).')
 
         self.write('H,%d' % state)
-        print '< %s' % self.serial.readline()
+        self.readline()
 
     def drive(self):
         """
@@ -61,7 +61,7 @@ class Hemisson:
         """
 
         self.write('I')
-        print '< %s' % self.serial.readline()
+        self.readline()
 
     def set_speed(self, left, right=None):
         """
@@ -73,12 +73,12 @@ class Hemisson:
         if right == None:
             right = left
 
-        if -9 < left or left > 9 or -9 < right or right > 9:
+        if not( -9 <= left <= 9 and -9 <= right <= 9):
             raise HemissonException(
                 'Keep the wheel drive speed value between -9 and 9.')
 
         self.write('D,%d,%d' % (left, right))
-        print '< %s' % self.serial.readline()
+        self.readline()
 
     def stop(self):
         """
@@ -86,7 +86,14 @@ class Hemisson:
         """
 
         self.write('D,0,0')
-        print '< %s' % self.serial.readline()
+        self.readline()
+
+    def readline(self):
+        """
+        Read a single newline terminated line from the serial connection.
+        """
+
+        print '< %s' % self.serial.readline()[:-1]
 
     def remote_version(self):
         """
@@ -94,7 +101,7 @@ class Hemisson:
         """
 
         self.write('B')
-        print '< %s' % self.serial.readline()
+        self.readline()
 
     def reset(self):
         """
@@ -102,25 +109,31 @@ class Hemisson:
         """
 
         self.serial.write('Z')
-        print '< %s' % self.serial.readline()
+        self.readline()
 
     def write(self, msg):
         """
         Write a message through the serial connection to the Hemisson robot.
         """
 
-        print '> %s\\r' % msg
-        self.serial.write(msg+'\r\n')
+        print '> %s\\n\\r' % msg
+        self.serial.write(msg+'\n\r')
 
 if __name__ == '__main__':
     robot = Hemisson()
     robot.remote_version()
     robot.get_switches()
-    robot.drive()
-    sleep(2)
+
+    #robot.drive()
+    for i in range(4):
+        robot.set_speed(4)
+        sleep(2)
+        robot.set_speed(-4,4)
+        sleep(1.5)
+
     robot.stop()
-    robot.beep(1)
-    sleep(2)
-    robot.beep(0)
-    del robot
+    #robot.beep(1)
+    #sleep(2)
+    #robot.beep(0)
+    #del robot
 
