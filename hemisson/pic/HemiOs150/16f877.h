@@ -163,14 +163,18 @@
 #define CCP_PWM_PLUS_1                  0x1c
 #define CCP_PWM_PLUS_2                  0x2c
 #define CCP_PWM_PLUS_3                  0x3c
+
 long CCP_1;
-#byte   CCP_1    =                      0x15
-#byte   CCP_1_LOW=                      0x15
-#byte   CCP_1_HIGH=                     0x16
+
+BYTE   CCP_1    =                      0x15
+byte   CCP_1_LOW=                      0x15
+byte   CCP_1_HIGH=                     0x16
+
 long CCP_2;
-#byte   CCP_2    =                      0x1B
-#byte   CCP_2_LOW=                      0x1B
-#byte   CCP_2_HIGH=                     0x1C
+
+byte   CCP_2    =                      0x1B
+byte   CCP_2_LOW=                      0x1B
+byte   CCP_2_HIGH=                     0x1C
 
 ////////////////////////////////////////////////////////////////// PSP
 // PSP Functions: SETUP_PSP, PSP_INPUT_FULL(), PSP_OUTPUT_FULL(),

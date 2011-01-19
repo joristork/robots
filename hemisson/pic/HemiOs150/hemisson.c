@@ -25,6 +25,8 @@
 //-                                                                              -//
 //--------------------------------------------------------------------------------//
 
+#include "hemisson.h"
+
 ////////////////////////////////////////////////////////////////////////////////
 /*!   \file hemisson.c
       \brief The Os functions, all functions are called through an interrupt
@@ -260,7 +262,7 @@ void __TV_Remote_Control( void )
 //-----------------------------------------------------------//
 //                  Internal Interrupts                     -//
 
-#INT_RB
+//#INT_RB
 void __TV_Remote_Interrupt(void)
 {
 	if( __Auto_Refresh_TV_Remote == 1 )
@@ -279,7 +281,8 @@ void __TV_Remote_Interrupt(void)
 	}
 }
 
-#INT_TIMER0
+
+//#INT_TIMER0
 void Scheduler_Interrupt(void)                                                   		// Internal Task Manager, Interrupt every 200 us
 {                                                                                		// Sensors Powered during 400us, refreshed every 40ms
 	// Time function
@@ -470,7 +473,7 @@ void Scheduler_Interrupt(void)                                                  
 	__SchedulerTask++;                                                            		// Task Counter
 }
 
-#INT_TIMER2
+//#INT_TIMER2
 void RC5_Decoding_Interrupt(void)
 {
 	switch(__TV_Counter)
@@ -563,13 +566,13 @@ void RC5_Decoding_Interrupt(void)
 	__TV_Counter++;
 }
 
-#separate
+//#separate
 __default()
 {
 	printf( "Unknown Command ?!\r\n" );
 }
 
-#separate
+//#separate
 __1()
 {
 	printf("1,");
@@ -593,7 +596,7 @@ __1()
 	}
 }
 
-#separate
+//#separate
 __2()
 {
 	printf("2\r\n");
@@ -618,26 +621,26 @@ __2()
 
 }
 
-#separate
+//#separate
 __Z()
 {
 	printf("z\r\n");
 	reset_cpu();
 }
 
-#separate
+//#separate
 __B()
 {
 	printf( "b,HemiOS_v_%d.%d\r\n" , HEMIOS_VERSION , HEMIOS_REVISION );
 }
 
-#separate
+//#separate
 __E()
 {
 	printf("e,%02d,%02d\r\n",__PwmMotLeft,__PwmMotRight);
 }
 
-#separate
+//#separate
 __J()
 {
 	unsigned char __i;
@@ -663,13 +666,13 @@ __J()
 	printf("\r\n");
 }
 
-#separate
+//#separate
 __T()
 {
 	printf( "t,%03u\r\n" , __TV_DATA );
 }
 
-#INT_RDA
+//#INT_RDA
 void Serial_Interrupt(void)
 {
 	unsigned char __memaddress = 0;
@@ -906,6 +909,7 @@ void Serial_Interrupt(void)
 		__SerialCounter = 0;
 	}
 }
+
 
 
 

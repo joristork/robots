@@ -25,22 +25,22 @@
 //-                                                                              -//
 //--------------------------------------------------------------------------------//
 
-#device PIC16F877 *=16 ADC=8
+//#device PIC16F877 *=16 ADC=8
 
 //#define firmware								 // Comment this line to build HemiOs
 
-#include "16f877.h"
+#include "p18f452.h"
 
-#fuses HS,NOWDT,NOPROTECT,NOPUT,NOBROWNOUT,NOLVP,WRT,NOCPD                       // Configuration Bits
-#use delay(clock=20000000)                                                       // Clock @ 20 MHz
-#use rs232(baud=115200,parity=N,xmit=PIN_C6,rcv=PIN_C7)                          // Serial Configuration
-#use i2c( master , sda = PIN_C4 , scl = PIN_C3, FORCE_HW, SLOW  )                // I2C Master Configuration
+//#fuses HS,NOWDT,NOPROTECT,NOPUT,NOBROWNOUT,NOLVP,WRT,NOCPD                       // Configuration Bits
+//#use delay(clock=20000000)                                                       // Clock @ 20 MHz
+//#use rs232(baud=115200,parity=N,xmit=PIN_C6,rcv=PIN_C7)                          // Serial Configuration
+//#use i2c( master , sda = PIN_C4 , scl = PIN_C3, FORCE_HW, SLOW  )                // I2C Master Configuration
 
-#use fast_io(a)
-#use fast_io(b)
-#use fast_io(c)
-#use fast_io(d)
-#use fast_io(e)
+//#use fast_io(a)
+//#use fast_io(b)
+//#use fast_io(c)
+//#use fast_io(d)
+//#use fast_io(e)
 
 #include "constants.h"
 #include "variables.c"
@@ -51,7 +51,7 @@
 #ifdef firmware
 #include "firmware_hemisson.c"
 #endif
-#include "hemisson.c"
+//#include "hemisson.c"
 
 #org 0x1F00, 0x1FFF {}                                                             // Bootloader Protection
 
