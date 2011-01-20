@@ -1,19 +1,8 @@
-
-\documentclass{beamer}
-\usetheme{Goettingen}
+\documentclass[a4paper, 12pt, titlepage]{article}
+\usepackage{hyperref, listings,amssymb, amsmath, amsthm, graphicx, float}
+\author{Joris Stork}
+\title{Notes for the presentation}
 \begin{document}
-%\nocite{voss2007essentials}
-\title{Chapter 8: Maps and related tasks}  
-\author{Harm Dubois \and Joris Stork}
-\date{\today} 
-
-\frame{\titlepage} 
-\section{Blah} 
-\frame{\tableofcontents} 
-
-\section{Introduction} 
-
-\frame{\frametitle{Introduction}
 \begin{itemize}
     \item
         Maps of an environment are usually unavailable or incomplete. Even blueprints
@@ -37,18 +26,7 @@
     \item
         Robots should be able to autonomously construct, update and validate
         maps destined for robot use.
-\end{itemize}
-}
 
-\frame{\frametitle{Blah}
-}
 
-\frame{\frametitle{Blah}
-\begin{columns}[c]
-\column{5cm}
-\column{5cm}
-% \includegraphics[width=5cm]{halsub1}
-\end{columns}
-}
+
 \end{document}
-
