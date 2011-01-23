@@ -1,8 +1,7 @@
 \documentclass{beamer}
 \usetheme{Goettingen}
-\usepackage{hyperref, graphicx}
+\usepackage{hyperref, graphicx}%, cite}
 \begin{document}
-%\nocite{voss2007essentials}
 \title{Chapter 8: Maps and related tasks}  
 \author{Harm Dermois \and Joris Stork}
 \date{\today} 
@@ -18,14 +17,14 @@
 Human maps:
 \begin{itemize}
     \item Often unavailable; 
-    \item Often incomplete: %blueprint image
+    \item Often incomplete: 
     \begin{itemize}
-        \item human relevant data; %obstacles within a building like chairs and tables.
+        \item human relevant data; 
         \item robot relevant data;
     \end{itemize} 
 \end{itemize}
 \column{5cm}
-\includegraphics[width=5cm]{blueprint}
+\includegraphics[width=5cm]{blueprint.png}
 \end{columns}
 }
 
@@ -35,15 +34,15 @@ Human maps:
 Human maps:
 \begin{itemize}
     \item Often unavailable; 
-    \item Often incomplete: %blueprint image
+    \item Often incomplete: 
     \begin{itemize}
-        \item human relevant data; %obstacles within a building like chairs and tables.
+        \item human relevant data;
         \item robot relevant data;
     \end{itemize} 
-    \item Wrong level(s) of abstraction: human oriented; %pizzas on googlemaps 
+    \item Wrong level(s) of abstraction: human oriented; 
 \end{itemize}
 \column{5cm}
-\includegraphics[width=5cm]{google_pizzas}
+\includegraphics[width=5cm]{google_pizzas.png}
 \end{columns}
 }
 
@@ -63,14 +62,14 @@ maps destined for robot use.
 \begin{columns}[c]
 \column{5cm}
 \begin{itemize}
-    \item Metric %something from wikipedia
+    \item Metric 
         \begin{itemize}
         \item Sensorial
         \item Geometric
         \end{itemize}            
 \end{itemize}
 \column{5cm}
-\includegraphics[width=5cm]{metric}
+\includegraphics[width=5cm]{metric.png}
 \end{columns}
 }
 
@@ -78,12 +77,12 @@ maps destined for robot use.
 \begin{columns}[c]
 \column{5cm}
 \begin{itemize}
-    \item Metric %something from wikipedia
+    \item Metric 
         \begin{itemize}
         \item Sensorial
         \item Geometric
         \end{itemize}            
-    \item Topological %put a picture of the london underground
+    \item Topological 
         \begin{itemize}
         \item Local relational
         \item Topological
@@ -91,14 +90,16 @@ maps destined for robot use.
         \end{itemize}            
 \end{itemize}
 \column{5cm}
-\includegraphics[width=5cm]{topological}
+\includegraphics[width=5cm]{topological.png}
 \end{columns}
 }
 
 \frame{\frametitle{Direction of map hierarchy}
 \begin{itemize}
-    \item Giralt et al.: metric to topological. 
-    \item Kuipers and Levitt: topological to metric. Low level topological
+    \item Giralt et al.%\cite{giralt1979multi}
+    : metric to topological. 
+    \item Kuipers and Levitt %\cite{kuipers1991robot}
+    : topological to metric. Low level topological
     landmarks as starting point.
 \end{itemize}
 }
@@ -144,7 +145,8 @@ Robot collects by:
 }
 
 \frame{\frametitle{Bourque: robot sightseeing}
-Bourque et al.: robots builds graph nodes corresponding to panorama shots, in a
+Bourque et al.%\cite{bourque2000automated}
+: robots builds graph nodes corresponding to panorama shots, in a
 less constrained environment, by:
 \begin{itemize}
     \item choosing sample (panorama) points based on models of human attention;
@@ -155,13 +157,14 @@ less constrained environment, by:
 
 \subsection{Spacial occupancy representations}
 
-\frame{\frametitle{Spacial occupancy representations}
+\frame{\frametitle{Spacial occupancy grid}
+Pioneered by Elfes and Moravec %\cite{}
 \begin{itemize}
     \item Grid of pixels
 \end{itemize}
 }
 
-\frame{\frametitle{Volumes}
+\frame{\frametitle{Spacial occupancy grid}
 \begin{columns}
 \column{5cm}
 \begin{itemize}
@@ -169,20 +172,20 @@ less constrained environment, by:
     \item Volume of voxels
 \end{itemize}
 \column{5cm}
-\includegraphics[width=5cm]{voxels}
+\includegraphics[width=5cm]{voxels.png}
 \end{columns}
 }
 
-\frame{\frametitle{Data represented}
+\frame{\frametitle{Spacial occupancy: data represented}
 \begin{itemize}
     \item Fill pixels / voxels with degree of occupancy data.
     \item More refined: fill pixels / voxels with probability of occupancy data.
 \end{itemize}
 }
 
-\frame{\frametitle{Probability}
+\frame{\frametitle{Spacial occupancy: probabilistic approach}
 \begin{itemize}
-    \item Example of a laser: probability of an actual distance $z$ for a given laser
+    \item Example of a laser sensor: probability of an actual distance $z$ for a given laser
     reading $r$ computed using Bayes' theorem:
     \begin{eqnarray}
         P(z\lvert r) = \frac{P(z) P(r \lvert z)}{P(r)}
@@ -199,21 +202,92 @@ less constrained environment, by:
 \end{itemize}
 }
 
-\subsection{Geometric maps}
-\frame{\frametitle{Geometric maps}
+\frame{\frametitle{Spacial occupancy: probabilistic approach}
+The result: \em{maximum a posteriori }\em (MAP). World model that most reasonably
+estimates environment according to Bayesian approach.\\
+\pause
+Considerations:
+\begin{itemize}
+    \item very general: no assumed model, deals with multiple sensors;
+    \item requires accurate probabilistic model of the sensors;
+    \item requires a lot of memory for the occupancy map;
+    \item measurement locations/times discarded: geometric accuracy reduced;
+    \item important to avoid accumulated positional errors - e.g. by iteratively
+    recomputing position;
+    \item needs an exploration policy: e.g. random or towards ``unkown' 'areas.
+\end{itemize}
 }
 
-\frame{\frametitle{Blah}
-\begin{columns}[c]
-\column{5cm}
-\column{5cm}
-% \includegraphics[width=5cm]{halsub1}
-\end{columns}
+\frame{\frametitle{Spacial occupancy: Markov models}
+    Markov localisation: estimating robot's location based on sensor data by
+    maintaining probability density grid for the robot's environment, with each
+    cell representing a possible robot pose.
+}
+
+\subsection{Geometric maps}
+
+\frame{\frametitle{Geometric maps}
+Accurate, with two assumptions:
+\begin{itemize}
+    \item sensor data is suitable
+    \item environment is suitable
+\end{itemize}
+}
+
+\frame{\frametitle{Geometric maps: exploration}
+Challenge is exploration. Includes searching for:
+\begin{itemize}
+    \item a goal position;
+    \item route with specific properties;
+    \item ``covering'' a space;
+    \item occupancy.
+\end{itemize}
+}
+
+\frame{\frametitle{Geometric maps: reach goal}
+Papadimitriou and Yannakakis's bug-like algorithm for reaching known goal 
+from known origin in unkown environment with obstacles:
+\begin{itemize}
+    \item move ``towards'' line connecting origin and goal;
+    \item if not possible, move in arbitrary direction;
+\end{itemize}
+Useful in certain simple types of environment, notably where obstacles are:
+\begin{itemize}
+    \item rectilinear; 
+    \item nonintersecting;
+    \item aligned with world coordinates.
+\end{itemize}
+In more general environments no bound is possible.
+}
+
+\frame{\frametitle{Geometric maps: geometric representations}
+   Chosen geometric representation influences applicable algorithms. Important
+   representation is that of ``street polygons''.
+}
+
+\frame{\frametitle{Geometric maps: Street polygons}
+    \begin{columns}[c]
+    \column{5cm}
+    Polygon such that:
+        \begin{itemize}
+        \item there is a start vertex $S$ and end vertex $T$
+        \item vertices and lines categorised as ``left'' or ``right'' with
+        respect to line segment from $S$ to $T$;
+        \item every vertex on either side is visible to some vertex on
+        the other
+    \end{itemize}
+    \column{5cm}
+        \includegraphics[width=5cm]{streetpolygon.png}
+    \end{columns}
+}
+
+\frame{\frametitle{Geometric maps: Street polygons}
+    
 }
 
 \section{Topological Maps}
 
-\frame{\frametitle{Topolgical Maps}
+\frame{\frametitle{Topological Maps}
  \textbf{Topological maps}: describe the environment as a graph that connectecs specific locations in the world and represents them as vertices.
  \begin{enumerate}
  	\item Because metric representations cost too much memory to maintain in the long run.
@@ -224,7 +298,7 @@ less constrained environment, by:
  \end{enumerate}
 }
 
-\frame{\frametitle{Marker based Exploration}
+\frame{\frametitle{Marker based exploration}
  \begin{enumerate}
  	\item No prior information about the environment available.
  	\item Can be extended by enumerating the edges incident to the node entered. Edge you traveled along is 0 and enumerate clockwise. This enumeration is local cause it depends on the edge the robot moved over.
@@ -338,7 +412,6 @@ less constrained environment, by:
 	\url{http://www.csupomona.edu/~ftang/courses/CS499/notes/navigation3.pdf }
 }
 
-\end{document}
-\bibliographystyle{plain}
-\bibliography{cited}
+%\bibliographystyle{plain}
+%\bibliography{cited}
 \end{document}
