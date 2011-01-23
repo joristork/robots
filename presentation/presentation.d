@@ -142,6 +142,12 @@ presentation.pdf presentation._graphics: $$(call graphics-target,voxels.png)
 -include streetpolygon.png.gpi.d
 presentation.d: $$(call graphics-source,streetpolygon.png)
 presentation.pdf presentation._graphics: $$(call graphics-target,streetpolygon.png)
+-include streetpolygon.png.gpi.d
+presentation.d: $$(call graphics-source,streetpolygon.png)
+presentation.pdf presentation._graphics: $$(call graphics-target,streetpolygon.png)
+-include topovsmetric.png.gpi.d
+presentation.d: $$(call graphics-source,topovsmetric.png)
+presentation.pdf presentation._graphics: $$(call graphics-target,topovsmetric.png)
 -include edgeordering.png.gpi.d
 presentation.d: $$(call graphics-source,edgeordering.png)
 presentation.pdf presentation._graphics: $$(call graphics-target,edgeordering.png)

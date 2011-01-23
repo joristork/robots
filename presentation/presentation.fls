@@ -327,7 +327,12 @@ INPUT ./voxels.png
 INPUT streetpolygon.png
 INPUT ./streetpolygon.png
 INPUT ./streetpolygon.png
+INPUT streetpolygon.png
+INPUT ./streetpolygon.png
 INPUT /opt/local/share/texmf-texlive-dist/fonts/tfm/public/cm/cmssbx10.tfm
+INPUT topovsmetric.png
+INPUT ./topovsmetric.png
+INPUT ./topovsmetric.png
 INPUT edgeordering.png
 INPUT ./edgeordering.png
 INPUT ./edgeordering.png

@@ -73,11 +73,11 @@
 \headcommand {\beamer@framepages {32}{32}}
 \headcommand {\slideentry {3}{0}{12}{33/33}{}{0}}
 \headcommand {\beamer@framepages {33}{33}}
-\headcommand {\sectionentry {4}{Multiple Robots}{34}{Multiple Robots}{0}}
-\headcommand {\beamer@sectionpages {28}{33}}
-\headcommand {\beamer@subsectionpages {28}{33}}
-\headcommand {\slideentry {4}{0}{13}{34/34}{}{0}}
+\headcommand {\slideentry {3}{0}{13}{34/34}{}{0}}
 \headcommand {\beamer@framepages {34}{34}}
+\headcommand {\sectionentry {4}{Multiple Robots}{35}{Multiple Robots}{0}}
+\headcommand {\beamer@sectionpages {28}{34}}
+\headcommand {\beamer@subsectionpages {28}{34}}
 \headcommand {\slideentry {4}{0}{14}{35/35}{}{0}}
 \headcommand {\beamer@framepages {35}{35}}
 \headcommand {\slideentry {4}{0}{15}{36/36}{}{0}}
@@ -90,8 +90,10 @@
 \headcommand {\beamer@framepages {39}{39}}
 \headcommand {\slideentry {4}{0}{19}{40/40}{}{0}}
 \headcommand {\beamer@framepages {40}{40}}
-\headcommand {\beamer@partpages {1}{40}}
-\headcommand {\beamer@subsectionpages {34}{40}}
-\headcommand {\beamer@sectionpages {34}{40}}
-\headcommand {\beamer@documentpages {40}}
-\headcommand {\def \inserttotalframenumber {38}}
+\headcommand {\slideentry {4}{0}{20}{41/41}{}{0}}
+\headcommand {\beamer@framepages {41}{41}}
+\headcommand {\beamer@partpages {1}{41}}
+\headcommand {\beamer@subsectionpages {35}{41}}
+\headcommand {\beamer@sectionpages {35}{41}}
+\headcommand {\beamer@documentpages {41}}
+\headcommand {\def \inserttotalframenumber {39}}
