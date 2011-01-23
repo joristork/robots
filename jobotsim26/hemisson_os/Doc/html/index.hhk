@@ -1,0 +1,1343 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD></HEAD><BODY>
+<OBJECT type="text/site properties">
+<param name="FrameName" value="right">
+</OBJECT>
+<UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html"><param name="Name" value="16f877.h"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a110"><param name="Name" value="A_ANALOG"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a118"><param name="Name" value="A_ANALOG_RA3_RA2_REF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a111"><param name="Name" value="A_ANALOG_RA3_REF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a123"><param name="Name" value="ADC_CLOCK_DIV_2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a125"><param name="Name" value="ADC_CLOCK_DIV_32"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a124"><param name="Name" value="ADC_CLOCK_DIV_8"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a126"><param name="Name" value="ADC_CLOCK_INTERNAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a122"><param name="Name" value="ADC_OFF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a108"><param name="Name" value="ALL_ANALOG"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a115"><param name="Name" value="ANALOG_NOT_RE1_RE2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a116"><param name="Name" value="ANALOG_NOT_RE1_RE2_REF_RA3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a117"><param name="Name" value="ANALOG_NOT_RE1_RE2_REF_RA3_RA2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a114"><param name="Name" value="ANALOG_RA3_RA2_REF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a109"><param name="Name" value="ANALOG_RA3_REF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a36"><param name="Name" value="BOOLEAN"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a35"><param name="Name" value="BYTE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a145"><param name="Name" value="CCP_1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a146"><param name="Name" value="CCP_2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a85"><param name="Name" value="CCP_CAPTURE_DIV_16"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a84"><param name="Name" value="CCP_CAPTURE_DIV_4"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a82"><param name="Name" value="CCP_CAPTURE_FE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a83"><param name="Name" value="CCP_CAPTURE_RE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a87"><param name="Name" value="CCP_COMPARE_CLR_ON_MATCH"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a88"><param name="Name" value="CCP_COMPARE_INT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a89"><param name="Name" value="CCP_COMPARE_RESET_TIMER"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a86"><param name="Name" value="CCP_COMPARE_SET_ON_MATCH"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a81"><param name="Name" value="CCP_OFF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a90"><param name="Name" value="CCP_PWM"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a91"><param name="Name" value="CCP_PWM_PLUS_1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a92"><param name="Name" value="CCP_PWM_PLUS_2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a93"><param name="Name" value="CCP_PWM_PLUS_3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a33"><param name="Name" value="FALSE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a38"><param name="Name" value="fgetc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a42"><param name="Name" value="fgets"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a41"><param name="Name" value="fputc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a43"><param name="Name" value="fputs"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a37"><param name="Name" value="getc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a39"><param name="Name" value="getchar"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a129"><param name="Name" value="GLOBAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a128"><param name="Name" value="H_TO_L"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a133"><param name="Name" value="INT_AD"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a142"><param name="Name" value="INT_BUSCOL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a138"><param name="Name" value="INT_CCP1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a139"><param name="Name" value="INT_CCP2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a143"><param name="Name" value="INT_EEPROM"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a132"><param name="Name" value="INT_EXT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a141"><param name="Name" value="INT_PSP"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a131"><param name="Name" value="INT_RB"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a135"><param name="Name" value="INT_RDA"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a130"><param name="Name" value="INT_RTCC"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a140"><param name="Name" value="INT_SSP"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a134"><param name="Name" value="INT_TBE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a144"><param name="Name" value="INT_TIMER0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a136"><param name="Name" value="INT_TIMER1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a137"><param name="Name" value="INT_TIMER2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a127"><param name="Name" value="L_TO_H"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a46"><param name="Name" value="MCLR_FROM_SLEEP"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a107"><param name="Name" value="NO_ANALOGS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a47"><param name="Name" value="NORMAL_POWER_UP"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a0"><param name="Name" value="PIN_A0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a1"><param name="Name" value="PIN_A1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a2"><param name="Name" value="PIN_A2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a3"><param name="Name" value="PIN_A3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a4"><param name="Name" value="PIN_A4"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a5"><param name="Name" value="PIN_A5"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a6"><param name="Name" value="PIN_B0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a7"><param name="Name" value="PIN_B1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a8"><param name="Name" value="PIN_B2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a9"><param name="Name" value="PIN_B3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a10"><param name="Name" value="PIN_B4"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a11"><param name="Name" value="PIN_B5"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a12"><param name="Name" value="PIN_B6"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a13"><param name="Name" value="PIN_B7"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a14"><param name="Name" value="PIN_C0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a15"><param name="Name" value="PIN_C1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a16"><param name="Name" value="PIN_C2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a17"><param name="Name" value="PIN_C3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a18"><param name="Name" value="PIN_C4"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a19"><param name="Name" value="PIN_C5"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a20"><param name="Name" value="PIN_C6"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a21"><param name="Name" value="PIN_C7"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a22"><param name="Name" value="PIN_D0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a23"><param name="Name" value="PIN_D1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a24"><param name="Name" value="PIN_D2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a25"><param name="Name" value="PIN_D3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a26"><param name="Name" value="PIN_D4"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a27"><param name="Name" value="PIN_D5"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a28"><param name="Name" value="PIN_D6"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a29"><param name="Name" value="PIN_D7"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a30"><param name="Name" value="PIN_E0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a31"><param name="Name" value="PIN_E1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a32"><param name="Name" value="PIN_E2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a95"><param name="Name" value="PSP_DISABLED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a94"><param name="Name" value="PSP_ENABLED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a40"><param name="Name" value="putc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a120"><param name="Name" value="RA0_ANALOG"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a121"><param name="Name" value="RA0_ANALOG_RA3_RA2_REF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a119"><param name="Name" value="RA0_RA1_ANALOG_RA3_RA2_REF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a113"><param name="Name" value="RA0_RA1_ANALOG_RA3_REF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a112"><param name="Name" value="RA0_RA1_RA3_ANALOG"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a59"><param name="Name" value="RTCC_8_BIT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a57"><param name="Name" value="RTCC_DIV_128"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a54"><param name="Name" value="RTCC_DIV_16"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a51"><param name="Name" value="RTCC_DIV_2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a58"><param name="Name" value="RTCC_DIV_256"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a55"><param name="Name" value="RTCC_DIV_32"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a52"><param name="Name" value="RTCC_DIV_4"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a56"><param name="Name" value="RTCC_DIV_64"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a53"><param name="Name" value="RTCC_DIV_8"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a50"><param name="Name" value="RTCC_EXT_H_TO_L"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a49"><param name="Name" value="RTCC_EXT_L_TO_H"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a48"><param name="Name" value="RTCC_INTERNAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a101"><param name="Name" value="SPI_CLK_DIV_16"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a100"><param name="Name" value="SPI_CLK_DIV_4"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a102"><param name="Name" value="SPI_CLK_DIV_64"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a103"><param name="Name" value="SPI_CLK_T2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a99"><param name="Name" value="SPI_H_TO_L"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a98"><param name="Name" value="SPI_L_TO_H"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a96"><param name="Name" value="SPI_MASTER"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a105"><param name="Name" value="SPI_SAMPLE_AT_END"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a97"><param name="Name" value="SPI_SLAVE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a104"><param name="Name" value="SPI_SS_DISABLED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a106"><param name="Name" value="SPI_XMIT_L_TO_H"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a72"><param name="Name" value="T1_CLK_OUT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a68"><param name="Name" value="T1_DISABLED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a73"><param name="Name" value="T1_DIV_BY_1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a74"><param name="Name" value="T1_DIV_BY_2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a75"><param name="Name" value="T1_DIV_BY_4"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a76"><param name="Name" value="T1_DIV_BY_8"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a70"><param name="Name" value="T1_EXTERNAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a71"><param name="Name" value="T1_EXTERNAL_SYNC"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a69"><param name="Name" value="T1_INTERNAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a77"><param name="Name" value="T2_DISABLED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a78"><param name="Name" value="T2_DIV_BY_1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a80"><param name="Name" value="T2_DIV_BY_16"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a79"><param name="Name" value="T2_DIV_BY_4"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a34"><param name="Name" value="TRUE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a66"><param name="Name" value="WDT_1152MS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a63"><param name="Name" value="WDT_144MS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a60"><param name="Name" value="WDT_18MS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a67"><param name="Name" value="WDT_2304MS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a64"><param name="Name" value="WDT_288MS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a61"><param name="Name" value="WDT_36MS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a65"><param name="Name" value="WDT_576MS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a62"><param name="Name" value="WDT_72MS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a44"><param name="Name" value="WDT_FROM_SLEEP"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a45"><param name="Name" value="WDT_TIMEOUT"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__Auto_Refresh_Sensors"><param name="Name" value="__Auto_Refresh_Sensors"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a3"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__Auto_Refresh_TV_Remote"><param name="Name" value="__Auto_Refresh_TV_Remote"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a4"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__BeepMem"><param name="Name" value="__BeepMem"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a27"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__DataBit0"><param name="Name" value="__DataBit0"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a24"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__DataBit1"><param name="Name" value="__DataBit1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a23"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__DataBit2"><param name="Name" value="__DataBit2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a22"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__DataBit3"><param name="Name" value="__DataBit3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a21"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__DataBit4"><param name="Name" value="__DataBit4"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a20"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__DataBit5"><param name="Name" value="__DataBit5"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a19"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__Divider"><param name="Name" value="__Divider"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a34"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__Enable_RS232_Control"><param name="Name" value="__Enable_RS232_Control"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a5"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__Enable_TV_Remote_Control"><param name="Name" value="__Enable_TV_Remote_Control"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a6"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__hemisson_init"><param name="Name" value="__hemisson_init"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a1"><param name="Name" value="hemisson.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__hemisson_refresh_sensors"><param name="Name" value="__hemisson_refresh_sensors"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a2"><param name="Name" value="hemisson.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__IR_Light"><param name="Name" value="__IR_Light"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a30"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__IR_Proximity"><param name="Name" value="__IR_Proximity"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a31"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__PwmCounter"><param name="Name" value="__PwmCounter"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a2"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__PwmMotLeft"><param name="Name" value="__PwmMotLeft"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a0"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__PwmMotRight"><param name="Name" value="__PwmMotRight"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a1"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__SchedulerTask"><param name="Name" value="__SchedulerTask"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a33"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__Sensors_Refreshed_Flag"><param name="Name" value="__Sensors_Refreshed_Flag"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a7"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__SERIAL_BUFFER_SIZE"><param name="Name" value="__SERIAL_BUFFER_SIZE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a10"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__SerialBuffer"><param name="Name" value="__SerialBuffer"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a9"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__SerialCounter"><param name="Name" value="__SerialCounter"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a10"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__StartBit1"><param name="Name" value="__StartBit1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a11"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__StartBit2"><param name="Name" value="__StartBit2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a12"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__Switchs"><param name="Name" value="__Switchs"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a32"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__SystemBit0"><param name="Name" value="__SystemBit0"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a18"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__SystemBit1"><param name="Name" value="__SystemBit1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a17"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__SystemBit2"><param name="Name" value="__SystemBit2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a16"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__SystemBit3"><param name="Name" value="__SystemBit3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a15"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__SystemBit4"><param name="Name" value="__SystemBit4"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a14"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__TimeTip"><param name="Name" value="__TimeTip"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a28"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__TimeTipDivider"><param name="Name" value="__TimeTipDivider"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a29"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__ToggleBit"><param name="Name" value="__ToggleBit"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a13"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__TV_Counter"><param name="Name" value="__TV_Counter"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a26"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__TV_DATA"><param name="Name" value="__TV_DATA"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a25"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__TV_Data_Available"><param name="Name" value="__TV_Data_Available"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a8"><param name="Name" value="variables.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__TV_Remote_Control"><param name="Name" value="__TV_Remote_Control"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a3"><param name="Name" value="hemisson.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="__TV_Remote_Interrupt"><param name="Name" value="__TV_Remote_Interrupt"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a4"><param name="Name" value="hemisson.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="A_ANALOG"><param name="Name" value="A_ANALOG"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a110"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="A_ANALOG_RA3_RA2_REF"><param name="Name" value="A_ANALOG_RA3_RA2_REF"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a118"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="A_ANALOG_RA3_REF"><param name="Name" value="A_ANALOG_RA3_REF"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a111"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="ADC_CLOCK_DIV_2"><param name="Name" value="ADC_CLOCK_DIV_2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a123"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="ADC_CLOCK_DIV_32"><param name="Name" value="ADC_CLOCK_DIV_32"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a125"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="ADC_CLOCK_DIV_8"><param name="Name" value="ADC_CLOCK_DIV_8"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a124"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="ADC_CLOCK_INTERNAL"><param name="Name" value="ADC_CLOCK_INTERNAL"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a126"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="ADC_OFF"><param name="Name" value="ADC_OFF"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a122"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="ALL_ANALOG"><param name="Name" value="ALL_ANALOG"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a108"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="ANALOG_NOT_RE1_RE2"><param name="Name" value="ANALOG_NOT_RE1_RE2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a115"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="ANALOG_NOT_RE1_RE2_REF_RA3"><param name="Name" value="ANALOG_NOT_RE1_RE2_REF_RA3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a116"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="ANALOG_NOT_RE1_RE2_REF_RA3_RA2"><param name="Name" value="ANALOG_NOT_RE1_RE2_REF_RA3_RA2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a117"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="ANALOG_RA3_RA2_REF"><param name="Name" value="ANALOG_RA3_RA2_REF"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a114"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="ANALOG_RA3_REF"><param name="Name" value="ANALOG_RA3_REF"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a109"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="BOOLEAN"><param name="Name" value="BOOLEAN"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a36"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="BYTE"><param name="Name" value="BYTE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a35"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_1"><param name="Name" value="CCP_1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a145"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_2"><param name="Name" value="CCP_2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a146"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_CAPTURE_DIV_16"><param name="Name" value="CCP_CAPTURE_DIV_16"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a85"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_CAPTURE_DIV_4"><param name="Name" value="CCP_CAPTURE_DIV_4"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a84"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_CAPTURE_FE"><param name="Name" value="CCP_CAPTURE_FE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a82"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_CAPTURE_RE"><param name="Name" value="CCP_CAPTURE_RE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a83"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_COMPARE_CLR_ON_MATCH"><param name="Name" value="CCP_COMPARE_CLR_ON_MATCH"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a87"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_COMPARE_INT"><param name="Name" value="CCP_COMPARE_INT"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a88"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_COMPARE_RESET_TIMER"><param name="Name" value="CCP_COMPARE_RESET_TIMER"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a89"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_COMPARE_SET_ON_MATCH"><param name="Name" value="CCP_COMPARE_SET_ON_MATCH"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a86"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_OFF"><param name="Name" value="CCP_OFF"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a81"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_PWM"><param name="Name" value="CCP_PWM"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a90"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_PWM_PLUS_1"><param name="Name" value="CCP_PWM_PLUS_1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a91"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_PWM_PLUS_2"><param name="Name" value="CCP_PWM_PLUS_2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a92"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="CCP_PWM_PLUS_3"><param name="Name" value="CCP_PWM_PLUS_3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a93"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="chartohex"><param name="Name" value="chartohex"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a0"><param name="Name" value="hemisson.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00011.html"><param name="Name" value="Configuration_Functions"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00011.html#a1"><param name="Name" value="hemisson_config_auto_refresh_sensors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00011.html#a2"><param name="Name" value="hemisson_config_auto_refresh_tv_remote"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00011.html#a3"><param name="Name" value="hemisson_config_rs232_control"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00011.html#a4"><param name="Name" value="hemisson_config_tv_remote_control"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00011.html#a0"><param name="Name" value="hemisson_init"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html"><param name="Name" value="constants.h"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a10"><param name="Name" value="__SERIAL_BUFFER_SIZE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a23"><param name="Name" value="DISABLE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a22"><param name="Name" value="ENABLE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a24"><param name="Name" value="FAST"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a11"><param name="Name" value="FRONT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a12"><param name="Name" value="FRONTLEFT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a13"><param name="Name" value="FRONTRIGHT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a19"><param name="Name" value="FRONTZONE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a17"><param name="Name" value="GROUNDLEFT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a18"><param name="Name" value="GROUNDRIGHT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a21"><param name="Name" value="GROUNDZONE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a31"><param name="Name" value="HEMIOS_REVISION"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a30"><param name="Name" value="HEMIOS_VERSION"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a1"><param name="Name" value="INIT_PORTA"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a3"><param name="Name" value="INIT_PORTB"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a5"><param name="Name" value="INIT_PORTC"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a7"><param name="Name" value="INIT_PORTD"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a9"><param name="Name" value="INIT_PORTE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a0"><param name="Name" value="INIT_TRISA"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a2"><param name="Name" value="INIT_TRISB"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a4"><param name="Name" value="INIT_TRISC"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a6"><param name="Name" value="INIT_TRISD"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a8"><param name="Name" value="INIT_TRISE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a14"><param name="Name" value="LEFT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a26"><param name="Name" value="MANUAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a25"><param name="Name" value="NORMAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a29"><param name="Name" value="OFF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a28"><param name="Name" value="ON"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a16"><param name="Name" value="REAR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a20"><param name="Name" value="REARZONE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a27"><param name="Name" value="REFRESH"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a15"><param name="Name" value="RIGHT"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="DISABLE"><param name="Name" value="DISABLE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a23"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="ENABLE"><param name="Name" value="ENABLE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a22"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00015.html"><param name="Name" value="External_Access"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00015.html#a0"><param name="Name" value="hemisson_ext_read_PINB0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00015.html#a1"><param name="Name" value="hemisson_ext_read_PINB6"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00015.html#a2"><param name="Name" value="hemisson_ext_read_PINB7"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00015.html#a3"><param name="Name" value="hemisson_ext_write_PINB0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00015.html#a4"><param name="Name" value="hemisson_ext_write_PINB6"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00015.html#a5"><param name="Name" value="hemisson_ext_write_PINB7"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="FALSE"><param name="Name" value="FALSE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a33"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="FAST"><param name="Name" value="FAST"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a24"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="fgetc"><param name="Name" value="fgetc"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a38"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="fgets"><param name="Name" value="fgets"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a42"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00012.html"><param name="Name" value="Flags"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00012.html#a2"><param name="Name" value="hemisson_flag_rs232_filtering"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00012.html#a0"><param name="Name" value="hemisson_flag_sensors_refreshed"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00012.html#a1"><param name="Name" value="hemisson_flag_sensors_reset"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00012.html#a3"><param name="Name" value="hemisson_flag_tv_data_refreshed"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00012.html#a4"><param name="Name" value="hemisson_flag_tv_data_reset"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="fputc"><param name="Name" value="fputc"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a41"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="fputs"><param name="Name" value="fputs"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a43"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="FRONT"><param name="Name" value="FRONT"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a11"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="FRONTLEFT"><param name="Name" value="FRONTLEFT"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a12"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="FRONTRIGHT"><param name="Name" value="FRONTRIGHT"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a13"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="FRONTZONE"><param name="Name" value="FRONTZONE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a19"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="getc"><param name="Name" value="getc"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a37"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="getchar"><param name="Name" value="getchar"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a39"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="GLOBAL"><param name="Name" value="GLOBAL"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a129"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="GROUNDLEFT"><param name="Name" value="GROUNDLEFT"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a17"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="GROUNDRIGHT"><param name="Name" value="GROUNDRIGHT"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a18"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="GROUNDZONE"><param name="Name" value="GROUNDZONE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a21"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="H_TO_L"><param name="Name" value="H_TO_L"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a128"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="HEMIOS_REVISION"><param name="Name" value="HEMIOS_REVISION"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a31"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="HEMIOS_VERSION"><param name="Name" value="HEMIOS_VERSION"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a30"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html"><param name="Name" value="hemisson.c"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a1"><param name="Name" value="__hemisson_init"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a2"><param name="Name" value="__hemisson_refresh_sensors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a3"><param name="Name" value="__TV_Remote_Control"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a4"><param name="Name" value="__TV_Remote_Interrupt"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a0"><param name="Name" value="chartohex"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a6"><param name="Name" value="RC5_Decoding_Interrupt"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a5"><param name="Name" value="Scheduler_Interrupt"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a7"><param name="Name" value="Serial_Interrupt"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_beep"><param name="Name" value="hemisson_beep"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a5"><param name="Name" value="Peripheral_Access_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_config_auto_refresh_sensors"><param name="Name" value="hemisson_config_auto_refresh_sensors"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00011.html#a1"><param name="Name" value="Configuration_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_config_auto_refresh_tv_remote"><param name="Name" value="hemisson_config_auto_refresh_tv_remote"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00011.html#a2"><param name="Name" value="Configuration_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_config_rs232_control"><param name="Name" value="hemisson_config_rs232_control"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00011.html#a3"><param name="Name" value="Configuration_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_config_tv_remote_control"><param name="Name" value="hemisson_config_tv_remote_control"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00011.html#a4"><param name="Name" value="Configuration_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_delay_ms"><param name="Name" value="hemisson_delay_ms"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00014.html#a1"><param name="Name" value="Time_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_delay_s"><param name="Name" value="hemisson_delay_s"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00014.html#a0"><param name="Name" value="Time_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_delay_us"><param name="Name" value="hemisson_delay_us"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00014.html#a2"><param name="Name" value="Time_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_ext_read_PINB0"><param name="Name" value="hemisson_ext_read_PINB0"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00015.html#a0"><param name="Name" value="External_Access"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_ext_read_PINB6"><param name="Name" value="hemisson_ext_read_PINB6"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00015.html#a1"><param name="Name" value="External_Access"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_ext_read_PINB7"><param name="Name" value="hemisson_ext_read_PINB7"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00015.html#a2"><param name="Name" value="External_Access"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_ext_write_PINB0"><param name="Name" value="hemisson_ext_write_PINB0"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00015.html#a3"><param name="Name" value="External_Access"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_ext_write_PINB6"><param name="Name" value="hemisson_ext_write_PINB6"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00015.html#a4"><param name="Name" value="External_Access"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_ext_write_PINB7"><param name="Name" value="hemisson_ext_write_PINB7"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00015.html#a5"><param name="Name" value="External_Access"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_flag_rs232_filtering"><param name="Name" value="hemisson_flag_rs232_filtering"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00012.html#a2"><param name="Name" value="Flags"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_flag_sensors_refreshed"><param name="Name" value="hemisson_flag_sensors_refreshed"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00012.html#a0"><param name="Name" value="Flags"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_flag_sensors_reset"><param name="Name" value="hemisson_flag_sensors_reset"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00012.html#a1"><param name="Name" value="Flags"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_flag_tv_data_refreshed"><param name="Name" value="hemisson_flag_tv_data_refreshed"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00012.html#a3"><param name="Name" value="Flags"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_flag_tv_data_reset"><param name="Name" value="hemisson_flag_tv_data_reset"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00012.html#a4"><param name="Name" value="Flags"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_get_brightness"><param name="Name" value="hemisson_get_brightness"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a1"><param name="Name" value="Peripheral_Access_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_get_proximity"><param name="Name" value="hemisson_get_proximity"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a0"><param name="Name" value="Peripheral_Access_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_get_switch_state"><param name="Name" value="hemisson_get_switch_state"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a2"><param name="Name" value="Peripheral_Access_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_get_time"><param name="Name" value="hemisson_get_time"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00014.html#a3"><param name="Name" value="Time_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_get_tv_data"><param name="Name" value="hemisson_get_tv_data"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a3"><param name="Name" value="Peripheral_Access_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_init"><param name="Name" value="hemisson_init"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00011.html#a0"><param name="Name" value="Configuration_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_led_frontleft"><param name="Name" value="hemisson_led_frontleft"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a6"><param name="Name" value="Peripheral_Access_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_led_frontright"><param name="Name" value="hemisson_led_frontright"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a7"><param name="Name" value="Peripheral_Access_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_led_onoff"><param name="Name" value="hemisson_led_onoff"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a9"><param name="Name" value="Peripheral_Access_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_led_pgmexec"><param name="Name" value="hemisson_led_pgmexec"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a8"><param name="Name" value="Peripheral_Access_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_manual_refresh_sensors"><param name="Name" value="hemisson_manual_refresh_sensors"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a10"><param name="Name" value="Peripheral_Access_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_set_speed"><param name="Name" value="hemisson_set_speed"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a4"><param name="Name" value="Peripheral_Access_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_set_time"><param name="Name" value="hemisson_set_time"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00014.html#a4"><param name="Name" value="Time_Functions"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005.html"><param name="Name" value="hemisson_task1.c"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005.html#a0"><param name="Name" value="hemisson_task1"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_task1"><param name="Name" value="hemisson_task1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005.html#a0"><param name="Name" value="hemisson_task1.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00006.html"><param name="Name" value="hemisson_task2.c"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00006.html#a0"><param name="Name" value="hemisson_task2"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_task2"><param name="Name" value="hemisson_task2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00006.html#a0"><param name="Name" value="hemisson_task2.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00007.html"><param name="Name" value="hemisson_task3.c"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00007.html#a0"><param name="Name" value="hemisson_task3"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_task3"><param name="Name" value="hemisson_task3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00007.html#a0"><param name="Name" value="hemisson_task3.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00008.html"><param name="Name" value="hemisson_task4.c"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00008.html#a0"><param name="Name" value="hemisson_task4"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="hemisson_task4"><param name="Name" value="hemisson_task4"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00008.html#a0"><param name="Name" value="hemisson_task4.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INIT_PORTA"><param name="Name" value="INIT_PORTA"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a1"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INIT_PORTB"><param name="Name" value="INIT_PORTB"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a3"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INIT_PORTC"><param name="Name" value="INIT_PORTC"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a5"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INIT_PORTD"><param name="Name" value="INIT_PORTD"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a7"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INIT_PORTE"><param name="Name" value="INIT_PORTE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a9"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INIT_TRISA"><param name="Name" value="INIT_TRISA"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a0"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INIT_TRISB"><param name="Name" value="INIT_TRISB"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a2"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INIT_TRISC"><param name="Name" value="INIT_TRISC"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a4"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INIT_TRISD"><param name="Name" value="INIT_TRISD"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a6"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INIT_TRISE"><param name="Name" value="INIT_TRISE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a8"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_AD"><param name="Name" value="INT_AD"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a133"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_BUSCOL"><param name="Name" value="INT_BUSCOL"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a142"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_CCP1"><param name="Name" value="INT_CCP1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a138"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_CCP2"><param name="Name" value="INT_CCP2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a139"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_EEPROM"><param name="Name" value="INT_EEPROM"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a143"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_EXT"><param name="Name" value="INT_EXT"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a132"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_PSP"><param name="Name" value="INT_PSP"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a141"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_RB"><param name="Name" value="INT_RB"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a131"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_RDA"><param name="Name" value="INT_RDA"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a135"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_RTCC"><param name="Name" value="INT_RTCC"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a130"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_SSP"><param name="Name" value="INT_SSP"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a140"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_TBE"><param name="Name" value="INT_TBE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a134"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_TIMER0"><param name="Name" value="INT_TIMER0"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a144"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_TIMER1"><param name="Name" value="INT_TIMER1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a136"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="INT_TIMER2"><param name="Name" value="INT_TIMER2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a137"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="L_TO_H"><param name="Name" value="L_TO_H"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a127"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="LEFT"><param name="Name" value="LEFT"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a14"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00009.html"><param name="Name" value="main.c"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00009.html#a0"><param name="Name" value="main"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="main"><param name="Name" value="main"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00009.html#a0"><param name="Name" value="main.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="MANUAL"><param name="Name" value="MANUAL"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a26"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="MCLR_FROM_SLEEP"><param name="Name" value="MCLR_FROM_SLEEP"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a46"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="NO_ANALOGS"><param name="Name" value="NO_ANALOGS"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a107"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="NORMAL"><param name="Name" value="NORMAL"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a25"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="NORMAL_POWER_UP"><param name="Name" value="NORMAL_POWER_UP"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a47"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="OFF"><param name="Name" value="OFF"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a29"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="ON"><param name="Name" value="ON"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a28"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html"><param name="Name" value="Peripheral_Access_Functions"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a5"><param name="Name" value="hemisson_beep"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a1"><param name="Name" value="hemisson_get_brightness"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a0"><param name="Name" value="hemisson_get_proximity"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a2"><param name="Name" value="hemisson_get_switch_state"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a3"><param name="Name" value="hemisson_get_tv_data"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a6"><param name="Name" value="hemisson_led_frontleft"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a7"><param name="Name" value="hemisson_led_frontright"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a9"><param name="Name" value="hemisson_led_onoff"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a8"><param name="Name" value="hemisson_led_pgmexec"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a10"><param name="Name" value="hemisson_manual_refresh_sensors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00013.html#a4"><param name="Name" value="hemisson_set_speed"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_A0"><param name="Name" value="PIN_A0"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a0"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_A1"><param name="Name" value="PIN_A1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a1"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_A2"><param name="Name" value="PIN_A2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a2"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_A3"><param name="Name" value="PIN_A3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a3"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_A4"><param name="Name" value="PIN_A4"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a4"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_A5"><param name="Name" value="PIN_A5"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a5"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_B0"><param name="Name" value="PIN_B0"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a6"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_B1"><param name="Name" value="PIN_B1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a7"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_B2"><param name="Name" value="PIN_B2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a8"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_B3"><param name="Name" value="PIN_B3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a9"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_B4"><param name="Name" value="PIN_B4"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a10"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_B5"><param name="Name" value="PIN_B5"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a11"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_B6"><param name="Name" value="PIN_B6"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a12"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_B7"><param name="Name" value="PIN_B7"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a13"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_C0"><param name="Name" value="PIN_C0"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a14"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_C1"><param name="Name" value="PIN_C1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a15"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_C2"><param name="Name" value="PIN_C2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a16"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_C3"><param name="Name" value="PIN_C3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a17"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_C4"><param name="Name" value="PIN_C4"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a18"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_C5"><param name="Name" value="PIN_C5"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a19"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_C6"><param name="Name" value="PIN_C6"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a20"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_C7"><param name="Name" value="PIN_C7"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a21"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_D0"><param name="Name" value="PIN_D0"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a22"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_D1"><param name="Name" value="PIN_D1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a23"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_D2"><param name="Name" value="PIN_D2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a24"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_D3"><param name="Name" value="PIN_D3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a25"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_D4"><param name="Name" value="PIN_D4"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a26"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_D5"><param name="Name" value="PIN_D5"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a27"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_D6"><param name="Name" value="PIN_D6"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a28"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_D7"><param name="Name" value="PIN_D7"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a29"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_E0"><param name="Name" value="PIN_E0"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a30"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_E1"><param name="Name" value="PIN_E1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a31"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PIN_E2"><param name="Name" value="PIN_E2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a32"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PSP_DISABLED"><param name="Name" value="PSP_DISABLED"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a95"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="PSP_ENABLED"><param name="Name" value="PSP_ENABLED"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a94"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="putc"><param name="Name" value="putc"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a40"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RA0_ANALOG"><param name="Name" value="RA0_ANALOG"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a120"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RA0_ANALOG_RA3_RA2_REF"><param name="Name" value="RA0_ANALOG_RA3_RA2_REF"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a121"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RA0_RA1_ANALOG_RA3_RA2_REF"><param name="Name" value="RA0_RA1_ANALOG_RA3_RA2_REF"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a119"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RA0_RA1_ANALOG_RA3_REF"><param name="Name" value="RA0_RA1_ANALOG_RA3_REF"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a113"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RA0_RA1_RA3_ANALOG"><param name="Name" value="RA0_RA1_RA3_ANALOG"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a112"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RC5_Decoding_Interrupt"><param name="Name" value="RC5_Decoding_Interrupt"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a6"><param name="Name" value="hemisson.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="REAR"><param name="Name" value="REAR"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a16"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="REARZONE"><param name="Name" value="REARZONE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a20"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="REFRESH"><param name="Name" value="REFRESH"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a27"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RIGHT"><param name="Name" value="RIGHT"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002.html#a15"><param name="Name" value="constants.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RTCC_8_BIT"><param name="Name" value="RTCC_8_BIT"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a59"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RTCC_DIV_128"><param name="Name" value="RTCC_DIV_128"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a57"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RTCC_DIV_16"><param name="Name" value="RTCC_DIV_16"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a54"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RTCC_DIV_256"><param name="Name" value="RTCC_DIV_256"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a58"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RTCC_DIV_2"><param name="Name" value="RTCC_DIV_2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a51"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RTCC_DIV_32"><param name="Name" value="RTCC_DIV_32"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a55"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RTCC_DIV_4"><param name="Name" value="RTCC_DIV_4"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a52"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RTCC_DIV_64"><param name="Name" value="RTCC_DIV_64"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a56"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RTCC_DIV_8"><param name="Name" value="RTCC_DIV_8"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a53"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RTCC_EXT_H_TO_L"><param name="Name" value="RTCC_EXT_H_TO_L"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a50"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RTCC_EXT_L_TO_H"><param name="Name" value="RTCC_EXT_L_TO_H"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a49"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="RTCC_INTERNAL"><param name="Name" value="RTCC_INTERNAL"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a48"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="Scheduler_Interrupt"><param name="Name" value="Scheduler_Interrupt"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a5"><param name="Name" value="hemisson.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="Serial_Interrupt"><param name="Name" value="Serial_Interrupt"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003.html#a7"><param name="Name" value="hemisson.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="SPI_CLK_DIV_16"><param name="Name" value="SPI_CLK_DIV_16"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a101"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="SPI_CLK_DIV_4"><param name="Name" value="SPI_CLK_DIV_4"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a100"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="SPI_CLK_DIV_64"><param name="Name" value="SPI_CLK_DIV_64"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a102"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="SPI_CLK_T2"><param name="Name" value="SPI_CLK_T2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a103"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="SPI_H_TO_L"><param name="Name" value="SPI_H_TO_L"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a99"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="SPI_L_TO_H"><param name="Name" value="SPI_L_TO_H"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a98"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="SPI_MASTER"><param name="Name" value="SPI_MASTER"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a96"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="SPI_SAMPLE_AT_END"><param name="Name" value="SPI_SAMPLE_AT_END"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a105"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="SPI_SLAVE"><param name="Name" value="SPI_SLAVE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a97"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="SPI_SS_DISABLED"><param name="Name" value="SPI_SS_DISABLED"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a104"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="SPI_XMIT_L_TO_H"><param name="Name" value="SPI_XMIT_L_TO_H"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a106"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="T1_CLK_OUT"><param name="Name" value="T1_CLK_OUT"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a72"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="T1_DISABLED"><param name="Name" value="T1_DISABLED"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a68"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="T1_DIV_BY_1"><param name="Name" value="T1_DIV_BY_1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a73"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="T1_DIV_BY_2"><param name="Name" value="T1_DIV_BY_2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a74"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="T1_DIV_BY_4"><param name="Name" value="T1_DIV_BY_4"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a75"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="T1_DIV_BY_8"><param name="Name" value="T1_DIV_BY_8"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a76"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="T1_EXTERNAL"><param name="Name" value="T1_EXTERNAL"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a70"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="T1_EXTERNAL_SYNC"><param name="Name" value="T1_EXTERNAL_SYNC"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a71"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="T1_INTERNAL"><param name="Name" value="T1_INTERNAL"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a69"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="T2_DISABLED"><param name="Name" value="T2_DISABLED"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a77"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="T2_DIV_BY_16"><param name="Name" value="T2_DIV_BY_16"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a80"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="T2_DIV_BY_1"><param name="Name" value="T2_DIV_BY_1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a78"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="T2_DIV_BY_4"><param name="Name" value="T2_DIV_BY_4"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a79"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00014.html"><param name="Name" value="Time_Functions"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00014.html#a1"><param name="Name" value="hemisson_delay_ms"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00014.html#a0"><param name="Name" value="hemisson_delay_s"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00014.html#a2"><param name="Name" value="hemisson_delay_us"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00014.html#a3"><param name="Name" value="hemisson_get_time"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00014.html#a4"><param name="Name" value="hemisson_set_time"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="TRUE"><param name="Name" value="TRUE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a34"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html"><param name="Name" value="variables.c"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a3"><param name="Name" value="__Auto_Refresh_Sensors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a4"><param name="Name" value="__Auto_Refresh_TV_Remote"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a27"><param name="Name" value="__BeepMem"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a24"><param name="Name" value="__DataBit0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a23"><param name="Name" value="__DataBit1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a22"><param name="Name" value="__DataBit2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a21"><param name="Name" value="__DataBit3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a20"><param name="Name" value="__DataBit4"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a19"><param name="Name" value="__DataBit5"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a34"><param name="Name" value="__Divider"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a5"><param name="Name" value="__Enable_RS232_Control"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a6"><param name="Name" value="__Enable_TV_Remote_Control"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a30"><param name="Name" value="__IR_Light"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a31"><param name="Name" value="__IR_Proximity"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a2"><param name="Name" value="__PwmCounter"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a0"><param name="Name" value="__PwmMotLeft"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a1"><param name="Name" value="__PwmMotRight"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a33"><param name="Name" value="__SchedulerTask"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a7"><param name="Name" value="__Sensors_Refreshed_Flag"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a9"><param name="Name" value="__SerialBuffer"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a10"><param name="Name" value="__SerialCounter"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a11"><param name="Name" value="__StartBit1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a12"><param name="Name" value="__StartBit2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a32"><param name="Name" value="__Switchs"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a18"><param name="Name" value="__SystemBit0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a17"><param name="Name" value="__SystemBit1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a16"><param name="Name" value="__SystemBit2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a15"><param name="Name" value="__SystemBit3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a14"><param name="Name" value="__SystemBit4"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a28"><param name="Name" value="__TimeTip"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a29"><param name="Name" value="__TimeTipDivider"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a13"><param name="Name" value="__ToggleBit"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a26"><param name="Name" value="__TV_Counter"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a25"><param name="Name" value="__TV_DATA"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00010.html#a8"><param name="Name" value="__TV_Data_Available"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="WDT_1152MS"><param name="Name" value="WDT_1152MS"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a66"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="WDT_144MS"><param name="Name" value="WDT_144MS"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a63"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="WDT_18MS"><param name="Name" value="WDT_18MS"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a60"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="WDT_2304MS"><param name="Name" value="WDT_2304MS"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a67"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="WDT_288MS"><param name="Name" value="WDT_288MS"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a64"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="WDT_36MS"><param name="Name" value="WDT_36MS"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a61"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="WDT_576MS"><param name="Name" value="WDT_576MS"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a65"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="WDT_72MS"><param name="Name" value="WDT_72MS"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a62"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="WDT_FROM_SLEEP"><param name="Name" value="WDT_FROM_SLEEP"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a44"><param name="Name" value="16f877.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="See Also" value="WDT_TIMEOUT"><param name="Name" value="WDT_TIMEOUT"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001.html#a45"><param name="Name" value="16f877.h"></OBJECT>
+</UL>

@@ -1,0 +1,5833 @@
+CCS PCM C Compiler, Version 3.180, 20845
+
+               Filename: main.LST
+
+               ROM used: 4011 (49%)
+                         Largest free fragment is 1799
+               RAM used: 112 (31%) at main() level
+                         143 (39%) worst case
+               Stack:    7 worst case (3 in main + 4 for interrupts)
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   73C
+0003:  NOP
+0004:  MOVWF  7F
+0005:  SWAPF  03,W
+0006:  CLRF   03
+0007:  MOVWF  21
+0008:  MOVF   0A,W
+0009:  MOVWF  20
+000A:  CLRF   0A
+000B:  MOVF   04,W
+000C:  MOVWF  22
+000D:  MOVF   77,W
+000E:  MOVWF  23
+000F:  MOVF   78,W
+0010:  MOVWF  24
+0011:  MOVF   79,W
+0012:  MOVWF  25
+0013:  MOVF   7A,W
+0014:  MOVWF  26
+0015:  MOVF   7B,W
+0016:  MOVWF  27
+0017:  BCF    03.7
+0018:  BCF    03.5
+0019:  BTFSS  0B.3
+001A:  GOTO   01D
+001B:  BTFSC  0B.0
+001C:  GOTO   040
+001D:  MOVLW  8C
+001E:  MOVWF  04
+001F:  BTFSS  00.5
+0020:  GOTO   023
+0021:  BTFSC  0C.5
+0022:  GOTO   043
+0023:  MOVLW  8C
+0024:  MOVWF  04
+0025:  BTFSS  00.1
+0026:  GOTO   029
+0027:  BTFSC  0C.1
+0028:  GOTO   046
+0029:  BTFSS  0B.5
+002A:  GOTO   02D
+002B:  BTFSC  0B.2
+002C:  GOTO   049
+002D:  MOVF   22,W
+002E:  MOVWF  04
+002F:  MOVF   23,W
+0030:  MOVWF  77
+0031:  MOVF   24,W
+0032:  MOVWF  78
+0033:  MOVF   25,W
+0034:  MOVWF  79
+0035:  MOVF   26,W
+0036:  MOVWF  7A
+0037:  MOVF   27,W
+0038:  MOVWF  7B
+0039:  MOVF   20,W
+003A:  MOVWF  0A
+003B:  SWAPF  21,W
+003C:  MOVWF  03
+003D:  SWAPF  7F,F
+003E:  SWAPF  7F,W
+003F:  RETFIE
+0040:  BCF    0A.3
+0041:  BCF    0A.4
+0042:  GOTO   0F0
+0043:  BSF    0A.3
+0044:  BCF    0A.4
+0045:  GOTO   000
+0046:  BCF    0A.3
+0047:  BCF    0A.4
+0048:  GOTO   3A7
+0049:  BCF    0A.3
+004A:  BCF    0A.4
+004B:  GOTO   118
+....................  //--------------------------------------------------------------------------------//  
+.................... //-                   HemiOs ( Hemisson Operating System )                       -//  
+.................... //-                                                                              -//  
+.................... //-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  
+.................... //-  This library is free software; you can redistribute it and/or               -//  
+.................... //-  modify it under the terms of the GNU Lesser General Public                  -//  
+.................... //-  License as published by the Free Software Foundation; either                -//  
+.................... //-  version 2.1 of the License, or any later version.                           -//  
+.................... //-                                                                              -//  
+.................... //-  This library is distributed in the hope that it will be useful,             -//  
+.................... //-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  
+.................... //-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  
+.................... //-  Lesser General Public License for more details.                             -//  
+.................... //-                                                                              -//  
+.................... //-  You should have received a copy of the GNU Lesser General Public            -//  
+.................... //-  License along with this library; if not, write to the Free Software         -//  
+.................... //-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  
+.................... //-                                                                              -//  
+.................... //-                               __  __  ________                               -//  
+.................... //- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  
+.................... //- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  
+.................... //- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  
+.................... //- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  
+.................... //- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  
+.................... //-                                                                              -//  
+.................... //--------------------------------------------------------------------------------//  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \file main.c  
+....................       \brief The main function where you can add your own code  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+....................   
+.................... #include "hemisson.h" 
+....................  //--------------------------------------------------------------------------------//  
+.................... //-                   HemiOs ( Hemisson Operating System )                       -//  
+.................... //										 -//  
+.................... //-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  
+.................... //-  This library is free software; you can redistribute it and/or               -//  
+.................... //-  modify it under the terms of the GNU Lesser General Public                  -//  
+.................... //-  License as published by the Free Software Foundation; either                -//  
+.................... //-  version 2.1 of the License, or any later version.                           -//  
+.................... //-                                                                              -//  
+.................... //-  This library is distributed in the hope that it will be useful,             -//  
+.................... //-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  
+.................... //-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  
+.................... //-  Lesser General Public License for more details.                             -//  
+.................... //-                                                                              -//  
+.................... //-  You should have received a copy of the GNU Lesser General Public            -//  
+.................... //-  License along with this library; if not, write to the Free Software         -//  
+.................... //-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  
+.................... //-                                                                              -//  
+.................... //-                               __  __  ________                               -//  
+.................... //- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  
+.................... //- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  
+.................... //- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  
+.................... //- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  
+.................... //- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  
+.................... //-                                                                              -//  
+.................... //--------------------------------------------------------------------------------//  
+....................   
+.................... #device PIC16F877 *=16 ADC=8  
+004C:  BCF    0A.0
+004D:  BCF    0A.1
+004E:  BCF    0A.2
+004F:  ADDWF  02,F
+0050:  RETLW  48
+0051:  RETLW  65
+0052:  RETLW  6D
+0053:  RETLW  69
+0054:  RETLW  4F
+0055:  RETLW  53
+0056:  RETLW  20
+0057:  RETLW  56
+0058:  RETLW  25
+0059:  RETLW  64
+005A:  RETLW  2E
+005B:  RETLW  25
+005C:  RETLW  64
+005D:  RETLW  20
+005E:  RETLW  2C
+005F:  RETLW  20
+0060:  RETLW  4B
+0061:  RETLW  2D
+0062:  RETLW  54
+0063:  RETLW  65
+0064:  RETLW  61
+0065:  RETLW  6D
+0066:  RETLW  20
+0067:  RETLW  53
+0068:  RETLW  2E
+0069:  RETLW  41
+006A:  RETLW  2E
+006B:  RETLW  20
+006C:  RETLW  28
+006D:  RETLW  20
+006E:  RETLW  41
+006F:  RETLW  6C
+0070:  RETLW  65
+0071:  RETLW  78
+0072:  RETLW  61
+0073:  RETLW  6E
+0074:  RETLW  64
+0075:  RETLW  72
+0076:  RETLW  65
+0077:  RETLW  20
+0078:  RETLW  43
+0079:  RETLW  6F
+007A:  RETLW  6C
+007B:  RETLW  6F
+007C:  RETLW  74
+007D:  RETLW  20
+007E:  RETLW  29
+007F:  RETLW  20
+0080:  RETLW  20
+0081:  RETLW  00
+0082:  BCF    0A.0
+0083:  BCF    0A.1
+0084:  BCF    0A.2
+0085:  ADDWF  02,F
+0086:  RETLW  31
+0087:  RETLW  39
+0088:  RETLW  2D
+0089:  RETLW  4A
+008A:  RETLW  61
+008B:  RETLW  6E
+008C:  RETLW  2D
+008D:  RETLW  30
+008E:  RETLW  39
+008F:  RETLW  00
+0090:  BCF    0A.0
+0091:  BCF    0A.1
+0092:  BCF    0A.2
+0093:  ADDWF  02,F
+0094:  RETLW  31
+0095:  RETLW  33
+0096:  RETLW  3A
+0097:  RETLW  34
+0098:  RETLW  31
+0099:  RETLW  3A
+009A:  RETLW  35
+009B:  RETLW  37
+009C:  RETLW  00
+009D:  BCF    0A.0
+009E:  BCF    0A.1
+009F:  BCF    0A.2
+00A0:  ADDWF  02,F
+00A1:  RETLW  45
+00A2:  RETLW  2D
+00A3:  RETLW  4D
+00A4:  RETLW  61
+00A5:  RETLW  69
+00A6:  RETLW  6C
+00A7:  RETLW  20
+00A8:  RETLW  3A
+00A9:  RETLW  20
+00AA:  RETLW  69
+00AB:  RETLW  6E
+00AC:  RETLW  66
+00AD:  RETLW  6F
+00AE:  RETLW  40
+00AF:  RETLW  68
+00B0:  RETLW  65
+00B1:  RETLW  6D
+00B2:  RETLW  69
+00B3:  RETLW  73
+00B4:  RETLW  73
+00B5:  RETLW  6F
+00B6:  RETLW  6E
+00B7:  RETLW  2E
+00B8:  RETLW  63
+00B9:  RETLW  6F
+00BA:  RETLW  6D
+00BB:  RETLW  0D
+00BC:  RETLW  0A
+00BD:  RETLW  0D
+00BE:  RETLW  0A
+00BF:  RETLW  00
+00C0:  BCF    0A.0
+00C1:  BCF    0A.1
+00C2:  BCF    0A.2
+00C3:  ADDWF  02,F
+00C4:  RETLW  55
+00C5:  RETLW  6E
+00C6:  RETLW  6B
+00C7:  RETLW  6E
+00C8:  RETLW  6F
+00C9:  RETLW  77
+00CA:  RETLW  6E
+00CB:  RETLW  20
+00CC:  RETLW  43
+00CD:  RETLW  6F
+00CE:  RETLW  6D
+00CF:  RETLW  6D
+00D0:  RETLW  61
+00D1:  RETLW  6E
+00D2:  RETLW  64
+00D3:  RETLW  20
+00D4:  RETLW  3F
+00D5:  RETLW  21
+00D6:  RETLW  0D
+00D7:  RETLW  0A
+00D8:  RETLW  00
+00D9:  BCF    0A.0
+00DA:  BCF    0A.1
+00DB:  BCF    0A.2
+00DC:  ADDWF  02,F
+00DD:  RETLW  62
+00DE:  RETLW  2C
+00DF:  RETLW  48
+00E0:  RETLW  65
+00E1:  RETLW  6D
+00E2:  RETLW  69
+00E3:  RETLW  4F
+00E4:  RETLW  53
+00E5:  RETLW  5F
+00E6:  RETLW  76
+00E7:  RETLW  5F
+00E8:  RETLW  25
+00E9:  RETLW  64
+00EA:  RETLW  2E
+00EB:  RETLW  25
+00EC:  RETLW  64
+00ED:  RETLW  0D
+00EE:  RETLW  0A
+00EF:  RETLW  00
+*
+0392:  BSF    0A.0
+0393:  BSF    0A.1
+0394:  BCF    0A.2
+0395:  ADDWF  02,F
+0396:  GOTO   363
+0397:  GOTO   368
+0398:  GOTO   36C
+0399:  GOTO   371
+039A:  GOTO   376
+039B:  GOTO   379
+039C:  GOTO   37E
+039D:  GOTO   383
+039E:  GOTO   387
+039F:  GOTO   38F
+03A0:  GOTO   38F
+03A1:  GOTO   38C
+03A2:  GOTO   38F
+03A3:  GOTO   38F
+03A4:  GOTO   38F
+03A5:  GOTO   38D
+03A6:  GOTO   38E
+*
+048A:  BCF    0A.0
+048B:  BCF    0A.1
+048C:  BSF    0A.2
+048D:  ADDWF  02,F
+048E:  GOTO   3AE
+048F:  GOTO   3C1
+0490:  GOTO   3C5
+0491:  GOTO   3D8
+0492:  GOTO   3EB
+0493:  GOTO   3FE
+0494:  GOTO   411
+0495:  GOTO   424
+0496:  GOTO   428
+0497:  GOTO   42C
+0498:  GOTO   430
+0499:  GOTO   434
+049A:  GOTO   438
+049B:  MOVF   56,W
+049C:  CLRF   78
+049D:  SUBWF  55,W
+049E:  BTFSC  03.0
+049F:  GOTO   4A3
+04A0:  MOVF   55,W
+04A1:  MOVWF  77
+04A2:  GOTO   4AF
+04A3:  CLRF   77
+04A4:  MOVLW  08
+04A5:  MOVWF  57
+04A6:  RLF    55,F
+04A7:  RLF    77,F
+04A8:  MOVF   56,W
+04A9:  SUBWF  77,W
+04AA:  BTFSC  03.0
+04AB:  MOVWF  77
+04AC:  RLF    78,F
+04AD:  DECFSZ 57,F
+04AE:  GOTO   4A6
+04AF:  RETLW  00
+04B0:  MOVF   53,W
+04B1:  MOVWF  77
+04B2:  BTFSC  53.7
+04B3:  GOTO   4B8
+04B4:  BTFSS  54.2
+04B5:  GOTO   4C4
+04B6:  MOVLW  20
+04B7:  GOTO   4BD
+04B8:  COMF   77,F
+04B9:  INCF   77,F
+04BA:  MOVF   77,W
+04BB:  MOVWF  53
+04BC:  MOVLW  2D
+04BD:  MOVWF  78
+04BE:  MOVF   78,W
+04BF:  BTFSS  0C.4
+04C0:  GOTO   4BF
+04C1:  MOVWF  19
+04C2:  BTFSS  54.2
+04C3:  BSF    54.3
+04C4:  MOVF   53,W
+04C5:  MOVWF  55
+04C6:  MOVLW  64
+04C7:  MOVWF  56
+04C8:  CALL   49B
+04C9:  MOVF   77,W
+04CA:  MOVWF  53
+04CB:  MOVF   78,W
+04CC:  MOVLW  30
+04CD:  BTFSS  03.2
+04CE:  GOTO   4D6
+04CF:  BTFSC  54.0
+04D0:  GOTO   4DD
+04D1:  BTFSC  54.3
+04D2:  GOTO   4DD
+04D3:  BTFSC  54.4
+04D4:  MOVLW  20
+04D5:  GOTO   4D8
+04D6:  BCF    54.3
+04D7:  BCF    54.4
+04D8:  ADDWF  78,F
+04D9:  MOVF   78,W
+04DA:  BTFSS  0C.4
+04DB:  GOTO   4DA
+04DC:  MOVWF  19
+04DD:  MOVF   53,W
+04DE:  MOVWF  55
+04DF:  MOVLW  0A
+04E0:  MOVWF  56
+04E1:  CALL   49B
+04E2:  MOVF   77,W
+04E3:  MOVWF  53
+04E4:  MOVF   78,W
+04E5:  MOVLW  30
+04E6:  BTFSS  03.2
+04E7:  GOTO   4EC
+04E8:  BTFSC  54.3
+04E9:  GOTO   4F1
+04EA:  BTFSC  54.4
+04EB:  MOVLW  20
+04EC:  ADDWF  78,F
+04ED:  MOVF   78,W
+04EE:  BTFSS  0C.4
+04EF:  GOTO   4EE
+04F0:  MOVWF  19
+04F1:  MOVLW  30
+04F2:  ADDWF  53,F
+04F3:  MOVF   53,W
+04F4:  BTFSS  0C.4
+04F5:  GOTO   4F4
+04F6:  MOVWF  19
+04F7:  RETLW  00
+*
+055E:  BTFSC  56.7
+055F:  GOTO   571
+0560:  MOVLW  0F
+0561:  MOVWF  77
+0562:  SWAPF  55,W
+0563:  ANDWF  77,F
+0564:  MOVLW  0A
+0565:  SUBWF  77,W
+0566:  BTFSC  03.0
+0567:  GOTO   56B
+0568:  MOVLW  30
+0569:  ADDWF  77,F
+056A:  GOTO   56D
+056B:  MOVF   56,W
+056C:  ADDWF  77,F
+056D:  MOVF   77,W
+056E:  BTFSS  0C.4
+056F:  GOTO   56E
+0570:  MOVWF  19
+0571:  MOVLW  0F
+0572:  ANDWF  55,F
+0573:  MOVLW  0A
+0574:  SUBWF  55,W
+0575:  BTFSC  03.0
+0576:  GOTO   579
+0577:  MOVLW  30
+0578:  GOTO   57B
+0579:  BCF    56.7
+057A:  MOVF   56,W
+057B:  ADDWF  55,F
+057C:  MOVF   55,W
+057D:  BTFSS  0C.4
+057E:  GOTO   57D
+057F:  MOVWF  19
+0580:  BCF    0A.3
+0581:  BCF    0A.4
+0582:  GOTO   5C4 (RETURN)
+*
+05D8:  MOVF   78,W
+05D9:  MOVF   52,W
+05DA:  MOVWF  55
+05DB:  MOVLW  64
+05DC:  MOVWF  56
+05DD:  CALL   49B
+05DE:  MOVF   77,W
+05DF:  MOVWF  52
+05E0:  MOVF   78,W
+05E1:  MOVLW  30
+05E2:  BTFSS  03.2
+05E3:  GOTO   5EB
+05E4:  BTFSC  53.0
+05E5:  GOTO   5F2
+05E6:  BTFSC  53.3
+05E7:  GOTO   5F2
+05E8:  BTFSC  53.4
+05E9:  MOVLW  20
+05EA:  GOTO   5ED
+05EB:  BCF    53.3
+05EC:  BCF    53.4
+05ED:  ADDWF  78,F
+05EE:  MOVF   78,W
+05EF:  BTFSS  0C.4
+05F0:  GOTO   5EF
+05F1:  MOVWF  19
+05F2:  MOVF   52,W
+05F3:  MOVWF  55
+05F4:  MOVLW  0A
+05F5:  MOVWF  56
+05F6:  CALL   49B
+05F7:  MOVF   77,W
+05F8:  MOVWF  52
+05F9:  MOVF   78,W
+05FA:  MOVLW  30
+05FB:  BTFSS  03.2
+05FC:  GOTO   601
+05FD:  BTFSC  53.3
+05FE:  GOTO   606
+05FF:  BTFSC  53.4
+0600:  MOVLW  20
+0601:  ADDWF  78,F
+0602:  MOVF   78,W
+0603:  BTFSS  0C.4
+0604:  GOTO   603
+0605:  MOVWF  19
+0606:  MOVLW  30
+0607:  ADDWF  52,F
+0608:  MOVF   52,W
+0609:  BTFSS  0C.4
+060A:  GOTO   609
+060B:  MOVWF  19
+060C:  RETLW  00
+....................   
+.................... //#define firmware								 // Comment this line to build HemiOs  
+....................   
+.................... #include "16f877.h" 
+....................  ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \file 16f877.h  
+....................       \brief All processor registers adresses are defined in this file  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+....................   
+.................... //////// Standard Header file for the PIC16F877 device ////////////////  
+.................... //#device PIC16F877  
+.................... #list  
+....................  
+....................   
+.................... #fuses HS,NOWDT,NOPROTECT,NOPUT,NOBROWNOUT,NOLVP,WRT,NOCPD                       // Configuration Bits  
+.................... #use delay(clock=20000000)                                                       // Clock @ 20 MHz  
+*
+0726:  MOVLW  3B
+0727:  MOVWF  04
+0728:  BCF    03.7
+0729:  MOVF   00,W
+072A:  BTFSC  03.2
+072B:  GOTO   739
+072C:  MOVLW  06
+072D:  MOVWF  78
+072E:  CLRF   77
+072F:  DECFSZ 77,F
+0730:  GOTO   72F
+0731:  DECFSZ 78,F
+0732:  GOTO   72E
+0733:  MOVLW  7B
+0734:  MOVWF  77
+0735:  DECFSZ 77,F
+0736:  GOTO   735
+0737:  DECFSZ 00,F
+0738:  GOTO   72C
+0739:  BCF    0A.3
+073A:  BSF    0A.4
+073B:  GOTO   06A (RETURN)
+.................... #use rs232(baud=115200,parity=N,xmit=PIN_C6,rcv=PIN_C7)                          // Serial Configuration  
+.................... #use i2c( master , sda = PIN_C4 , scl = PIN_C3, FORCE_HW, SLOW  )                // I2C Master Configuration  
+*
+053F:  BCF    14.7
+0540:  BCF    0C.3
+0541:  MOVF   55,W
+0542:  MOVWF  13
+0543:  MOVLW  02
+0544:  BTFSC  14.7
+0545:  GOTO   54D
+0546:  BTFSS  0C.3
+0547:  GOTO   546
+0548:  MOVLW  00
+0549:  BSF    03.5
+054A:  BTFSC  11.6
+054B:  MOVLW  01
+054C:  BCF    03.5
+054D:  MOVWF  78
+054E:  RETLW  00
+054F:  BSF    03.5
+0550:  BSF    11.3
+0551:  BTFSC  11.3
+0552:  GOTO   551
+0553:  BTFSC  77.0
+0554:  BCF    11.5
+0555:  BTFSS  77.0
+0556:  BSF    11.5
+0557:  BSF    11.4
+0558:  BTFSC  11.4
+0559:  GOTO   558
+055A:  BCF    03.5
+055B:  MOVF   13,W
+055C:  MOVWF  78
+055D:  RETLW  00
+*
+074A:  MOVLW  FF
+074B:  MOVWF  29
+074C:  BSF    29.3
+074D:  MOVF   29,W
+074E:  BSF    03.5
+074F:  MOVWF  07
+0750:  BCF    03.5
+0751:  BSF    29.4
+0752:  MOVF   29,W
+0753:  BSF    03.5
+0754:  MOVWF  07
+....................   
+.................... #use fast_io(a)  
+.................... #use fast_io(b)  
+.................... #use fast_io(c)  
+.................... #use fast_io(d)  
+.................... #use fast_io(e)  
+....................   
+.................... #include "constants.h" 
+....................  //--------------------------------------------------------------------------------// 
+.................... //-                   HemiOs ( Hemisson Operating System )                       -// 
+.................... //-                                                                              -// 
+.................... //-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -// 
+.................... //-  This library is free software; you can redistribute it and/or               -// 
+.................... //-  modify it under the terms of the GNU Lesser General Public                  -// 
+.................... //-  License as published by the Free Software Foundation; either                -// 
+.................... //-  version 2.1 of the License, or any later version.                           -// 
+.................... //-                                                                              -// 
+.................... //-  This library is distributed in the hope that it will be useful,             -// 
+.................... //-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -// 
+.................... //-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -// 
+.................... //-  Lesser General Public License for more details.                             -// 
+.................... //-                                                                              -// 
+.................... //-  You should have received a copy of the GNU Lesser General Public            -// 
+.................... //-  License along with this library; if not, write to the Free Software         -// 
+.................... //-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -// 
+.................... //-                                                                              -// 
+.................... //-                               __  __  ________                               -// 
+.................... //- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -// 
+.................... //- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -// 
+.................... //- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -// 
+.................... //- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -// 
+.................... //- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -// 
+.................... //-                                                                              -// 
+.................... //--------------------------------------------------------------------------------// 
+....................  
+.................... //////////////////////////////////////////////////////////////////////////////// 
+.................... /*!   \file constants.h 
+....................       \brief In this file all constants are defined 
+.................... */ 
+.................... //////////////////////////////////////////////////////////////////////////////// 
+....................  
+.................... #define INIT_TRISA            0x2F	// b0010 1111 
+.................... #define INIT_PORTA            0x10	// b0001 0000 
+....................  
+.................... #define INIT_TRISB            0x30	// bXX11 000X 
+.................... #define INIT_PORTB            0x00	// b0000 0000 
+....................  
+.................... #define INIT_TRISC            0xA7	// b1010 0111 
+.................... #define INIT_PORTC            0x00	// b0000 0000 
+....................  
+.................... #define INIT_TRISD            0x00	// b0000 0000 
+.................... #define INIT_PORTD            0x00	// b0000 0000 
+....................  
+.................... #define INIT_TRISE            0x0F	// b0000 1111 
+.................... #define INIT_PORTE            0x00	// b0000 0000 
+....................  
+.................... #BIT BOR = 0x8E.0 
+.................... #BIT POR = 0x8E.1 
+....................  
+.................... #define __SERIAL_BUFFER_SIZE  80 
+....................  
+.................... #define FRONT                 2 
+.................... #define FRONTLEFT             1 
+.................... #define FRONTRIGHT            0 
+.................... #define LEFT                  4 
+.................... #define RIGHT                 5 
+.................... #define REAR                  3 
+.................... #define GROUNDLEFT            6 
+.................... #define GROUNDRIGHT           7 
+.................... #define FRONTZONE             0 
+.................... #define REARZONE              1 
+.................... #define GROUNDZONE            2 
+....................  
+.................... #define ENABLE                1 
+.................... #define DISABLE               0 
+.................... #define FAST                  1 
+.................... #define NORMAL                0 
+.................... #define MANUAL                0 
+.................... #define REFRESH               1 
+.................... #define ON                    1 
+.................... #define OFF                   0 
+....................  
+.................... #define HEMIOS_VERSION        1 
+.................... #define HEMIOS_REVISION       50 
+....................  
+....................  
+.................... #include "variables.c" 
+....................  //--------------------------------------------------------------------------------//  
+.................... //-                   HemiOs ( Hemisson Operating System )                       -//  
+.................... //-                                                                              -//  
+.................... //-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  
+.................... //-  This library is free software; you can redistribute it and/or               -//  
+.................... //-  modify it under the terms of the GNU Lesser General Public                  -//  
+.................... //-  License as published by the Free Software Foundation; either                -//  
+.................... //-  version 2.1 of the License, or any later version.                           -//  
+.................... //-                                                                              -//  
+.................... //-  This library is distributed in the hope that it will be useful,             -//  
+.................... //-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  
+.................... //-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  
+.................... //-  Lesser General Public License for more details.                             -//  
+.................... //-                                                                              -//  
+.................... //-  You should have received a copy of the GNU Lesser General Public            -//  
+.................... //-  License along with this library; if not, write to the Free Software         -//  
+.................... //-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  
+.................... //-                                                                              -//  
+.................... //-                               __  __  ________                               -//  
+.................... //- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  
+.................... //- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  
+.................... //- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  
+.................... //- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  
+.................... //- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  
+.................... //-                                                                              -//  
+.................... //--------------------------------------------------------------------------------//  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \file variables.c  
+....................       \brief Definition of all global functions  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+....................   
+.................... //- Motors  
+.................... signed int8 __PwmMotLeft = 0;                                                    // 0 : Stop ; 9 : Max Speed  
+*
+075D:  BCF    03.5
+075E:  CLRF   2A
+.................... signed int8 __PwmMotRight = 0;                                                   // 0 : Stop ; 9 : Max Speed  
+075F:  CLRF   2B
+.................... unsigned char __PwmCounter = 0;  
+0760:  CLRF   2C
+....................   
+.................... //- Configuration Bits  
+.................... int1 __Auto_Refresh_Sensors = 1;                                                 // 1 : Auto   ; 0 : Manual  
+0761:  BSF    2D.0
+.................... int1 __Auto_Refresh_TV_Remote = 1;                                               // 1 : Auto   ; 0 : Never  
+0762:  BSF    2D.1
+.................... int1 __Enable_RS232_Control = 1;                                                 // 1 : Enable ; 0 : Disable  
+0763:  BSF    2D.2
+.................... int1 __Enable_TV_Remote_Control = 1;                                             // 1 : Enable ; 0 : Disable  
+0764:  BSF    2D.3
+....................   
+.................... //- Flags  
+.................... int1 __Sensors_Refreshed_Flag = 0;                                               // 1 : Sensors refreshed  
+0765:  BCF    2D.4
+.................... int1 __TV_Data_Available = 0;  
+0766:  BCF    2D.5
+....................   
+.................... //- RS232  
+.................... char __SerialBuffer[ __SERIAL_BUFFER_SIZE ];  
+.................... #locate __SerialBuffer = 0x01A0  
+.................... char __SerialCounter = 0;  
+0767:  CLRF   2E
+....................   
+.................... //- TV Remote Control  
+.................... int1 __StartBit1 = 0;  
+0768:  BCF    2D.6
+.................... int1 __StartBit2 = 0;  
+0769:  BCF    2D.7
+.................... int1 __ToggleBit = 0;  
+076A:  BCF    2F.0
+.................... int1 __SystemBit4 = 0;  
+076B:  BCF    2F.1
+.................... int1 __SystemBit3 = 0;  
+076C:  BCF    2F.2
+.................... int1 __SystemBit2 = 0;  
+076D:  BCF    2F.3
+.................... int1 __SystemBit1 = 0;  
+076E:  BCF    2F.4
+.................... int1 __SystemBit0 = 0;  
+076F:  BCF    2F.5
+.................... int1 __DataBit5 = 0;  
+0770:  BCF    2F.6
+.................... int1 __DataBit4 = 0;  
+0771:  BCF    2F.7
+.................... int1 __DataBit3 = 0;  
+0772:  BCF    30.0
+.................... int1 __DataBit2 = 0;  
+0773:  BCF    30.1
+.................... int1 __DataBit1 = 0;  
+0774:  BCF    30.2
+.................... int1 __DataBit0 = 0;  
+0775:  BCF    30.3
+.................... int __TV_DATA = 0;  
+0776:  CLRF   31
+.................... int __TV_Counter = 0;  
+0777:  CLRF   32
+.................... int __BeepMem = 0;  
+0778:  CLRF   33
+....................   
+.................... //- Time  
+.................... unsigned int32 __TimeTip = 0;  
+0779:  CLRF   34
+077A:  CLRF   35
+077B:  CLRF   36
+077C:  CLRF   37
+.................... char __TimeTipDivider = 0;  
+077D:  CLRF   38
+....................   
+.................... //- Irs Sensors  
+.................... unsigned char __IR_Light[ 8 ];  
+.................... #locate __IR_Light = 0x01D2  
+.................... unsigned char __IR_Proximity[ 8 ];				// 0 : nothing detected ; 255 : obstacle near Hemisson  
+.................... #locate __IR_Proximity = 0x01DA  
+....................   
+.................... //- Switchs  
+.................... char __Switchs[ 4 ];  
+.................... #locate __Switchs = 0x01E2  
+....................   
+.................... //- Scheduler  
+.................... unsigned char __SchedulerTask = 0;  
+077E:  CLRF   39
+.................... int __Divider = 0;  
+077F:  CLRF   3A
+....................   
+.................... //- TRIS  
+.................... #locate TRISB = 0x0086  
+....................   
+....................   
+....................   
+....................   
+....................  
+.................... #include "hemisson_task1.c" 
+....................  //--------------------------------------------------------------------------------//  
+.................... //-                   HemiOs ( Hemisson Operating System )                       -//  
+.................... //-                                                                              -//  
+.................... //-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  
+.................... //-  This library is free software; you can redistribute it and/or               -//  
+.................... //-  modify it under the terms of the GNU Lesser General Public                  -//  
+.................... //-  License as published by the Free Software Foundation; either                -//  
+.................... //-  version 2.1 of the License, or any later version.                           -//  
+.................... //-                                                                              -//  
+.................... //-  This library is distributed in the hope that it will be useful,             -//  
+.................... //-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  
+.................... //-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  
+.................... //-  Lesser General Public License for more details.                             -//  
+.................... //-                                                                              -//  
+.................... //-  You should have received a copy of the GNU Lesser General Public            -//  
+.................... //-  License along with this library; if not, write to the Free Software         -//  
+.................... //-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  
+.................... //-                                                                              -//  
+.................... //-                               __  __  ________                               -//  
+.................... //- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  
+.................... //- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  
+.................... //- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  
+.................... //- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  
+.................... //- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  
+.................... //-                                                                              -//  
+.................... //--------------------------------------------------------------------------------//  
+....................   
+.................... void hemisson_task1(void)  
+.................... {  
+....................    // Add your task here  
+....................    // This code will be executed every 40 ms  
+....................    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
+....................    // !!! BE CAREFUL THAT THE WHOLE TASK MUSN'T LAST LESS THAN 200 us !!!  
+....................    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
+.................... }  
+....................  
+.................... #include "hemisson_task2.c" 
+....................  //--------------------------------------------------------------------------------//  
+.................... //-                   HemiOs ( Hemisson Operating System )                       -//  
+.................... //-                                                                              -//  
+.................... //-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  
+.................... //-  This library is free software; you can redistribute it and/or               -//  
+.................... //-  modify it under the terms of the GNU Lesser General Public                  -//  
+.................... //-  License as published by the Free Software Foundation; either                -//  
+.................... //-  version 2.1 of the License, or any later version.                           -//  
+.................... //-                                                                              -//  
+.................... //-  This library is distributed in the hope that it will be useful,             -//  
+.................... //-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  
+.................... //-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  
+.................... //-  Lesser General Public License for more details.                             -//  
+.................... //-                                                                              -//  
+.................... //-  You should have received a copy of the GNU Lesser General Public            -//  
+.................... //-  License along with this library; if not, write to the Free Software         -//  
+.................... //-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  
+.................... //-                                                                              -//  
+.................... //-                               __  __  ________                               -//  
+.................... //- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  
+.................... //- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  
+.................... //- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  
+.................... //- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  
+.................... //- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  
+.................... //-                                                                              -//  
+.................... //--------------------------------------------------------------------------------//  
+....................   
+.................... void hemisson_task2(void)  
+.................... {  
+....................    // Add your task here  
+....................    // This code will be executed every 40 ms  
+....................    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
+....................    // !!! BE CAREFUL THAT THE WHOLE TASK MUSN'T LAST LESS THAN 200 us !!!  
+....................    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
+.................... }  
+....................  
+.................... #include "hemisson_task3.c" 
+....................  //--------------------------------------------------------------------------------//  
+.................... //-                   HemiOs ( Hemisson Operating System )                       -//  
+.................... //-                                                                              -//  
+.................... //-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  
+.................... //-  This library is free software; you can redistribute it and/or               -//  
+.................... //-  modify it under the terms of the GNU Lesser General Public                  -//  
+.................... //-  License as published by the Free Software Foundation; either                -//  
+.................... //-  version 2.1 of the License, or any later version.                           -//  
+.................... //-                                                                              -//  
+.................... //-  This library is distributed in the hope that it will be useful,             -//  
+.................... //-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  
+.................... //-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  
+.................... //-  Lesser General Public License for more details.                             -//  
+.................... //-                                                                              -//  
+.................... //-  You should have received a copy of the GNU Lesser General Public            -//  
+.................... //-  License along with this library; if not, write to the Free Software         -//  
+.................... //-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  
+.................... //-                                                                              -//  
+.................... //-                               __  __  ________                               -//  
+.................... //- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  
+.................... //- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  
+.................... //- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  
+.................... //- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  
+.................... //- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  
+.................... //-                                                                              -//  
+.................... //--------------------------------------------------------------------------------//  
+....................   
+.................... void hemisson_task3(void)  
+.................... {  
+....................    // Add your task here  
+....................    // This code will be executed every 40 ms  
+....................    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
+....................    // !!! BE CAREFUL THAT THE WHOLE TASK MUSN'T LAST LESS THAN 200 us !!!  
+....................    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
+.................... }  
+....................  
+.................... #include "hemisson_task4.c" 
+....................  //--------------------------------------------------------------------------------//  
+.................... //-                   HemiOs ( Hemisson Operating System )                       -//  
+.................... //-                                                                              -//  
+.................... //-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  
+.................... //-  This library is free software; you can redistribute it and/or               -//  
+.................... //-  modify it under the terms of the GNU Lesser General Public                  -//  
+.................... //-  License as published by the Free Software Foundation; either                -//  
+.................... //-  version 2.1 of the License, or any later version.                           -//  
+.................... //-                                                                              -//  
+.................... //-  This library is distributed in the hope that it will be useful,             -//  
+.................... //-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  
+.................... //-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  
+.................... //-  Lesser General Public License for more details.                             -//  
+.................... //-                                                                              -//  
+.................... //-  You should have received a copy of the GNU Lesser General Public            -//  
+.................... //-  License along with this library; if not, write to the Free Software         -//  
+.................... //-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  
+.................... //-                                                                              -//  
+.................... //-                               __  __  ________                               -//  
+.................... //- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  
+.................... //- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  
+.................... //- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  
+.................... //- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  
+.................... //- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  
+.................... //-                                                                              -//  
+.................... //--------------------------------------------------------------------------------//  
+....................   
+.................... void hemisson_task4(void)  
+.................... {  
+....................    // Add your task here  
+....................    // This code will be executed every 40 ms  
+....................    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
+....................    // !!! BE CAREFUL THAT THE WHOLE TASK MUSN'T LAST LESS THAN 200 us !!!  
+....................    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
+.................... }  
+....................  
+.................... #ifdef firmware  
+.................... #include "firmware_hemisson.c"  
+.................... #endif  
+.................... #include "hemisson.c" 
+....................  //--------------------------------------------------------------------------------//  
+.................... //-                   HemiOs ( Hemisson Operating System )                       -//  
+.................... //-                                                                              -//  
+.................... //-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  
+.................... //-  This library is free software; you can redistribute it and/or               -//  
+.................... //-  modify it under the terms of the GNU Lesser General Public                  -//  
+.................... //-  License as published by the Free Software Foundation; either                -//  
+.................... //-  version 2.1 of the License, or any later version.                           -//  
+.................... //-                                                                              -//  
+.................... //-  This library is distributed in the hope that it will be useful,             -//  
+.................... //-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  
+.................... //-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  
+.................... //-  Lesser General Public License for more details.                             -//  
+.................... //-                                                                              -//  
+.................... //-  You should have received a copy of the GNU Lesser General Public            -//  
+.................... //-  License along with this library; if not, write to the Free Software         -//  
+.................... //-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  
+.................... //-                                                                              -//  
+.................... //-                               __  __  ________                               -//  
+.................... //- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  
+.................... //- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  
+.................... //- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  
+.................... //- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  
+.................... //- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  
+.................... //-                                                                              -//  
+.................... //--------------------------------------------------------------------------------//  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \file hemisson.c  
+....................       \brief The Os functions, all functions are called through an interrupt  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+....................   
+.................... //----------------------------------------------------------------//  
+.................... //-                Conversion Function                           -//  
+.................... char chartohex( char valuetoconvert )  
+.................... {  
+.................... 	char convertedval;  
+....................    	if( valuetoconvert >= 'A' )  
+....................    	{  
+*
+060D:  MOVF   57,W
+060E:  SUBLW  40
+060F:  BTFSC  03.0
+0610:  GOTO   616
+....................       		convertedval = valuetoconvert-'A'+10;  
+0611:  MOVLW  41
+0612:  SUBWF  57,W
+0613:  ADDLW  0A
+0614:  MOVWF  58
+....................    	}	  
+....................    	else  
+....................    	{  
+0615:  GOTO   619
+....................       		convertedval = valuetoconvert -'0';  
+0616:  MOVLW  30
+0617:  SUBWF  57,W
+0618:  MOVWF  58
+....................    	}  
+....................    	return convertedval;  
+0619:  MOVF   58,W
+061A:  MOVWF  78
+.................... }  
+061B:  RETLW  00
+....................   
+.................... //----------------------------------------------------------------//  
+.................... //-                Robot Initialisation                          -//  
+.................... void __hemisson_init(void)  
+.................... {  
+.................... 	__PwmMotLeft = 0;  
+*
+1000:  CLRF   2A
+....................    	__PwmMotRight = 0;  
+1001:  CLRF   2B
+....................   
+....................    	__IR_Light[ 0 ] = 0;  
+1002:  BSF    03.5
+1003:  BSF    03.6
+1004:  CLRF   52
+....................    	__IR_Light[ 1 ] = 0;  
+1005:  CLRF   53
+....................    	__IR_Light[ 2 ] = 0;  
+1006:  CLRF   54
+....................    	__IR_Light[ 3 ] = 0;  
+1007:  CLRF   55
+....................    	__IR_Light[ 4 ] = 0;  
+1008:  CLRF   56
+....................    	__IR_Light[ 5 ] = 0;  
+1009:  CLRF   57
+....................    	__IR_Light[ 6 ] = 0;  
+100A:  CLRF   58
+....................    	__IR_Light[ 7 ] = 0;  
+100B:  CLRF   59
+....................    	__IR_Proximity[ 0 ] = 0;  
+100C:  CLRF   5A
+....................    	__IR_Proximity[ 1 ] = 0;  
+100D:  CLRF   5B
+....................    	__IR_Proximity[ 2 ] = 0;  
+100E:  CLRF   5C
+....................    	__IR_Proximity[ 3 ] = 0;  
+100F:  CLRF   5D
+....................    	__IR_Proximity[ 4 ] = 0;  
+1010:  CLRF   5E
+....................    	__IR_Proximity[ 5 ] = 0;  
+1011:  CLRF   5F
+....................    	__IR_Proximity[ 6 ] = 0;  
+1012:  CLRF   60
+....................    	__IR_Proximity[ 7 ] = 0;  
+1013:  CLRF   61
+....................   
+....................    	__Switchs[ 0 ] = 0;  
+1014:  CLRF   62
+....................    	__Switchs[ 1 ] = 0;  
+1015:  CLRF   63
+....................    	__Switchs[ 2 ] = 0;  
+1016:  CLRF   64
+....................    	__Switchs[ 3 ] = 0;  
+1017:  CLRF   65
+....................   
+....................    	//setup_spi(FALSE);  
+....................    	setup_psp(PSP_DISABLED);  
+1018:  BCF    03.6
+1019:  BCF    09.4
+....................    	setup_counters(RTCC_INTERNAL,RTCC_DIV_2);  
+101A:  CLRF   77
+101B:  BTFSS  77.3
+101C:  GOTO   028
+101D:  MOVLW  07
+101E:  BCF    03.5
+101F:  CLRF   01
+1020:  MOVLW  81
+1021:  MOVWF  04
+1022:  BCF    03.7
+1023:  MOVF   00,W
+1024:  ANDLW  C0
+1025:  IORLW  0F
+1026:  MOVWF  00
+1027:  BSF    03.5
+1028:  CLRWDT
+1029:  MOVLW  81
+102A:  MOVWF  04
+102B:  MOVF   00,W
+102C:  ANDLW  C0
+102D:  IORWF  77,W
+102E:  MOVWF  00
+....................    	setup_timer_1(T1_DISABLED);  
+102F:  BCF    03.5
+1030:  CLRF   10
+....................    	setup_timer_2(T2_DISABLED,0,1);  
+1031:  MOVLW  00
+1032:  MOVWF  78
+1033:  MOVWF  12
+1034:  MOVLW  00
+1035:  BSF    03.5
+1036:  MOVWF  12
+....................    	setup_ccp1(CCP_OFF);  
+1037:  BCF    03.5
+1038:  CLRF   17
+1039:  CLRF   17
+.................... 	setup_ccp2(CCP_OFF);  
+103A:  CLRF   1D
+103B:  CLRF   1D
+....................   
+.................... 	// I/O's  
+.................... 	set_tris_a(INIT_TRISA);  
+103C:  MOVLW  2F
+103D:  BSF    03.5
+103E:  MOVWF  05
+.................... 	set_tris_b(INIT_TRISB);  
+103F:  MOVLW  30
+1040:  MOVWF  06
+.................... 	set_tris_c(INIT_TRISC);  
+1041:  MOVLW  A7
+1042:  MOVWF  07
+.................... 	set_tris_d(INIT_TRISD);  
+1043:  MOVLW  00
+1044:  MOVWF  08
+.................... 	set_tris_e(INIT_TRISE);  
+1045:  BSF    09.0
+1046:  BSF    09.1
+1047:  BSF    09.2
+....................   
+.................... 	output_a(INIT_PORTA);  
+1048:  MOVLW  10
+1049:  BCF    03.5
+104A:  MOVWF  05
+.................... 	output_b(INIT_PORTB);  
+104B:  CLRF   06
+.................... 	output_c(INIT_PORTC);  
+104C:  CLRF   07
+.................... 	output_d(INIT_PORTD);  
+104D:  CLRF   08
+.................... 	output_e(INIT_PORTE);  
+104E:  CLRF   09
+....................   
+.................... 	port_b_pullups(false);  
+104F:  BSF    03.5
+1050:  BSF    01.7
+....................   
+.................... 	// Analog Port  
+.................... 	setup_adc_ports(ALL_ANALOG);  
+1051:  CLRF   1F
+.................... 	setup_adc(ADC_CLOCK_INTERNAL);  
+1052:  BCF    03.5
+1053:  MOVF   1F,W
+1054:  ANDLW  38
+1055:  IORLW  C1
+1056:  MOVWF  1F
+....................   
+.................... 	// Timer 2 for TV Remote RC5 Decode  
+.................... 	setup_timer_2(T2_DISABLED,0xBB,3);  
+1057:  MOVLW  10
+1058:  MOVWF  78
+1059:  MOVWF  12
+105A:  MOVLW  BB
+105B:  BSF    03.5
+105C:  MOVWF  12
+.................... 	set_timer2(0);  
+105D:  BCF    03.5
+105E:  CLRF   11
+....................   
+.................... 	// Timer 0 for Scheduler  
+.................... 	setup_timer_0 (RTCC_DIV_4);  
+105F:  BSF    03.5
+1060:  MOVF   01,W
+1061:  ANDLW  C0
+1062:  IORLW  01
+1063:  MOVWF  01
+.................... 	set_timer0(0);  
+1064:  BCF    03.5
+1065:  CLRF   01
+....................    	  
+.................... 	#ifdef firmware  
+.................... 	// Timer 1 for Webots Timer  
+....................    	setup_timer_1(T1_INTERNAL|T1_DIV_BY_8);  
+....................    	set_timer1(0);  
+.................... 	#endif  
+.................... 	  
+.................... 	// Welcome Message  
+.................... 	delay_ms(5);			// Delay for HemRadio Module  
+1066:  MOVLW  05
+1067:  MOVWF  3B
+1068:  BCF    0A.4
+1069:  GOTO   726
+106A:  BSF    0A.4
+.................... 	printf("HemiOS V%d.%d , K-Team S.A. ( Alexandre Colot )  " , HEMIOS_VERSION , HEMIOS_REVISION);  
+106B:  CLRF   3B
+106C:  MOVF   3B,W
+106D:  BCF    0A.4
+106E:  CALL   04C
+106F:  BSF    0A.4
+1070:  INCF   3B,F
+1071:  MOVWF  77
+1072:  MOVF   77,W
+1073:  BTFSS  0C.4
+1074:  GOTO   073
+1075:  MOVWF  19
+1076:  MOVLW  08
+1077:  SUBWF  3B,W
+1078:  BTFSS  03.2
+1079:  GOTO   06C
+107A:  CLRF   28
+107B:  BTFSC  0B.7
+107C:  BSF    28.7
+107D:  BCF    0B.7
+107E:  MOVLW  01
+107F:  MOVWF  53
+1080:  MOVLW  18
+1081:  MOVWF  54
+1082:  BCF    0A.4
+1083:  CALL   4B0
+1084:  BSF    0A.4
+1085:  BTFSC  28.7
+1086:  BSF    0B.7
+1087:  MOVLW  2E
+1088:  BTFSS  0C.4
+1089:  GOTO   088
+108A:  MOVWF  19
+108B:  CLRF   28
+108C:  BTFSC  0B.7
+108D:  BSF    28.7
+108E:  BCF    0B.7
+108F:  MOVLW  32
+1090:  MOVWF  53
+1091:  MOVLW  18
+1092:  MOVWF  54
+1093:  BCF    0A.4
+1094:  CALL   4B0
+1095:  BSF    0A.4
+1096:  BTFSC  28.7
+1097:  BSF    0B.7
+1098:  MOVLW  0D
+1099:  MOVWF  3C
+109A:  MOVF   3C,W
+109B:  BCF    0A.4
+109C:  CALL   04C
+109D:  BSF    0A.4
+109E:  INCF   3C,F
+109F:  MOVWF  77
+10A0:  MOVF   77,W
+10A1:  BTFSS  0C.4
+10A2:  GOTO   0A1
+10A3:  MOVWF  19
+10A4:  MOVLW  31
+10A5:  SUBWF  3C,W
+10A6:  BTFSS  03.2
+10A7:  GOTO   09A
+.................... 	printf(__DATE__);  
+10A8:  CLRF   3B
+10A9:  MOVF   3B,W
+10AA:  BCF    0A.4
+10AB:  CALL   082
+10AC:  BSF    0A.4
+10AD:  INCF   3B,F
+10AE:  MOVWF  77
+10AF:  MOVF   77,W
+10B0:  BTFSS  0C.4
+10B1:  GOTO   0B0
+10B2:  MOVWF  19
+10B3:  MOVLW  09
+10B4:  SUBWF  3B,W
+10B5:  BTFSS  03.2
+10B6:  GOTO   0A9
+.................... 	printf(" @ ");  
+10B7:  MOVLW  20
+10B8:  BTFSS  0C.4
+10B9:  GOTO   0B8
+10BA:  MOVWF  19
+10BB:  MOVLW  40
+10BC:  BTFSS  0C.4
+10BD:  GOTO   0BC
+10BE:  MOVWF  19
+10BF:  MOVLW  20
+10C0:  BTFSS  0C.4
+10C1:  GOTO   0C0
+10C2:  MOVWF  19
+.................... 	printf(__TIME__);  
+10C3:  CLRF   3B
+10C4:  MOVF   3B,W
+10C5:  BCF    0A.4
+10C6:  CALL   090
+10C7:  BSF    0A.4
+10C8:  INCF   3B,F
+10C9:  MOVWF  77
+10CA:  MOVF   77,W
+10CB:  BTFSS  0C.4
+10CC:  GOTO   0CB
+10CD:  MOVWF  19
+10CE:  MOVLW  08
+10CF:  SUBWF  3B,W
+10D0:  BTFSS  03.2
+10D1:  GOTO   0C4
+.................... 	printf("\r\n");  
+10D2:  MOVLW  0D
+10D3:  BTFSS  0C.4
+10D4:  GOTO   0D3
+10D5:  MOVWF  19
+10D6:  MOVLW  0A
+10D7:  BTFSS  0C.4
+10D8:  GOTO   0D7
+10D9:  MOVWF  19
+.................... 	printf("E-Mail : info@hemisson.com\r\n\r\n");  
+10DA:  CLRF   3B
+10DB:  MOVF   3B,W
+10DC:  BCF    0A.4
+10DD:  CALL   09D
+10DE:  BSF    0A.4
+10DF:  INCF   3B,F
+10E0:  MOVWF  77
+10E1:  MOVF   77,W
+10E2:  BTFSS  0C.4
+10E3:  GOTO   0E2
+10E4:  MOVWF  19
+10E5:  MOVLW  1E
+10E6:  SUBWF  3B,W
+10E7:  BTFSS  03.2
+10E8:  GOTO   0DB
+....................   
+.................... 	// Interrupts  
+.................... 	enable_interrupts(INT_TIMER0);  
+10E9:  BSF    0B.5
+.................... 	enable_interrupts(INT_RB);  
+10EA:  BSF    0B.3
+.................... 	if( __Enable_RS232_Control == 1 )  
+.................... 	{  
+10EB:  MOVLW  00
+10EC:  BTFSC  2D.2
+10ED:  MOVLW  01
+10EE:  SUBLW  01
+10EF:  BTFSS  03.2
+10F0:  GOTO   0F4
+.................... 		enable_interrupts(INT_RDA);  
+10F1:  BSF    03.5
+10F2:  BSF    0C.5
+10F3:  BCF    03.5
+.................... 	}  
+.................... 	enable_interrupts(GLOBAL);  
+10F4:  MOVLW  C0
+10F5:  IORWF  0B,F
+.................... }  
+....................   
+.................... //---------------------------------------------------------------//  
+.................... //-                        IR Sensors                           -//  
+.................... void __hemisson_refresh_sensors( int zone )  
+.................... {  
+.................... 	switch( zone )  
+.................... 	{  
+.................... 		case FrontZone :  
+.................... 			set_adc_channel( FrontLeft );  
+.................... 			delay_us( 12 );  
+.................... 			__IR_Light[ FrontLeft ] = read_adc();  
+.................... 			set_adc_channel( FrontRight );  
+.................... 			delay_us( 12 );  
+.................... 			__IR_Light[ FrontRight ] = read_adc();  
+.................... 			set_adc_channel( Front );  
+.................... 			delay_us( 12 );  
+.................... 			__IR_Light[ Front ] = read_adc();  
+.................... 			output_high( PIN_B2 );  
+.................... 			delay_us( 300 );  
+.................... 			__IR_Proximity[ Front ] = __IR_Light[ Front ] - read_adc();  
+.................... 			set_adc_channel( FrontLeft );  
+.................... 			delay_us( 12 );  
+.................... 			__IR_Proximity[ FrontLeft ] = __IR_Light[ FrontLeft ] - read_adc();  
+.................... 			set_adc_channel( FrontRight );  
+.................... 			delay_us( 12 );  
+.................... 			__IR_Proximity[ FrontRight ] = __IR_Light[ FrontRight ] - read_adc();  
+.................... 			output_low( PIN_B2 );  
+.................... 			break;  
+.................... 		case RearZone :  
+.................... 			set_adc_channel(Left);  
+.................... 			delay_us(12);  
+.................... 			__IR_Light[Left]=read_adc();  
+.................... 			set_adc_channel(Right);  
+.................... 			delay_us(12);  
+.................... 			__IR_Light[Right]= read_adc();  
+.................... 			set_adc_channel(Rear);  
+.................... 			delay_us(12);  
+.................... 			__IR_Light[Rear]= read_adc();  
+.................... 			output_high(PIN_B3);  
+.................... 			delay_us(300);  
+.................... 			__IR_Proximity[Rear]=__IR_Light[Rear]- read_adc();  
+.................... 			set_adc_channel(Left);  
+.................... 			delay_us(12);  
+.................... 			__IR_Proximity[Left]=__IR_Light[Left]- read_adc();  
+.................... 			set_adc_channel(Right);  
+.................... 			delay_us(12);  
+.................... 			__IR_Proximity[Right]=__IR_Light[Right]- read_adc();  
+.................... 			output_low(PIN_B3);  
+.................... 			break;  
+.................... 		case GroundZone :  
+.................... 			set_adc_channel( GroundLeft );  
+.................... 			delay_us( 12 );  
+.................... 			__IR_Light[ GroundLeft ] = read_adc();  
+.................... 			set_adc_channel( GroundRight );  
+.................... 			delay_us( 12 );  
+.................... 			__IR_Light[ GroundRight ] = read_adc();  
+.................... 			output_high( PIN_B1 );  
+.................... 			delay_us( 300 );  
+.................... 			__IR_Proximity[ GroundRight ] = __IR_Light[ GroundRight ] - read_adc();  
+.................... 			set_adc_channel( GroundLeft );  
+.................... 			delay_us( 12 );  
+.................... 			__IR_Proximity[ GroundLeft ] = __IR_Light[ GroundRight ] - read_adc();  
+.................... 			output_low( PIN_B1 );  
+.................... 			break;  
+.................... 	}  
+.................... 	delay_ms( 5 );  
+.................... }  
+....................   
+.................... //---------------------------------------------------------------//  
+.................... //-                        TV Remote                            -//  
+....................   
+.................... // TV Remote Control  
+.................... void __TV_Remote_Control( void )  
+.................... {  
+.................... 	switch( __TV_DATA )  
+.................... 	{  
+*
+035C:  MOVLW  01
+035D:  SUBWF  31,W
+035E:  ADDLW  EF
+035F:  BTFSC  03.0
+0360:  GOTO   38F
+0361:  ADDLW  11
+0362:  GOTO   392
+.................... 		case 1 :  
+.................... 			__PwmMotLeft = 5;  
+0363:  MOVLW  05
+0364:  MOVWF  2A
+.................... 			__PwmMotRight = 10;  
+0365:  MOVLW  0A
+0366:  MOVWF  2B
+.................... 			break;  
+0367:  GOTO   38F
+.................... 		case 2 :  
+.................... 			__PwmMotLeft = 10;  
+0368:  MOVLW  0A
+0369:  MOVWF  2A
+.................... 			__PwmMotRight = 10;  
+036A:  MOVWF  2B
+.................... 			break;  
+036B:  GOTO   38F
+.................... 		case 3 :  
+.................... 			__PwmMotLeft = 10;  
+036C:  MOVLW  0A
+036D:  MOVWF  2A
+.................... 			__PwmMotRight = 5;  
+036E:  MOVLW  05
+036F:  MOVWF  2B
+.................... 			break;  
+0370:  GOTO   38F
+.................... 		case 4:  
+.................... 			__PwmMotLeft = -10;  
+0371:  MOVLW  F6
+0372:  MOVWF  2A
+.................... 			__PwmMotRight = 10;  
+0373:  MOVLW  0A
+0374:  MOVWF  2B
+.................... 			break;  
+0375:  GOTO   38F
+.................... 		case 5 :  
+.................... 			__PwmMotLeft = 0;  
+0376:  CLRF   2A
+.................... 			__PwmMotRight = 0;  
+0377:  CLRF   2B
+.................... 			break;  
+0378:  GOTO   38F
+.................... 		case 6 :  
+.................... 			__PwmMotLeft = 10;  
+0379:  MOVLW  0A
+037A:  MOVWF  2A
+.................... 			__PwmMotRight = -10;  
+037B:  MOVLW  F6
+037C:  MOVWF  2B
+.................... 			break;  
+037D:  GOTO   38F
+.................... 		case 7 :  
+.................... 			__PwmMotLeft = -5;  
+037E:  MOVLW  FB
+037F:  MOVWF  2A
+.................... 			__PwmMotRight = -10;  
+0380:  MOVLW  F6
+0381:  MOVWF  2B
+.................... 			break;  
+0382:  GOTO   38F
+.................... 		case 8:  
+.................... 			__PwmMotLeft = -10;  
+0383:  MOVLW  F6
+0384:  MOVWF  2A
+.................... 			__PwmMotRight = -10;  
+0385:  MOVWF  2B
+.................... 			break;  
+0386:  GOTO   38F
+.................... 		case 9 :  
+.................... 			__PwmMotLeft = -10;  
+0387:  MOVLW  F6
+0388:  MOVWF  2A
+.................... 			__PwmMotRight = -5;  
+0389:  MOVLW  FB
+038A:  MOVWF  2B
+.................... 			break;  
+038B:  GOTO   38F
+.................... 		case 12 :   			// Touche On/Off  
+.................... 			break;  
+038C:  GOTO   38F
+.................... 		case 16 :   			// Touche Son +  
+.................... 			break;  
+038D:  GOTO   38F
+.................... 		case 17 :   			// Touche Son -  
+.................... 			break;  
+038E:  GOTO   38F
+.................... 	}  
+.................... }  
+038F:  BCF    0A.3
+0390:  BCF    0A.4
+0391:  GOTO   47A (RETURN)
+....................   
+....................   
+.................... //-----------------------------------------------------------//  
+.................... //                  Internal Interrupts                     -//  
+....................   
+.................... #INT_RB  
+.................... void __TV_Remote_Interrupt(void)  
+.................... {  
+.................... 	if( __Auto_Refresh_TV_Remote == 1 )  
+.................... 	{  
+*
+00F0:  MOVLW  00
+00F1:  BTFSC  2D.1
+00F2:  MOVLW  01
+00F3:  SUBLW  01
+00F4:  BTFSS  03.2
+00F5:  GOTO   114
+.................... 		delay_us(150);									// only a glitch  
+00F6:  MOVLW  F9
+00F7:  MOVWF  77
+00F8:  DECFSZ 77,F
+00F9:  GOTO   0F8
+00FA:  NOP
+00FB:  NOP
+.................... 		if(input(PIN_B4)== 0)  
+.................... 		{  
+00FC:  MOVLW  00
+00FD:  BTFSC  06.4
+00FE:  MOVLW  01
+00FF:  XORLW  00
+0100:  BTFSS  03.2
+0101:  GOTO   114
+.................... 			__TV_Counter=0;  
+0102:  CLRF   32
+.................... 			__StartBit1=!input(PIN_B4);  
+0103:  BCF    2D.6
+0104:  BTFSS  06.4
+0105:  BSF    2D.6
+.................... 			__TV_Counter++;  
+0106:  INCF   32,F
+.................... 			disable_interrupts(INT_RB);  
+0107:  BCF    0B.3
+.................... 			setup_timer_2(T2_DIV_BY_16,0xBB,3);                                     // Interrupt every 1.780 ms  
+0108:  MOVLW  10
+0109:  MOVWF  78
+010A:  IORLW  06
+010B:  MOVWF  12
+010C:  MOVLW  BB
+010D:  BSF    03.5
+010E:  MOVWF  12
+.................... 			set_timer2(0);  
+010F:  BCF    03.5
+0110:  CLRF   11
+.................... 			enable_interrupts(INT_TIMER2);  
+0111:  BSF    03.5
+0112:  BSF    0C.1
+0113:  BCF    03.5
+.................... 		}  
+.................... 	}  
+.................... }  
+....................   
+0114:  BCF    0B.0
+0115:  BCF    0A.3
+0116:  BCF    0A.4
+0117:  GOTO   02D
+.................... #INT_TIMER0  
+.................... void Scheduler_Interrupt(void)                                                   		// Internal Task Manager, Interrupt every 200 us  
+.................... {                                                                                		// Sensors Powered during 400us, refreshed every 40ms  
+.................... 	// Time function  
+.................... 	__TimeTipDivider++;  
+0118:  INCF   38,F
+.................... 	if(__TimeTipDivider == 5)  
+.................... 	{  
+0119:  MOVF   38,W
+011A:  SUBLW  05
+011B:  BTFSS  03.2
+011C:  GOTO   126
+.................... 		__TimeTipDivider = 0;  
+011D:  CLRF   38
+.................... 		__TimeTip++;                                                               	// __TimeTip incremented every 1 ms (counter up to 4294967296 ms = 1193 hours ...)  
+011E:  MOVLW  01
+011F:  ADDWF  34,F
+0120:  BTFSC  03.0
+0121:  INCF   35,F
+0122:  BTFSC  03.2
+0123:  INCF   36,F
+0124:  BTFSC  03.2
+0125:  INCF   37,F
+.................... 	}  
+.................... 	// Motor Task, PWM freq 300 Hz  
+.................... 	if( __PwmMotLeft >= 0 )                                                       		// Left Motor  
+.................... 	{  
+0126:  BTFSC  2A.7
+0127:  GOTO   138
+.................... 		if( ( 15 - __PwmMotLeft + __PwmCounter ) >= 15 )  
+.................... 		{  
+0128:  MOVF   2A,W
+0129:  SUBLW  0F
+012A:  ADDWF  2C,W
+012B:  MOVWF  77
+012C:  BTFSC  77.7
+012D:  GOTO   135
+012E:  MOVF   77,W
+012F:  SUBLW  0E
+0130:  BTFSC  03.0
+0131:  GOTO   135
+.................... 			output_bit( PIN_D0 , 0 );  
+0132:  BCF    08.0
+.................... 			output_bit( PIN_D1 , 0 );  
+0133:  BCF    08.1
+.................... 		}  
+.................... 		else  
+.................... 		{  
+0134:  GOTO   137
+.................... 			output_bit( PIN_D0 , 1 );  
+0135:  BSF    08.0
+.................... 			output_bit( PIN_D1 , 0 );  
+0136:  BCF    08.1
+.................... 		}  
+.................... 	}  
+.................... 	else  
+.................... 	{  
+0137:  GOTO   148
+.................... 		if( ( 15 - ( - __PwmMotLeft ) + __PwmCounter ) >= 15 )  
+.................... 		{  
+0138:  MOVF   2A,W
+0139:  SUBLW  00
+013A:  SUBLW  0F
+013B:  ADDWF  2C,W
+013C:  MOVWF  77
+013D:  BTFSC  77.7
+013E:  GOTO   146
+013F:  MOVF   77,W
+0140:  SUBLW  0E
+0141:  BTFSC  03.0
+0142:  GOTO   146
+.................... 			output_bit( PIN_D0 , 0 );  
+0143:  BCF    08.0
+.................... 			output_bit( PIN_D1 , 0 );  
+0144:  BCF    08.1
+.................... 		}  
+.................... 		else  
+.................... 		{  
+0145:  GOTO   148
+.................... 			output_bit( PIN_D0 , 0 );  
+0146:  BCF    08.0
+.................... 			output_bit( PIN_D1 , 1 );  
+0147:  BSF    08.1
+.................... 		}  
+.................... 	}  
+.................... 	if( __PwmMotRight >= 0 )                                                      		// Right Motor  
+.................... 	{  
+0148:  BTFSC  2B.7
+0149:  GOTO   15A
+.................... 		if( ( 15 - __PwmMotRight + __PwmCounter ) >= 15 )  
+.................... 		{  
+014A:  MOVF   2B,W
+014B:  SUBLW  0F
+014C:  ADDWF  2C,W
+014D:  MOVWF  77
+014E:  BTFSC  77.7
+014F:  GOTO   157
+0150:  MOVF   77,W
+0151:  SUBLW  0E
+0152:  BTFSC  03.0
+0153:  GOTO   157
+.................... 			output_bit( PIN_D2 , 0 );  
+0154:  BCF    08.2
+.................... 			output_bit( PIN_D3 , 0 );  
+0155:  BCF    08.3
+.................... 		}  
+.................... 		else  
+.................... 		{  
+0156:  GOTO   159
+.................... 			output_bit( PIN_D2 , 1 );  
+0157:  BSF    08.2
+.................... 			output_bit( PIN_D3 , 0 );  
+0158:  BCF    08.3
+.................... 		}  
+.................... 	}  
+.................... 	else  
+.................... 	{  
+0159:  GOTO   16A
+.................... 		if( ( 15 - ( - __PwmMotRight ) + __PwmCounter ) >= 15 )  
+.................... 		{  
+015A:  MOVF   2B,W
+015B:  SUBLW  00
+015C:  SUBLW  0F
+015D:  ADDWF  2C,W
+015E:  MOVWF  77
+015F:  BTFSC  77.7
+0160:  GOTO   168
+0161:  MOVF   77,W
+0162:  SUBLW  0E
+0163:  BTFSC  03.0
+0164:  GOTO   168
+.................... 			output_bit( PIN_D2 , 0 );  
+0165:  BCF    08.2
+.................... 			output_bit( PIN_D3 , 0 );  
+0166:  BCF    08.3
+.................... 		}  
+.................... 		else  
+.................... 		{  
+0167:  GOTO   16A
+.................... 			output_bit( PIN_D2 , 0 );  
+0168:  BCF    08.2
+.................... 			output_bit( PIN_D3 , 1 );  
+0169:  BSF    08.3
+.................... 		}  
+.................... 	}  
+.................... 	__PwmCounter++;                                                               		// Counter  
+016A:  INCF   2C,F
+.................... 	if( __PwmCounter > 15 )  
+.................... 	{  
+016B:  MOVF   2C,W
+016C:  SUBLW  0F
+016D:  BTFSC  03.0
+016E:  GOTO   170
+.................... 		__PwmCounter = 0;  
+016F:  CLRF   2C
+.................... 	}  
+....................   
+.................... 	// Other Tasks  
+.................... 	switch( __SchedulerTask )  
+.................... 	{  
+0170:  MOVF   39,W
+0171:  MOVWF  77
+0172:  MOVLW  01
+0173:  SUBWF  77,W
+0174:  BTFSC  03.2
+0175:  GOTO   1AB
+0176:  MOVLW  03
+0177:  SUBWF  77,W
+0178:  BTFSC  03.2
+0179:  GOTO   1DD
+017A:  MOVLW  0A
+017B:  SUBWF  77,W
+017C:  BTFSC  03.2
+017D:  GOTO   205
+017E:  MOVLW  0C
+017F:  SUBWF  77,W
+0180:  BTFSC  03.2
+0181:  GOTO   24C
+0182:  MOVLW  0F
+0183:  SUBWF  77,W
+0184:  BTFSC  03.2
+0185:  GOTO   28A
+0186:  MOVLW  14
+0187:  SUBWF  77,W
+0188:  BTFSC  03.2
+0189:  GOTO   28F
+018A:  MOVLW  16
+018B:  SUBWF  77,W
+018C:  BTFSC  03.2
+018D:  GOTO   2D6
+018E:  MOVLW  19
+018F:  SUBWF  77,W
+0190:  BTFSC  03.2
+0191:  GOTO   315
+0192:  MOVLW  23
+0193:  SUBWF  77,W
+0194:  BTFSC  03.2
+0195:  GOTO   346
+0196:  MOVLW  64
+0197:  SUBWF  77,W
+0198:  BTFSC  03.2
+0199:  GOTO   34B
+019A:  MOVLW  78
+019B:  SUBWF  77,W
+019C:  BTFSC  03.2
+019D:  GOTO   34C
+019E:  MOVLW  8C
+019F:  SUBWF  77,W
+01A0:  BTFSC  03.2
+01A1:  GOTO   34D
+01A2:  MOVLW  A0
+01A3:  SUBWF  77,W
+01A4:  BTFSC  03.2
+01A5:  GOTO   34E
+01A6:  MOVLW  C8
+01A7:  SUBWF  77,W
+01A8:  BTFSC  03.2
+01A9:  GOTO   34F
+01AA:  GOTO   357
+.................... 		case 1 :                                                                   	// Brightness measurement zone 1  
+.................... 			if( __Auto_Refresh_Sensors == 1 )  
+.................... 			{  
+01AB:  MOVLW  00
+01AC:  BTFSC  2D.0
+01AD:  MOVLW  01
+01AE:  SUBLW  01
+01AF:  BTFSS  03.2
+01B0:  GOTO   1DC
+.................... 				set_adc_channel( GroundLeft );  
+01B1:  MOVLW  30
+01B2:  MOVWF  78
+01B3:  MOVF   1F,W
+01B4:  ANDLW  C7
+01B5:  IORWF  78,W
+01B6:  MOVWF  1F
+.................... 				delay_us( 12 );  
+01B7:  MOVLW  13
+01B8:  MOVWF  77
+01B9:  DECFSZ 77,F
+01BA:  GOTO   1B9
+01BB:  NOP
+01BC:  NOP
+.................... 				__IR_Light[ GroundLeft ] = read_adc();  
+01BD:  BSF    1F.2
+01BE:  BTFSC  1F.2
+01BF:  GOTO   1BE
+01C0:  MOVF   1E,W
+01C1:  BSF    03.5
+01C2:  BSF    03.6
+01C3:  MOVWF  58
+.................... 				set_adc_channel( GroundRight );  
+01C4:  MOVLW  38
+01C5:  MOVWF  78
+01C6:  BCF    03.5
+01C7:  BCF    03.6
+01C8:  MOVF   1F,W
+01C9:  ANDLW  C7
+01CA:  IORWF  78,W
+01CB:  MOVWF  1F
+.................... 				delay_us( 12 );  
+01CC:  MOVLW  13
+01CD:  MOVWF  77
+01CE:  DECFSZ 77,F
+01CF:  GOTO   1CE
+01D0:  NOP
+01D1:  NOP
+.................... 				__IR_Light[ GroundRight ] = read_adc();  
+01D2:  BSF    1F.2
+01D3:  BTFSC  1F.2
+01D4:  GOTO   1D3
+01D5:  MOVF   1E,W
+01D6:  BSF    03.5
+01D7:  BSF    03.6
+01D8:  MOVWF  59
+.................... 				output_high( PIN_B1 );  
+01D9:  BCF    03.5
+01DA:  BCF    03.6
+01DB:  BSF    06.1
+.................... 			}  
+.................... 			break;  
+01DC:  GOTO   357
+.................... 		case 3 :                                                                   	// Proximity measurement zone 1  
+.................... 			if( __Auto_Refresh_Sensors == 1 )  
+.................... 			{  
+01DD:  MOVLW  00
+01DE:  BTFSC  2D.0
+01DF:  MOVLW  01
+01E0:  SUBLW  01
+01E1:  BTFSS  03.2
+01E2:  GOTO   204
+.................... 				__IR_Proximity[ GroundRight ] = __IR_Light[ GroundRight ] - read_adc();  
+01E3:  BSF    1F.2
+01E4:  BTFSC  1F.2
+01E5:  GOTO   1E4
+01E6:  MOVF   1E,W
+01E7:  BSF    03.5
+01E8:  BSF    03.6
+01E9:  SUBWF  59,W
+01EA:  MOVWF  61
+.................... 				set_adc_channel( GroundLeft );  
+01EB:  MOVLW  30
+01EC:  MOVWF  78
+01ED:  BCF    03.5
+01EE:  BCF    03.6
+01EF:  MOVF   1F,W
+01F0:  ANDLW  C7
+01F1:  IORWF  78,W
+01F2:  MOVWF  1F
+.................... 				delay_us( 12 );  
+01F3:  MOVLW  13
+01F4:  MOVWF  77
+01F5:  DECFSZ 77,F
+01F6:  GOTO   1F5
+01F7:  NOP
+01F8:  NOP
+.................... 				__IR_Proximity[ GroundLeft ] = __IR_Light[ GroundRight ] - read_adc();  
+01F9:  BSF    1F.2
+01FA:  BTFSC  1F.2
+01FB:  GOTO   1FA
+01FC:  MOVF   1E,W
+01FD:  BSF    03.5
+01FE:  BSF    03.6
+01FF:  SUBWF  59,W
+0200:  MOVWF  60
+.................... 				output_low( PIN_B1 );  
+0201:  BCF    03.5
+0202:  BCF    03.6
+0203:  BCF    06.1
+.................... 			}  
+.................... 			break;  
+0204:  GOTO   357
+.................... 		case 10 :                                                                  	// Brightness measurement zone 2  
+.................... 			if( __Auto_Refresh_Sensors == 1 )  
+.................... 			{  
+0205:  MOVLW  00
+0206:  BTFSC  2D.0
+0207:  MOVLW  01
+0208:  SUBLW  01
+0209:  BTFSS  03.2
+020A:  GOTO   24B
+.................... 				set_adc_channel( FrontLeft );  
+020B:  MOVLW  08
+020C:  MOVWF  78
+020D:  MOVF   1F,W
+020E:  ANDLW  C7
+020F:  IORWF  78,W
+0210:  MOVWF  1F
+.................... 				delay_us( 12 );  
+0211:  MOVLW  13
+0212:  MOVWF  77
+0213:  DECFSZ 77,F
+0214:  GOTO   213
+0215:  NOP
+0216:  NOP
+.................... 				__IR_Light[ FrontLeft ] = read_adc();  
+0217:  BSF    1F.2
+0218:  BTFSC  1F.2
+0219:  GOTO   218
+021A:  MOVF   1E,W
+021B:  BSF    03.5
+021C:  BSF    03.6
+021D:  MOVWF  53
+.................... 				set_adc_channel( FrontRight );  
+021E:  MOVLW  00
+021F:  MOVWF  78
+0220:  BCF    03.5
+0221:  BCF    03.6
+0222:  MOVF   1F,W
+0223:  ANDLW  C7
+0224:  IORWF  78,W
+0225:  MOVWF  1F
+.................... 				delay_us( 12 );  
+0226:  MOVLW  13
+0227:  MOVWF  77
+0228:  DECFSZ 77,F
+0229:  GOTO   228
+022A:  NOP
+022B:  NOP
+.................... 				__IR_Light[ FrontRight ] = read_adc();  
+022C:  BSF    1F.2
+022D:  BTFSC  1F.2
+022E:  GOTO   22D
+022F:  MOVF   1E,W
+0230:  BSF    03.5
+0231:  BSF    03.6
+0232:  MOVWF  52
+.................... 				set_adc_channel( Front );  
+0233:  MOVLW  10
+0234:  MOVWF  78
+0235:  BCF    03.5
+0236:  BCF    03.6
+0237:  MOVF   1F,W
+0238:  ANDLW  C7
+0239:  IORWF  78,W
+023A:  MOVWF  1F
+.................... 				delay_us( 12 );  
+023B:  MOVLW  13
+023C:  MOVWF  77
+023D:  DECFSZ 77,F
+023E:  GOTO   23D
+023F:  NOP
+0240:  NOP
+.................... 				__IR_Light[ Front ] = read_adc();  
+0241:  BSF    1F.2
+0242:  BTFSC  1F.2
+0243:  GOTO   242
+0244:  MOVF   1E,W
+0245:  BSF    03.5
+0246:  BSF    03.6
+0247:  MOVWF  54
+.................... 				output_high( PIN_B2 );  
+0248:  BCF    03.5
+0249:  BCF    03.6
+024A:  BSF    06.2
+.................... 			}  
+.................... 			break;  
+024B:  GOTO   357
+.................... 		case 12 :                                                                 	// Proximity measurement zone 2  
+.................... 			if( __Auto_Refresh_Sensors == 1 )  
+.................... 			{  
+024C:  MOVLW  00
+024D:  BTFSC  2D.0
+024E:  MOVLW  01
+024F:  SUBLW  01
+0250:  BTFSS  03.2
+0251:  GOTO   289
+.................... 				__IR_Proximity[ Front ] = __IR_Light[ Front ] - read_adc();  
+0252:  BSF    1F.2
+0253:  BTFSC  1F.2
+0254:  GOTO   253
+0255:  MOVF   1E,W
+0256:  BSF    03.5
+0257:  BSF    03.6
+0258:  SUBWF  54,W
+0259:  MOVWF  5C
+.................... 				set_adc_channel( FrontLeft );  
+025A:  MOVLW  08
+025B:  MOVWF  78
+025C:  BCF    03.5
+025D:  BCF    03.6
+025E:  MOVF   1F,W
+025F:  ANDLW  C7
+0260:  IORWF  78,W
+0261:  MOVWF  1F
+.................... 				delay_us( 12 );  
+0262:  MOVLW  13
+0263:  MOVWF  77
+0264:  DECFSZ 77,F
+0265:  GOTO   264
+0266:  NOP
+0267:  NOP
+.................... 				__IR_Proximity[ FrontLeft ] = __IR_Light[ FrontLeft ] - read_adc();  
+0268:  BSF    1F.2
+0269:  BTFSC  1F.2
+026A:  GOTO   269
+026B:  MOVF   1E,W
+026C:  BSF    03.5
+026D:  BSF    03.6
+026E:  SUBWF  53,W
+026F:  MOVWF  5B
+.................... 				set_adc_channel( FrontRight );  
+0270:  MOVLW  00
+0271:  MOVWF  78
+0272:  BCF    03.5
+0273:  BCF    03.6
+0274:  MOVF   1F,W
+0275:  ANDLW  C7
+0276:  IORWF  78,W
+0277:  MOVWF  1F
+.................... 				delay_us( 12 );  
+0278:  MOVLW  13
+0279:  MOVWF  77
+027A:  DECFSZ 77,F
+027B:  GOTO   27A
+027C:  NOP
+027D:  NOP
+.................... 				__IR_Proximity[ FrontRight ] = __IR_Light[ FrontRight ] - read_adc();  
+027E:  BSF    1F.2
+027F:  BTFSC  1F.2
+0280:  GOTO   27F
+0281:  MOVF   1E,W
+0282:  BSF    03.5
+0283:  BSF    03.6
+0284:  SUBWF  52,W
+0285:  MOVWF  5A
+.................... 				output_low( PIN_B2 );  
+0286:  BCF    03.5
+0287:  BCF    03.6
+0288:  BCF    06.2
+.................... 			}  
+.................... 			break;  
+0289:  GOTO   357
+.................... 		case 15 :  
+.................... 			if(__Divider==0)                                                        // Powered during 4ms every 450ms  
+.................... 			{  
+028A:  MOVF   3A,F
+028B:  BTFSS  03.2
+028C:  GOTO   28E
+.................... 				output_bit( PIN_D7 , 1 );  
+028D:  BSF    08.7
+.................... 			}  
+.................... 			break;  
+028E:  GOTO   357
+.................... 		case 20 :                                                                  	// Brightness measurement zone 3  
+.................... 			if( __Auto_Refresh_Sensors == 1 )  
+.................... 			{  
+028F:  MOVLW  00
+0290:  BTFSC  2D.0
+0291:  MOVLW  01
+0292:  SUBLW  01
+0293:  BTFSS  03.2
+0294:  GOTO   2D5
+.................... 				set_adc_channel(Left);  
+0295:  MOVLW  20
+0296:  MOVWF  78
+0297:  MOVF   1F,W
+0298:  ANDLW  C7
+0299:  IORWF  78,W
+029A:  MOVWF  1F
+.................... 				delay_us(12);  
+029B:  MOVLW  13
+029C:  MOVWF  77
+029D:  DECFSZ 77,F
+029E:  GOTO   29D
+029F:  NOP
+02A0:  NOP
+.................... 				__IR_Light[Left]=read_adc();  
+02A1:  BSF    1F.2
+02A2:  BTFSC  1F.2
+02A3:  GOTO   2A2
+02A4:  MOVF   1E,W
+02A5:  BSF    03.5
+02A6:  BSF    03.6
+02A7:  MOVWF  56
+.................... 				set_adc_channel(Right);  
+02A8:  MOVLW  28
+02A9:  MOVWF  78
+02AA:  BCF    03.5
+02AB:  BCF    03.6
+02AC:  MOVF   1F,W
+02AD:  ANDLW  C7
+02AE:  IORWF  78,W
+02AF:  MOVWF  1F
+.................... 				delay_us(12);  
+02B0:  MOVLW  13
+02B1:  MOVWF  77
+02B2:  DECFSZ 77,F
+02B3:  GOTO   2B2
+02B4:  NOP
+02B5:  NOP
+.................... 				__IR_Light[Right]= read_adc();  
+02B6:  BSF    1F.2
+02B7:  BTFSC  1F.2
+02B8:  GOTO   2B7
+02B9:  MOVF   1E,W
+02BA:  BSF    03.5
+02BB:  BSF    03.6
+02BC:  MOVWF  57
+.................... 				set_adc_channel(Rear);  
+02BD:  MOVLW  18
+02BE:  MOVWF  78
+02BF:  BCF    03.5
+02C0:  BCF    03.6
+02C1:  MOVF   1F,W
+02C2:  ANDLW  C7
+02C3:  IORWF  78,W
+02C4:  MOVWF  1F
+.................... 				delay_us(12);  
+02C5:  MOVLW  13
+02C6:  MOVWF  77
+02C7:  DECFSZ 77,F
+02C8:  GOTO   2C7
+02C9:  NOP
+02CA:  NOP
+.................... 				__IR_Light[Rear]= read_adc();  
+02CB:  BSF    1F.2
+02CC:  BTFSC  1F.2
+02CD:  GOTO   2CC
+02CE:  MOVF   1E,W
+02CF:  BSF    03.5
+02D0:  BSF    03.6
+02D1:  MOVWF  55
+.................... 				output_high(PIN_B3);  
+02D2:  BCF    03.5
+02D3:  BCF    03.6
+02D4:  BSF    06.3
+.................... 			}  
+.................... 			break;  
+02D5:  GOTO   357
+.................... 		case 22 :                                                                 	// Proximity measurement zone 3  
+.................... 			if( __Auto_Refresh_Sensors == 1 )  
+.................... 			{  
+02D6:  MOVLW  00
+02D7:  BTFSC  2D.0
+02D8:  MOVLW  01
+02D9:  SUBLW  01
+02DA:  BTFSS  03.2
+02DB:  GOTO   314
+.................... 				__IR_Proximity[Rear]=__IR_Light[Rear]- read_adc();  
+02DC:  BSF    1F.2
+02DD:  BTFSC  1F.2
+02DE:  GOTO   2DD
+02DF:  MOVF   1E,W
+02E0:  BSF    03.5
+02E1:  BSF    03.6
+02E2:  SUBWF  55,W
+02E3:  MOVWF  5D
+.................... 				set_adc_channel(Left);  
+02E4:  MOVLW  20
+02E5:  MOVWF  78
+02E6:  BCF    03.5
+02E7:  BCF    03.6
+02E8:  MOVF   1F,W
+02E9:  ANDLW  C7
+02EA:  IORWF  78,W
+02EB:  MOVWF  1F
+.................... 				delay_us(12);  
+02EC:  MOVLW  13
+02ED:  MOVWF  77
+02EE:  DECFSZ 77,F
+02EF:  GOTO   2EE
+02F0:  NOP
+02F1:  NOP
+.................... 				__IR_Proximity[Left]=__IR_Light[Left]- read_adc();  
+02F2:  BSF    1F.2
+02F3:  BTFSC  1F.2
+02F4:  GOTO   2F3
+02F5:  MOVF   1E,W
+02F6:  BSF    03.5
+02F7:  BSF    03.6
+02F8:  SUBWF  56,W
+02F9:  MOVWF  5E
+.................... 				set_adc_channel(Right);  
+02FA:  MOVLW  28
+02FB:  MOVWF  78
+02FC:  BCF    03.5
+02FD:  BCF    03.6
+02FE:  MOVF   1F,W
+02FF:  ANDLW  C7
+0300:  IORWF  78,W
+0301:  MOVWF  1F
+.................... 				delay_us(12);  
+0302:  MOVLW  13
+0303:  MOVWF  77
+0304:  DECFSZ 77,F
+0305:  GOTO   304
+0306:  NOP
+0307:  NOP
+.................... 				__IR_Proximity[Right]=__IR_Light[Right]- read_adc();  
+0308:  BSF    1F.2
+0309:  BTFSC  1F.2
+030A:  GOTO   309
+030B:  MOVF   1E,W
+030C:  BSF    03.5
+030D:  BSF    03.6
+030E:  SUBWF  57,W
+030F:  MOVWF  5F
+.................... 				output_low(PIN_B3);  
+0310:  BCF    03.5
+0311:  BCF    03.6
+0312:  BCF    06.3
+.................... 				__Sensors_Refreshed_Flag = 1;  
+0313:  BSF    2D.4
+.................... 			}  
+.................... 			break;  
+0314:  GOTO   357
+.................... 		case 25 :                                                                  	// Refresh Switchs  
+.................... 			__Switchs[0]=!input(PIN_C0);  
+0315:  BSF    03.5
+0316:  BSF    03.6
+0317:  CLRF   62
+0318:  BCF    03.5
+0319:  BCF    03.6
+031A:  BTFSC  07.0
+031B:  GOTO   321
+031C:  BSF    03.5
+031D:  BSF    03.6
+031E:  INCF   62,F
+031F:  BCF    03.5
+0320:  BCF    03.6
+.................... 			__Switchs[1]=!input(PIN_C1);  
+0321:  BSF    03.5
+0322:  BSF    03.6
+0323:  CLRF   63
+0324:  BCF    03.5
+0325:  BCF    03.6
+0326:  BTFSC  07.1
+0327:  GOTO   32D
+0328:  BSF    03.5
+0329:  BSF    03.6
+032A:  INCF   63,F
+032B:  BCF    03.5
+032C:  BCF    03.6
+.................... 			__Switchs[2]=!input(PIN_C2);  
+032D:  BSF    03.5
+032E:  BSF    03.6
+032F:  CLRF   64
+0330:  BCF    03.5
+0331:  BCF    03.6
+0332:  BTFSC  07.2
+0333:  GOTO   339
+0334:  BSF    03.5
+0335:  BSF    03.6
+0336:  INCF   64,F
+0337:  BCF    03.5
+0338:  BCF    03.6
+.................... 			__Switchs[3]=!input(PIN_C5);  
+0339:  BSF    03.5
+033A:  BSF    03.6
+033B:  CLRF   65
+033C:  BCF    03.5
+033D:  BCF    03.6
+033E:  BTFSC  07.5
+033F:  GOTO   345
+0340:  BSF    03.5
+0341:  BSF    03.6
+0342:  INCF   65,F
+0343:  BCF    03.5
+0344:  BCF    03.6
+.................... 			break;  
+0345:  GOTO   357
+.................... 		case 35 :  
+.................... 			if(__Divider==0)  
+.................... 			{  
+0346:  MOVF   3A,F
+0347:  BTFSS  03.2
+0348:  GOTO   34A
+.................... 				output_bit( PIN_D7 , 0 );  
+0349:  BCF    08.7
+.................... 			}  
+.................... 			break;  
+034A:  GOTO   357
+.................... 		case 100 :  
+.................... 			hemisson_task1();  
+.................... 			break;  
+034B:  GOTO   357
+.................... 		case 120 :  
+.................... 			hemisson_task2();  
+.................... 			break;  
+034C:  GOTO   357
+.................... 		case 140 :  
+.................... 			hemisson_task3();  
+.................... 			break;  
+034D:  GOTO   357
+.................... 		case 160 :  
+.................... 			hemisson_task4();  
+.................... 			break;  
+034E:  GOTO   357
+.................... 		case 200 :                                                                 	// Every 40 ms  
+.................... 			__SchedulerTask=0;  
+034F:  CLRF   39
+.................... 			__Divider++;  
+0350:  INCF   3A,F
+.................... 			if(__Divider>10)  
+.................... 				__Divider=0;  
+0351:  MOVF   3A,W
+0352:  SUBLW  0A
+0353:  BTFSC  03.0
+0354:  GOTO   356
+0355:  CLRF   3A
+.................... 			break;  
+0356:  GOTO   357
+.................... 	}  
+.................... 	__SchedulerTask++;                                                            		// Task Counter  
+0357:  INCF   39,F
+.................... }  
+....................   
+0358:  BCF    0B.2
+0359:  BCF    0A.3
+035A:  BCF    0A.4
+035B:  GOTO   02D
+.................... #INT_TIMER2  
+.................... void RC5_Decoding_Interrupt(void)  
+.................... {  
+.................... 	switch(__TV_Counter)  
+.................... 	{  
+*
+03A7:  MOVLW  01
+03A8:  SUBWF  32,W
+03A9:  ADDLW  F3
+03AA:  BTFSC  03.0
+03AB:  GOTO   485
+03AC:  ADDLW  0D
+03AD:  GOTO   48A
+.................... 		case 1 :  
+.................... 			__StartBit2 = !input(PIN_B4);  
+03AE:  BCF    2D.7
+03AF:  BTFSS  06.4
+03B0:  BSF    2D.7
+.................... 			if(__StartBit2 != 1)  
+.................... 			{  
+03B1:  MOVLW  00
+03B2:  BTFSC  2D.7
+03B3:  MOVLW  01
+03B4:  SUBLW  01
+03B5:  BTFSC  03.2
+03B6:  GOTO   3C0
+.................... 				setup_timer_2(T2_DISABLED,0xBB,3);  
+03B7:  MOVLW  10
+03B8:  MOVWF  78
+03B9:  MOVWF  12
+03BA:  MOVLW  BB
+03BB:  BSF    03.5
+03BC:  MOVWF  12
+.................... 				disable_interrupts(INT_TIMER2);  
+03BD:  BCF    0C.1
+.................... 				enable_interrupts(INT_RB);  
+03BE:  BCF    03.5
+03BF:  BSF    0B.3
+.................... 			}  
+.................... 			break;  
+03C0:  GOTO   485
+.................... 		case 2 :  
+.................... 			__ToggleBit=!input(PIN_B4);  
+03C1:  BCF    2F.0
+03C2:  BTFSS  06.4
+03C3:  BSF    2F.0
+.................... 			break;  
+03C4:  GOTO   485
+.................... 		case 3 :  
+.................... 			__SystemBit4 = !input( PIN_B4 );  
+03C5:  BCF    2F.1
+03C6:  BTFSS  06.4
+03C7:  BSF    2F.1
+.................... 			if( __SystemBit4 != 0 )  
+.................... 			{  
+03C8:  MOVLW  00
+03C9:  BTFSC  2F.1
+03CA:  MOVLW  01
+03CB:  XORLW  00
+03CC:  BTFSC  03.2
+03CD:  GOTO   3D7
+.................... 				setup_timer_2(T2_DISABLED,0xBB,3);  
+03CE:  MOVLW  10
+03CF:  MOVWF  78
+03D0:  MOVWF  12
+03D1:  MOVLW  BB
+03D2:  BSF    03.5
+03D3:  MOVWF  12
+.................... 				disable_interrupts(INT_TIMER2);  
+03D4:  BCF    0C.1
+.................... 				enable_interrupts( INT_RB );  
+03D5:  BCF    03.5
+03D6:  BSF    0B.3
+.................... 			}  
+.................... 			break;  
+03D7:  GOTO   485
+.................... 		case 4 :  
+.................... 			__SystemBit3 = !input( PIN_B4 );  
+03D8:  BCF    2F.2
+03D9:  BTFSS  06.4
+03DA:  BSF    2F.2
+.................... 			if( __SystemBit3 != 0 )  
+.................... 			{  
+03DB:  MOVLW  00
+03DC:  BTFSC  2F.2
+03DD:  MOVLW  01
+03DE:  XORLW  00
+03DF:  BTFSC  03.2
+03E0:  GOTO   3EA
+.................... 				setup_timer_2(T2_DISABLED,0xBB,3);  
+03E1:  MOVLW  10
+03E2:  MOVWF  78
+03E3:  MOVWF  12
+03E4:  MOVLW  BB
+03E5:  BSF    03.5
+03E6:  MOVWF  12
+.................... 				disable_interrupts(INT_TIMER2);  
+03E7:  BCF    0C.1
+.................... 				enable_interrupts( INT_RB );  
+03E8:  BCF    03.5
+03E9:  BSF    0B.3
+.................... 			}  
+.................... 			break;  
+03EA:  GOTO   485
+.................... 		case 5 :  
+.................... 			__SystemBit2 = !input( PIN_B4 );  
+03EB:  BCF    2F.3
+03EC:  BTFSS  06.4
+03ED:  BSF    2F.3
+.................... 			if( __SystemBit2 != 0 )  
+.................... 			{  
+03EE:  MOVLW  00
+03EF:  BTFSC  2F.3
+03F0:  MOVLW  01
+03F1:  XORLW  00
+03F2:  BTFSC  03.2
+03F3:  GOTO   3FD
+.................... 				setup_timer_2(T2_DISABLED,0xBB,3);  
+03F4:  MOVLW  10
+03F5:  MOVWF  78
+03F6:  MOVWF  12
+03F7:  MOVLW  BB
+03F8:  BSF    03.5
+03F9:  MOVWF  12
+.................... 				disable_interrupts(INT_TIMER2);  
+03FA:  BCF    0C.1
+.................... 				enable_interrupts( INT_RB );  
+03FB:  BCF    03.5
+03FC:  BSF    0B.3
+.................... 			}  
+.................... 			break;  
+03FD:  GOTO   485
+.................... 		case 6 :  
+.................... 			__SystemBit1 = !input( PIN_B4 );  
+03FE:  BCF    2F.4
+03FF:  BTFSS  06.4
+0400:  BSF    2F.4
+.................... 			if( __SystemBit1 != 0 )  
+.................... 			{  
+0401:  MOVLW  00
+0402:  BTFSC  2F.4
+0403:  MOVLW  01
+0404:  XORLW  00
+0405:  BTFSC  03.2
+0406:  GOTO   410
+.................... 				setup_timer_2(T2_DISABLED,0xBB,3);  
+0407:  MOVLW  10
+0408:  MOVWF  78
+0409:  MOVWF  12
+040A:  MOVLW  BB
+040B:  BSF    03.5
+040C:  MOVWF  12
+.................... 				disable_interrupts(INT_TIMER2);  
+040D:  BCF    0C.1
+.................... 				enable_interrupts( INT_RB );  
+040E:  BCF    03.5
+040F:  BSF    0B.3
+.................... 			}  
+.................... 			break;  
+0410:  GOTO   485
+.................... 		case 7 :  
+.................... 			__SystemBit0 = !input( PIN_B4 );  
+0411:  BCF    2F.5
+0412:  BTFSS  06.4
+0413:  BSF    2F.5
+.................... 			if( __SystemBit0 != 0 )  
+.................... 			{  
+0414:  MOVLW  00
+0415:  BTFSC  2F.5
+0416:  MOVLW  01
+0417:  XORLW  00
+0418:  BTFSC  03.2
+0419:  GOTO   423
+.................... 				setup_timer_2(T2_DISABLED,0xBB,3);  
+041A:  MOVLW  10
+041B:  MOVWF  78
+041C:  MOVWF  12
+041D:  MOVLW  BB
+041E:  BSF    03.5
+041F:  MOVWF  12
+.................... 				disable_interrupts(INT_TIMER2);  
+0420:  BCF    0C.1
+.................... 				enable_interrupts( INT_RB );  
+0421:  BCF    03.5
+0422:  BSF    0B.3
+.................... 			}	  
+.................... 			break;  
+0423:  GOTO   485
+.................... 		case 8 :  
+.................... 			__DataBit5 = !input( PIN_B4 );  
+0424:  BCF    2F.6
+0425:  BTFSS  06.4
+0426:  BSF    2F.6
+.................... 			break;  
+0427:  GOTO   485
+.................... 		case 9 :  
+.................... 			__DataBit4 = !input( PIN_B4 );  
+0428:  BCF    2F.7
+0429:  BTFSS  06.4
+042A:  BSF    2F.7
+.................... 			break;  
+042B:  GOTO   485
+.................... 		case 10 :  
+.................... 			__DataBit3 = !input( PIN_B4 );  
+042C:  BCF    30.0
+042D:  BTFSS  06.4
+042E:  BSF    30.0
+.................... 			break;  
+042F:  GOTO   485
+.................... 		case 11 :  
+.................... 			__DataBit2 = !input( PIN_B4 );  
+0430:  BCF    30.1
+0431:  BTFSS  06.4
+0432:  BSF    30.1
+.................... 			break;  
+0433:  GOTO   485
+.................... 		case 12 :  
+.................... 			__DataBit1 = !input( PIN_B4 );  
+0434:  BCF    30.2
+0435:  BTFSS  06.4
+0436:  BSF    30.2
+.................... 			break;  
+0437:  GOTO   485
+.................... 		case 13 :  
+.................... 			__DataBit0 = !input( PIN_B4 );  
+0438:  BCF    30.3
+0439:  BTFSS  06.4
+043A:  BSF    30.3
+.................... 			__TV_DATA = ( __DataBit5 << 5 ) | ( __DataBit4 << 4 ) | ( __DataBit3 << 3 ) | ( __DataBit2 << 2 ) | ( __DataBit1 << 1 ) | __DataBit0 ;  
+043B:  MOVLW  00
+043C:  BTFSC  2F.6
+043D:  MOVLW  01
+043E:  MOVWF  77
+043F:  SWAPF  77,W
+0440:  MOVWF  45
+0441:  RLF    45,F
+0442:  MOVLW  E0
+0443:  ANDWF  45,F
+0444:  MOVLW  00
+0445:  BTFSC  2F.7
+0446:  MOVLW  01
+0447:  MOVWF  77
+0448:  SWAPF  77,F
+0449:  MOVLW  F0
+044A:  ANDWF  77,F
+044B:  MOVF   77,W
+044C:  IORWF  45,W
+044D:  MOVWF  47
+044E:  MOVLW  00
+044F:  BTFSC  30.0
+0450:  MOVLW  01
+0451:  MOVWF  77
+0452:  RLF    77,F
+0453:  RLF    77,F
+0454:  RLF    77,F
+0455:  MOVLW  F8
+0456:  ANDWF  77,F
+0457:  MOVF   77,W
+0458:  IORWF  47,W
+0459:  MOVWF  49
+045A:  MOVLW  00
+045B:  BTFSC  30.1
+045C:  MOVLW  01
+045D:  MOVWF  77
+045E:  RLF    77,F
+045F:  RLF    77,F
+0460:  MOVLW  FC
+0461:  ANDWF  77,F
+0462:  MOVF   77,W
+0463:  IORWF  49,W
+0464:  MOVWF  4B
+0465:  MOVLW  00
+0466:  BTFSC  30.2
+0467:  MOVLW  01
+0468:  MOVWF  77
+0469:  BCF    03.0
+046A:  RLF    77,F
+046B:  MOVF   77,W
+046C:  IORWF  4B,W
+046D:  MOVWF  4D
+046E:  MOVLW  00
+046F:  BTFSC  30.3
+0470:  MOVLW  01
+0471:  IORWF  4D,W
+0472:  MOVWF  31
+.................... 			if( __Enable_TV_Remote_Control == 1 )  
+.................... 			{  
+0473:  MOVLW  00
+0474:  BTFSC  2D.3
+0475:  MOVLW  01
+0476:  SUBLW  01
+0477:  BTFSS  03.2
+0478:  GOTO   47A
+.................... 				__TV_Remote_Control();  
+0479:  GOTO   35C
+.................... 			}  
+.................... 			__TV_Data_Available = 1;                                                	// Just a Flag  
+047A:  BSF    2D.5
+.................... 			setup_timer_2(T2_DISABLED,0xBB,3);  
+047B:  MOVLW  10
+047C:  MOVWF  78
+047D:  MOVWF  12
+047E:  MOVLW  BB
+047F:  BSF    03.5
+0480:  MOVWF  12
+.................... 			disable_interrupts(INT_TIMER2);  
+0481:  BCF    0C.1
+.................... 			enable_interrupts( INT_RB );  
+0482:  BCF    03.5
+0483:  BSF    0B.3
+.................... 			break;  
+0484:  GOTO   485
+.................... 	}  
+.................... 	__TV_Counter++;  
+0485:  INCF   32,F
+.................... }  
+....................   
+0486:  BCF    0C.1
+0487:  BCF    0A.3
+0488:  BCF    0A.4
+0489:  GOTO   02D
+.................... #separate  
+.................... __default()  
+.................... {  
+.................... 	printf( "Unknown Command ??\r\n" );  
+*
+0644:  CLRF   52
+0645:  MOVF   52,W
+0646:  CALL   0C0
+0647:  INCF   52,F
+0648:  MOVWF  77
+0649:  MOVF   77,W
+064A:  BTFSS  0C.4
+064B:  GOTO   64A
+064C:  MOVWF  19
+064D:  MOVLW  14
+064E:  SUBWF  52,W
+064F:  BTFSS  03.2
+0650:  GOTO   645
+.................... }  
+0651:  RETLW  00
+....................   
+.................... #separate  
+.................... __1()  
+.................... {  
+.................... 	printf("1,");  
+0652:  MOVLW  31
+0653:  BTFSS  0C.4
+0654:  GOTO   653
+0655:  MOVWF  19
+0656:  MOVLW  2C
+0657:  BTFSS  0C.4
+0658:  GOTO   657
+0659:  MOVWF  19
+.................... 	switch(__SerialBuffer[ 2 ])  
+.................... 	{  
+065A:  BSF    03.5
+065B:  BSF    03.6
+065C:  MOVF   22,W
+065D:  MOVWF  77
+065E:  MOVLW  30
+065F:  SUBWF  77,W
+0660:  BCF    03.5
+0661:  BCF    03.6
+0662:  BTFSC  03.2
+0663:  GOTO   66D
+0664:  MOVLW  31
+0665:  SUBWF  77,W
+0666:  BTFSC  03.2
+0667:  GOTO   686
+0668:  MOVLW  32
+0669:  SUBWF  77,W
+066A:  BTFSC  03.2
+066B:  GOTO   69F
+066C:  GOTO   6B8
+.................... 		case '0' :  
+.................... 			set_tris_b(TRISB|0x01);	  
+066D:  BSF    03.5
+066E:  MOVF   06,W
+066F:  IORLW  01
+0670:  BCF    03.5
+0671:  MOVWF  52
+0672:  BSF    03.5
+0673:  MOVWF  06
+.................... 			printf("%d\r\n",input(PIN_B0));  
+0674:  MOVLW  00
+0675:  BCF    03.5
+0676:  BTFSC  06.0
+0677:  MOVLW  01
+0678:  MOVWF  52
+0679:  MOVWF  53
+067A:  MOVLW  18
+067B:  MOVWF  54
+067C:  CALL   4B0
+067D:  MOVLW  0D
+067E:  BTFSS  0C.4
+067F:  GOTO   67E
+0680:  MOVWF  19
+0681:  MOVLW  0A
+0682:  BTFSS  0C.4
+0683:  GOTO   682
+0684:  MOVWF  19
+.................... 			break;  
+0685:  GOTO   6BA
+.................... 		case '1' :  
+.................... 			set_tris_b(TRISB|0x40);  
+0686:  BSF    03.5
+0687:  MOVF   06,W
+0688:  IORLW  40
+0689:  BCF    03.5
+068A:  MOVWF  52
+068B:  BSF    03.5
+068C:  MOVWF  06
+.................... 			printf("%d\r\n",input(PIN_B6));  
+068D:  MOVLW  00
+068E:  BCF    03.5
+068F:  BTFSC  06.6
+0690:  MOVLW  01
+0691:  MOVWF  52
+0692:  MOVWF  53
+0693:  MOVLW  18
+0694:  MOVWF  54
+0695:  CALL   4B0
+0696:  MOVLW  0D
+0697:  BTFSS  0C.4
+0698:  GOTO   697
+0699:  MOVWF  19
+069A:  MOVLW  0A
+069B:  BTFSS  0C.4
+069C:  GOTO   69B
+069D:  MOVWF  19
+.................... 			break;  
+069E:  GOTO   6BA
+.................... 		case '2' :  
+.................... 			set_tris_b(TRISB|0x80);	  
+069F:  BSF    03.5
+06A0:  MOVF   06,W
+06A1:  IORLW  80
+06A2:  BCF    03.5
+06A3:  MOVWF  52
+06A4:  BSF    03.5
+06A5:  MOVWF  06
+.................... 			printf("%d\r\n",input(PIN_B7));  
+06A6:  MOVLW  00
+06A7:  BCF    03.5
+06A8:  BTFSC  06.7
+06A9:  MOVLW  01
+06AA:  MOVWF  52
+06AB:  MOVWF  53
+06AC:  MOVLW  18
+06AD:  MOVWF  54
+06AE:  CALL   4B0
+06AF:  MOVLW  0D
+06B0:  BTFSS  0C.4
+06B1:  GOTO   6B0
+06B2:  MOVWF  19
+06B3:  MOVLW  0A
+06B4:  BTFSS  0C.4
+06B5:  GOTO   6B4
+06B6:  MOVWF  19
+.................... 			break;  
+06B7:  GOTO   6BA
+.................... 		default:  
+.................... 			__default();  
+06B8:  CALL   644
+.................... 			break;  
+06B9:  GOTO   6BA
+.................... 	}  
+.................... }  
+06BA:  BSF    0A.3
+06BB:  BCF    0A.4
+06BC:  GOTO   71E (RETURN)
+....................   
+.................... #separate  
+.................... __2()  
+.................... {  
+.................... 	printf("2\r\n");  
+06BD:  MOVLW  32
+06BE:  BTFSS  0C.4
+06BF:  GOTO   6BE
+06C0:  MOVWF  19
+06C1:  MOVLW  0D
+06C2:  BTFSS  0C.4
+06C3:  GOTO   6C2
+06C4:  MOVWF  19
+06C5:  MOVLW  0A
+06C6:  BTFSS  0C.4
+06C7:  GOTO   6C6
+06C8:  MOVWF  19
+.................... 	switch(__SerialBuffer[ 2 ])  
+.................... 	{  
+06C9:  BSF    03.5
+06CA:  BSF    03.6
+06CB:  MOVF   22,W
+06CC:  MOVWF  77
+06CD:  MOVLW  30
+06CE:  SUBWF  77,W
+06CF:  BCF    03.5
+06D0:  BCF    03.6
+06D1:  BTFSC  03.2
+06D2:  GOTO   6DC
+06D3:  MOVLW  31
+06D4:  SUBWF  77,W
+06D5:  BTFSC  03.2
+06D6:  GOTO   6F3
+06D7:  MOVLW  32
+06D8:  SUBWF  77,W
+06D9:  BTFSC  03.2
+06DA:  GOTO   70A
+06DB:  GOTO   721
+.................... 		case '0' :  
+.................... 			set_tris_b(TRISB & 0xFE);  
+06DC:  BSF    03.5
+06DD:  MOVF   06,W
+06DE:  ANDLW  FE
+06DF:  BCF    03.5
+06E0:  MOVWF  52
+06E1:  BSF    03.5
+06E2:  MOVWF  06
+.................... 			output_bit(PIN_B0,__SerialBuffer[ 4 ] - '0');  
+06E3:  MOVLW  30
+06E4:  BSF    03.6
+06E5:  SUBWF  24,W
+06E6:  XORLW  00
+06E7:  BTFSS  03.2
+06E8:  GOTO   6EF
+06E9:  BCF    03.5
+06EA:  BCF    03.6
+06EB:  BCF    06.0
+06EC:  GOTO   6F2
+06ED:  BSF    03.5
+06EE:  BSF    03.6
+06EF:  BCF    03.5
+06F0:  BCF    03.6
+06F1:  BSF    06.0
+.................... 			break;  
+06F2:  GOTO   723
+.................... 		case '1' :  
+.................... 			set_tris_b(TRISB & 0xBF);  
+06F3:  BSF    03.5
+06F4:  MOVF   06,W
+06F5:  ANDLW  BF
+06F6:  BCF    03.5
+06F7:  MOVWF  52
+06F8:  BSF    03.5
+06F9:  MOVWF  06
+.................... 			output_bit(PIN_B6,__SerialBuffer[ 4 ] - '0');  
+06FA:  MOVLW  30
+06FB:  BSF    03.6
+06FC:  SUBWF  24,W
+06FD:  XORLW  00
+06FE:  BTFSS  03.2
+06FF:  GOTO   706
+0700:  BCF    03.5
+0701:  BCF    03.6
+0702:  BCF    06.6
+0703:  GOTO   709
+0704:  BSF    03.5
+0705:  BSF    03.6
+0706:  BCF    03.5
+0707:  BCF    03.6
+0708:  BSF    06.6
+.................... 			break;  
+0709:  GOTO   723
+.................... 		case '2' :  
+.................... 			set_tris_b(TRISB & 0x7F);  
+070A:  BSF    03.5
+070B:  MOVF   06,W
+070C:  ANDLW  7F
+070D:  BCF    03.5
+070E:  MOVWF  52
+070F:  BSF    03.5
+0710:  MOVWF  06
+.................... 			output_bit(PIN_B7,__SerialBuffer[ 4 ] - '0');  
+0711:  MOVLW  30
+0712:  BSF    03.6
+0713:  SUBWF  24,W
+0714:  XORLW  00
+0715:  BTFSS  03.2
+0716:  GOTO   71D
+0717:  BCF    03.5
+0718:  BCF    03.6
+0719:  BCF    06.7
+071A:  GOTO   720
+071B:  BSF    03.5
+071C:  BSF    03.6
+071D:  BCF    03.5
+071E:  BCF    03.6
+071F:  BSF    06.7
+.................... 			break;  
+0720:  GOTO   723
+.................... 		default :  
+.................... 			__default();  
+0721:  CALL   644
+.................... 			break;  
+0722:  GOTO   723
+.................... 	}  
+....................   
+.................... }  
+0723:  BSF    0A.3
+0724:  BCF    0A.4
+0725:  GOTO   722 (RETURN)
+....................   
+.................... #separate  
+.................... __Z()  
+.................... {  
+.................... 	printf("z\r\n");  
+*
+0633:  MOVLW  7A
+0634:  BTFSS  0C.4
+0635:  GOTO   634
+0636:  MOVWF  19
+0637:  MOVLW  0D
+0638:  BTFSS  0C.4
+0639:  GOTO   638
+063A:  MOVWF  19
+063B:  MOVLW  0A
+063C:  BTFSS  0C.4
+063D:  GOTO   63C
+063E:  MOVWF  19
+.................... 	reset_cpu();  
+063F:  CLRF   0A
+0640:  GOTO   000
+.................... }  
+0641:  BSF    0A.3
+0642:  BCF    0A.4
+0643:  GOTO   5BB (RETURN)
+....................   
+.................... #separate  
+.................... __B()  
+.................... {  
+.................... 	printf( "b,HemiOS_v_%d.%d\r\n" , HEMIOS_VERSION , HEMIOS_REVISION );  
+*
+04F8:  CLRF   52
+04F9:  MOVF   52,W
+04FA:  CALL   0D9
+04FB:  INCF   52,F
+04FC:  MOVWF  77
+04FD:  MOVF   77,W
+04FE:  BTFSS  0C.4
+04FF:  GOTO   4FE
+0500:  MOVWF  19
+0501:  MOVLW  0B
+0502:  SUBWF  52,W
+0503:  BTFSS  03.2
+0504:  GOTO   4F9
+0505:  MOVLW  01
+0506:  MOVWF  53
+0507:  MOVLW  18
+0508:  MOVWF  54
+0509:  CALL   4B0
+050A:  MOVLW  2E
+050B:  BTFSS  0C.4
+050C:  GOTO   50B
+050D:  MOVWF  19
+050E:  MOVLW  32
+050F:  MOVWF  53
+0510:  MOVLW  18
+0511:  MOVWF  54
+0512:  CALL   4B0
+0513:  MOVLW  0D
+0514:  BTFSS  0C.4
+0515:  GOTO   514
+0516:  MOVWF  19
+0517:  MOVLW  0A
+0518:  BTFSS  0C.4
+0519:  GOTO   518
+051A:  MOVWF  19
+.................... }  
+051B:  BSF    0A.3
+051C:  BCF    0A.4
+051D:  GOTO   078 (RETURN)
+....................   
+.................... #separate  
+.................... __E()  
+.................... {  
+.................... 	printf("e,%02d,%02d\r\n",__PwmMotLeft,__PwmMotRight);  
+051E:  MOVLW  65
+051F:  BTFSS  0C.4
+0520:  GOTO   51F
+0521:  MOVWF  19
+0522:  MOVLW  2C
+0523:  BTFSS  0C.4
+0524:  GOTO   523
+0525:  MOVWF  19
+0526:  MOVF   2A,W
+0527:  MOVWF  53
+0528:  MOVLW  01
+0529:  MOVWF  54
+052A:  CALL   4B0
+052B:  MOVLW  2C
+052C:  BTFSS  0C.4
+052D:  GOTO   52C
+052E:  MOVWF  19
+052F:  MOVF   2B,W
+0530:  MOVWF  53
+0531:  MOVLW  01
+0532:  MOVWF  54
+0533:  CALL   4B0
+0534:  MOVLW  0D
+0535:  BTFSS  0C.4
+0536:  GOTO   535
+0537:  MOVWF  19
+0538:  MOVLW  0A
+0539:  BTFSS  0C.4
+053A:  GOTO   539
+053B:  MOVWF  19
+.................... }  
+053C:  BSF    0A.3
+053D:  BCF    0A.4
+053E:  GOTO   0C5 (RETURN)
+....................   
+.................... #separate  
+.................... __J()  
+.................... {  
+.................... 	unsigned char __i;  
+.................... 	unsigned char __TempVal;  
+.................... 	printf("j");  
+*
+0583:  MOVLW  6A
+0584:  BTFSS  0C.4
+0585:  GOTO   584
+0586:  MOVWF  19
+.................... 	for(__i=3;__i<254;__i=__i+2)  
+0587:  MOVLW  03
+0588:  MOVWF  52
+0589:  MOVF   52,W
+058A:  SUBLW  FD
+058B:  BTFSS  03.0
+058C:  GOTO   5CD
+.................... 	{  
+.................... 		i2c_start();  
+058D:  BCF    0D.3
+058E:  BCF    14.7
+058F:  BSF    03.5
+0590:  BSF    11.0
+0591:  BCF    03.5
+0592:  BTFSC  0D.3
+0593:  GOTO   58D
+0594:  BTFSC  14.7
+0595:  GOTO   58D
+0596:  BSF    03.5
+0597:  BTFSS  11.0
+0598:  GOTO   59B
+0599:  BCF    03.5
+059A:  GOTO   596
+.................... 		if(i2c_write(__i-1)==0)  
+.................... 		{  
+059B:  MOVLW  01
+059C:  BCF    03.5
+059D:  SUBWF  52,W
+059E:  MOVWF  54
+059F:  MOVWF  55
+05A0:  CALL   53F
+05A1:  MOVF   78,F
+05A2:  BTFSS  03.2
+05A3:  GOTO   5C5
+.................... 			i2c_write(0x00);  		// Version Register  
+05A4:  CLRF   55
+05A5:  CALL   53F
+.................... 			i2c_start();  
+05A6:  BCF    0C.3
+05A7:  BSF    03.5
+05A8:  BSF    11.1
+05A9:  BTFSC  11.1
+05AA:  GOTO   5A9
+.................... 			i2c_write(__i);  
+05AB:  BCF    03.5
+05AC:  MOVF   52,W
+05AD:  MOVWF  55
+05AE:  CALL   53F
+.................... 			__TempVal=i2c_read(0);  
+05AF:  CLRF   77
+05B0:  CALL   54F
+05B1:  MOVF   78,W
+05B2:  MOVWF  53
+.................... 			i2c_stop();  
+05B3:  BSF    03.5
+05B4:  BSF    11.2
+05B5:  BTFSC  11.2
+05B6:  GOTO   5B5
+.................... 			printf(",%2x",__i-1);  
+05B7:  MOVLW  01
+05B8:  BCF    03.5
+05B9:  SUBWF  52,W
+05BA:  MOVWF  54
+05BB:  MOVLW  2C
+05BC:  BTFSS  0C.4
+05BD:  GOTO   5BC
+05BE:  MOVWF  19
+05BF:  MOVF   54,W
+05C0:  MOVWF  55
+05C1:  MOVLW  57
+05C2:  MOVWF  56
+05C3:  GOTO   55E
+.................... 		}  
+.................... 		else  
+.................... 		{  
+05C4:  GOTO   5CA
+.................... 			i2c_stop();  
+05C5:  BSF    03.5
+05C6:  BSF    11.2
+05C7:  BTFSC  11.2
+05C8:  GOTO   5C7
+05C9:  BCF    03.5
+.................... 		}  
+.................... 	}  
+05CA:  MOVLW  02
+05CB:  ADDWF  52,F
+05CC:  GOTO   589
+.................... 	printf("\r\n");  
+05CD:  MOVLW  0D
+05CE:  BTFSS  0C.4
+05CF:  GOTO   5CE
+05D0:  MOVWF  19
+05D1:  MOVLW  0A
+05D2:  BTFSS  0C.4
+05D3:  GOTO   5D2
+05D4:  MOVWF  19
+.................... }  
+05D5:  BSF    0A.3
+05D6:  BCF    0A.4
+05D7:  GOTO   12F (RETURN)
+....................   
+.................... #separate  
+.................... __T()  
+.................... {  
+.................... 	printf( "t,%03u\r\n" , __TV_DATA );  
+*
+061C:  MOVLW  74
+061D:  BTFSS  0C.4
+061E:  GOTO   61D
+061F:  MOVWF  19
+0620:  MOVLW  2C
+0621:  BTFSS  0C.4
+0622:  GOTO   621
+0623:  MOVWF  19
+0624:  MOVF   31,W
+0625:  MOVWF  52
+0626:  CLRF   53
+0627:  CALL   5D8
+0628:  MOVLW  0D
+0629:  BTFSS  0C.4
+062A:  GOTO   629
+062B:  MOVWF  19
+062C:  MOVLW  0A
+062D:  BTFSS  0C.4
+062E:  GOTO   62D
+062F:  MOVWF  19
+.................... }  
+0630:  BSF    0A.3
+0631:  BCF    0A.4
+0632:  GOTO   482 (RETURN)
+....................   
+.................... #INT_RDA  
+.................... void Serial_Interrupt(void)  
+.................... {  
+.................... 	unsigned char __memaddress = 0;  
+*
+0800:  CLRF   4E
+.................... 	unsigned char __rcvalue = 0;  
+0801:  CLRF   4F
+.................... 	unsigned char __TempVal;  
+.................... 	unsigned char __i;  
+....................   
+.................... 	while(kbhit())                                                                		// Read while data available  
+.................... 	{  
+0802:  BTFSS  0C.5
+0803:  GOTO   012
+.................... 		__SerialBuffer[ __SerialCounter ] = getc();  
+0804:  MOVLW  A0
+0805:  ADDWF  2E,W
+0806:  MOVWF  04
+0807:  BSF    03.7
+0808:  BTFSS  0C.5
+0809:  GOTO   008
+080A:  MOVF   1A,W
+080B:  MOVWF  00
+.................... 		if (__SerialCounter < ( __SERIAL_BUFFER_SIZE-1 ))                          	// To discard buffer overflow  
+.................... 		{  
+080C:  MOVF   2E,W
+080D:  SUBLW  4E
+080E:  BTFSS  03.0
+080F:  GOTO   011
+.................... 			__SerialCounter++;  
+0810:  INCF   2E,F
+.................... 		}  
+.................... 	}  
+0811:  GOTO   002
+.................... 	if( __SerialBuffer[ __SerialCounter-1 ] == 13 )                               		// '\n'  
+.................... 	{  
+0812:  MOVLW  01
+0813:  SUBWF  2E,W
+0814:  ADDLW  A0
+0815:  MOVWF  04
+0816:  BSF    03.7
+0817:  MOVF   00,W
+0818:  SUBLW  0D
+0819:  BTFSS  03.2
+081A:  GOTO   729
+.................... 		//delay_ms(6);                                                             	// Only for HemBasicStamp  
+.................... 		switch( __SerialBuffer[ 0 ] )  
+.................... 		{  
+081B:  BSF    03.5
+081C:  BSF    03.6
+081D:  MOVF   20,W
+081E:  MOVWF  77
+081F:  MOVLW  42
+0820:  SUBWF  77,W
+0821:  BCF    03.5
+0822:  BCF    03.6
+0823:  BTFSC  03.2
+0824:  GOTO   076
+0825:  MOVLW  44
+0826:  SUBWF  77,W
+0827:  BTFSC  03.2
+0828:  GOTO   07A
+0829:  MOVLW  45
+082A:  SUBWF  77,W
+082B:  BTFSC  03.2
+082C:  GOTO   0C3
+082D:  MOVLW  48
+082E:  SUBWF  77,W
+082F:  BTFSC  03.2
+0830:  GOTO   0C7
+0831:  MOVLW  49
+0832:  SUBWF  77,W
+0833:  BTFSC  03.2
+0834:  GOTO   0E4
+0835:  MOVLW  4A
+0836:  SUBWF  77,W
+0837:  BTFSC  03.2
+0838:  GOTO   12D
+0839:  MOVLW  4C
+083A:  SUBWF  77,W
+083B:  BTFSC  03.2
+083C:  GOTO   131
+083D:  MOVLW  4D
+083E:  SUBWF  77,W
+083F:  BTFSC  03.2
+0840:  GOTO   17E
+0841:  MOVLW  4E
+0842:  SUBWF  77,W
+0843:  BTFSC  03.2
+0844:  GOTO   229
+0845:  MOVLW  4F
+0846:  SUBWF  77,W
+0847:  BTFSC  03.2
+0848:  GOTO   2A6
+0849:  MOVLW  50
+084A:  SUBWF  77,W
+084B:  BTFSC  03.2
+084C:  GOTO   323
+084D:  MOVLW  52
+084E:  SUBWF  77,W
+084F:  BTFSC  03.2
+0850:  GOTO   3CE
+0851:  MOVLW  54
+0852:  SUBWF  77,W
+0853:  BTFSC  03.2
+0854:  GOTO   480
+0855:  MOVLW  57
+0856:  SUBWF  77,W
+0857:  BTFSC  03.2
+0858:  GOTO   484
+0859:  MOVLW  59
+085A:  SUBWF  77,W
+085B:  BTFSC  03.2
+085C:  GOTO   507
+085D:  MOVLW  5A
+085E:  SUBWF  77,W
+085F:  BTFSC  03.2
+0860:  GOTO   5B9
+0861:  MOVLW  26
+0862:  SUBWF  77,W
+0863:  BTFSC  03.2
+0864:  GOTO   5BD
+0865:  MOVLW  2A
+0866:  SUBWF  77,W
+0867:  BTFSC  03.2
+0868:  GOTO   6B3
+0869:  MOVLW  21
+086A:  SUBWF  77,W
+086B:  BTFSC  03.2
+086C:  GOTO   700
+086D:  MOVLW  31
+086E:  SUBWF  77,W
+086F:  BTFSC  03.2
+0870:  GOTO   71C
+0871:  MOVLW  32
+0872:  SUBWF  77,W
+0873:  BTFSC  03.2
+0874:  GOTO   720
+0875:  GOTO   724
+.................... 			//case 'A' : Unused  
+.................... 			case 'B' :                                                             // HemiOs Version  
+.................... 				__B();  
+0876:  BCF    0A.3
+0877:  GOTO   4F8
+0878:  BSF    0A.3
+.................... 				break;  
+0879:  GOTO   728
+.................... 			//case 'C' : Unused  
+.................... 			case 'D' :                                                             // Set Motors Speed  
+.................... 				if( __SerialBuffer[2] == '-' )  
+.................... 				{  
+087A:  BSF    03.5
+087B:  BSF    03.6
+087C:  MOVF   22,W
+087D:  SUBLW  2D
+087E:  BTFSS  03.2
+087F:  GOTO   09D
+.................... 					__PwmMotLeft = - ( __SerialBuffer[3] - '0' );  
+0880:  MOVLW  30
+0881:  SUBWF  23,W
+0882:  SUBLW  00
+0883:  BCF    03.5
+0884:  BCF    03.6
+0885:  MOVWF  2A
+.................... 					if( __SerialBuffer[5] == '-' )  
+.................... 					{  
+0886:  BSF    03.5
+0887:  BSF    03.6
+0888:  MOVF   25,W
+0889:  SUBLW  2D
+088A:  BTFSS  03.2
+088B:  GOTO   095
+.................... 						__PwmMotRight = - ( __SerialBuffer[6] - '0' );  
+088C:  MOVLW  30
+088D:  SUBWF  26,W
+088E:  SUBLW  00
+088F:  BCF    03.5
+0890:  BCF    03.6
+0891:  MOVWF  2B
+.................... 					}  
+.................... 					else  
+.................... 					{  
+0892:  GOTO   09A
+0893:  BSF    03.5
+0894:  BSF    03.6
+.................... 						__PwmMotRight = __SerialBuffer[5] - '0';  
+0895:  MOVLW  30
+0896:  SUBWF  25,W
+0897:  BCF    03.5
+0898:  BCF    03.6
+0899:  MOVWF  2B
+.................... 					}  
+.................... 				}  
+.................... 				else  
+.................... 				{  
+089A:  GOTO   0B6
+089B:  BSF    03.5
+089C:  BSF    03.6
+.................... 					__PwmMotLeft = __SerialBuffer[2] - '0';  
+089D:  MOVLW  30
+089E:  SUBWF  22,W
+089F:  BCF    03.5
+08A0:  BCF    03.6
+08A1:  MOVWF  2A
+.................... 					if( __SerialBuffer[4] == '-' )  
+.................... 					{  
+08A2:  BSF    03.5
+08A3:  BSF    03.6
+08A4:  MOVF   24,W
+08A5:  SUBLW  2D
+08A6:  BTFSS  03.2
+08A7:  GOTO   0B1
+.................... 						__PwmMotRight = - ( __SerialBuffer[5] - '0' );  
+08A8:  MOVLW  30
+08A9:  SUBWF  25,W
+08AA:  SUBLW  00
+08AB:  BCF    03.5
+08AC:  BCF    03.6
+08AD:  MOVWF  2B
+.................... 					}  
+.................... 					else  
+.................... 					{  
+08AE:  GOTO   0B6
+08AF:  BSF    03.5
+08B0:  BSF    03.6
+.................... 						__PwmMotRight = __SerialBuffer[4] - '0';  
+08B1:  MOVLW  30
+08B2:  SUBWF  24,W
+08B3:  BCF    03.5
+08B4:  BCF    03.6
+08B5:  MOVWF  2B
+.................... 					}  
+.................... 				}  
+.................... 				printf( "d\r\n" );  
+08B6:  MOVLW  64
+08B7:  BTFSS  0C.4
+08B8:  GOTO   0B7
+08B9:  MOVWF  19
+08BA:  MOVLW  0D
+08BB:  BTFSS  0C.4
+08BC:  GOTO   0BB
+08BD:  MOVWF  19
+08BE:  MOVLW  0A
+08BF:  BTFSS  0C.4
+08C0:  GOTO   0BF
+08C1:  MOVWF  19
+.................... 				break;  
+08C2:  GOTO   728
+.................... 			case 'E' :                                                             	// Read Motors Speed  
+.................... 				__E();  
+08C3:  BCF    0A.3
+08C4:  GOTO   51E
+08C5:  BSF    0A.3
+.................... 				break;  
+08C6:  GOTO   728
+.................... 			//case 'F' : Unused  
+.................... 			//case 'G' : Unused  
+.................... 			case 'H' :								// Buzzer  
+.................... 				output_bit( PIN_D4 , __SerialBuffer[ 2 ] - '0' );  
+08C7:  MOVLW  30
+08C8:  BSF    03.5
+08C9:  BSF    03.6
+08CA:  SUBWF  22,W
+08CB:  XORLW  00
+08CC:  BTFSS  03.2
+08CD:  GOTO   0D4
+08CE:  BCF    03.5
+08CF:  BCF    03.6
+08D0:  BCF    08.4
+08D1:  GOTO   0D7
+08D2:  BSF    03.5
+08D3:  BSF    03.6
+08D4:  BCF    03.5
+08D5:  BCF    03.6
+08D6:  BSF    08.4
+.................... 				printf( "h\r\n" );  
+08D7:  MOVLW  68
+08D8:  BTFSS  0C.4
+08D9:  GOTO   0D8
+08DA:  MOVWF  19
+08DB:  MOVLW  0D
+08DC:  BTFSS  0C.4
+08DD:  GOTO   0DC
+08DE:  MOVWF  19
+08DF:  MOVLW  0A
+08E0:  BTFSS  0C.4
+08E1:  GOTO   0E0
+08E2:  MOVWF  19
+.................... 				break;  
+08E3:  GOTO   728
+.................... 			case 'I' :								// Read switches  
+.................... 				printf( "i,%d,%d,%d,%d\r\n" , __Switchs[ 0 ] , __Switchs[ 1 ] , __Switchs[ 2 ] , __Switchs[ 3 ] );  
+08E4:  MOVLW  69
+08E5:  BTFSS  0C.4
+08E6:  GOTO   0E5
+08E7:  MOVWF  19
+08E8:  MOVLW  2C
+08E9:  BTFSS  0C.4
+08EA:  GOTO   0E9
+08EB:  MOVWF  19
+08EC:  BSF    03.5
+08ED:  BSF    03.6
+08EE:  MOVF   62,W
+08EF:  BCF    03.5
+08F0:  BCF    03.6
+08F1:  MOVWF  53
+08F2:  MOVLW  18
+08F3:  MOVWF  54
+08F4:  BCF    0A.3
+08F5:  CALL   4B0
+08F6:  BSF    0A.3
+08F7:  MOVLW  2C
+08F8:  BTFSS  0C.4
+08F9:  GOTO   0F8
+08FA:  MOVWF  19
+08FB:  BSF    03.5
+08FC:  BSF    03.6
+08FD:  MOVF   63,W
+08FE:  BCF    03.5
+08FF:  BCF    03.6
+0900:  MOVWF  53
+0901:  MOVLW  18
+0902:  MOVWF  54
+0903:  BCF    0A.3
+0904:  CALL   4B0
+0905:  BSF    0A.3
+0906:  MOVLW  2C
+0907:  BTFSS  0C.4
+0908:  GOTO   107
+0909:  MOVWF  19
+090A:  BSF    03.5
+090B:  BSF    03.6
+090C:  MOVF   64,W
+090D:  BCF    03.5
+090E:  BCF    03.6
+090F:  MOVWF  53
+0910:  MOVLW  18
+0911:  MOVWF  54
+0912:  BCF    0A.3
+0913:  CALL   4B0
+0914:  BSF    0A.3
+0915:  MOVLW  2C
+0916:  BTFSS  0C.4
+0917:  GOTO   116
+0918:  MOVWF  19
+0919:  BSF    03.5
+091A:  BSF    03.6
+091B:  MOVF   65,W
+091C:  BCF    03.5
+091D:  BCF    03.6
+091E:  MOVWF  53
+091F:  MOVLW  18
+0920:  MOVWF  54
+0921:  BCF    0A.3
+0922:  CALL   4B0
+0923:  BSF    0A.3
+0924:  MOVLW  0D
+0925:  BTFSS  0C.4
+0926:  GOTO   125
+0927:  MOVWF  19
+0928:  MOVLW  0A
+0929:  BTFSS  0C.4
+092A:  GOTO   129
+092B:  MOVWF  19
+.................... 				break;  
+092C:  GOTO   728
+.................... 			case 'J' :								// Scan I2C Bus  
+.................... 				__J();  
+092D:  BCF    0A.3
+092E:  GOTO   583
+092F:  BSF    0A.3
+.................... 				break;  
+0930:  GOTO   728
+.................... 			//case 'K' : Unused  
+.................... 			case 'L' :								// Set the Leds  
+.................... 				output_bit( PIN_D7 , __SerialBuffer[2] - '0' );  
+0931:  MOVLW  30
+0932:  BSF    03.5
+0933:  BSF    03.6
+0934:  SUBWF  22,W
+0935:  XORLW  00
+0936:  BTFSS  03.2
+0937:  GOTO   13E
+0938:  BCF    03.5
+0939:  BCF    03.6
+093A:  BCF    08.7
+093B:  GOTO   141
+093C:  BSF    03.5
+093D:  BSF    03.6
+093E:  BCF    03.5
+093F:  BCF    03.6
+0940:  BSF    08.7
+.................... 				output_bit( PIN_D5 , __SerialBuffer[4] - '0' );  
+0941:  MOVLW  30
+0942:  BSF    03.5
+0943:  BSF    03.6
+0944:  SUBWF  24,W
+0945:  XORLW  00
+0946:  BTFSS  03.2
+0947:  GOTO   14E
+0948:  BCF    03.5
+0949:  BCF    03.6
+094A:  BCF    08.5
+094B:  GOTO   151
+094C:  BSF    03.5
+094D:  BSF    03.6
+094E:  BCF    03.5
+094F:  BCF    03.6
+0950:  BSF    08.5
+.................... 				output_bit( PIN_D6 , __SerialBuffer[6] - '0' );  
+0951:  MOVLW  30
+0952:  BSF    03.5
+0953:  BSF    03.6
+0954:  SUBWF  26,W
+0955:  XORLW  00
+0956:  BTFSS  03.2
+0957:  GOTO   15E
+0958:  BCF    03.5
+0959:  BCF    03.6
+095A:  BCF    08.6
+095B:  GOTO   161
+095C:  BSF    03.5
+095D:  BSF    03.6
+095E:  BCF    03.5
+095F:  BCF    03.6
+0960:  BSF    08.6
+.................... 				output_bit( PIN_A4 , !(__SerialBuffer[8] - '0') );  
+0961:  MOVLW  30
+0962:  BSF    03.5
+0963:  BSF    03.6
+0964:  SUBWF  28,W
+0965:  XORLW  00
+0966:  BTFSC  03.2
+0967:  GOTO   16E
+0968:  BCF    03.5
+0969:  BCF    03.6
+096A:  BCF    05.4
+096B:  GOTO   171
+096C:  BSF    03.5
+096D:  BSF    03.6
+096E:  BCF    03.5
+096F:  BCF    03.6
+0970:  BSF    05.4
+.................... 				printf( "l\r\n" );  
+0971:  MOVLW  6C
+0972:  BTFSS  0C.4
+0973:  GOTO   172
+0974:  MOVWF  19
+0975:  MOVLW  0D
+0976:  BTFSS  0C.4
+0977:  GOTO   176
+0978:  MOVWF  19
+0979:  MOVLW  0A
+097A:  BTFSS  0C.4
+097B:  GOTO   17A
+097C:  MOVWF  19
+.................... 				break;  
+097D:  GOTO   728
+.................... 			case 'M' :								// Get Brightness Zone Sensors  
+.................... 				switch(__SerialBuffer[2])  
+.................... 				{  
+097E:  BSF    03.5
+097F:  BSF    03.6
+0980:  MOVF   22,W
+0981:  MOVWF  77
+0982:  MOVLW  30
+0983:  SUBWF  77,W
+0984:  BCF    03.5
+0985:  BCF    03.6
+0986:  BTFSC  03.2
+0987:  GOTO   191
+0988:  MOVLW  31
+0989:  SUBWF  77,W
+098A:  BTFSC  03.2
+098B:  GOTO   1C8
+098C:  MOVLW  32
+098D:  SUBWF  77,W
+098E:  BTFSC  03.2
+098F:  GOTO   1FF
+0990:  GOTO   228
+.................... 					case '0' :  // Front Zone  
+.................... 						printf( "m,%03u,%03u,%03u\r\n",__IR_Light[ Front ],__IR_Light[ FrontRight ],__IR_Light[ FrontLeft ] );  
+0991:  MOVLW  6D
+0992:  BTFSS  0C.4
+0993:  GOTO   192
+0994:  MOVWF  19
+0995:  MOVLW  2C
+0996:  BTFSS  0C.4
+0997:  GOTO   196
+0998:  MOVWF  19
+0999:  BSF    03.5
+099A:  BSF    03.6
+099B:  MOVF   54,W
+099C:  BCF    03.5
+099D:  BCF    03.6
+099E:  MOVWF  52
+099F:  CLRF   53
+09A0:  BCF    0A.3
+09A1:  CALL   5D8
+09A2:  BSF    0A.3
+09A3:  MOVLW  2C
+09A4:  BTFSS  0C.4
+09A5:  GOTO   1A4
+09A6:  MOVWF  19
+09A7:  BSF    03.5
+09A8:  BSF    03.6
+09A9:  MOVF   52,W
+09AA:  BCF    03.5
+09AB:  BCF    03.6
+09AC:  MOVWF  52
+09AD:  CLRF   53
+09AE:  BCF    0A.3
+09AF:  CALL   5D8
+09B0:  BSF    0A.3
+09B1:  MOVLW  2C
+09B2:  BTFSS  0C.4
+09B3:  GOTO   1B2
+09B4:  MOVWF  19
+09B5:  BSF    03.5
+09B6:  BSF    03.6
+09B7:  MOVF   53,W
+09B8:  BCF    03.5
+09B9:  BCF    03.6
+09BA:  MOVWF  52
+09BB:  CLRF   53
+09BC:  BCF    0A.3
+09BD:  CALL   5D8
+09BE:  BSF    0A.3
+09BF:  MOVLW  0D
+09C0:  BTFSS  0C.4
+09C1:  GOTO   1C0
+09C2:  MOVWF  19
+09C3:  MOVLW  0A
+09C4:  BTFSS  0C.4
+09C5:  GOTO   1C4
+09C6:  MOVWF  19
+.................... 						break;  
+09C7:  GOTO   228
+.................... 					case '1' :  // Rear Zone  
+.................... 						printf( "m,%03u,%03u,%03u\r\n",__IR_Light[ Right],__IR_Light[ Left],__IR_Light[ Rear ] );  
+09C8:  MOVLW  6D
+09C9:  BTFSS  0C.4
+09CA:  GOTO   1C9
+09CB:  MOVWF  19
+09CC:  MOVLW  2C
+09CD:  BTFSS  0C.4
+09CE:  GOTO   1CD
+09CF:  MOVWF  19
+09D0:  BSF    03.5
+09D1:  BSF    03.6
+09D2:  MOVF   57,W
+09D3:  BCF    03.5
+09D4:  BCF    03.6
+09D5:  MOVWF  52
+09D6:  CLRF   53
+09D7:  BCF    0A.3
+09D8:  CALL   5D8
+09D9:  BSF    0A.3
+09DA:  MOVLW  2C
+09DB:  BTFSS  0C.4
+09DC:  GOTO   1DB
+09DD:  MOVWF  19
+09DE:  BSF    03.5
+09DF:  BSF    03.6
+09E0:  MOVF   56,W
+09E1:  BCF    03.5
+09E2:  BCF    03.6
+09E3:  MOVWF  52
+09E4:  CLRF   53
+09E5:  BCF    0A.3
+09E6:  CALL   5D8
+09E7:  BSF    0A.3
+09E8:  MOVLW  2C
+09E9:  BTFSS  0C.4
+09EA:  GOTO   1E9
+09EB:  MOVWF  19
+09EC:  BSF    03.5
+09ED:  BSF    03.6
+09EE:  MOVF   55,W
+09EF:  BCF    03.5
+09F0:  BCF    03.6
+09F1:  MOVWF  52
+09F2:  CLRF   53
+09F3:  BCF    0A.3
+09F4:  CALL   5D8
+09F5:  BSF    0A.3
+09F6:  MOVLW  0D
+09F7:  BTFSS  0C.4
+09F8:  GOTO   1F7
+09F9:  MOVWF  19
+09FA:  MOVLW  0A
+09FB:  BTFSS  0C.4
+09FC:  GOTO   1FB
+09FD:  MOVWF  19
+.................... 						break;  
+09FE:  GOTO   228
+.................... 					case '2' :  // Ground Zone  
+.................... 						printf( "m,%03u,%03u\r\n",__IR_Light[ GroundRight ],__IR_Light[ GroundLeft ]);  
+09FF:  MOVLW  6D
+0A00:  BTFSS  0C.4
+0A01:  GOTO   200
+0A02:  MOVWF  19
+0A03:  MOVLW  2C
+0A04:  BTFSS  0C.4
+0A05:  GOTO   204
+0A06:  MOVWF  19
+0A07:  BSF    03.5
+0A08:  BSF    03.6
+0A09:  MOVF   59,W
+0A0A:  BCF    03.5
+0A0B:  BCF    03.6
+0A0C:  MOVWF  52
+0A0D:  CLRF   53
+0A0E:  BCF    0A.3
+0A0F:  CALL   5D8
+0A10:  BSF    0A.3
+0A11:  MOVLW  2C
+0A12:  BTFSS  0C.4
+0A13:  GOTO   212
+0A14:  MOVWF  19
+0A15:  BSF    03.5
+0A16:  BSF    03.6
+0A17:  MOVF   58,W
+0A18:  BCF    03.5
+0A19:  BCF    03.6
+0A1A:  MOVWF  52
+0A1B:  CLRF   53
+0A1C:  BCF    0A.3
+0A1D:  CALL   5D8
+0A1E:  BSF    0A.3
+0A1F:  MOVLW  0D
+0A20:  BTFSS  0C.4
+0A21:  GOTO   220
+0A22:  MOVWF  19
+0A23:  MOVLW  0A
+0A24:  BTFSS  0C.4
+0A25:  GOTO   224
+0A26:  MOVWF  19
+.................... 						break;  
+0A27:  GOTO   228
+.................... 				}  
+.................... 				break;  
+0A28:  GOTO   728
+.................... 			case 'N' :     								// Get all Proximity Sensors  
+.................... 				printf( "n,%03u,%03u,%03u,%03u,%03u,%03u,%03u,%03u\r\n" , __IR_Proximity[ Front ] , __IR_Proximity[ FrontRight ] ,  
+.................... 						__IR_Proximity[ FrontLeft ] , __IR_Proximity[ Right] , __IR_Proximity[ Left] , __IR_Proximity[ Rear ] ,  
+.................... 						__IR_Proximity[ GroundRight ] , __IR_Proximity[ GroundLeft ] );  
+0A29:  MOVLW  6E
+0A2A:  BTFSS  0C.4
+0A2B:  GOTO   22A
+0A2C:  MOVWF  19
+0A2D:  MOVLW  2C
+0A2E:  BTFSS  0C.4
+0A2F:  GOTO   22E
+0A30:  MOVWF  19
+0A31:  BSF    03.5
+0A32:  BSF    03.6
+0A33:  MOVF   5C,W
+0A34:  BCF    03.5
+0A35:  BCF    03.6
+0A36:  MOVWF  52
+0A37:  CLRF   53
+0A38:  BCF    0A.3
+0A39:  CALL   5D8
+0A3A:  BSF    0A.3
+0A3B:  MOVLW  2C
+0A3C:  BTFSS  0C.4
+0A3D:  GOTO   23C
+0A3E:  MOVWF  19
+0A3F:  BSF    03.5
+0A40:  BSF    03.6
+0A41:  MOVF   5A,W
+0A42:  BCF    03.5
+0A43:  BCF    03.6
+0A44:  MOVWF  52
+0A45:  CLRF   53
+0A46:  BCF    0A.3
+0A47:  CALL   5D8
+0A48:  BSF    0A.3
+0A49:  MOVLW  2C
+0A4A:  BTFSS  0C.4
+0A4B:  GOTO   24A
+0A4C:  MOVWF  19
+0A4D:  BSF    03.5
+0A4E:  BSF    03.6
+0A4F:  MOVF   5B,W
+0A50:  BCF    03.5
+0A51:  BCF    03.6
+0A52:  MOVWF  52
+0A53:  CLRF   53
+0A54:  BCF    0A.3
+0A55:  CALL   5D8
+0A56:  BSF    0A.3
+0A57:  MOVLW  2C
+0A58:  BTFSS  0C.4
+0A59:  GOTO   258
+0A5A:  MOVWF  19
+0A5B:  BSF    03.5
+0A5C:  BSF    03.6
+0A5D:  MOVF   5F,W
+0A5E:  BCF    03.5
+0A5F:  BCF    03.6
+0A60:  MOVWF  52
+0A61:  CLRF   53
+0A62:  BCF    0A.3
+0A63:  CALL   5D8
+0A64:  BSF    0A.3
+0A65:  MOVLW  2C
+0A66:  BTFSS  0C.4
+0A67:  GOTO   266
+0A68:  MOVWF  19
+0A69:  BSF    03.5
+0A6A:  BSF    03.6
+0A6B:  MOVF   5E,W
+0A6C:  BCF    03.5
+0A6D:  BCF    03.6
+0A6E:  MOVWF  52
+0A6F:  CLRF   53
+0A70:  BCF    0A.3
+0A71:  CALL   5D8
+0A72:  BSF    0A.3
+0A73:  MOVLW  2C
+0A74:  BTFSS  0C.4
+0A75:  GOTO   274
+0A76:  MOVWF  19
+0A77:  BSF    03.5
+0A78:  BSF    03.6
+0A79:  MOVF   5D,W
+0A7A:  BCF    03.5
+0A7B:  BCF    03.6
+0A7C:  MOVWF  52
+0A7D:  CLRF   53
+0A7E:  BCF    0A.3
+0A7F:  CALL   5D8
+0A80:  BSF    0A.3
+0A81:  MOVLW  2C
+0A82:  BTFSS  0C.4
+0A83:  GOTO   282
+0A84:  MOVWF  19
+0A85:  BSF    03.5
+0A86:  BSF    03.6
+0A87:  MOVF   61,W
+0A88:  BCF    03.5
+0A89:  BCF    03.6
+0A8A:  MOVWF  52
+0A8B:  CLRF   53
+0A8C:  BCF    0A.3
+0A8D:  CALL   5D8
+0A8E:  BSF    0A.3
+0A8F:  MOVLW  2C
+0A90:  BTFSS  0C.4
+0A91:  GOTO   290
+0A92:  MOVWF  19
+0A93:  BSF    03.5
+0A94:  BSF    03.6
+0A95:  MOVF   60,W
+0A96:  BCF    03.5
+0A97:  BCF    03.6
+0A98:  MOVWF  52
+0A99:  CLRF   53
+0A9A:  BCF    0A.3
+0A9B:  CALL   5D8
+0A9C:  BSF    0A.3
+0A9D:  MOVLW  0D
+0A9E:  BTFSS  0C.4
+0A9F:  GOTO   29E
+0AA0:  MOVWF  19
+0AA1:  MOVLW  0A
+0AA2:  BTFSS  0C.4
+0AA3:  GOTO   2A2
+0AA4:  MOVWF  19
+.................... 				break;  
+0AA5:  GOTO   728
+.................... 			case 'O' :								// Get all Brightness Sensors  
+.................... 				printf( "o,%03u,%03u,%03u,%03u,%03u,%03u,%03u,%03u\r\n" , __IR_Light[ Front ] , __IR_Light[ FrontRight ] ,  
+.................... 						__IR_Light[ FrontLeft ] , __IR_Light[ Right] , __IR_Light[ Left] , __IR_Light[ Rear ] ,  
+.................... 						__IR_Light[ GroundRight ] , __IR_Light[ GroundLeft ] );  
+0AA6:  MOVLW  6F
+0AA7:  BTFSS  0C.4
+0AA8:  GOTO   2A7
+0AA9:  MOVWF  19
+0AAA:  MOVLW  2C
+0AAB:  BTFSS  0C.4
+0AAC:  GOTO   2AB
+0AAD:  MOVWF  19
+0AAE:  BSF    03.5
+0AAF:  BSF    03.6
+0AB0:  MOVF   54,W
+0AB1:  BCF    03.5
+0AB2:  BCF    03.6
+0AB3:  MOVWF  52
+0AB4:  CLRF   53
+0AB5:  BCF    0A.3
+0AB6:  CALL   5D8
+0AB7:  BSF    0A.3
+0AB8:  MOVLW  2C
+0AB9:  BTFSS  0C.4
+0ABA:  GOTO   2B9
+0ABB:  MOVWF  19
+0ABC:  BSF    03.5
+0ABD:  BSF    03.6
+0ABE:  MOVF   52,W
+0ABF:  BCF    03.5
+0AC0:  BCF    03.6
+0AC1:  MOVWF  52
+0AC2:  CLRF   53
+0AC3:  BCF    0A.3
+0AC4:  CALL   5D8
+0AC5:  BSF    0A.3
+0AC6:  MOVLW  2C
+0AC7:  BTFSS  0C.4
+0AC8:  GOTO   2C7
+0AC9:  MOVWF  19
+0ACA:  BSF    03.5
+0ACB:  BSF    03.6
+0ACC:  MOVF   53,W
+0ACD:  BCF    03.5
+0ACE:  BCF    03.6
+0ACF:  MOVWF  52
+0AD0:  CLRF   53
+0AD1:  BCF    0A.3
+0AD2:  CALL   5D8
+0AD3:  BSF    0A.3
+0AD4:  MOVLW  2C
+0AD5:  BTFSS  0C.4
+0AD6:  GOTO   2D5
+0AD7:  MOVWF  19
+0AD8:  BSF    03.5
+0AD9:  BSF    03.6
+0ADA:  MOVF   57,W
+0ADB:  BCF    03.5
+0ADC:  BCF    03.6
+0ADD:  MOVWF  52
+0ADE:  CLRF   53
+0ADF:  BCF    0A.3
+0AE0:  CALL   5D8
+0AE1:  BSF    0A.3
+0AE2:  MOVLW  2C
+0AE3:  BTFSS  0C.4
+0AE4:  GOTO   2E3
+0AE5:  MOVWF  19
+0AE6:  BSF    03.5
+0AE7:  BSF    03.6
+0AE8:  MOVF   56,W
+0AE9:  BCF    03.5
+0AEA:  BCF    03.6
+0AEB:  MOVWF  52
+0AEC:  CLRF   53
+0AED:  BCF    0A.3
+0AEE:  CALL   5D8
+0AEF:  BSF    0A.3
+0AF0:  MOVLW  2C
+0AF1:  BTFSS  0C.4
+0AF2:  GOTO   2F1
+0AF3:  MOVWF  19
+0AF4:  BSF    03.5
+0AF5:  BSF    03.6
+0AF6:  MOVF   55,W
+0AF7:  BCF    03.5
+0AF8:  BCF    03.6
+0AF9:  MOVWF  52
+0AFA:  CLRF   53
+0AFB:  BCF    0A.3
+0AFC:  CALL   5D8
+0AFD:  BSF    0A.3
+0AFE:  MOVLW  2C
+0AFF:  BTFSS  0C.4
+0B00:  GOTO   2FF
+0B01:  MOVWF  19
+0B02:  BSF    03.5
+0B03:  BSF    03.6
+0B04:  MOVF   59,W
+0B05:  BCF    03.5
+0B06:  BCF    03.6
+0B07:  MOVWF  52
+0B08:  CLRF   53
+0B09:  BCF    0A.3
+0B0A:  CALL   5D8
+0B0B:  BSF    0A.3
+0B0C:  MOVLW  2C
+0B0D:  BTFSS  0C.4
+0B0E:  GOTO   30D
+0B0F:  MOVWF  19
+0B10:  BSF    03.5
+0B11:  BSF    03.6
+0B12:  MOVF   58,W
+0B13:  BCF    03.5
+0B14:  BCF    03.6
+0B15:  MOVWF  52
+0B16:  CLRF   53
+0B17:  BCF    0A.3
+0B18:  CALL   5D8
+0B19:  BSF    0A.3
+0B1A:  MOVLW  0D
+0B1B:  BTFSS  0C.4
+0B1C:  GOTO   31B
+0B1D:  MOVWF  19
+0B1E:  MOVLW  0A
+0B1F:  BTFSS  0C.4
+0B20:  GOTO   31F
+0B21:  MOVWF  19
+.................... 				break;  
+0B22:  GOTO   728
+.................... 			case 'P' :								// Get Proximity Zone Sensors  
+.................... 				switch(__SerialBuffer[2])  
+.................... 				{  
+0B23:  BSF    03.5
+0B24:  BSF    03.6
+0B25:  MOVF   22,W
+0B26:  MOVWF  77
+0B27:  MOVLW  30
+0B28:  SUBWF  77,W
+0B29:  BCF    03.5
+0B2A:  BCF    03.6
+0B2B:  BTFSC  03.2
+0B2C:  GOTO   336
+0B2D:  MOVLW  31
+0B2E:  SUBWF  77,W
+0B2F:  BTFSC  03.2
+0B30:  GOTO   36D
+0B31:  MOVLW  32
+0B32:  SUBWF  77,W
+0B33:  BTFSC  03.2
+0B34:  GOTO   3A4
+0B35:  GOTO   3CD
+.................... 					case '0' :  // Front Zone  
+.................... 						printf( "p,%03u,%03u,%03u\r\n",__IR_Proximity[ Front ],__IR_Proximity[ FrontRight ],__IR_Proximity[ FrontLeft ] );  
+0B36:  MOVLW  70
+0B37:  BTFSS  0C.4
+0B38:  GOTO   337
+0B39:  MOVWF  19
+0B3A:  MOVLW  2C
+0B3B:  BTFSS  0C.4
+0B3C:  GOTO   33B
+0B3D:  MOVWF  19
+0B3E:  BSF    03.5
+0B3F:  BSF    03.6
+0B40:  MOVF   5C,W
+0B41:  BCF    03.5
+0B42:  BCF    03.6
+0B43:  MOVWF  52
+0B44:  CLRF   53
+0B45:  BCF    0A.3
+0B46:  CALL   5D8
+0B47:  BSF    0A.3
+0B48:  MOVLW  2C
+0B49:  BTFSS  0C.4
+0B4A:  GOTO   349
+0B4B:  MOVWF  19
+0B4C:  BSF    03.5
+0B4D:  BSF    03.6
+0B4E:  MOVF   5A,W
+0B4F:  BCF    03.5
+0B50:  BCF    03.6
+0B51:  MOVWF  52
+0B52:  CLRF   53
+0B53:  BCF    0A.3
+0B54:  CALL   5D8
+0B55:  BSF    0A.3
+0B56:  MOVLW  2C
+0B57:  BTFSS  0C.4
+0B58:  GOTO   357
+0B59:  MOVWF  19
+0B5A:  BSF    03.5
+0B5B:  BSF    03.6
+0B5C:  MOVF   5B,W
+0B5D:  BCF    03.5
+0B5E:  BCF    03.6
+0B5F:  MOVWF  52
+0B60:  CLRF   53
+0B61:  BCF    0A.3
+0B62:  CALL   5D8
+0B63:  BSF    0A.3
+0B64:  MOVLW  0D
+0B65:  BTFSS  0C.4
+0B66:  GOTO   365
+0B67:  MOVWF  19
+0B68:  MOVLW  0A
+0B69:  BTFSS  0C.4
+0B6A:  GOTO   369
+0B6B:  MOVWF  19
+.................... 						break;  
+0B6C:  GOTO   3CD
+.................... 					case '1' :  // Rear Zone  
+.................... 						printf( "p,%03u,%03u,%03u\r\n",__IR_Proximity[ Right],__IR_Proximity[ Left],__IR_Proximity[ Rear ] );  
+0B6D:  MOVLW  70
+0B6E:  BTFSS  0C.4
+0B6F:  GOTO   36E
+0B70:  MOVWF  19
+0B71:  MOVLW  2C
+0B72:  BTFSS  0C.4
+0B73:  GOTO   372
+0B74:  MOVWF  19
+0B75:  BSF    03.5
+0B76:  BSF    03.6
+0B77:  MOVF   5F,W
+0B78:  BCF    03.5
+0B79:  BCF    03.6
+0B7A:  MOVWF  52
+0B7B:  CLRF   53
+0B7C:  BCF    0A.3
+0B7D:  CALL   5D8
+0B7E:  BSF    0A.3
+0B7F:  MOVLW  2C
+0B80:  BTFSS  0C.4
+0B81:  GOTO   380
+0B82:  MOVWF  19
+0B83:  BSF    03.5
+0B84:  BSF    03.6
+0B85:  MOVF   5E,W
+0B86:  BCF    03.5
+0B87:  BCF    03.6
+0B88:  MOVWF  52
+0B89:  CLRF   53
+0B8A:  BCF    0A.3
+0B8B:  CALL   5D8
+0B8C:  BSF    0A.3
+0B8D:  MOVLW  2C
+0B8E:  BTFSS  0C.4
+0B8F:  GOTO   38E
+0B90:  MOVWF  19
+0B91:  BSF    03.5
+0B92:  BSF    03.6
+0B93:  MOVF   5D,W
+0B94:  BCF    03.5
+0B95:  BCF    03.6
+0B96:  MOVWF  52
+0B97:  CLRF   53
+0B98:  BCF    0A.3
+0B99:  CALL   5D8
+0B9A:  BSF    0A.3
+0B9B:  MOVLW  0D
+0B9C:  BTFSS  0C.4
+0B9D:  GOTO   39C
+0B9E:  MOVWF  19
+0B9F:  MOVLW  0A
+0BA0:  BTFSS  0C.4
+0BA1:  GOTO   3A0
+0BA2:  MOVWF  19
+.................... 						break;  
+0BA3:  GOTO   3CD
+.................... 					case '2' :  // Ground Zone  
+.................... 						printf( "p,%03u,%03u\r\n",__IR_Proximity[ GroundRight ],__IR_Proximity[ GroundLeft ]);  
+0BA4:  MOVLW  70
+0BA5:  BTFSS  0C.4
+0BA6:  GOTO   3A5
+0BA7:  MOVWF  19
+0BA8:  MOVLW  2C
+0BA9:  BTFSS  0C.4
+0BAA:  GOTO   3A9
+0BAB:  MOVWF  19
+0BAC:  BSF    03.5
+0BAD:  BSF    03.6
+0BAE:  MOVF   61,W
+0BAF:  BCF    03.5
+0BB0:  BCF    03.6
+0BB1:  MOVWF  52
+0BB2:  CLRF   53
+0BB3:  BCF    0A.3
+0BB4:  CALL   5D8
+0BB5:  BSF    0A.3
+0BB6:  MOVLW  2C
+0BB7:  BTFSS  0C.4
+0BB8:  GOTO   3B7
+0BB9:  MOVWF  19
+0BBA:  BSF    03.5
+0BBB:  BSF    03.6
+0BBC:  MOVF   60,W
+0BBD:  BCF    03.5
+0BBE:  BCF    03.6
+0BBF:  MOVWF  52
+0BC0:  CLRF   53
+0BC1:  BCF    0A.3
+0BC2:  CALL   5D8
+0BC3:  BSF    0A.3
+0BC4:  MOVLW  0D
+0BC5:  BTFSS  0C.4
+0BC6:  GOTO   3C5
+0BC7:  MOVWF  19
+0BC8:  MOVLW  0A
+0BC9:  BTFSS  0C.4
+0BCA:  GOTO   3C9
+0BCB:  MOVWF  19
+.................... 						break;  
+0BCC:  GOTO   3CD
+.................... 				}  
+.................... 				break;  
+0BCD:  GOTO   728
+.................... 			#ifdef firmware  
+.................... 			case 'Q' : //Reserved for Webots-Hemisson  
+.................... 				__Q();  
+.................... 				break;  
+.................... 			#endif  
+.................... 			case 'R' :								// Read I2C  
+.................... 				__memaddress = chartohex(__SerialBuffer[2]);  
+0BCE:  BSF    03.5
+0BCF:  BSF    03.6
+0BD0:  MOVF   22,W
+0BD1:  BCF    03.5
+0BD2:  BCF    03.6
+0BD3:  MOVWF  57
+0BD4:  BCF    0A.3
+0BD5:  CALL   60D
+0BD6:  BSF    0A.3
+0BD7:  MOVF   78,W
+0BD8:  MOVWF  4E
+.................... 				__memaddress = (__memaddress<<4) + chartohex(__SerialBuffer[3]);  
+0BD9:  SWAPF  4E,W
+0BDA:  MOVWF  52
+0BDB:  MOVLW  F0
+0BDC:  ANDWF  52,F
+0BDD:  BSF    03.5
+0BDE:  BSF    03.6
+0BDF:  MOVF   23,W
+0BE0:  BCF    03.5
+0BE1:  BCF    03.6
+0BE2:  MOVWF  57
+0BE3:  BCF    0A.3
+0BE4:  CALL   60D
+0BE5:  BSF    0A.3
+0BE6:  MOVF   78,W
+0BE7:  ADDWF  52,W
+0BE8:  MOVWF  4E
+.................... 				i2c_start();  
+0BE9:  BCF    0D.3
+0BEA:  BCF    14.7
+0BEB:  BSF    03.5
+0BEC:  BSF    11.0
+0BED:  BCF    03.5
+0BEE:  BTFSC  0D.3
+0BEF:  GOTO   3E9
+0BF0:  BTFSC  14.7
+0BF1:  GOTO   3E9
+0BF2:  BSF    03.5
+0BF3:  BTFSS  11.0
+0BF4:  GOTO   3F7
+0BF5:  BCF    03.5
+0BF6:  GOTO   3F2
+.................... 				i2c_write( __memaddress );                                      // Writing Address of the module  
+0BF7:  BCF    03.5
+0BF8:  MOVF   4E,W
+0BF9:  MOVWF  55
+0BFA:  BCF    0A.3
+0BFB:  CALL   53F
+0BFC:  BSF    0A.3
+.................... 				__rcvalue = chartohex(__SerialBuffer[5]);  
+0BFD:  BSF    03.5
+0BFE:  BSF    03.6
+0BFF:  MOVF   25,W
+0C00:  BCF    03.5
+0C01:  BCF    03.6
+0C02:  MOVWF  57
+0C03:  BCF    0A.3
+0C04:  CALL   60D
+0C05:  BSF    0A.3
+0C06:  MOVF   78,W
+0C07:  MOVWF  4F
+.................... 				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[6]);  
+0C08:  SWAPF  4F,W
+0C09:  MOVWF  52
+0C0A:  MOVLW  F0
+0C0B:  ANDWF  52,F
+0C0C:  BSF    03.5
+0C0D:  BSF    03.6
+0C0E:  MOVF   26,W
+0C0F:  BCF    03.5
+0C10:  BCF    03.6
+0C11:  MOVWF  57
+0C12:  BCF    0A.3
+0C13:  CALL   60D
+0C14:  BSF    0A.3
+0C15:  MOVF   78,W
+0C16:  ADDWF  52,W
+0C17:  MOVWF  4F
+.................... 				i2c_write( __rcvalue );                                         // Writing Address of the register  
+0C18:  MOVF   4F,W
+0C19:  MOVWF  55
+0C1A:  BCF    0A.3
+0C1B:  CALL   53F
+0C1C:  BSF    0A.3
+.................... 				__rcvalue = chartohex(__SerialBuffer[8]);  
+0C1D:  BSF    03.5
+0C1E:  BSF    03.6
+0C1F:  MOVF   28,W
+0C20:  BCF    03.5
+0C21:  BCF    03.6
+0C22:  MOVWF  57
+0C23:  BCF    0A.3
+0C24:  CALL   60D
+0C25:  BSF    0A.3
+0C26:  MOVF   78,W
+0C27:  MOVWF  4F
+.................... 				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[9]);  
+0C28:  SWAPF  4F,W
+0C29:  MOVWF  52
+0C2A:  MOVLW  F0
+0C2B:  ANDWF  52,F
+0C2C:  BSF    03.5
+0C2D:  BSF    03.6
+0C2E:  MOVF   29,W
+0C2F:  BCF    03.5
+0C30:  BCF    03.6
+0C31:  MOVWF  57
+0C32:  BCF    0A.3
+0C33:  CALL   60D
+0C34:  BSF    0A.3
+0C35:  MOVF   78,W
+0C36:  ADDWF  52,W
+0C37:  MOVWF  4F
+.................... 				i2c_start();  
+0C38:  BCF    0C.3
+0C39:  BSF    03.5
+0C3A:  BSF    11.1
+0C3B:  BTFSC  11.1
+0C3C:  GOTO   43B
+.................... 				i2c_write( __memaddress + 1 );                                  // Writing Address of the module in Read Mode  
+0C3D:  MOVLW  01
+0C3E:  BCF    03.5
+0C3F:  ADDWF  4E,W
+0C40:  MOVWF  52
+0C41:  MOVWF  55
+0C42:  BCF    0A.3
+0C43:  CALL   53F
+0C44:  BSF    0A.3
+.................... 				printf("r",__TempVal);  
+0C45:  MOVLW  72
+0C46:  BTFSS  0C.4
+0C47:  GOTO   446
+0C48:  MOVWF  19
+.................... 				while(__rcvalue > 1)  
+.................... 				{  
+0C49:  MOVF   4F,W
+0C4A:  SUBLW  01
+0C4B:  BTFSC  03.0
+0C4C:  GOTO   460
+.................... 					__TempVal = i2c_read();  
+0C4D:  MOVLW  01
+0C4E:  MOVWF  77
+0C4F:  BCF    0A.3
+0C50:  CALL   54F
+0C51:  BSF    0A.3
+0C52:  MOVF   78,W
+0C53:  MOVWF  50
+.................... 					printf(",%03u",__TempVal);  
+0C54:  MOVLW  2C
+0C55:  BTFSS  0C.4
+0C56:  GOTO   455
+0C57:  MOVWF  19
+0C58:  MOVF   50,W
+0C59:  MOVWF  52
+0C5A:  CLRF   53
+0C5B:  BCF    0A.3
+0C5C:  CALL   5D8
+0C5D:  BSF    0A.3
+.................... 					__rcvalue--;  
+0C5E:  DECF   4F,F
+.................... 				}  
+0C5F:  GOTO   449
+.................... 				__TempVal = i2c_read(0);  
+0C60:  CLRF   77
+0C61:  BCF    0A.3
+0C62:  CALL   54F
+0C63:  BSF    0A.3
+0C64:  MOVF   78,W
+0C65:  MOVWF  50
+.................... 				printf(",%03u",__TempVal);  
+0C66:  MOVLW  2C
+0C67:  BTFSS  0C.4
+0C68:  GOTO   467
+0C69:  MOVWF  19
+0C6A:  MOVF   50,W
+0C6B:  MOVWF  52
+0C6C:  CLRF   53
+0C6D:  BCF    0A.3
+0C6E:  CALL   5D8
+0C6F:  BSF    0A.3
+.................... 				i2c_stop();  
+0C70:  BSF    03.5
+0C71:  BSF    11.2
+0C72:  BTFSC  11.2
+0C73:  GOTO   472
+.................... 				printf("\r\n");  
+0C74:  MOVLW  0D
+0C75:  BCF    03.5
+0C76:  BTFSC  0C.4
+0C77:  GOTO   47A
+0C78:  BSF    03.5
+0C79:  GOTO   475
+0C7A:  MOVWF  19
+0C7B:  MOVLW  0A
+0C7C:  BTFSS  0C.4
+0C7D:  GOTO   47C
+0C7E:  MOVWF  19
+.................... 				break;  
+0C7F:  GOTO   728
+.................... 			#ifdef firmware  
+.................... 			case 'S' : //Reserved for Webots-Hemisson  
+.................... 				__S();  
+.................... 				break;  
+.................... 			#endif  
+.................... 			case 'T' :								// Read TV Remote Sensor  
+.................... 			__T();  
+0C80:  BCF    0A.3
+0C81:  GOTO   61C
+0C82:  BSF    0A.3
+.................... 			break;  
+0C83:  GOTO   728
+.................... 			#ifdef firmware  
+.................... 			case 'U' : //Reserved for Webots-Hemisson  
+.................... 				__U();  
+.................... 				break;  
+.................... 			#endif  
+.................... 			//case 'V' : Unused  
+.................... 			case 'W' :								// Write I2C  
+.................... 				__rcvalue = chartohex(__SerialBuffer[2]);  
+0C84:  BSF    03.5
+0C85:  BSF    03.6
+0C86:  MOVF   22,W
+0C87:  BCF    03.5
+0C88:  BCF    03.6
+0C89:  MOVWF  57
+0C8A:  BCF    0A.3
+0C8B:  CALL   60D
+0C8C:  BSF    0A.3
+0C8D:  MOVF   78,W
+0C8E:  MOVWF  4F
+.................... 				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[3]);  
+0C8F:  SWAPF  4F,W
+0C90:  MOVWF  52
+0C91:  MOVLW  F0
+0C92:  ANDWF  52,F
+0C93:  BSF    03.5
+0C94:  BSF    03.6
+0C95:  MOVF   23,W
+0C96:  BCF    03.5
+0C97:  BCF    03.6
+0C98:  MOVWF  57
+0C99:  BCF    0A.3
+0C9A:  CALL   60D
+0C9B:  BSF    0A.3
+0C9C:  MOVF   78,W
+0C9D:  ADDWF  52,W
+0C9E:  MOVWF  4F
+.................... 				i2c_start();  
+0C9F:  BCF    0D.3
+0CA0:  BCF    14.7
+0CA1:  BSF    03.5
+0CA2:  BSF    11.0
+0CA3:  BCF    03.5
+0CA4:  BTFSC  0D.3
+0CA5:  GOTO   49F
+0CA6:  BTFSC  14.7
+0CA7:  GOTO   49F
+0CA8:  BSF    03.5
+0CA9:  BTFSS  11.0
+0CAA:  GOTO   4AD
+0CAB:  BCF    03.5
+0CAC:  GOTO   4A8
+.................... 				i2c_write( __rcvalue );                                         // Writing Address of the module  
+0CAD:  BCF    03.5
+0CAE:  MOVF   4F,W
+0CAF:  MOVWF  55
+0CB0:  BCF    0A.3
+0CB1:  CALL   53F
+0CB2:  BSF    0A.3
+.................... 				__rcvalue = chartohex(__SerialBuffer[5]);  
+0CB3:  BSF    03.5
+0CB4:  BSF    03.6
+0CB5:  MOVF   25,W
+0CB6:  BCF    03.5
+0CB7:  BCF    03.6
+0CB8:  MOVWF  57
+0CB9:  BCF    0A.3
+0CBA:  CALL   60D
+0CBB:  BSF    0A.3
+0CBC:  MOVF   78,W
+0CBD:  MOVWF  4F
+.................... 				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[6]);  
+0CBE:  SWAPF  4F,W
+0CBF:  MOVWF  52
+0CC0:  MOVLW  F0
+0CC1:  ANDWF  52,F
+0CC2:  BSF    03.5
+0CC3:  BSF    03.6
+0CC4:  MOVF   26,W
+0CC5:  BCF    03.5
+0CC6:  BCF    03.6
+0CC7:  MOVWF  57
+0CC8:  BCF    0A.3
+0CC9:  CALL   60D
+0CCA:  BSF    0A.3
+0CCB:  MOVF   78,W
+0CCC:  ADDWF  52,W
+0CCD:  MOVWF  4F
+.................... 				i2c_write( __rcvalue );                                         // Writing Address of the register  
+0CCE:  MOVF   4F,W
+0CCF:  MOVWF  55
+0CD0:  BCF    0A.3
+0CD1:  CALL   53F
+0CD2:  BSF    0A.3
+.................... 				__rcvalue = chartohex(__SerialBuffer[8]);  
+0CD3:  BSF    03.5
+0CD4:  BSF    03.6
+0CD5:  MOVF   28,W
+0CD6:  BCF    03.5
+0CD7:  BCF    03.6
+0CD8:  MOVWF  57
+0CD9:  BCF    0A.3
+0CDA:  CALL   60D
+0CDB:  BSF    0A.3
+0CDC:  MOVF   78,W
+0CDD:  MOVWF  4F
+.................... 				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[9]);  
+0CDE:  SWAPF  4F,W
+0CDF:  MOVWF  52
+0CE0:  MOVLW  F0
+0CE1:  ANDWF  52,F
+0CE2:  BSF    03.5
+0CE3:  BSF    03.6
+0CE4:  MOVF   29,W
+0CE5:  BCF    03.5
+0CE6:  BCF    03.6
+0CE7:  MOVWF  57
+0CE8:  BCF    0A.3
+0CE9:  CALL   60D
+0CEA:  BSF    0A.3
+0CEB:  MOVF   78,W
+0CEC:  ADDWF  52,W
+0CED:  MOVWF  4F
+.................... 				i2c_write( __rcvalue );                                         // Writing Data in the register  
+0CEE:  MOVF   4F,W
+0CEF:  MOVWF  55
+0CF0:  BCF    0A.3
+0CF1:  CALL   53F
+0CF2:  BSF    0A.3
+.................... 				i2c_stop();  
+0CF3:  BSF    03.5
+0CF4:  BSF    11.2
+0CF5:  BTFSC  11.2
+0CF6:  GOTO   4F5
+.................... 				printf("w\r\n");  
+0CF7:  MOVLW  77
+0CF8:  BCF    03.5
+0CF9:  BTFSC  0C.4
+0CFA:  GOTO   4FD
+0CFB:  BSF    03.5
+0CFC:  GOTO   4F8
+0CFD:  MOVWF  19
+0CFE:  MOVLW  0D
+0CFF:  BTFSS  0C.4
+0D00:  GOTO   4FF
+0D01:  MOVWF  19
+0D02:  MOVLW  0A
+0D03:  BTFSS  0C.4
+0D04:  GOTO   503
+0D05:  MOVWF  19
+.................... 				break;  
+0D06:  GOTO   728
+.................... 			#ifdef firmware  
+.................... 			case 'X' : //Reserved for Webots-Hemisson  
+.................... 				__X();  
+.................... 				break;  
+.................... 			#endif  
+.................... 			case 'Y' :                                                        	// Write I2C (Pointer Method)  
+.................... 				__rcvalue = chartohex(__SerialBuffer[2]);  
+0D07:  BSF    03.5
+0D08:  BSF    03.6
+0D09:  MOVF   22,W
+0D0A:  BCF    03.5
+0D0B:  BCF    03.6
+0D0C:  MOVWF  57
+0D0D:  BCF    0A.3
+0D0E:  CALL   60D
+0D0F:  BSF    0A.3
+0D10:  MOVF   78,W
+0D11:  MOVWF  4F
+.................... 				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[3]);  
+0D12:  SWAPF  4F,W
+0D13:  MOVWF  52
+0D14:  MOVLW  F0
+0D15:  ANDWF  52,F
+0D16:  BSF    03.5
+0D17:  BSF    03.6
+0D18:  MOVF   23,W
+0D19:  BCF    03.5
+0D1A:  BCF    03.6
+0D1B:  MOVWF  57
+0D1C:  BCF    0A.3
+0D1D:  CALL   60D
+0D1E:  BSF    0A.3
+0D1F:  MOVF   78,W
+0D20:  ADDWF  52,W
+0D21:  MOVWF  4F
+.................... 				i2c_start();  
+0D22:  BCF    0D.3
+0D23:  BCF    14.7
+0D24:  BSF    03.5
+0D25:  BSF    11.0
+0D26:  BCF    03.5
+0D27:  BTFSC  0D.3
+0D28:  GOTO   522
+0D29:  BTFSC  14.7
+0D2A:  GOTO   522
+0D2B:  BSF    03.5
+0D2C:  BTFSS  11.0
+0D2D:  GOTO   530
+0D2E:  BCF    03.5
+0D2F:  GOTO   52B
+.................... 				i2c_write( __rcvalue );                                           // Writing Address of the module  
+0D30:  BCF    03.5
+0D31:  MOVF   4F,W
+0D32:  MOVWF  55
+0D33:  BCF    0A.3
+0D34:  CALL   53F
+0D35:  BSF    0A.3
+.................... 				__rcvalue = chartohex(__SerialBuffer[5]);  
+0D36:  BSF    03.5
+0D37:  BSF    03.6
+0D38:  MOVF   25,W
+0D39:  BCF    03.5
+0D3A:  BCF    03.6
+0D3B:  MOVWF  57
+0D3C:  BCF    0A.3
+0D3D:  CALL   60D
+0D3E:  BSF    0A.3
+0D3F:  MOVF   78,W
+0D40:  MOVWF  4F
+.................... 				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[6]);  
+0D41:  SWAPF  4F,W
+0D42:  MOVWF  52
+0D43:  MOVLW  F0
+0D44:  ANDWF  52,F
+0D45:  BSF    03.5
+0D46:  BSF    03.6
+0D47:  MOVF   26,W
+0D48:  BCF    03.5
+0D49:  BCF    03.6
+0D4A:  MOVWF  57
+0D4B:  BCF    0A.3
+0D4C:  CALL   60D
+0D4D:  BSF    0A.3
+0D4E:  MOVF   78,W
+0D4F:  ADDWF  52,W
+0D50:  MOVWF  4F
+.................... 				i2c_write( __rcvalue );                                           // Writing Address of the register  
+0D51:  MOVF   4F,W
+0D52:  MOVWF  55
+0D53:  BCF    0A.3
+0D54:  CALL   53F
+0D55:  BSF    0A.3
+.................... 				__TempVal = chartohex(__SerialBuffer[8]);  
+0D56:  BSF    03.5
+0D57:  BSF    03.6
+0D58:  MOVF   28,W
+0D59:  BCF    03.5
+0D5A:  BCF    03.6
+0D5B:  MOVWF  57
+0D5C:  BCF    0A.3
+0D5D:  CALL   60D
+0D5E:  BSF    0A.3
+0D5F:  MOVF   78,W
+0D60:  MOVWF  50
+.................... 				__TempVal = (__TempVal<<4) + chartohex(__SerialBuffer[9]);        // Number of Data to Write  
+0D61:  SWAPF  50,W
+0D62:  MOVWF  52
+0D63:  MOVLW  F0
+0D64:  ANDWF  52,F
+0D65:  BSF    03.5
+0D66:  BSF    03.6
+0D67:  MOVF   29,W
+0D68:  BCF    03.5
+0D69:  BCF    03.6
+0D6A:  MOVWF  57
+0D6B:  BCF    0A.3
+0D6C:  CALL   60D
+0D6D:  BSF    0A.3
+0D6E:  MOVF   78,W
+0D6F:  ADDWF  52,W
+0D70:  MOVWF  50
+.................... 				i2c_write( __TempVal );                                           // Writing Number of Data  
+0D71:  MOVF   50,W
+0D72:  MOVWF  55
+0D73:  BCF    0A.3
+0D74:  CALL   53F
+0D75:  BSF    0A.3
+.................... 				for(__i=0;__i<__TempVal;__i++)  
+0D76:  CLRF   51
+0D77:  MOVF   50,W
+0D78:  SUBWF  51,W
+0D79:  BTFSC  03.0
+0D7A:  GOTO   5A5
+.................... 				{  
+.................... 					__rcvalue = chartohex(__SerialBuffer[11+__i+__i+__i]);  
+0D7B:  MOVLW  0B
+0D7C:  ADDWF  51,W
+0D7D:  ADDWF  51,W
+0D7E:  ADDWF  51,W
+0D7F:  ADDLW  A0
+0D80:  MOVWF  04
+0D81:  BSF    03.7
+0D82:  MOVF   00,W
+0D83:  MOVWF  55
+0D84:  MOVWF  57
+0D85:  BCF    0A.3
+0D86:  CALL   60D
+0D87:  BSF    0A.3
+0D88:  MOVF   78,W
+0D89:  MOVWF  4F
+.................... 					__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[12+__i+__i+__i]);  
+0D8A:  SWAPF  4F,W
+0D8B:  MOVWF  52
+0D8C:  MOVLW  F0
+0D8D:  ANDWF  52,F
+0D8E:  MOVLW  0C
+0D8F:  ADDWF  51,W
+0D90:  ADDWF  51,W
+0D91:  ADDWF  51,W
+0D92:  ADDLW  A0
+0D93:  MOVWF  04
+0D94:  BSF    03.7
+0D95:  MOVF   00,W
+0D96:  MOVWF  56
+0D97:  MOVWF  57
+0D98:  BCF    0A.3
+0D99:  CALL   60D
+0D9A:  BSF    0A.3
+0D9B:  MOVF   78,W
+0D9C:  ADDWF  52,W
+0D9D:  MOVWF  4F
+.................... 					i2c_write( __rcvalue );                                        // Writing Data in the register  
+0D9E:  MOVF   4F,W
+0D9F:  MOVWF  55
+0DA0:  BCF    0A.3
+0DA1:  CALL   53F
+0DA2:  BSF    0A.3
+.................... 					//delay_ms(1);						   // Needed for module ???? 
+.................... 				}  
+0DA3:  INCF   51,F
+0DA4:  GOTO   577
+.................... 				i2c_stop();  
+0DA5:  BSF    03.5
+0DA6:  BSF    11.2
+0DA7:  BTFSC  11.2
+0DA8:  GOTO   5A7
+.................... 				printf("y\r\n");  
+0DA9:  MOVLW  79
+0DAA:  BCF    03.5
+0DAB:  BTFSC  0C.4
+0DAC:  GOTO   5AF
+0DAD:  BSF    03.5
+0DAE:  GOTO   5AA
+0DAF:  MOVWF  19
+0DB0:  MOVLW  0D
+0DB1:  BTFSS  0C.4
+0DB2:  GOTO   5B1
+0DB3:  MOVWF  19
+0DB4:  MOVLW  0A
+0DB5:  BTFSS  0C.4
+0DB6:  GOTO   5B5
+0DB7:  MOVWF  19
+.................... 				break;  
+0DB8:  GOTO   728
+.................... 			case 'Z' :	// Reset  
+.................... 				__Z();  
+0DB9:  BCF    0A.3
+0DBA:  GOTO   633
+0DBB:  BSF    0A.3
+.................... 				break;  
+0DBC:  GOTO   728
+.................... 			case '&' :	// Fast binary read  
+.................... 				printf("&%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\r\n",__PwmMotLeft,__PwmMotRight ,__IR_Proximity[ Front ] , __IR_Proximity[ FrontRight ] ,  
+.................... 						__IR_Proximity[ FrontLeft ] , __IR_Proximity[ Right] , __IR_Proximity[ Left] , __IR_Proximity[ Rear ] ,  
+.................... 						__IR_Proximity[ GroundRight ] , __IR_Proximity[ GroundLeft ] , __IR_Light[ Front ] , __IR_Light[ FrontRight ] ,  
+.................... 						__IR_Light[ FrontLeft ] , __IR_Light[ Right] , __IR_Light[ Left] , __IR_Light[ Rear ] ,  
+.................... 						__IR_Light[ GroundRight ] , __IR_Light[ GroundLeft ] , (__Switchs[ 0 ]|(__Switchs[ 1 ]<<1)|(__Switchs[ 2 ]<<2)|(__Switchs[ 3 ]<<3)) ,  
+.................... 						__TV_DATA , HEMIOS_VERSION, HEMIOS_REVISION );  
+0DBD:  BCF    03.0
+0DBE:  BSF    03.5
+0DBF:  BSF    03.6
+0DC0:  RLF    63,W
+0DC1:  IORWF  62,W
+0DC2:  BCF    03.5
+0DC3:  BCF    03.6
+0DC4:  MOVWF  52
+0DC5:  BSF    03.5
+0DC6:  BSF    03.6
+0DC7:  RLF    64,W
+0DC8:  MOVWF  77
+0DC9:  RLF    77,F
+0DCA:  MOVLW  FC
+0DCB:  ANDWF  77,F
+0DCC:  MOVF   77,W
+0DCD:  BCF    03.5
+0DCE:  BCF    03.6
+0DCF:  IORWF  52,W
+0DD0:  MOVWF  53
+0DD1:  BSF    03.5
+0DD2:  BSF    03.6
+0DD3:  RLF    65,W
+0DD4:  MOVWF  77
+0DD5:  RLF    77,F
+0DD6:  RLF    77,F
+0DD7:  MOVLW  F8
+0DD8:  ANDWF  77,F
+0DD9:  MOVF   77,W
+0DDA:  BCF    03.5
+0DDB:  BCF    03.6
+0DDC:  IORWF  53,W
+0DDD:  MOVWF  54
+0DDE:  MOVLW  26
+0DDF:  BTFSS  0C.4
+0DE0:  GOTO   5DF
+0DE1:  MOVWF  19
+0DE2:  MOVF   2A,W
+0DE3:  BTFSS  0C.4
+0DE4:  GOTO   5E3
+0DE5:  MOVWF  19
+0DE6:  MOVF   2B,W
+0DE7:  BTFSS  0C.4
+0DE8:  GOTO   5E7
+0DE9:  MOVWF  19
+0DEA:  BSF    03.5
+0DEB:  BSF    03.6
+0DEC:  MOVF   5C,W
+0DED:  BCF    03.5
+0DEE:  BCF    03.6
+0DEF:  BTFSC  0C.4
+0DF0:  GOTO   5F4
+0DF1:  BSF    03.5
+0DF2:  BSF    03.6
+0DF3:  GOTO   5ED
+0DF4:  MOVWF  19
+0DF5:  BSF    03.5
+0DF6:  BSF    03.6
+0DF7:  MOVF   5A,W
+0DF8:  BCF    03.5
+0DF9:  BCF    03.6
+0DFA:  BTFSC  0C.4
+0DFB:  GOTO   5FF
+0DFC:  BSF    03.5
+0DFD:  BSF    03.6
+0DFE:  GOTO   5F8
+0DFF:  MOVWF  19
+0E00:  BSF    03.5
+0E01:  BSF    03.6
+0E02:  MOVF   5B,W
+0E03:  BCF    03.5
+0E04:  BCF    03.6
+0E05:  BTFSC  0C.4
+0E06:  GOTO   60A
+0E07:  BSF    03.5
+0E08:  BSF    03.6
+0E09:  GOTO   603
+0E0A:  MOVWF  19
+0E0B:  BSF    03.5
+0E0C:  BSF    03.6
+0E0D:  MOVF   5F,W
+0E0E:  BCF    03.5
+0E0F:  BCF    03.6
+0E10:  BTFSC  0C.4
+0E11:  GOTO   615
+0E12:  BSF    03.5
+0E13:  BSF    03.6
+0E14:  GOTO   60E
+0E15:  MOVWF  19
+0E16:  BSF    03.5
+0E17:  BSF    03.6
+0E18:  MOVF   5E,W
+0E19:  BCF    03.5
+0E1A:  BCF    03.6
+0E1B:  BTFSC  0C.4
+0E1C:  GOTO   620
+0E1D:  BSF    03.5
+0E1E:  BSF    03.6
+0E1F:  GOTO   619
+0E20:  MOVWF  19
+0E21:  BSF    03.5
+0E22:  BSF    03.6
+0E23:  MOVF   5D,W
+0E24:  BCF    03.5
+0E25:  BCF    03.6
+0E26:  BTFSC  0C.4
+0E27:  GOTO   62B
+0E28:  BSF    03.5
+0E29:  BSF    03.6
+0E2A:  GOTO   624
+0E2B:  MOVWF  19
+0E2C:  BSF    03.5
+0E2D:  BSF    03.6
+0E2E:  MOVF   61,W
+0E2F:  BCF    03.5
+0E30:  BCF    03.6
+0E31:  BTFSC  0C.4
+0E32:  GOTO   636
+0E33:  BSF    03.5
+0E34:  BSF    03.6
+0E35:  GOTO   62F
+0E36:  MOVWF  19
+0E37:  BSF    03.5
+0E38:  BSF    03.6
+0E39:  MOVF   60,W
+0E3A:  BCF    03.5
+0E3B:  BCF    03.6
+0E3C:  BTFSC  0C.4
+0E3D:  GOTO   641
+0E3E:  BSF    03.5
+0E3F:  BSF    03.6
+0E40:  GOTO   63A
+0E41:  MOVWF  19
+0E42:  BSF    03.5
+0E43:  BSF    03.6
+0E44:  MOVF   54,W
+0E45:  BCF    03.5
+0E46:  BCF    03.6
+0E47:  BTFSC  0C.4
+0E48:  GOTO   64C
+0E49:  BSF    03.5
+0E4A:  BSF    03.6
+0E4B:  GOTO   645
+0E4C:  MOVWF  19
+0E4D:  BSF    03.5
+0E4E:  BSF    03.6
+0E4F:  MOVF   52,W
+0E50:  BCF    03.5
+0E51:  BCF    03.6
+0E52:  BTFSC  0C.4
+0E53:  GOTO   657
+0E54:  BSF    03.5
+0E55:  BSF    03.6
+0E56:  GOTO   650
+0E57:  MOVWF  19
+0E58:  BSF    03.5
+0E59:  BSF    03.6
+0E5A:  MOVF   53,W
+0E5B:  BCF    03.5
+0E5C:  BCF    03.6
+0E5D:  BTFSC  0C.4
+0E5E:  GOTO   662
+0E5F:  BSF    03.5
+0E60:  BSF    03.6
+0E61:  GOTO   65B
+0E62:  MOVWF  19
+0E63:  BSF    03.5
+0E64:  BSF    03.6
+0E65:  MOVF   57,W
+0E66:  BCF    03.5
+0E67:  BCF    03.6
+0E68:  BTFSC  0C.4
+0E69:  GOTO   66D
+0E6A:  BSF    03.5
+0E6B:  BSF    03.6
+0E6C:  GOTO   666
+0E6D:  MOVWF  19
+0E6E:  BSF    03.5
+0E6F:  BSF    03.6
+0E70:  MOVF   56,W
+0E71:  BCF    03.5
+0E72:  BCF    03.6
+0E73:  BTFSC  0C.4
+0E74:  GOTO   678
+0E75:  BSF    03.5
+0E76:  BSF    03.6
+0E77:  GOTO   671
+0E78:  MOVWF  19
+0E79:  BSF    03.5
+0E7A:  BSF    03.6
+0E7B:  MOVF   55,W
+0E7C:  BCF    03.5
+0E7D:  BCF    03.6
+0E7E:  BTFSC  0C.4
+0E7F:  GOTO   683
+0E80:  BSF    03.5
+0E81:  BSF    03.6
+0E82:  GOTO   67C
+0E83:  MOVWF  19
+0E84:  BSF    03.5
+0E85:  BSF    03.6
+0E86:  MOVF   59,W
+0E87:  BCF    03.5
+0E88:  BCF    03.6
+0E89:  BTFSC  0C.4
+0E8A:  GOTO   68E
+0E8B:  BSF    03.5
+0E8C:  BSF    03.6
+0E8D:  GOTO   687
+0E8E:  MOVWF  19
+0E8F:  BSF    03.5
+0E90:  BSF    03.6
+0E91:  MOVF   58,W
+0E92:  BCF    03.5
+0E93:  BCF    03.6
+0E94:  BTFSC  0C.4
+0E95:  GOTO   699
+0E96:  BSF    03.5
+0E97:  BSF    03.6
+0E98:  GOTO   692
+0E99:  MOVWF  19
+0E9A:  MOVF   54,W
+0E9B:  BTFSS  0C.4
+0E9C:  GOTO   69B
+0E9D:  MOVWF  19
+0E9E:  MOVF   31,W
+0E9F:  BTFSS  0C.4
+0EA0:  GOTO   69F
+0EA1:  MOVWF  19
+0EA2:  MOVLW  01
+0EA3:  BTFSS  0C.4
+0EA4:  GOTO   6A3
+0EA5:  MOVWF  19
+0EA6:  MOVLW  32
+0EA7:  BTFSS  0C.4
+0EA8:  GOTO   6A7
+0EA9:  MOVWF  19
+0EAA:  MOVLW  0D
+0EAB:  BTFSS  0C.4
+0EAC:  GOTO   6AB
+0EAD:  MOVWF  19
+0EAE:  MOVLW  0A
+0EAF:  BTFSS  0C.4
+0EB0:  GOTO   6AF
+0EB1:  MOVWF  19
+.................... 				break;  
+0EB2:  GOTO   728
+.................... 			case '*' :	// Fast binary write  
+.................... 				__PwmMotLeft = __SerialBuffer[1];  
+0EB3:  BSF    03.5
+0EB4:  BSF    03.6
+0EB5:  MOVF   21,W
+0EB6:  BCF    03.5
+0EB7:  BCF    03.6
+0EB8:  MOVWF  2A
+.................... 				__PwmMotRight = __SerialBuffer[2];  
+0EB9:  BSF    03.5
+0EBA:  BSF    03.6
+0EBB:  MOVF   22,W
+0EBC:  BCF    03.5
+0EBD:  BCF    03.6
+0EBE:  MOVWF  2B
+.................... 				output_bit( PIN_D7 , __SerialBuffer[3]&0x01 );  
+0EBF:  BSF    03.5
+0EC0:  BSF    03.6
+0EC1:  BTFSC  23.0
+0EC2:  GOTO   6C9
+0EC3:  BCF    03.5
+0EC4:  BCF    03.6
+0EC5:  BCF    08.7
+0EC6:  GOTO   6CC
+0EC7:  BSF    03.5
+0EC8:  BSF    03.6
+0EC9:  BCF    03.5
+0ECA:  BCF    03.6
+0ECB:  BSF    08.7
+.................... 				output_bit( PIN_D5 , __SerialBuffer[3]&0x02 );  
+0ECC:  BSF    03.5
+0ECD:  BSF    03.6
+0ECE:  BTFSC  23.1
+0ECF:  GOTO   6D6
+0ED0:  BCF    03.5
+0ED1:  BCF    03.6
+0ED2:  BCF    08.5
+0ED3:  GOTO   6D9
+0ED4:  BSF    03.5
+0ED5:  BSF    03.6
+0ED6:  BCF    03.5
+0ED7:  BCF    03.6
+0ED8:  BSF    08.5
+.................... 				output_bit( PIN_D6 , __SerialBuffer[3]&0x04 );  
+0ED9:  BSF    03.5
+0EDA:  BSF    03.6
+0EDB:  BTFSC  23.2
+0EDC:  GOTO   6E3
+0EDD:  BCF    03.5
+0EDE:  BCF    03.6
+0EDF:  BCF    08.6
+0EE0:  GOTO   6E6
+0EE1:  BSF    03.5
+0EE2:  BSF    03.6
+0EE3:  BCF    03.5
+0EE4:  BCF    03.6
+0EE5:  BSF    08.6
+.................... 				output_bit( PIN_A4 , !(__SerialBuffer[3]&0x08) );  
+0EE6:  BSF    03.5
+0EE7:  BSF    03.6
+0EE8:  BTFSS  23.3
+0EE9:  GOTO   6F0
+0EEA:  BCF    03.5
+0EEB:  BCF    03.6
+0EEC:  BCF    05.4
+0EED:  GOTO   6F3
+0EEE:  BSF    03.5
+0EEF:  BSF    03.6
+0EF0:  BCF    03.5
+0EF1:  BCF    03.6
+0EF2:  BSF    05.4
+.................... 				printf("*\r\n");  
+0EF3:  MOVLW  2A
+0EF4:  BTFSS  0C.4
+0EF5:  GOTO   6F4
+0EF6:  MOVWF  19
+0EF7:  MOVLW  0D
+0EF8:  BTFSS  0C.4
+0EF9:  GOTO   6F8
+0EFA:  MOVWF  19
+0EFB:  MOVLW  0A
+0EFC:  BTFSS  0C.4
+0EFD:  GOTO   6FC
+0EFE:  MOVWF  19
+.................... 				break;  
+0EFF:  GOTO   728
+.................... 			case '!' :	// To check when sensors has been refreshed  
+.................... 				printf("!%c\r\n",__Sensors_Refreshed_Flag);  
+0F00:  MOVLW  00
+0F01:  BTFSC  2D.4
+0F02:  MOVLW  01
+0F03:  MOVWF  52
+0F04:  MOVLW  21
+0F05:  BTFSS  0C.4
+0F06:  GOTO   705
+0F07:  MOVWF  19
+0F08:  MOVF   52,W
+0F09:  BTFSS  0C.4
+0F0A:  GOTO   709
+0F0B:  MOVWF  19
+0F0C:  MOVLW  0D
+0F0D:  BTFSS  0C.4
+0F0E:  GOTO   70D
+0F0F:  MOVWF  19
+0F10:  MOVLW  0A
+0F11:  BTFSS  0C.4
+0F12:  GOTO   711
+0F13:  MOVWF  19
+.................... 				if(__Sensors_Refreshed_Flag == 1)  
+.................... 				{  
+0F14:  MOVLW  00
+0F15:  BTFSC  2D.4
+0F16:  MOVLW  01
+0F17:  SUBLW  01
+0F18:  BTFSS  03.2
+0F19:  GOTO   71B
+.................... 					__Sensors_Refreshed_Flag = 0;  
+0F1A:  BCF    2D.4
+.................... 				}  
+.................... 				break;  
+0F1B:  GOTO   728
+.................... 			case '1' :     // Read RB0,RB6,RB7  
+.................... 				__1();  
+0F1C:  BCF    0A.3
+0F1D:  GOTO   652
+0F1E:  BSF    0A.3
+.................... 				break;  
+0F1F:  GOTO   728
+.................... 			case '2' :	// Write RB0,RB6,RB7  
+.................... 				__2();  
+0F20:  BCF    0A.3
+0F21:  GOTO   6BD
+0F22:  BSF    0A.3
+.................... 				break;  
+0F23:  GOTO   728
+.................... 			default :	// Unknown message command  
+.................... 				__default();    
+0F24:  BCF    0A.3
+0F25:  CALL   644
+0F26:  BSF    0A.3
+.................... 				break;  
+0F27:  GOTO   728
+.................... 		}  
+.................... 		__SerialCounter = 0;  
+0F28:  CLRF   2E
+.................... 	}  
+.................... }  
+....................   
+....................   
+....................   
+....................   
+....................   
+....................   
+....................   
+....................   
+....................   
+....................   
+....................   
+....................  
+....................   
+0F29:  BCF    0C.5
+0F2A:  BCF    0A.3
+0F2B:  BCF    0A.4
+0F2C:  GOTO   02D
+.................... #org 0x1F00, 0x1FFF {}                                                             // Bootloader Protection  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \file hemisson.h  
+....................       \brief This file is the library of all high level functions that can be used when programming Hemisson  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+....................   
+.................... /**  
+....................    * \defgroup Configuration_Functions  
+....................    */  
+.................... /*@{*/  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_init(void)  
+....................       \brief Hemisson Initialisation. This function initialise all Hemisson peripherals  
+....................       \param None  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_init(void)  
+.................... {  
+.................... 	__hemisson_init();  
+.................... }  
+*
+10F6:  BCF    0A.3
+10F7:  BCF    0A.4
+10F8:  GOTO   782 (RETURN)
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_config_auto_refresh_sensors(int1 Bit)  
+....................       \brief Set the refresh mode of all IRs sensors  
+....................       \param int1 Manual or Refresh (Default)  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_config_auto_refresh_sensors(int1 Bit)  
+.................... {  
+....................    	__Auto_Refresh_Sensors=Bit;  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_config_auto_refresh_tv_remote(int1 Bit)  
+....................       \brief Configure the refresh mode of the TV remote receiver  
+....................       \param int1 Manual or Refresh(Default)  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_config_auto_refresh_tv_remote(int1 Bit)  
+.................... {  
+....................    	__Auto_Refresh_TV_Remote=Bit;  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_config_rs232_control(int1 Bit)  
+....................       \brief Configure the Serial Remote Control  
+....................       \param int1 Disable or Enable (Default)  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_config_rs232_control(int1 Bit)  
+.................... {  
+....................    	__Enable_RS232_Control=Bit;  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_config_tv_remote_control(int1 Bit)  
+....................       \brief Configure the TV Remote Control  
+....................       \param int1 Disable or Enable (Default)  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_config_tv_remote_control(int1 Bit)  
+.................... {  
+....................    	__Enable_TV_Remote_Control=Bit;  
+.................... }  
+.................... /*@}*/  
+....................   
+.................... /**  
+....................    * \defgroup Flags  
+....................    */  
+.................... /*@{*/  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn int1 hemisson_flag_sensors_refreshed(void)  
+....................       \brief Test if IRs sensors have been refreshed  
+....................       \param None  
+....................       \retval int1 1 if sensors have been refreshed  
+....................       \warning You must then call hemisson_flag_sensors_reset() to clear the flag  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... int1 hemisson_flag_sensors_refreshed(void)  
+.................... {  
+....................    	return __Sensors_Refreshed_Flag;  
+.................... }  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_flag_sensors_reset(void)  
+....................       \brief Clear IRs sensors refreshed flag  
+....................       \param None  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_flag_sensors_reset(void)  
+.................... {  
+....................    	__Sensors_Refreshed_Flag = 0;  
+.................... }  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn int1 hemisson_flag_rs232_filtering(void)  
+....................       \brief Test if Serial Remote Control is active or not  
+....................       \param None  
+....................       \retval int1 1 if active otherwise 0  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... int1 hemisson_flag_rs232_filtering(void)  
+.................... {  
+....................    	return __Enable_RS232_Control;  
+.................... }  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn int1 hemisson_flag_tv_data_refreshed(void)  
+....................       \brief Test if Tv Data have been refreshed  
+....................       \param None  
+....................       \retval int1 1 if active otherwise 0  
+....................       \warning You must then call hemisson_flag_tv_data_reset() to clear the flag  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... int1 hemisson_flag_tv_data_refreshed(void)  
+.................... {  
+....................    	return __TV_Data_Available;  
+.................... }  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_flag_tv_data_reset(void)  
+....................       \brief Clear TV Data flag  
+....................       \param None  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_flag_tv_data_reset(void)  
+.................... {  
+....................    	__TV_Data_Available = 0;  
+.................... }  
+.................... /*@}*/  
+....................   
+.................... /**  
+....................    * \defgroup Peripheral_Access_Functions  
+....................    */  
+.................... /*@{*/  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn unsigned char hemisson_get_proximity(char Sensor)  
+....................       \brief Get proximity value of one IR sensor  
+....................       \param char Front, FrontLeft, FrontRight, Left, Right, Rear, GroundLeft, GroundRight  
+....................       \retval unsigned_char Proximity Value (0 when nothing)  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... unsigned char hemisson_get_proximity(char Sensor)  
+.................... {  
+....................    	return __IR_Proximity[Sensor];  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn unsigned char hemisson_get_brightness(char Sensor)  
+....................       \brief Get brightness value of one IR sensor  
+....................       \param char Front, FrontLeft, FrontRight, Left, Right, Rear, GroundLeft, GroundRight  
+....................       \retval unsigned_char Brightness Value (0 when lot of light)  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... unsigned char hemisson_get_brightness(char Sensor)  
+.................... {  
+....................    	return __IR_Light[Sensor];  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn int1 hemisson_get_switch_state(char Switch_Number)  
+....................       \brief Get Switch State  
+....................       \param char Number of the switch (0,1,2 or 3)  
+....................       \retval int1 Position of the switch (0 or 1)  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... int1 hemisson_get_switch_state(char Switch_Number)  
+.................... {  
+....................    	return __Switchs[Switch_Number];  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn char hemisson_get_tv_data(void)  
+....................       \brief Get latest data from the TV remote receiver  
+....................       \param None  
+....................       \retval char Byte that have been received  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... char hemisson_get_tv_data(void)  
+.................... {  
+....................    	return __TV_DATA;  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_set_speed(signed int8 Left, signed int8 Right)  
+....................       \brief Set speed of each motor  
+....................       \param signed_int8 Speed of motor (from -9 to 9, 0 = Stop)  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_set_speed(signed int8 LeftSpeed,signed int8 RightSpeed)  
+.................... {  
+....................    	__PwmMotLeft = LeftSpeed;  
+....................    	__PwmMotRight = RightSpeed;  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_beep(int1 State)  
+....................       \brief Set the buzzer State  
+....................       \param int1 State (0=Off,1=On)  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_beep(int1 State)  
+.................... {  
+....................    	output_bit(PIN_D4,State);  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_led_frontleft(int1 State)  
+....................       \brief Set the FrontLeft Led State  
+....................       \param int1 State (0=Off,1=On)  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_led_frontleft(int1 State)  
+.................... {  
+....................    	output_bit(PIN_D6,State);  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_led_frontright(int1 State)  
+....................       \brief Set the FrontRight Led State  
+....................       \param int1 State (0=Off,1=On)  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_led_frontright(int1 State)  
+.................... {  
+....................    	output_bit(PIN_A4,!State);  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_led_pgmexec(int1 State)  
+....................       \brief Set the PgmExec Led State  
+....................       \param int1 State (0=Off,1=On)  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_led_pgmexec(int1 State)  
+.................... {  
+....................    	output_bit(PIN_D5,State);  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_led_onoff(int1 State)  
+....................       \brief Set the OnOff Led State  
+....................       \param int1 State (0=Off,1=On)  
+....................       \retval None  
+....................       \warning This Led is controlled in background by the Scheduler  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_led_onoff(int1 State)  
+.................... {  
+....................    	output_bit(PIN_D7,State);  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_manual_refresh_sensors(char Zone)  
+....................       \brief Manualy refresh a zone  
+....................       \param char Zone (FrontZone,GroundZone,RearZone)  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_manual_refresh_sensors(char Zone)  
+.................... {  
+....................    	__hemisson_refresh_sensors(Zone);  
+.................... }  
+.................... /*@}*/  
+....................   
+.................... /**  
+....................    * \defgroup Time_Functions  
+....................    */  
+.................... /*@{*/  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_delay_s(int Delay)  
+....................       \brief This function stop program execution (but not the interrupts) during the defined time in second  
+....................       \param Delay 1 to 255  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_delay_s(int Delay)  
+.................... {  
+....................    	int i;  
+....................    	for(i = 0; i< Delay; i++)  
+....................    	{  
+.................... 		delay_ms(1000);  
+....................    	}  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_delay_ms(int Delay)  
+....................       \brief This function stop program execution (but not the interrupts) during the defined time in millisecond  
+....................       \param Delay 1 to 255  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_delay_ms(int Delay)  
+.................... {  
+.................... 	delay_ms(Delay);  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_delay_us(int Delay)  
+....................       \brief This function stop program execution (but not the interrupts) during the defined time in microsecond  
+....................       \param Delay 1 to 255  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_delay_us(int Delay)  
+.................... {  
+.................... 	delay_us(Delay);  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn unsigned int32 hemisson_get_time(void)  
+....................       \brief This function return a 32 bits value which is increased every ms  
+....................       \param None  
+....................       \retval unsigned int32 time value  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... unsigned int32 hemisson_get_time(void)  
+.................... {  
+.................... 	return __TimeTip;  
+.................... }  
+....................   
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_set_time(unsigned int32 time)  
+....................       \brief This function allow user to set the current time value  
+....................       \param unsigned int32 time  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_set_time(unsigned int32 Time)  
+.................... {  
+.................... 	__TimeTip = Time;  
+.................... }  
+....................   
+.................... /*@}*/  
+....................   
+....................   
+.................... /**  
+....................    * \defgroup External_Access  
+....................    */  
+.................... /*@{*/  
+.................... // External Access  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn int1 hemisson_ext_read_PINB0(void)  
+....................       \brief Read input PORTB.0  
+....................       \param None  
+....................       \retval int1 input value (0 or 1)  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... int1 hemisson_ext_read_PINB0(void)  
+.................... {	  
+.................... 	set_tris_b(TRISB|0x01);	  
+.................... 	return input(PIN_B0);  
+.................... }  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn int1 hemisson_ext_read_PINB6(void)  
+....................       \brief Read input PORTB.6  
+....................       \param None  
+....................       \retval int1 input value (0 or 1)  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... int1 hemisson_ext_read_PINB6(void)  
+.................... {  
+.................... 	set_tris_b(TRISB|0x40);  
+.................... 	return input(PIN_B6);  
+.................... }  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn int1 hemisson_ext_read_PINB7(void)  
+....................       \brief Read input PORTB.7  
+....................       \param None  
+....................       \retval int1 input value (0 or 1)  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... int1 hemisson_ext_read_PINB7(void)  
+.................... {  
+.................... 	set_tris_b(TRISB|0x80);  
+.................... 	return input(PIN_B7);  
+.................... }  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_ext_write_PINB0(int1 Bit)  
+....................       \brief Write output PORTB.0  
+....................       \param int1 Value to write (0 or 1)  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_ext_write_PINB0(int1 Bit)  
+.................... {  
+.................... 	set_tris_b(TRISB & 0xFE);  
+.................... 	output_bit(PIN_B0,bit);  
+.................... }  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_ext_write_PINB6(int1 Bit)  
+....................       \brief Write output PORTB.6  
+....................       \param int1 Value to write (0 or 1)  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_ext_write_PINB6(int1 Bit)  
+.................... {  
+.................... 	set_tris_b(TRISB & 0xBF);  
+.................... 	output_bit(PIN_B6,bit);  
+.................... }  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... /*!   \fn void hemisson_ext_write_PINB7(int1 Bit)  
+....................       \brief Write output PORTB.7  
+....................       \param int1 Value to write (0 or 1)  
+....................       \retval None  
+.................... */  
+.................... ////////////////////////////////////////////////////////////////////////////////  
+.................... void hemisson_ext_write_PINB7(int1 Bit)  
+.................... {  
+.................... 	set_tris_b(TRISB & 0x7F);  
+.................... 	output_bit(PIN_B7,bit);  
+.................... }  
+.................... /*@}*/  
+....................   
+....................   
+....................   
+....................   
+....................  
+....................   
+.................... // Add your variables here  
+.................... // ...  
+....................   
+....................   
+.................... void main()  
+.................... {  
+*
+073C:  CLRF   04
+073D:  BCF    03.7
+073E:  MOVLW  1F
+073F:  ANDWF  03,F
+0740:  MOVLW  06
+0741:  BSF    03.5
+0742:  MOVWF  1F
+0743:  MOVLW  0A
+0744:  MOVWF  19
+0745:  MOVLW  26
+0746:  MOVWF  18
+0747:  MOVLW  90
+0748:  BCF    03.5
+0749:  MOVWF  18
+*
+0755:  MOVLW  31
+0756:  MOVWF  13
+0757:  MOVLW  28
+0758:  BCF    03.5
+0759:  MOVWF  14
+075A:  BSF    03.5
+075B:  BSF    14.7
+075C:  BCF    14.6
+....................   
+....................    hemisson_init();        // Start Hemisson Initialisation  
+*
+0780:  BSF    0A.4
+0781:  GOTO   000
+0782:  BCF    0A.4
+....................   
+....................    while(1)  
+....................    {  
+....................       // Add your Code here  
+....................    }  
+0783:  GOTO   783
+....................   
+.................... }  
+....................   
+....................  
+0784:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3D3A   HS NOWDT NOPUT NOPROTECT NOBROWNOUT NOLVP NOCPD WRT NODEBUG
