@@ -13,39 +13,70 @@
 \section{Robots and maps} 
 
 \frame{\frametitle{Maps for robots}
+\begin{columns}[c]
+\column{5cm}
 Human maps:
 \begin{itemize}
-    \item often unavailable; 
-    \item often incomplete: %blueprint image
+    \item Often unavailable; 
+    \item Often incomplete: %blueprint image
     \begin{itemize}
         \item human relevant data; %obstacles within a building like chairs and tables.
         \item robot relevant data;
     \end{itemize} 
-    \item Wrong level(s) of abstraction: human oriented; %pizzas on googlemaps Additionally, available maps made for humans represent the environment
-        on some abstract level that is not suited to robot interpretation or
-        does not relate to robot perception or does not include information
-        about objects that is relevant to the robot.
-    \pause
 \end{itemize}
+\column{5cm}
+\includegraphics[width=5cm]{blueprint}
+\end{columns}
+}
+
+\frame{\frametitle{Maps for robots}
+\begin{columns}[c]
+\column{5cm}
+Human maps:
+\begin{itemize}
+    \item Often unavailable; 
+    \item Often incomplete: %blueprint image
+    \begin{itemize}
+        \item human relevant data; %obstacles within a building like chairs and tables.
+        \item robot relevant data;
+    \end{itemize} 
+    \item Wrong level(s) of abstraction: human oriented; %pizzas on googlemaps 
+\end{itemize}
+\column{5cm}
+\includegraphics[width=5cm]{google_pizzas}
+\end{columns}
 }
 
 \frame{\frametitle{Maps by robots}
 \begin{itemize}
     \item
         Building a robot friendly map is very difficult and tedious.
-    \pause
     \item
-        These considerations indicate that the robot itself is a good candidate
-        for building maps that are suitable for its own use: maps built with and
-        for its own sensory system.
-    \pause
-    \item
-        Robots should be able to autonomously construct, update and validate
-        maps destined for robot use.
+        Robots are good candidates to build maps with and for their own sensory
+        suite;
 \end{itemize}
+Conclusion: Design robots to autonomously construct, update and validate
+maps destined for robot use.
 }
 
 \frame{\frametitle{Map paradigms: metric vs. topological}
+\begin{columns}[c]
+\column{5cm}
+\begin{itemize}
+    \item Metric %something from wikipedia
+        \begin{itemize}
+        \item Sensorial
+        \item Geometric
+        \end{itemize}            
+\end{itemize}
+\column{5cm}
+\includegraphics[width=5cm]{metric}
+\end{columns}
+}
+
+\frame{\frametitle{Map paradigms: metric vs. topological}
+\begin{columns}[c]
+\column{5cm}
 \begin{itemize}
     \item Metric %something from wikipedia
         \begin{itemize}
@@ -59,6 +90,9 @@ Human maps:
         \item Semantic
         \end{itemize}            
 \end{itemize}
+\column{5cm}
+\includegraphics[width=5cm]{topological}
+\end{columns}
 }
 
 \frame{\frametitle{Direction of map hierarchy}
@@ -72,7 +106,7 @@ Human maps:
 \frame{\frametitle{Types of data}
 \begin{itemize}
     \item (Derived) spacial occupancy; 
-    \item (Direct) Sensor measurements in relation to position. e.g. olfaction.
+    \item (Direct) sensor measurements in relation to position. e.g. olfaction.
 \end{itemize}
 }
 
@@ -87,24 +121,56 @@ Human maps:
 
 \subsection{Image based mapping}
 \frame{\frametitle{Image based mapping}
+The challenge: 
 \begin{itemize}
-    \item ; 
+    \item how to sample the set of possible measurements,
+    $\lbrace I_i\rbrace$;
+    \item how to turn the samples into a continuous $I$.
 \end{itemize}
 }
 
 \frame{\frametitle{Li: street panoramas}
+Li et al.: robots builds graph representing street network:
+\begin{itemize}
+    \item edges = streets;
+    \item nodes = intersections;
+\end{itemize}
+Robot collects by:
+\begin{itemize}
+    \item moving in a closed loop, always turning left;
+    \item recording panoramas of left and right sides of streets;
+    \item concluding a loop by identifying previously recorded street side;
+\end{itemize}
 }
 
 \frame{\frametitle{Bourque: robot sightseeing}
+Bourque et al.: robots builds graph nodes corresponding to panorama shots, in a
+less constrained environment, by:
+\begin{itemize}
+    \item choosing sample (panorama) points based on models of human attention;
+    \item using ``alpha backtracking'' to make trade-off between distance to
+    next sample point and optimality of next sample point;
+\end{itemize}
 }
 
 \subsection{Spacial occupancy representations}
+
 \frame{\frametitle{Spacial occupancy representations}
-    Grid of pixels
+\begin{itemize}
+    \item Grid of pixels
+\end{itemize}
 }
 
 \frame{\frametitle{Volumes}
-    Volume of voxels
+\begin{columns}
+\column{5cm}
+\begin{itemize}
+    \item Grid of pixels
+    \item Volume of voxels
+\end{itemize}
+\column{5cm}
+\includegraphics[width=5cm]{voxels}
+\end{columns}
 }
 
 \frame{\frametitle{Data represented}
@@ -131,6 +197,10 @@ Human maps:
     \end{eqnarray}
     with $P(R_i)=\sum_j P(R_i \lvert W_j) P (W_j)$
 \end{itemize}
+}
+
+\subsection{Geometric maps}
+\frame{\frametitle{Geometric maps}
 }
 
 \frame{\frametitle{Blah}
