@@ -8,39 +8,129 @@
 \date{\today} 
 
 \frame{\titlepage} 
-\section{Blah} 
 \frame{\tableofcontents} 
 
-\section{Introduction} 
+\section{Robots and maps} 
 
-\frame{\frametitle{Introduction}
+\frame{\frametitle{Maps for robots}
+Human maps:
 \begin{itemize}
-    \item
-        Maps of an environment are usually unavailable or incomplete. Even blueprints
-        are not totally reliable and don't show relevant information, such as temporary
-        obstacles within a building like chairs and tables.
-
-    \item
-        Additionally, available maps made for humans represent the environment
+    \item often unavailable; 
+    \item often incomplete: %blueprint image
+    \begin{itemize}
+        \item human relevant data; %obstacles within a building like chairs and tables.
+        \item robot relevant data;
+    \end{itemize} 
+    \item Wrong level(s) of abstraction: human oriented; %pizzas on googlemaps Additionally, available maps made for humans represent the environment
         on some abstract level that is not suited to robot interpretation or
         does not relate to robot perception or does not include information
         about objects that is relevant to the robot.
+    \pause
+\end{itemize}
+}
 
+\frame{\frametitle{Maps by robots}
+\begin{itemize}
     \item
         Building a robot friendly map is very difficult and tedious.
-
+    \pause
     \item
         These considerations indicate that the robot itself is a good candidate
         for building maps that are suitable for its own use: maps built with and
         for its own sensory system.
-
+    \pause
     \item
         Robots should be able to autonomously construct, update and validate
         maps destined for robot use.
 \end{itemize}
 }
 
-\frame{\frametitle{Blah}
+\frame{\frametitle{Map paradigms: metric vs. topological}
+\begin{itemize}
+    \item Metric %something from wikipedia
+        \begin{itemize}
+        \item Sensorial
+        \item Geometric
+        \end{itemize}            
+    \item Topological %put a picture of the london underground
+        \begin{itemize}
+        \item Local relational
+        \item Topological
+        \item Semantic
+        \end{itemize}            
+\end{itemize}
+}
+
+\frame{\frametitle{Direction of map hierarchy}
+\begin{itemize}
+    \item Giralt et al.: metric to topological. 
+    \item Kuipers and Levitt: topological to metric. Low level topological
+    landmarks as starting point.
+\end{itemize}
+}
+
+\frame{\frametitle{Types of data}
+\begin{itemize}
+    \item (Derived) spacial occupancy; 
+    \item (Direct) Sensor measurements in relation to position. e.g. olfaction.
+\end{itemize}
+}
+
+\section{Sensorial maps}
+
+\frame{\frametitle{Sensorial maps}
+\begin{itemize}
+    \item Represent sensor measurements against odometry; 
+    \item Collection of measurements: $[I_i(x_i,y_i,\theta_i)]$
+\end{itemize}
+}
+
+\subsection{Image based mapping}
+\frame{\frametitle{Image based mapping}
+\begin{itemize}
+    \item ; 
+\end{itemize}
+}
+
+\frame{\frametitle{Li: street panoramas}
+}
+
+\frame{\frametitle{Bourque: robot sightseeing}
+}
+
+\subsection{Spacial occupancy representations}
+\frame{\frametitle{Spacial occupancy representations}
+    Grid of pixels
+}
+
+\frame{\frametitle{Volumes}
+    Volume of voxels
+}
+
+\frame{\frametitle{Data represented}
+\begin{itemize}
+    \item Fill pixels / voxels with degree of occupancy data.
+    \item More refined: fill pixels / voxels with probability of occupancy data.
+\end{itemize}
+}
+
+\frame{\frametitle{Probability}
+\begin{itemize}
+    \item Example of a laser: probability of an actual distance $z$ for a given laser
+    reading $r$ computed using Bayes' theorem:
+    \begin{eqnarray}
+        P(z\lvert r) = \frac{P(z) P(r \lvert z)}{P(r)}
+        \nonumber
+    \end{eqnarray}
+    
+    \pause
+    \item Generalised:
+    \begin{eqnarray}
+        P(W\lvert R) = \frac{P(W) P(R \lvert W)}{P(R)}
+        \nonumber
+    \end{eqnarray}
+    with $P(R_i)=\sum_j P(R_i \lvert W_j) P (W_j)$
+\end{itemize}
 }
 
 \frame{\frametitle{Blah}
