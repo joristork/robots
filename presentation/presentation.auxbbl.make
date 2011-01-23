@@ -1,5 +1,5 @@
 \@writefile{nav}{\beamer@endinputifotherversion {3.10pt}}
-\@writefile{nav}{\headcommand {\beamer@documentpages {41}}}
+\@writefile{nav}{\headcommand {\beamer@documentpages {42}}}
 \@writefile{nav}{\headcommand {\beamer@framepages {10}{10}}}
 \@writefile{nav}{\headcommand {\beamer@framepages {11}{11}}}
 \@writefile{nav}{\headcommand {\beamer@framepages {12}{12}}}
@@ -33,31 +33,32 @@
 \@writefile{nav}{\headcommand {\beamer@framepages {3}{3}}}
 \@writefile{nav}{\headcommand {\beamer@framepages {40}{40}}}
 \@writefile{nav}{\headcommand {\beamer@framepages {41}{41}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {42}{42}}}
 \@writefile{nav}{\headcommand {\beamer@framepages {4}{4}}}
 \@writefile{nav}{\headcommand {\beamer@framepages {5}{5}}}
 \@writefile{nav}{\headcommand {\beamer@framepages {6}{6}}}
 \@writefile{nav}{\headcommand {\beamer@framepages {7}{7}}}
 \@writefile{nav}{\headcommand {\beamer@framepages {8}{8}}}
 \@writefile{nav}{\headcommand {\beamer@framepages {9}{9}}}
-\@writefile{nav}{\headcommand {\beamer@partpages {1}{41}}}
-\@writefile{nav}{\headcommand {\beamer@sectionpages {10}{27}}}
+\@writefile{nav}{\headcommand {\beamer@partpages {1}{42}}}
+\@writefile{nav}{\headcommand {\beamer@sectionpages {10}{28}}}
 \@writefile{nav}{\headcommand {\beamer@sectionpages {1}{2}}}
-\@writefile{nav}{\headcommand {\beamer@sectionpages {28}{34}}}
-\@writefile{nav}{\headcommand {\beamer@sectionpages {35}{41}}}
+\@writefile{nav}{\headcommand {\beamer@sectionpages {29}{35}}}
+\@writefile{nav}{\headcommand {\beamer@sectionpages {36}{42}}}
 \@writefile{nav}{\headcommand {\beamer@sectionpages {3}{9}}}
 \@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{2}{1}{11}{Image based mapping}}\headcommand {\beamer@subsectionpages {10}{10}}}
 \@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{2}{2}{14}{Spacial occupancy representations}}\headcommand {\beamer@subsectionpages {11}{13}}}
 \@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{2}{3}{22}{Geometric maps}}\headcommand {\beamer@subsectionpages {14}{21}}}
 \@writefile{nav}{\headcommand {\beamer@subsectionpages {1}{2}}}
-\@writefile{nav}{\headcommand {\beamer@subsectionpages {22}{27}}}
-\@writefile{nav}{\headcommand {\beamer@subsectionpages {28}{34}}}
-\@writefile{nav}{\headcommand {\beamer@subsectionpages {35}{41}}}
+\@writefile{nav}{\headcommand {\beamer@subsectionpages {22}{28}}}
+\@writefile{nav}{\headcommand {\beamer@subsectionpages {29}{35}}}
+\@writefile{nav}{\headcommand {\beamer@subsectionpages {36}{42}}}
 \@writefile{nav}{\headcommand {\beamer@subsectionpages {3}{9}}}
-\@writefile{nav}{\headcommand {\def \inserttotalframenumber {39}}}
+\@writefile{nav}{\headcommand {\def \inserttotalframenumber {40}}}
 \@writefile{nav}{\headcommand {\sectionentry {1}{Robots and maps}{3}{Robots and maps}{0}}}
 \@writefile{nav}{\headcommand {\sectionentry {2}{Sensorial maps}{10}{Sensorial maps}{0}}}
-\@writefile{nav}{\headcommand {\sectionentry {3}{Topological Maps}{28}{Topological Maps}{0}}}
-\@writefile{nav}{\headcommand {\sectionentry {4}{Multiple Robots}{35}{Multiple Robots}{0}}}
+\@writefile{nav}{\headcommand {\sectionentry {3}{Topological Maps}{29}{Topological Maps}{0}}}
+\@writefile{nav}{\headcommand {\sectionentry {4}{Multiple Robots}{36}{Multiple Robots}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {0}{0}{2}{2/2}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {1}{0}{3}{3/3}{}{0}}}
@@ -83,25 +84,26 @@
 \@writefile{nav}{\headcommand {\slideentry {2}{3}{4}{25/25}{Geometric maps}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {2}{3}{5}{26/26}{Geometric maps}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {2}{3}{6}{27/27}{Geometric maps}{0}}}
+\@writefile{nav}{\headcommand {\slideentry {2}{3}{7}{28/28}{Geometric maps}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {3}{0}{10}{31/31}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {3}{0}{11}{32/32}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {3}{0}{12}{33/33}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {3}{0}{13}{34/34}{}{0}}}
-\@writefile{nav}{\headcommand {\slideentry {3}{0}{7}{28/28}{}{0}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{0}{14}{35/35}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {3}{0}{8}{29/29}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {3}{0}{9}{30/30}{}{0}}}
-\@writefile{nav}{\headcommand {\slideentry {4}{0}{14}{35/35}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {4}{0}{15}{36/36}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {4}{0}{16}{37/37}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {4}{0}{17}{38/38}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {4}{0}{18}{39/39}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {4}{0}{19}{40/40}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {4}{0}{20}{41/41}{}{0}}}
+\@writefile{nav}{\headcommand {\slideentry {4}{0}{21}{42/42}{}{0}}}
 \@writefile{toc}{\beamer@endinputifotherversion {3.10pt}}
 \@writefile{toc}{\beamer@sectionintoc {1}{Robots and maps}{3}{0}{1}}
 \@writefile{toc}{\beamer@sectionintoc {2}{Sensorial maps}{10}{0}{2}}
-\@writefile{toc}{\beamer@sectionintoc {3}{Topological Maps}{28}{0}{3}}
-\@writefile{toc}{\beamer@sectionintoc {4}{Multiple Robots}{35}{0}{4}}
+\@writefile{toc}{\beamer@sectionintoc {3}{Topological Maps}{29}{0}{3}}
+\@writefile{toc}{\beamer@sectionintoc {4}{Multiple Robots}{36}{0}{4}}
 \@writefile{toc}{\beamer@subsectionintoc {2}{1}{Image based mapping}{11}{0}{2}}
 \@writefile{toc}{\beamer@subsectionintoc {2}{2}{Spacial occupancy representations}{14}{0}{2}}
 \@writefile{toc}{\beamer@subsectionintoc {2}{3}{Geometric maps}{22}{0}{2}}

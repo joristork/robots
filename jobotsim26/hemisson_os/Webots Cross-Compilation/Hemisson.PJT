@@ -1,0 +1,32 @@
+[PROJECT]
+Target=hemisson.HEX
+Development_Mode=
+Processor=0x877F
+ToolSuite=CCS
+
+[Directories]
+Include=..
+Library=
+LinkerScript=
+
+[Target Data]
+FileList=hemisson.c;
+BuildTool=CCSC
+OptionString=-p +FM
+AdditionalOptionString=
+BuildRequired=1
+
+[hemisson.c]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+
+[mru-list]
+1=hemisson.c
+
+[Windows]
+0=0000 hemisson.c 0 0 796 451 3 0
+

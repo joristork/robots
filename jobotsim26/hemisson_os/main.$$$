@@ -1,0 +1,2030 @@
+ //--------------------------------------------------------------------------------//  A    1 :V17
+//-                   HemiOs ( Hemisson Operating System )                       -//  A    2 :
+//-                                                                              -//  A    3 :
+//-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  A    4 :
+//-  This library is free software; you can redistribute it and/or               -//  A    5 :
+//-  modify it under the terms of the GNU Lesser General Public                  -//  A    6 :
+//-  License as published by the Free Software Foundation; either                -//  A    7 :
+//-  version 2.1 of the License, or any later version.                           -//  A    8 :
+//-                                                                              -//  A    9 :
+//-  This library is distributed in the hope that it will be useful,             -//  A   10 :
+//-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  A   11 :
+//-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  A   12 :
+//-  Lesser General Public License for more details.                             -//  A   13 :
+//-                                                                              -//  A   14 :
+//-  You should have received a copy of the GNU Lesser General Public            -//  A   15 :
+//-  License along with this library; if not, write to the Free Software         -//  A   16 :
+//-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  A   17 :
+//-                                                                              -//  A   18 :
+//-                               __  __  ________                               -//  A   19 :
+//- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  A   20 :
+//- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  A   21 :
+//- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  A   22 :
+//- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  A   23 :
+//- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  A   24 :
+//-                                                                              -//  A   25 :
+//--------------------------------------------------------------------------------//  A   26 :
+  A   27 :
+////////////////////////////////////////////////////////////////////////////////  A   28 :
+/*!   \file main.c  A   29 :
+      \brief The main function where you can add your own code  A   30 :
+*/  A   31 :
+////////////////////////////////////////////////////////////////////////////////  A   32 :
+  A   33 :
+#include "hemisson.h" A   34 :
+ //--------------------------------------------------------------------------------//  B    1 :I1
+//-                   HemiOs ( Hemisson Operating System )                       -//  B    2 :
+//										 -//  B    3 :
+//-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  B    4 :
+//-  This library is free software; you can redistribute it and/or               -//  B    5 :
+//-  modify it under the terms of the GNU Lesser General Public                  -//  B    6 :
+//-  License as published by the Free Software Foundation; either                -//  B    7 :
+//-  version 2.1 of the License, or any later version.                           -//  B    8 :
+//-                                                                              -//  B    9 :
+//-  This library is distributed in the hope that it will be useful,             -//  B   10 :
+//-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  B   11 :
+//-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  B   12 :
+//-  Lesser General Public License for more details.                             -//  B   13 :
+//-                                                                              -//  B   14 :
+//-  You should have received a copy of the GNU Lesser General Public            -//  B   15 :
+//-  License along with this library; if not, write to the Free Software         -//  B   16 :
+//-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  B   17 :
+//-                                                                              -//  B   18 :
+//-                               __  __  ________                               -//  B   19 :
+//- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  B   20 :
+//- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  B   21 :
+//- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  B   22 :
+//- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  B   23 :
+//- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  B   24 :
+//-                                                                              -//  B   25 :
+//--------------------------------------------------------------------------------//  B   26 :
+  B   27 :
+#device PIC16F877 *=16 ADC=8  B   28 :
+  B   29 :
+//#define firmware								 // Comment this line to build HemiOs  B   30 :
+  B   31 :
+#include "16f877.h" B   32 :
+ ////////////////////////////////////////////////////////////////////////////////  C    1 :I2
+/*!   \file 16f877.h  C    2 :
+      \brief All processor registers adresses are defined in this file  C    3 :
+*/  C    4 :
+////////////////////////////////////////////////////////////////////////////////  C    5 :
+  C    6 :
+//////// Standard Header file for the PIC16F877 device ////////////////  C    7 :
+//#device PIC16F877  C    8 :
+#nolist  C    9N:X0
+//////// Program memory: 8192x14  Data RAM: 367  Stack: 8  C   10N:
+//////// I/O: 33   Analog Pins: 8  C   11N:
+//////// Data EEPROM: 256  C   12N:
+//////// C Scratch area: 77   ID Location: 2000  C   13N:
+//////// Fuses: LP,XT,HS,RC,NOWDT,WDT,NOPUT,PUT,PROTECT,PROTECT_5%  C   14N:
+//////// Fuses: PROTECT_50%,NOPROTECT,NOBROWNOUT,BROWNOUT,LVP,NOLVP,CPD  C   15N:
+//////// Fuses: NOCPD,WRT,NOWRT  C   16N:
+////////  C   17N:
+////////////////////////////////////////////////////////////////// I/O  C   18N:
+// Discrete I/O Functions: SET_TRIS_x(), OUTPUT_x(), INPUT_x(),  C   19N:
+//                         PORT_B_PULLUPS(), INPUT(),  C   20N:
+//                         OUTPUT_LOW(), OUTPUT_HIGH(),  C   21N:
+//                         OUTPUT_FLOAT(), OUTPUT_BIT()  C   22N:
+// Constants used to identify pins in the above are:  C   23N:
+  C   24N:
+#define PIN_A0  40  C   25N:
+#define PIN_A1  41  C   26N:
+#define PIN_A2  42  C   27N:
+#define PIN_A3  43  C   28N:
+#define PIN_A4  44  C   29N:
+#define PIN_A5  45  C   30N:
+  C   31N:
+#define PIN_B0  48  C   32N:
+#define PIN_B1  49  C   33N:
+#define PIN_B2  50  C   34N:
+#define PIN_B3  51  C   35N:
+#define PIN_B4  52  C   36N:
+#define PIN_B5  53  C   37N:
+#define PIN_B6  54  C   38N:
+#define PIN_B7  55  C   39N:
+  C   40N:
+#define PIN_C0  56  C   41N:
+#define PIN_C1  57  C   42N:
+#define PIN_C2  58  C   43N:
+#define PIN_C3  59  C   44N:
+#define PIN_C4  60  C   45N:
+#define PIN_C5  61  C   46N:
+#define PIN_C6  62  C   47N:
+#define PIN_C7  63  C   48N:
+  C   49N:
+#define PIN_D0  64  C   50N:
+#define PIN_D1  65  C   51N:
+#define PIN_D2  66  C   52N:
+#define PIN_D3  67  C   53N:
+#define PIN_D4  68  C   54N:
+#define PIN_D5  69  C   55N:
+#define PIN_D6  70  C   56N:
+#define PIN_D7  71  C   57N:
+  C   58N:
+#define PIN_E0  72  C   59N:
+#define PIN_E1  73  C   60N:
+#define PIN_E2  74  C   61N:
+  C   62N:
+////////////////////////////////////////////////////////////////// Useful defines  C   63N:
+#define FALSE 0  C   64N:
+#define TRUE 1  C   65N:
+  C   66N:
+#define BYTE int  C   67N:
+#define BOOLEAN short int  C   68N:
+  C   69N:
+#define getc getch  C   70N:
+#define fgetc getch  C   71N:
+#define getchar getch  C   72N:
+#define putc putchar  C   73N:
+#define fputc putchar  C   74N:
+#define fgets gets  C   75N:
+#define fputs puts  C   76N:
+  C   77N:
+////////////////////////////////////////////////////////////////// Control  C   78N:
+// Control Functions:  RESET_CPU(), SLEEP(), RESTART_CAUSE()  C   79N:
+// Constants returned from RESTART_CAUSE() are:  C   80N:
+#define WDT_FROM_SLEEP  0  C   81N:
+#define WDT_TIMEOUT     8  C   82N:
+#define MCLR_FROM_SLEEP 16  C   83N:
+#define NORMAL_POWER_UP 24  C   84N:
+  C   85N:
+  C   86N:
+////////////////////////////////////////////////////////////////// Timer 0  C   87N:
+// Timer 0 (AKA RTCC)Functions: SETUP_COUNTERS() or SETUP_TIMER0(),  C   88N:
+//                              SET_TIMER0() or SET_RTCC(),  C   89N:
+//                              GET_TIMER0() or GET_RTCC()  C   90N:
+// Constants used for SETUP_TIMER0() are:  C   91N:
+#define RTCC_INTERNAL   0  C   92N:
+#define RTCC_EXT_L_TO_H 32  C   93N:
+#define RTCC_EXT_H_TO_L 48  C   94N:
+  C   95N:
+#define RTCC_DIV_2      0  C   96N:
+#define RTCC_DIV_4      1  C   97N:
+#define RTCC_DIV_8      2  C   98N:
+#define RTCC_DIV_16     3  C   99N:
+#define RTCC_DIV_32     4  C  100N:
+#define RTCC_DIV_64     5  C  101N:
+#define RTCC_DIV_128    6  C  102N:
+#define RTCC_DIV_256    7  C  103N:
+  C  104N:
+  C  105N:
+#define RTCC_8_BIT      0  C  106N:
+  C  107N:
+// Constants used for SETUP_COUNTERS() are the above  C  108N:
+// constants for the 1st param and the following for  C  109N:
+// the 2nd param:  C  110N:
+  C  111N:
+////////////////////////////////////////////////////////////////// WDT  C  112N:
+// Watch Dog Timer Functions: SETUP_WDT() or SETUP_COUNTERS() (see above)  C  113N:
+//                            RESTART_WDT()  C  114N:
+//  C  115N:
+#define WDT_18MS        8  C  116N:
+#define WDT_36MS        9  C  117N:
+#define WDT_72MS       10  C  118N:
+#define WDT_144MS      11  C  119N:
+#define WDT_288MS      12  C  120N:
+#define WDT_576MS      13  C  121N:
+#define WDT_1152MS     14  C  122N:
+#define WDT_2304MS     15  C  123N:
+  C  124N:
+////////////////////////////////////////////////////////////////// Timer 1  C  125N:
+// Timer 1 Functions: SETUP_TIMER_1, GET_TIMER1, SET_TIMER1  C  126N:
+// Constants used for SETUP_TIMER_1() are:  C  127N:
+//      (or (via |) together constants from each group)  C  128N:
+#define T1_DISABLED         0  C  129N:
+#define T1_INTERNAL         0x85  C  130N:
+#define T1_EXTERNAL         0x87  C  131N:
+#define T1_EXTERNAL_SYNC    0x83  C  132N:
+  C  133N:
+#define T1_CLK_OUT          8  C  134N:
+  C  135N:
+#define T1_DIV_BY_1         0  C  136N:
+#define T1_DIV_BY_2         0x10  C  137N:
+#define T1_DIV_BY_4         0x20  C  138N:
+#define T1_DIV_BY_8         0x30  C  139N:
+  C  140N:
+////////////////////////////////////////////////////////////////// Timer 2  C  141N:
+// Timer 2 Functions: SETUP_TIMER_2, GET_TIMER2, SET_TIMER2  C  142N:
+// Constants used for SETUP_TIMER_2() are:  C  143N:
+#define T2_DISABLED         0  C  144N:
+#define T2_DIV_BY_1         4  C  145N:
+#define T2_DIV_BY_4         5  C  146N:
+#define T2_DIV_BY_16        6  C  147N:
+  C  148N:
+////////////////////////////////////////////////////////////////// CCP  C  149N:
+// CCP Functions: SETUP_CCPx, SET_PWMx_DUTY  C  150N:
+// CCP Variables: CCP_x, CCP_x_LOW, CCP_x_HIGH  C  151N:
+// Constants used for SETUP_CCPx() are:  C  152N:
+#define CCP_OFF                         0  C  153N:
+#define CCP_CAPTURE_FE                  4  C  154N:
+#define CCP_CAPTURE_RE                  5  C  155N:
+#define CCP_CAPTURE_DIV_4               6  C  156N:
+#define CCP_CAPTURE_DIV_16              7  C  157N:
+#define CCP_COMPARE_SET_ON_MATCH        8  C  158N:
+#define CCP_COMPARE_CLR_ON_MATCH        9  C  159N:
+#define CCP_COMPARE_INT                 0xA  C  160N:
+#define CCP_COMPARE_RESET_TIMER         0xB  C  161N:
+#define CCP_PWM                         0xC  C  162N:
+#define CCP_PWM_PLUS_1                  0x1c  C  163N:
+#define CCP_PWM_PLUS_2                  0x2c  C  164N:
+#define CCP_PWM_PLUS_3                  0x3c  C  165N:
+long CCP_1;  C  166N:V18
+#byte   CCP_1    =                      0x15  C  167N:
+#byte   CCP_1_LOW=                      0x15  C  168N:
+#byte   CCP_1_HIGH=                     0x16  C  169N:V19
+long CCP_2;  C  170N:V20V21
+#byte   CCP_2    =                      0x1B  C  171N:
+#byte   CCP_2_LOW=                      0x1B  C  172N:
+#byte   CCP_2_HIGH=                     0x1C  C  173N:V22
+  C  174N:
+////////////////////////////////////////////////////////////////// PSP  C  175N:
+// PSP Functions: SETUP_PSP, PSP_INPUT_FULL(), PSP_OUTPUT_FULL(),  C  176N:
+//                PSP_OVERFLOW(), INPUT_D(), OUTPUT_D()  C  177N:
+// PSP Variables: PSP_DATA  C  178N:
+// Constants used in SETUP_PSP() are:  C  179N:
+#define PSP_ENABLED                     0x10  C  180N:
+#define PSP_DISABLED                    0  C  181N:
+  C  182N:
+#byte   PSP_DATA=                       8  C  183N:V23
+  C  184N:
+////////////////////////////////////////////////////////////////// SPI  C  185N:
+// SPI Functions: SETUP_SPI, SPI_WRITE, SPI_READ, SPI_DATA_IN  C  186N:
+// Constants used in SETUP_SSP() are:  C  187N:
+#define SPI_MASTER       0x20  C  188N:
+#define SPI_SLAVE        0x24  C  189N:
+#define SPI_L_TO_H       0  C  190N:
+#define SPI_H_TO_L       0x10  C  191N:
+#define SPI_CLK_DIV_4    0  C  192N:
+#define SPI_CLK_DIV_16   1  C  193N:
+#define SPI_CLK_DIV_64   2  C  194N:
+#define SPI_CLK_T2       3  C  195N:
+#define SPI_SS_DISABLED  1  C  196N:
+  C  197N:
+#define SPI_SAMPLE_AT_END 0x8000  C  198N:
+#define SPI_XMIT_L_TO_H  0x4000  C  199N:
+  C  200N:
+////////////////////////////////////////////////////////////////// ADC  C  201N:
+// ADC Functions: SETUP_ADC(), SETUP_ADC_PORTS() (aka SETUP_PORT_A),  C  202N:
+//                SET_ADC_CHANNEL(), READ_ADC()  C  203N:
+// Constants used in SETUP_ADC_PORTS() are:  C  204N:
+#define NO_ANALOGS             0x86         // None  C  205N:
+#define ALL_ANALOG             0x80         // RA0 RA1 RA2 RA3 RA5 RE0 RE1 RE2 Ref=Vdd  C  206N:
+#define ANALOG_RA3_REF         0x81         // RA0 RA1 RA2 RA5 RE0 RE1 RE2 Ref=RA3  C  207N:
+#define A_ANALOG               0x82         // RA0 RA1 RA2 RA3 RA5 Ref=Vdd  C  208N:
+#define A_ANALOG_RA3_REF       0x83         // RA0 RA1 RA2 RA5 Ref=RA3  C  209N:
+#define RA0_RA1_RA3_ANALOG     0x84         // RA0 RA1 RA3 Ref=Vdd  C  210N:
+#define RA0_RA1_ANALOG_RA3_REF 0x85         // RA0 RA1 Ref=RA3  C  211N:
+  C  212N:
+#define ANALOG_RA3_RA2_REF              0x88   // RA0 RA1 RA5 RE0 RE1 RE2 Ref=RA2,RA3  C  213N:
+#define ANALOG_NOT_RE1_RE2              0x89   // RA0 RA1 RA2 RA3 RA5 RE0 Ref=Vdd  C  214N:
+#define ANALOG_NOT_RE1_RE2_REF_RA3      0x8A   // RA0 RA1 RA2 RA5 RE0 Ref=RA3  C  215N:
+#define ANALOG_NOT_RE1_RE2_REF_RA3_RA2  0x8B   // RA0 RA1 RA5 RE0 Ref=RA2,RA3  C  216N:
+#define A_ANALOG_RA3_RA2_REF            0x8C   // RA0 RA1 RA5 Ref=RA2,RA3  C  217N:
+#define RA0_RA1_ANALOG_RA3_RA2_REF      0x8D   // RA0 RA1 Ref=RA2,RA3  C  218N:
+#define RA0_ANALOG                      0x8E   // RA0  C  219N:
+#define RA0_ANALOG_RA3_RA2_REF          0x8F   // RA0 Ref=RA2,RA3  C  220N:
+// Constants used for SETUP_ADC() are:  C  221N:
+#define ADC_OFF                0  C  222N:
+#define ADC_CLOCK_DIV_2        1  C  223N:
+#define ADC_CLOCK_DIV_8     0x41  C  224N:
+#define ADC_CLOCK_DIV_32    0x81  C  225N:
+#define ADC_CLOCK_INTERNAL  0xc1  C  226N:
+  C  227N:
+////////////////////////////////////////////////////////////////// INT  C  228N:
+// Interrupt Functions: ENABLE_INTERRUPTS(), DISABLE_INTERRUPTS(),  C  229N:
+//                      EXT_INT_EDGE()  C  230N:
+//  C  231N:
+// Constants used in EXT_INT_EDGE() are:  C  232N:
+#define L_TO_H              0x40  C  233N:
+#define H_TO_L                 0  C  234N:
+// Constants used in ENABLE/DISABLE_INTERRUPTS() are:  C  235N:
+#define GLOBAL                    0x0BC0  C  236N:
+#define INT_RTCC                  0x0B20  C  237N:
+#define INT_RB                    0x0B08  C  238N:
+#define INT_EXT                   0x0B10  C  239N:
+#define INT_AD                    0x8C40  C  240N:
+#define INT_TBE                   0x8C10  C  241N:
+#define INT_RDA                   0x8C20  C  242N:
+#define INT_TIMER1                0x8C01  C  243N:
+#define INT_TIMER2                0x8C02  C  244N:
+#define INT_CCP1                  0x8C04  C  245N:
+#define INT_CCP2                  0x8D01  C  246N:
+#define INT_SSP                   0x8C08  C  247N:
+#define INT_PSP                   0x8C80  C  248N:
+#define INT_BUSCOL                0x8D08  C  249N:
+#define INT_EEPROM                0x8D10  C  250N:
+#define INT_TIMER0                0x0B20  C  251N:
+  C  252N:
+#list  C  253 :X1E
+ C  253 :
+  B   33 :
+#fuses HS,NOWDT,NOPROTECT,NOPUT,NOBROWNOUT,NOLVP,WRT,NOCPD                       // Configuration Bits  B   34 :
+#use delay(clock=20000000)                                                       // Clock @ 20 MHz  B   35 :V25V27
+#use rs232(baud=115200,parity=N,xmit=PIN_C6,rcv=PIN_C7)                          // Serial Configuration  B   36 :
+#use i2c( master , sda = PIN_C4 , scl = PIN_C3, FORCE_HW, SLOW  )                // I2C Master Configuration  B   37 :V32V34V35
+  B   38 :
+#use fast_io(a)  B   39 :
+#use fast_io(b)  B   40 :
+#use fast_io(c)  B   41 :
+#use fast_io(d)  B   42 :
+#use fast_io(e)  B   43 :
+  B   44 :
+#include "constants.h" B   45 :
+ //--------------------------------------------------------------------------------// D    1 :I3
+//-                   HemiOs ( Hemisson Operating System )                       -// D    2 :
+//-                                                                              -// D    3 :
+//-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -// D    4 :
+//-  This library is free software; you can redistribute it and/or               -// D    5 :
+//-  modify it under the terms of the GNU Lesser General Public                  -// D    6 :
+//-  License as published by the Free Software Foundation; either                -// D    7 :
+//-  version 2.1 of the License, or any later version.                           -// D    8 :
+//-                                                                              -// D    9 :
+//-  This library is distributed in the hope that it will be useful,             -// D   10 :
+//-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -// D   11 :
+//-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -// D   12 :
+//-  Lesser General Public License for more details.                             -// D   13 :
+//-                                                                              -// D   14 :
+//-  You should have received a copy of the GNU Lesser General Public            -// D   15 :
+//-  License along with this library; if not, write to the Free Software         -// D   16 :
+//-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -// D   17 :
+//-                                                                              -// D   18 :
+//-                               __  __  ________                               -// D   19 :
+//- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -// D   20 :
+//- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -// D   21 :
+//- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -// D   22 :
+//- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -// D   23 :
+//- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -// D   24 :
+//-                                                                              -// D   25 :
+//--------------------------------------------------------------------------------// D   26 :
+ D   26 :
+//////////////////////////////////////////////////////////////////////////////// D   28 :
+/*!   \file constants.h D   29 :
+      \brief In this file all constants are defined D   30 :
+*/ D   31 :
+//////////////////////////////////////////////////////////////////////////////// D   32 :
+ D   32 :
+#define INIT_TRISA            0x2F	// b0010 1111 D   34 :
+#define INIT_PORTA            0x10	// b0001 0000 D   35 :
+ D   35 :
+#define INIT_TRISB            0x30	// bXX11 000X D   37 :
+#define INIT_PORTB            0x00	// b0000 0000 D   38 :
+ D   38 :
+#define INIT_TRISC            0xA7	// b1010 0111 D   40 :
+#define INIT_PORTC            0x00	// b0000 0000 D   41 :
+ D   41 :
+#define INIT_TRISD            0x00	// b0000 0000 D   43 :
+#define INIT_PORTD            0x00	// b0000 0000 D   44 :
+ D   44 :
+#define INIT_TRISE            0x0F	// b0000 1111 D   46 :
+#define INIT_PORTE            0x00	// b0000 0000 D   47 :
+ D   47 :
+#BIT BOR = 0x8E.0 D   49 :V36
+#BIT POR = 0x8E.1 D   50 :V37
+ D   50 :
+#define __SERIAL_BUFFER_SIZE  80 D   52 :
+ D   52 :
+#define FRONT                 2 D   54 :
+#define FRONTLEFT             1 D   55 :
+#define FRONTRIGHT            0 D   56 :
+#define LEFT                  4 D   57 :
+#define RIGHT                 5 D   58 :
+#define REAR                  3 D   59 :
+#define GROUNDLEFT            6 D   60 :
+#define GROUNDRIGHT           7 D   61 :
+#define FRONTZONE             0 D   62 :
+#define REARZONE              1 D   63 :
+#define GROUNDZONE            2 D   64 :
+ D   64 :
+#define ENABLE                1 D   66 :
+#define DISABLE               0 D   67 :
+#define FAST                  1 D   68 :
+#define NORMAL                0 D   69 :
+#define MANUAL                0 D   70 :
+#define REFRESH               1 D   71 :
+#define ON                    1 D   72 :
+#define OFF                   0 D   73 :
+ D   73 :
+#define HEMIOS_VERSION        1 D   75 :
+#define HEMIOS_REVISION       50 D   76 :
+ D   76 :E
+ D   76 :
+#include "variables.c" B   46 :
+ //--------------------------------------------------------------------------------//  E    1 :I4
+//-                   HemiOs ( Hemisson Operating System )                       -//  E    2 :
+//-                                                                              -//  E    3 :
+//-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  E    4 :
+//-  This library is free software; you can redistribute it and/or               -//  E    5 :
+//-  modify it under the terms of the GNU Lesser General Public                  -//  E    6 :
+//-  License as published by the Free Software Foundation; either                -//  E    7 :
+//-  version 2.1 of the License, or any later version.                           -//  E    8 :
+//-                                                                              -//  E    9 :
+//-  This library is distributed in the hope that it will be useful,             -//  E   10 :
+//-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  E   11 :
+//-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  E   12 :
+//-  Lesser General Public License for more details.                             -//  E   13 :
+//-                                                                              -//  E   14 :
+//-  You should have received a copy of the GNU Lesser General Public            -//  E   15 :
+//-  License along with this library; if not, write to the Free Software         -//  E   16 :
+//-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  E   17 :
+//-                                                                              -//  E   18 :
+//-                               __  __  ________                               -//  E   19 :
+//- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  E   20 :
+//- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  E   21 :
+//- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  E   22 :
+//- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  E   23 :
+//- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  E   24 :
+//-                                                                              -//  E   25 :
+//--------------------------------------------------------------------------------//  E   26 :
+  E   27 :
+////////////////////////////////////////////////////////////////////////////////  E   28 :
+/*!   \file variables.c  E   29 :
+      \brief Definition of all global functions  E   30 :
+*/  E   31 :
+////////////////////////////////////////////////////////////////////////////////  E   32 :
+  E   33 :
+//- Motors  E   34 :
+signed int8 __PwmMotLeft = 0;                                                    // 0 : Stop ; 9 : Max Speed  E   35 :V38V39
+signed int8 __PwmMotRight = 0;                                                   // 0 : Stop ; 9 : Max Speed  E   36 :V40
+unsigned char __PwmCounter = 0;  E   37 :V41
+  E   38 :
+//- Configuration Bits  E   39 :
+int1 __Auto_Refresh_Sensors = 1;                                                 // 1 : Auto   ; 0 : Manual  E   40 :V42
+int1 __Auto_Refresh_TV_Remote = 1;                                               // 1 : Auto   ; 0 : Never  E   41 :V43
+int1 __Enable_RS232_Control = 1;                                                 // 1 : Enable ; 0 : Disable  E   42 :V44
+int1 __Enable_TV_Remote_Control = 1;                                             // 1 : Enable ; 0 : Disable  E   43 :V45
+  E   44 :
+//- Flags  E   45 :
+int1 __Sensors_Refreshed_Flag = 0;                                               // 1 : Sensors refreshed  E   46 :V46
+int1 __TV_Data_Available = 0;  E   47 :V47
+  E   48 :
+//- RS232  E   49 :
+char __SerialBuffer[ __SERIAL_BUFFER_SIZE ];  E   50 :V48
+#locate __SerialBuffer = 0x01A0  E   51 :
+char __SerialCounter = 0;  E   52 :V49
+  E   53 :
+//- TV Remote Control  E   54 :
+int1 __StartBit1 = 0;  E   55 :V50
+int1 __StartBit2 = 0;  E   56 :V51
+int1 __ToggleBit = 0;  E   57 :V52
+int1 __SystemBit4 = 0;  E   58 :V53
+int1 __SystemBit3 = 0;  E   59 :V54
+int1 __SystemBit2 = 0;  E   60 :V55
+int1 __SystemBit1 = 0;  E   61 :V56
+int1 __SystemBit0 = 0;  E   62 :V57
+int1 __DataBit5 = 0;  E   63 :V58
+int1 __DataBit4 = 0;  E   64 :V59
+int1 __DataBit3 = 0;  E   65 :V60
+int1 __DataBit2 = 0;  E   66 :V61
+int1 __DataBit1 = 0;  E   67 :V62
+int1 __DataBit0 = 0;  E   68 :V63
+int __TV_DATA = 0;  E   69 :V64
+int __TV_Counter = 0;  E   70 :V65
+int __BeepMem = 0;  E   71 :V66
+  E   72 :
+//- Time  E   73 :
+unsigned int32 __TimeTip = 0;  E   74 :V67
+char __TimeTipDivider = 0;  E   75 :V68
+  E   76 :
+//- Irs Sensors  E   77 :
+unsigned char __IR_Light[ 8 ];  E   78 :V69
+#locate __IR_Light = 0x01D2  E   79 :
+unsigned char __IR_Proximity[ 8 ];				// 0 : nothing detected ; 255 : obstacle near Hemisson  E   80 :V70
+#locate __IR_Proximity = 0x01DA  E   81 :
+  E   82 :
+//- Switchs  E   83 :
+char __Switchs[ 4 ];  E   84 :V71
+#locate __Switchs = 0x01E2  E   85 :
+  E   86 :
+//- Scheduler  E   87 :
+unsigned char __SchedulerTask = 0;  E   88 :V72
+int __Divider = 0;  E   89 :V73
+  E   90 :
+//- TRIS  E   91 :
+#locate TRISB = 0x0086  E   92 :
+  E   93 :
+  E   94 :
+  E   95 :
+  E   96 :E
+ E   96 :
+#include "hemisson_task1.c" B   47 :
+ //--------------------------------------------------------------------------------//  F    1 :I5
+//-                   HemiOs ( Hemisson Operating System )                       -//  F    2 :
+//-                                                                              -//  F    3 :
+//-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  F    4 :
+//-  This library is free software; you can redistribute it and/or               -//  F    5 :
+//-  modify it under the terms of the GNU Lesser General Public                  -//  F    6 :
+//-  License as published by the Free Software Foundation; either                -//  F    7 :
+//-  version 2.1 of the License, or any later version.                           -//  F    8 :
+//-                                                                              -//  F    9 :
+//-  This library is distributed in the hope that it will be useful,             -//  F   10 :
+//-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  F   11 :
+//-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  F   12 :
+//-  Lesser General Public License for more details.                             -//  F   13 :
+//-                                                                              -//  F   14 :
+//-  You should have received a copy of the GNU Lesser General Public            -//  F   15 :
+//-  License along with this library; if not, write to the Free Software         -//  F   16 :
+//-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  F   17 :
+//-                                                                              -//  F   18 :
+//-                               __  __  ________                               -//  F   19 :
+//- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  F   20 :
+//- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  F   21 :
+//- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  F   22 :
+//- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  F   23 :
+//- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  F   24 :
+//-                                                                              -//  F   25 :
+//--------------------------------------------------------------------------------//  F   26 :
+  F   27 :
+void hemisson_task1(void)  F   28 :V74f344
+{  F   29 :{22
+   // Add your task here  F   30 :
+   // This code will be executed every 40 ms  F   31 :
+   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  F   32 :
+   // !!! BE CAREFUL THAT THE WHOLE TASK MUSN'T LAST LESS THAN 200 us !!!  F   33 :
+   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  F   34 :
+}  F   35 :}24E
+ F   35 :
+#include "hemisson_task2.c" B   48 :
+ //--------------------------------------------------------------------------------//  G    1 :I6
+//-                   HemiOs ( Hemisson Operating System )                       -//  G    2 :
+//-                                                                              -//  G    3 :
+//-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  G    4 :
+//-  This library is free software; you can redistribute it and/or               -//  G    5 :
+//-  modify it under the terms of the GNU Lesser General Public                  -//  G    6 :
+//-  License as published by the Free Software Foundation; either                -//  G    7 :
+//-  version 2.1 of the License, or any later version.                           -//  G    8 :
+//-                                                                              -//  G    9 :
+//-  This library is distributed in the hope that it will be useful,             -//  G   10 :
+//-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  G   11 :
+//-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  G   12 :
+//-  Lesser General Public License for more details.                             -//  G   13 :
+//-                                                                              -//  G   14 :
+//-  You should have received a copy of the GNU Lesser General Public            -//  G   15 :
+//-  License along with this library; if not, write to the Free Software         -//  G   16 :
+//-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  G   17 :
+//-                                                                              -//  G   18 :
+//-                               __  __  ________                               -//  G   19 :
+//- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  G   20 :
+//- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  G   21 :
+//- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  G   22 :
+//- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  G   23 :
+//- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  G   24 :
+//-                                                                              -//  G   25 :
+//--------------------------------------------------------------------------------//  G   26 :
+  G   27 :
+void hemisson_task2(void)  G   28 :f345
+{  G   29 :{26
+   // Add your task here  G   30 :
+   // This code will be executed every 40 ms  G   31 :
+   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  G   32 :
+   // !!! BE CAREFUL THAT THE WHOLE TASK MUSN'T LAST LESS THAN 200 us !!!  G   33 :
+   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  G   34 :
+}  G   35 :}28E
+ G   35 :
+#include "hemisson_task3.c" B   49 :
+ //--------------------------------------------------------------------------------//  H    1 :I7
+//-                   HemiOs ( Hemisson Operating System )                       -//  H    2 :
+//-                                                                              -//  H    3 :
+//-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  H    4 :
+//-  This library is free software; you can redistribute it and/or               -//  H    5 :
+//-  modify it under the terms of the GNU Lesser General Public                  -//  H    6 :
+//-  License as published by the Free Software Foundation; either                -//  H    7 :
+//-  version 2.1 of the License, or any later version.                           -//  H    8 :
+//-                                                                              -//  H    9 :
+//-  This library is distributed in the hope that it will be useful,             -//  H   10 :
+//-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  H   11 :
+//-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  H   12 :
+//-  Lesser General Public License for more details.                             -//  H   13 :
+//-                                                                              -//  H   14 :
+//-  You should have received a copy of the GNU Lesser General Public            -//  H   15 :
+//-  License along with this library; if not, write to the Free Software         -//  H   16 :
+//-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  H   17 :
+//-                                                                              -//  H   18 :
+//-                               __  __  ________                               -//  H   19 :
+//- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  H   20 :
+//- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  H   21 :
+//- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  H   22 :
+//- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  H   23 :
+//- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  H   24 :
+//-                                                                              -//  H   25 :
+//--------------------------------------------------------------------------------//  H   26 :
+  H   27 :
+void hemisson_task3(void)  H   28 :f346
+{  H   29 :{30
+   // Add your task here  H   30 :
+   // This code will be executed every 40 ms  H   31 :
+   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  H   32 :
+   // !!! BE CAREFUL THAT THE WHOLE TASK MUSN'T LAST LESS THAN 200 us !!!  H   33 :
+   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  H   34 :
+}  H   35 :}32E
+ H   35 :
+#include "hemisson_task4.c" B   50 :
+ //--------------------------------------------------------------------------------//  I    1 :I8
+//-                   HemiOs ( Hemisson Operating System )                       -//  I    2 :
+//-                                                                              -//  I    3 :
+//-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  I    4 :
+//-  This library is free software; you can redistribute it and/or               -//  I    5 :
+//-  modify it under the terms of the GNU Lesser General Public                  -//  I    6 :
+//-  License as published by the Free Software Foundation; either                -//  I    7 :
+//-  version 2.1 of the License, or any later version.                           -//  I    8 :
+//-                                                                              -//  I    9 :
+//-  This library is distributed in the hope that it will be useful,             -//  I   10 :
+//-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  I   11 :
+//-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  I   12 :
+//-  Lesser General Public License for more details.                             -//  I   13 :
+//-                                                                              -//  I   14 :
+//-  You should have received a copy of the GNU Lesser General Public            -//  I   15 :
+//-  License along with this library; if not, write to the Free Software         -//  I   16 :
+//-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  I   17 :
+//-                                                                              -//  I   18 :
+//-                               __  __  ________                               -//  I   19 :
+//- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  I   20 :
+//- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  I   21 :
+//- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  I   22 :
+//- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  I   23 :
+//- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  I   24 :
+//-                                                                              -//  I   25 :
+//--------------------------------------------------------------------------------//  I   26 :
+  I   27 :
+void hemisson_task4(void)  I   28 :f347
+{  I   29 :{34
+   // Add your task here  I   30 :
+   // This code will be executed every 40 ms  I   31 :
+   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  I   32 :
+   // !!! BE CAREFUL THAT THE WHOLE TASK MUSN'T LAST LESS THAN 200 us !!!  I   33 :
+   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  I   34 :
+}  I   35 :}36E
+ I   35 :
+#ifdef firmware  B   51 :
+#include "firmware_hemisson.c"  B   52 :
+#endif  B   53 :
+#include "hemisson.c" B   54 :
+ //--------------------------------------------------------------------------------//  J    1 :I9
+//-                   HemiOs ( Hemisson Operating System )                       -//  J    2 :
+//-                                                                              -//  J    3 :
+//-  Copyright (C) Alexandre Colot, K-Team S.A. 2002                             -//  J    4 :
+//-  This library is free software; you can redistribute it and/or               -//  J    5 :
+//-  modify it under the terms of the GNU Lesser General Public                  -//  J    6 :
+//-  License as published by the Free Software Foundation; either                -//  J    7 :
+//-  version 2.1 of the License, or any later version.                           -//  J    8 :
+//-                                                                              -//  J    9 :
+//-  This library is distributed in the hope that it will be useful,             -//  J   10 :
+//-  but WITHOUT ANY WARRANTY; without even the implied warranty of              -//  J   11 :
+//-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           -//  J   12 :
+//-  Lesser General Public License for more details.                             -//  J   13 :
+//-                                                                              -//  J   14 :
+//-  You should have received a copy of the GNU Lesser General Public            -//  J   15 :
+//-  License along with this library; if not, write to the Free Software         -//  J   16 :
+//-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   -//  J   17 :
+//-                                                                              -//  J   18 :
+//-                               __  __  ________                               -//  J   19 :
+//- K-Team S.A.                  |  |/  /|__    __|___  _____  ___  ___          -//  J   20 :
+//- Chemin de Vuasset, CP 111    |     / __ |  | _____|/  _  \|   \/   |         -//  J   21 :
+//- 1028 Preverenges             |  |  \    |  | ____|/  /_\  |        |         -//  J   22 :
+//- Switzerland                  |__|\__\   |__|______|_/   \_|__|\/|__|         -//  J   23 :
+//- alexandre.colot@k-team.com   tel:+41 21 802 5472 fax:+41 21 802 5471         -//  J   24 :
+//-                                                                              -//  J   25 :
+//--------------------------------------------------------------------------------//  J   26 :
+  J   27 :
+////////////////////////////////////////////////////////////////////////////////  J   28 :
+/*!   \file hemisson.c  J   29 :
+      \brief The Os functions, all functions are called through an interrupt  J   30 :
+*/  J   31 :
+////////////////////////////////////////////////////////////////////////////////  J   32 :
+  J   33 :
+//----------------------------------------------------------------//  J   34 :
+//-                Conversion Function                           -//  J   35 :
+char chartohex( char valuetoconvert )  J   36 :f348V80
+{  J   37 :{38
+	char convertedval;  J   38 :V81
+   	if( valuetoconvert >= 'A' )  J   39 :
+   	{  J   40 :
+      		convertedval = valuetoconvert-'A'+10;  J   41 :{42
+   	}	  J   42 :}43
+   	else  J   43 :
+   	{  J   44 :
+      		convertedval = valuetoconvert -'0';  J   45 :{45
+   	}  J   46 :}46
+   	return convertedval;  J   47 :
+}  J   48 :}47
+  J   49 :
+//----------------------------------------------------------------//  J   50 :
+//-                Robot Initialisation                          -//  J   51 :
+void __hemisson_init(void)  J   52 :f351
+{  J   53 :{49
+	__PwmMotLeft = 0;  J   54 :
+   	__PwmMotRight = 0;  J   55 :
+  J   56 :
+   	__IR_Light[ 0 ] = 0;  J   57 :
+   	__IR_Light[ 1 ] = 0;  J   58 :
+   	__IR_Light[ 2 ] = 0;  J   59 :
+   	__IR_Light[ 3 ] = 0;  J   60 :
+   	__IR_Light[ 4 ] = 0;  J   61 :
+   	__IR_Light[ 5 ] = 0;  J   62 :
+   	__IR_Light[ 6 ] = 0;  J   63 :
+   	__IR_Light[ 7 ] = 0;  J   64 :
+   	__IR_Proximity[ 0 ] = 0;  J   65 :
+   	__IR_Proximity[ 1 ] = 0;  J   66 :
+   	__IR_Proximity[ 2 ] = 0;  J   67 :
+   	__IR_Proximity[ 3 ] = 0;  J   68 :
+   	__IR_Proximity[ 4 ] = 0;  J   69 :
+   	__IR_Proximity[ 5 ] = 0;  J   70 :
+   	__IR_Proximity[ 6 ] = 0;  J   71 :
+   	__IR_Proximity[ 7 ] = 0;  J   72 :
+  J   73 :
+   	__Switchs[ 0 ] = 0;  J   74 :
+   	__Switchs[ 1 ] = 0;  J   75 :
+   	__Switchs[ 2 ] = 0;  J   76 :
+   	__Switchs[ 3 ] = 0;  J   77 :
+  J   78 :
+   	//setup_spi(FALSE);  J   79 :
+   	setup_psp(PSP_DISABLED);  J   80 :
+   	setup_counters(RTCC_INTERNAL,RTCC_DIV_2);  J   81 :
+   	setup_timer_1(T1_DISABLED);  J   82 :
+   	setup_timer_2(T2_DISABLED,0,1);  J   83 :
+   	setup_ccp1(CCP_OFF);  J   84 :
+	setup_ccp2(CCP_OFF);  J   85 :
+  J   86 :
+	// I/O's  J   87 :
+	set_tris_a(INIT_TRISA);  J   88 :
+	set_tris_b(INIT_TRISB);  J   89 :
+	set_tris_c(INIT_TRISC);  J   90 :
+	set_tris_d(INIT_TRISD);  J   91 :
+	set_tris_e(INIT_TRISE);  J   92 :
+  J   93 :
+	output_a(INIT_PORTA);  J   94 :
+	output_b(INIT_PORTB);  J   95 :
+	output_c(INIT_PORTC);  J   96 :
+	output_d(INIT_PORTD);  J   97 :
+	output_e(INIT_PORTE);  J   98 :
+  J   99 :
+	port_b_pullups(false);  J  100 :
+  J  101 :
+	// Analog Port  J  102 :
+	setup_adc_ports(ALL_ANALOG);  J  103 :
+	setup_adc(ADC_CLOCK_INTERNAL);  J  104 :
+  J  105 :
+	// Timer 2 for TV Remote RC5 Decode  J  106 :
+	setup_timer_2(T2_DISABLED,0xBB,3);  J  107 :
+	set_timer2(0);  J  108 :
+  J  109 :
+	// Timer 0 for Scheduler  J  110 :
+	setup_timer_0 (RTCC_DIV_4);  J  111 :
+	set_timer0(0);  J  112 :
+   	  J  113 :
+	#ifdef firmware  J  114 :
+	// Timer 1 for Webots Timer  J  115 :
+   	setup_timer_1(T1_INTERNAL|T1_DIV_BY_8);  J  116 :
+   	set_timer1(0);  J  117 :
+	#endif  J  118 :
+	  J  119 :
+	// Welcome Message  J  120 :
+	delay_ms(5);			// Delay for HemRadio Module  J  121 :
+	printf("HemiOS V%d.%d , K-Team S.A. ( Alexandre Colot )  " , HEMIOS_VERSION , HEMIOS_REVISION);  J  122 :V85V86V88V89
+	printf(__DATE__);  J  123 :
+	printf(" @ ");  J  124 :
+	printf(__TIME__);  J  125 :
+	printf("\r\n");  J  126 :
+	printf("E-Mail : info@hemisson.com\r\n\r\n");  J  127 :
+  J  128 :
+	// Interrupts  J  129 :
+	enable_interrupts(INT_TIMER0);  J  130 :
+	enable_interrupts(INT_RB);  J  131 :
+	if( __Enable_RS232_Control == 1 )  J  132 :
+	{  J  133 :
+		enable_interrupts(INT_RDA);  J  134 :{104
+	}  J  135 :}105
+	enable_interrupts(GLOBAL);  J  136 :
+}  J  137 :}106
+  J  138 :
+//---------------------------------------------------------------//  J  139 :
+//-                        IR Sensors                           -//  J  140 :
+void __hemisson_refresh_sensors( int zone )  J  141 :f360V96
+{  J  142 :{108
+	switch( zone )  J  143 :
+	{  J  144 :
+		case FrontZone :  J  145 :
+			set_adc_channel( FrontLeft );  J  146 :
+			delay_us( 12 );  J  147 :
+			__IR_Light[ FrontLeft ] = read_adc();  J  148 :
+			set_adc_channel( FrontRight );  J  149 :
+			delay_us( 12 );  J  150 :
+			__IR_Light[ FrontRight ] = read_adc();  J  151 :
+			set_adc_channel( Front );  J  152 :
+			delay_us( 12 );  J  153 :
+			__IR_Light[ Front ] = read_adc();  J  154 :
+			output_high( PIN_B2 );  J  155 :
+			delay_us( 300 );  J  156 :
+			__IR_Proximity[ Front ] = __IR_Light[ Front ] - read_adc();  J  157 :
+			set_adc_channel( FrontLeft );  J  158 :
+			delay_us( 12 );  J  159 :
+			__IR_Proximity[ FrontLeft ] = __IR_Light[ FrontLeft ] - read_adc();  J  160 :
+			set_adc_channel( FrontRight );  J  161 :
+			delay_us( 12 );  J  162 :
+			__IR_Proximity[ FrontRight ] = __IR_Light[ FrontRight ] - read_adc();  J  163 :
+			output_low( PIN_B2 );  J  164 :
+			break;  J  165 :
+		case RearZone :  J  166 :
+			set_adc_channel(Left);  J  167 :
+			delay_us(12);  J  168 :
+			__IR_Light[Left]=read_adc();  J  169 :
+			set_adc_channel(Right);  J  170 :
+			delay_us(12);  J  171 :
+			__IR_Light[Right]= read_adc();  J  172 :
+			set_adc_channel(Rear);  J  173 :
+			delay_us(12);  J  174 :
+			__IR_Light[Rear]= read_adc();  J  175 :
+			output_high(PIN_B3);  J  176 :
+			delay_us(300);  J  177 :
+			__IR_Proximity[Rear]=__IR_Light[Rear]- read_adc();  J  178 :
+			set_adc_channel(Left);  J  179 :
+			delay_us(12);  J  180 :
+			__IR_Proximity[Left]=__IR_Light[Left]- read_adc();  J  181 :
+			set_adc_channel(Right);  J  182 :
+			delay_us(12);  J  183 :
+			__IR_Proximity[Right]=__IR_Light[Right]- read_adc();  J  184 :
+			output_low(PIN_B3);  J  185 :
+			break;  J  186 :
+		case GroundZone :  J  187 :
+			set_adc_channel( GroundLeft );  J  188 :
+			delay_us( 12 );  J  189 :
+			__IR_Light[ GroundLeft ] = read_adc();  J  190 :
+			set_adc_channel( GroundRight );  J  191 :
+			delay_us( 12 );  J  192 :
+			__IR_Light[ GroundRight ] = read_adc();  J  193 :
+			output_high( PIN_B1 );  J  194 :
+			delay_us( 300 );  J  195 :
+			__IR_Proximity[ GroundRight ] = __IR_Light[ GroundRight ] - read_adc();  J  196 :
+			set_adc_channel( GroundLeft );  J  197 :
+			delay_us( 12 );  J  198 :
+			__IR_Proximity[ GroundLeft ] = __IR_Light[ GroundRight ] - read_adc();  J  199 :
+			output_low( PIN_B1 );  J  200 :
+			break;  J  201 :
+	}  J  202 :
+	delay_ms( 5 );  J  203 :
+}  J  204 :}147
+  J  205 :
+//---------------------------------------------------------------//  J  206 :
+//-                        TV Remote                            -//  J  207 :
+  J  208 :
+// TV Remote Control  J  209 :
+void __TV_Remote_Control( void )  J  210 :f362
+{  J  211 :{149
+	switch( __TV_DATA )  J  212 :
+	{  J  213 :
+		case 1 :  J  214 :
+			__PwmMotLeft = 5;  J  215 :
+			__PwmMotRight = 10;  J  216 :
+			break;  J  217 :
+		case 2 :  J  218 :
+			__PwmMotLeft = 10;  J  219 :
+			__PwmMotRight = 10;  J  220 :
+			break;  J  221 :
+		case 3 :  J  222 :
+			__PwmMotLeft = 10;  J  223 :
+			__PwmMotRight = 5;  J  224 :
+			break;  J  225 :
+		case 4:  J  226 :
+			__PwmMotLeft = -10;  J  227 :
+			__PwmMotRight = 10;  J  228 :
+			break;  J  229 :
+		case 5 :  J  230 :
+			__PwmMotLeft = 0;  J  231 :
+			__PwmMotRight = 0;  J  232 :
+			break;  J  233 :
+		case 6 :  J  234 :
+			__PwmMotLeft = 10;  J  235 :
+			__PwmMotRight = -10;  J  236 :
+			break;  J  237 :
+		case 7 :  J  238 :
+			__PwmMotLeft = -5;  J  239 :
+			__PwmMotRight = -10;  J  240 :
+			break;  J  241 :
+		case 8:  J  242 :
+			__PwmMotLeft = -10;  J  243 :
+			__PwmMotRight = -10;  J  244 :
+			break;  J  245 :
+		case 9 :  J  246 :
+			__PwmMotLeft = -10;  J  247 :
+			__PwmMotRight = -5;  J  248 :
+			break;  J  249 :
+		case 12 :   			// Touche On/Off  J  250 :
+			break;  J  251 :
+		case 16 :   			// Touche Son +  J  252 :
+			break;  J  253 :
+		case 17 :   			// Touche Son -  J  254 :
+			break;  J  255 :
+	}  J  256 :
+}  J  257 :}167
+  J  258 :
+  J  259 :
+//-----------------------------------------------------------//  J  260 :
+//                  Internal Interrupts                     -//  J  261 :
+  J  262 :
+#INT_RB  J  263 :
+void __TV_Remote_Interrupt(void)  J  264 :f364
+{  J  265 :{169
+	if( __Auto_Refresh_TV_Remote == 1 )  J  266 :
+	{  J  267 :
+		delay_us(150);									// only a glitch  J  268 :{175
+		if(input(PIN_B4)== 0)  J  269 :
+		{  J  270 :
+			__TV_Counter=0;  J  271 :{181
+			__StartBit1=!input(PIN_B4);  J  272 :
+			__TV_Counter++;  J  273 :
+			disable_interrupts(INT_RB);  J  274 :
+			setup_timer_2(T2_DIV_BY_16,0xBB,3);                                     // Interrupt every 1.780 ms  J  275 :
+			set_timer2(0);  J  276 :
+			enable_interrupts(INT_TIMER2);  J  277 :
+		}  J  278 :}185
+	}  J  279 :}186
+}  J  280 :}187
+  J  281 :
+#INT_TIMER0  J  282 :
+void Scheduler_Interrupt(void)                                                   		// Internal Task Manager, Interrupt every 200 us  J  283 :f365
+{                                                                                		// Sensors Powered during 400us, refreshed every 40ms  J  284 :{189
+	// Time function  J  285 :
+	__TimeTipDivider++;  J  286 :
+	if(__TimeTipDivider == 5)  J  287 :
+	{  J  288 :
+		__TimeTipDivider = 0;  J  289 :{193
+		__TimeTip++;                                                               	// __TimeTip incremented every 1 ms (counter up to 4294967296 ms = 1193 hours ...)  J  290 :
+	}  J  291 :}194
+	// Motor Task, PWM freq 300 Hz  J  292 :
+	if( __PwmMotLeft >= 0 )                                                       		// Left Motor  J  293 :
+	{  J  294 :
+		if( ( 15 - __PwmMotLeft + __PwmCounter ) >= 15 )  J  295 :{197
+		{  J  296 :
+			output_bit( PIN_D0 , 0 );  J  297 :{200
+			output_bit( PIN_D1 , 0 );  J  298 :
+		}  J  299 :}203
+		else  J  300 :
+		{  J  301 :
+			output_bit( PIN_D0 , 1 );  J  302 :{205
+			output_bit( PIN_D1 , 0 );  J  303 :
+		}  J  304 :}208
+	}  J  305 :}209
+	else  J  306 :
+	{  J  307 :
+		if( ( 15 - ( - __PwmMotLeft ) + __PwmCounter ) >= 15 )  J  308 :{211
+		{  J  309 :
+			output_bit( PIN_D0 , 0 );  J  310 :{214
+			output_bit( PIN_D1 , 0 );  J  311 :
+		}  J  312 :}217
+		else  J  313 :
+		{  J  314 :
+			output_bit( PIN_D0 , 0 );  J  315 :{219
+			output_bit( PIN_D1 , 1 );  J  316 :
+		}  J  317 :}222
+	}  J  318 :}223
+	if( __PwmMotRight >= 0 )                                                      		// Right Motor  J  319 :
+	{  J  320 :
+		if( ( 15 - __PwmMotRight + __PwmCounter ) >= 15 )  J  321 :{226
+		{  J  322 :
+			output_bit( PIN_D2 , 0 );  J  323 :{229
+			output_bit( PIN_D3 , 0 );  J  324 :
+		}  J  325 :}232
+		else  J  326 :
+		{  J  327 :
+			output_bit( PIN_D2 , 1 );  J  328 :{234
+			output_bit( PIN_D3 , 0 );  J  329 :
+		}  J  330 :}237
+	}  J  331 :}238
+	else  J  332 :
+	{  J  333 :
+		if( ( 15 - ( - __PwmMotRight ) + __PwmCounter ) >= 15 )  J  334 :{240
+		{  J  335 :
+			output_bit( PIN_D2 , 0 );  J  336 :{243
+			output_bit( PIN_D3 , 0 );  J  337 :
+		}  J  338 :}246
+		else  J  339 :
+		{  J  340 :
+			output_bit( PIN_D2 , 0 );  J  341 :{248
+			output_bit( PIN_D3 , 1 );  J  342 :
+		}  J  343 :}251
+	}  J  344 :}252
+	__PwmCounter++;                                                               		// Counter  J  345 :
+	if( __PwmCounter > 15 )  J  346 :
+	{  J  347 :
+		__PwmCounter = 0;  J  348 :{255
+	}  J  349 :}256
+  J  350 :
+	// Other Tasks  J  351 :
+	switch( __SchedulerTask )  J  352 :
+	{  J  353 :
+		case 1 :                                                                   	// Brightness measurement zone 1  J  354 :
+			if( __Auto_Refresh_Sensors == 1 )  J  355 :
+			{  J  356 :
+				set_adc_channel( GroundLeft );  J  357 :{264
+				delay_us( 12 );  J  358 :
+				__IR_Light[ GroundLeft ] = read_adc();  J  359 :
+				set_adc_channel( GroundRight );  J  360 :
+				delay_us( 12 );  J  361 :
+				__IR_Light[ GroundRight ] = read_adc();  J  362 :
+				output_high( PIN_B1 );  J  363 :
+			}  J  364 :}269
+			break;  J  365 :
+		case 3 :                                                                   	// Proximity measurement zone 1  J  366 :
+			if( __Auto_Refresh_Sensors == 1 )  J  367 :
+			{  J  368 :
+				__IR_Proximity[ GroundRight ] = __IR_Light[ GroundRight ] - read_adc();  J  369 :{275
+				set_adc_channel( GroundLeft );  J  370 :
+				delay_us( 12 );  J  371 :
+				__IR_Proximity[ GroundLeft ] = __IR_Light[ GroundRight ] - read_adc();  J  372 :
+				output_low( PIN_B1 );  J  373 :
+			}  J  374 :}279
+			break;  J  375 :
+		case 10 :                                                                  	// Brightness measurement zone 2  J  376 :
+			if( __Auto_Refresh_Sensors == 1 )  J  377 :
+			{  J  378 :
+				set_adc_channel( FrontLeft );  J  379 :{285
+				delay_us( 12 );  J  380 :
+				__IR_Light[ FrontLeft ] = read_adc();  J  381 :
+				set_adc_channel( FrontRight );  J  382 :
+				delay_us( 12 );  J  383 :
+				__IR_Light[ FrontRight ] = read_adc();  J  384 :
+				set_adc_channel( Front );  J  385 :
+				delay_us( 12 );  J  386 :
+				__IR_Light[ Front ] = read_adc();  J  387 :
+				output_high( PIN_B2 );  J  388 :
+			}  J  389 :}292
+			break;  J  390 :
+		case 12 :                                                                 	// Proximity measurement zone 2  J  391 :
+			if( __Auto_Refresh_Sensors == 1 )  J  392 :
+			{  J  393 :
+				__IR_Proximity[ Front ] = __IR_Light[ Front ] - read_adc();  J  394 :{298
+				set_adc_channel( FrontLeft );  J  395 :
+				delay_us( 12 );  J  396 :
+				__IR_Proximity[ FrontLeft ] = __IR_Light[ FrontLeft ] - read_adc();  J  397 :
+				set_adc_channel( FrontRight );  J  398 :
+				delay_us( 12 );  J  399 :
+				__IR_Proximity[ FrontRight ] = __IR_Light[ FrontRight ] - read_adc();  J  400 :
+				output_low( PIN_B2 );  J  401 :
+			}  J  402 :}304
+			break;  J  403 :
+		case 15 :  J  404 :
+			if(__Divider==0)                                                        // Powered during 4ms every 450ms  J  405 :
+			{  J  406 :
+				output_bit( PIN_D7 , 1 );  J  407 :{308
+			}  J  408 :}310
+			break;  J  409 :
+		case 20 :                                                                  	// Brightness measurement zone 3  J  410 :
+			if( __Auto_Refresh_Sensors == 1 )  J  411 :
+			{  J  412 :
+				set_adc_channel(Left);  J  413 :{316
+				delay_us(12);  J  414 :
+				__IR_Light[Left]=read_adc();  J  415 :
+				set_adc_channel(Right);  J  416 :
+				delay_us(12);  J  417 :
+				__IR_Light[Right]= read_adc();  J  418 :
+				set_adc_channel(Rear);  J  419 :
+				delay_us(12);  J  420 :
+				__IR_Light[Rear]= read_adc();  J  421 :
+				output_high(PIN_B3);  J  422 :
+			}  J  423 :}323
+			break;  J  424 :
+		case 22 :                                                                 	// Proximity measurement zone 3  J  425 :
+			if( __Auto_Refresh_Sensors == 1 )  J  426 :
+			{  J  427 :
+				__IR_Proximity[Rear]=__IR_Light[Rear]- read_adc();  J  428 :{329
+				set_adc_channel(Left);  J  429 :
+				delay_us(12);  J  430 :
+				__IR_Proximity[Left]=__IR_Light[Left]- read_adc();  J  431 :
+				set_adc_channel(Right);  J  432 :
+				delay_us(12);  J  433 :
+				__IR_Proximity[Right]=__IR_Light[Right]- read_adc();  J  434 :
+				output_low(PIN_B3);  J  435 :
+				__Sensors_Refreshed_Flag = 1;  J  436 :
+			}  J  437 :}335
+			break;  J  438 :
+		case 25 :                                                                  	// Refresh Switchs  J  439 :
+			__Switchs[0]=!input(PIN_C0);  J  440 :
+			__Switchs[1]=!input(PIN_C1);  J  441 :
+			__Switchs[2]=!input(PIN_C2);  J  442 :
+			__Switchs[3]=!input(PIN_C5);  J  443 :
+			break;  J  444 :
+		case 35 :  J  445 :
+			if(__Divider==0)  J  446 :
+			{  J  447 :
+				output_bit( PIN_D7 , 0 );  J  448 :{348
+			}  J  449 :}350
+			break;  J  450 :
+		case 100 :  J  451 :
+			hemisson_task1();  J  452 :
+			break;  J  453 :
+		case 120 :  J  454 :
+			hemisson_task2();  J  455 :
+			break;  J  456 :
+		case 140 :  J  457 :
+			hemisson_task3();  J  458 :
+			break;  J  459 :
+		case 160 :  J  460 :
+			hemisson_task4();  J  461 :
+			break;  J  462 :
+		case 200 :                                                                 	// Every 40 ms  J  463 :
+			__SchedulerTask=0;  J  464 :
+			__Divider++;  J  465 :
+			if(__Divider>10)  J  466 :
+				__Divider=0;  J  467 :
+			break;  J  468 :
+	}  J  469 :
+	__SchedulerTask++;                                                            		// Task Counter  J  470 :
+}  J  471 :}358
+  J  472 :
+#INT_TIMER2  J  473 :
+void RC5_Decoding_Interrupt(void)  J  474 :f366
+{  J  475 :{360
+	switch(__TV_Counter)  J  476 :
+	{  J  477 :
+		case 1 :  J  478 :
+			__StartBit2 = !input(PIN_B4);  J  479 :
+			if(__StartBit2 != 1)  J  480 :
+			{  J  481 :
+				setup_timer_2(T2_DISABLED,0xBB,3);  J  482 :{371
+				disable_interrupts(INT_TIMER2);  J  483 :
+				enable_interrupts(INT_RB);  J  484 :
+			}  J  485 :}373
+			break;  J  486 :
+		case 2 :  J  487 :
+			__ToggleBit=!input(PIN_B4);  J  488 :
+			break;  J  489 :
+		case 3 :  J  490 :
+			__SystemBit4 = !input( PIN_B4 );  J  491 :
+			if( __SystemBit4 != 0 )  J  492 :
+			{  J  493 :
+				setup_timer_2(T2_DISABLED,0xBB,3);  J  494 :{384
+				disable_interrupts(INT_TIMER2);  J  495 :
+				enable_interrupts( INT_RB );  J  496 :
+			}  J  497 :}386
+			break;  J  498 :
+		case 4 :  J  499 :
+			__SystemBit3 = !input( PIN_B4 );  J  500 :
+			if( __SystemBit3 != 0 )  J  501 :
+			{  J  502 :
+				setup_timer_2(T2_DISABLED,0xBB,3);  J  503 :{394
+				disable_interrupts(INT_TIMER2);  J  504 :
+				enable_interrupts( INT_RB );  J  505 :
+			}  J  506 :}396
+			break;  J  507 :
+		case 5 :  J  508 :
+			__SystemBit2 = !input( PIN_B4 );  J  509 :
+			if( __SystemBit2 != 0 )  J  510 :
+			{  J  511 :
+				setup_timer_2(T2_DISABLED,0xBB,3);  J  512 :{404
+				disable_interrupts(INT_TIMER2);  J  513 :
+				enable_interrupts( INT_RB );  J  514 :
+			}  J  515 :}406
+			break;  J  516 :
+		case 6 :  J  517 :
+			__SystemBit1 = !input( PIN_B4 );  J  518 :
+			if( __SystemBit1 != 0 )  J  519 :
+			{  J  520 :
+				setup_timer_2(T2_DISABLED,0xBB,3);  J  521 :{414
+				disable_interrupts(INT_TIMER2);  J  522 :
+				enable_interrupts( INT_RB );  J  523 :
+			}  J  524 :}416
+			break;  J  525 :
+		case 7 :  J  526 :
+			__SystemBit0 = !input( PIN_B4 );  J  527 :
+			if( __SystemBit0 != 0 )  J  528 :
+			{  J  529 :
+				setup_timer_2(T2_DISABLED,0xBB,3);  J  530 :{424
+				disable_interrupts(INT_TIMER2);  J  531 :
+				enable_interrupts( INT_RB );  J  532 :
+			}	  J  533 :}426
+			break;  J  534 :
+		case 8 :  J  535 :
+			__DataBit5 = !input( PIN_B4 );  J  536 :
+			break;  J  537 :
+		case 9 :  J  538 :
+			__DataBit4 = !input( PIN_B4 );  J  539 :
+			break;  J  540 :
+		case 10 :  J  541 :
+			__DataBit3 = !input( PIN_B4 );  J  542 :
+			break;  J  543 :
+		case 11 :  J  544 :
+			__DataBit2 = !input( PIN_B4 );  J  545 :
+			break;  J  546 :
+		case 12 :  J  547 :
+			__DataBit1 = !input( PIN_B4 );  J  548 :
+			break;  J  549 :
+		case 13 :  J  550 :
+			__DataBit0 = !input( PIN_B4 );  J  551 :
+			__TV_DATA = ( __DataBit5 << 5 ) | ( __DataBit4 << 4 ) | ( __DataBit3 << 3 ) | ( __DataBit2 << 2 ) | ( __DataBit1 << 1 ) | __DataBit0 ;  J  552 :
+			if( __Enable_TV_Remote_Control == 1 )  J  553 :
+			{  J  554 :
+				__TV_Remote_Control();  J  555 :{461
+			}  J  556 :}462
+			__TV_Data_Available = 1;                                                	// Just a Flag  J  557 :
+			setup_timer_2(T2_DISABLED,0xBB,3);  J  558 :
+			disable_interrupts(INT_TIMER2);  J  559 :
+			enable_interrupts( INT_RB );  J  560 :
+			break;  J  561 :
+	}  J  562 :
+	__TV_Counter++;  J  563 :
+}  J  564 :}466
+  J  565 :
+#separate  J  566 :
+__default()  J  567 :f368
+{  J  568 :{468
+	printf( "Unknown Command ??\r\n" );  J  569 :
+}  J  570 :}474
+  J  571 :
+#separate  J  572 :
+__1()  J  573 :f370
+{  J  574 :{476
+	printf("1,");  J  575 :
+	switch(__SerialBuffer[ 2 ])  J  576 :
+	{  J  577 :
+		case '0' :  J  578 :
+			set_tris_b(TRISB|0x01);	  J  579 :
+			printf("%d\r\n",input(PIN_B0));  J  580 :
+			break;  J  581 :
+		case '1' :  J  582 :
+			set_tris_b(TRISB|0x40);  J  583 :
+			printf("%d\r\n",input(PIN_B6));  J  584 :
+			break;  J  585 :
+		case '2' :  J  586 :
+			set_tris_b(TRISB|0x80);	  J  587 :
+			printf("%d\r\n",input(PIN_B7));  J  588 :
+			break;  J  589 :
+		default:  J  590 :
+			__default();  J  591 :
+			break;  J  592 :
+	}  J  593 :
+}  J  594 :}506
+  J  595 :
+#separate  J  596 :
+__2()  J  597 :f375
+{  J  598 :{508
+	printf("2\r\n");  J  599 :
+	switch(__SerialBuffer[ 2 ])  J  600 :
+	{  J  601 :
+		case '0' :  J  602 :
+			set_tris_b(TRISB & 0xFE);  J  603 :
+			output_bit(PIN_B0,__SerialBuffer[ 4 ] - '0');  J  604 :
+			break;  J  605 :
+		case '1' :  J  606 :
+			set_tris_b(TRISB & 0xBF);  J  607 :
+			output_bit(PIN_B6,__SerialBuffer[ 4 ] - '0');  J  608 :
+			break;  J  609 :
+		case '2' :  J  610 :
+			set_tris_b(TRISB & 0x7F);  J  611 :
+			output_bit(PIN_B7,__SerialBuffer[ 4 ] - '0');  J  612 :
+			break;  J  613 :
+		default :  J  614 :
+			__default();  J  615 :
+			break;  J  616 :
+	}  J  617 :
+  J  618 :
+}  J  619 :}530
+  J  620 :
+#separate  J  621 :
+__Z()  J  622 :f377
+{  J  623 :{532
+	printf("z\r\n");  J  624 :
+	reset_cpu();  J  625 :
+}  J  626 :}539
+  J  627 :
+#separate  J  628 :
+__B()  J  629 :f379
+{  J  630 :{541
+	printf( "b,HemiOS_v_%d.%d\r\n" , HEMIOS_VERSION , HEMIOS_REVISION );  J  631 :
+}  J  632 :}550
+  J  633 :
+#separate  J  634 :
+__E()  J  635 :f381
+{  J  636 :{552
+	printf("e,%02d,%02d\r\n",__PwmMotLeft,__PwmMotRight);  J  637 :
+}  J  638 :}561
+  J  639 :
+#separate  J  640 :
+__J()  J  641 :f383
+{  J  642 :{563
+	unsigned char __i;  J  643 :V119
+	unsigned char __TempVal;  J  644 :V120
+	printf("j");  J  645 :
+	for(__i=3;__i<254;__i=__i+2)  J  646 :
+	{  J  647 :
+		i2c_start();  J  648 :{574
+		if(i2c_write(__i-1)==0)  J  649 :
+		{  J  650 :
+			i2c_write(0x00);  		// Version Register  J  651 :{579
+			i2c_start();  J  652 :
+			i2c_write(__i);  J  653 :
+			__TempVal=i2c_read(0);  J  654 :
+			i2c_stop();  J  655 :
+			printf(",%2x",__i-1);  J  656 :V124V125
+		}  J  657 :}593
+		else  J  658 :
+		{  J  659 :
+			i2c_stop();  J  660 :{595
+		}  J  661 :}597
+	}  J  662 :}598
+	printf("\r\n");  J  663 :
+}  J  664 :}603
+  J  665 :
+#separate  J  666 :
+__T()  J  667 :f390
+{  J  668 :{605
+	printf( "t,%03u\r\n" , __TV_DATA );  J  669 :V130V131
+}  J  670 :}623
+  J  671 :
+#INT_RDA  J  672 :
+void Serial_Interrupt(void)  J  673 :f393
+{  J  674 :{625
+	unsigned char __memaddress = 0;  J  675 :V133
+	unsigned char __rcvalue = 0;  J  676 :V134
+	unsigned char __TempVal;  J  677 :V135
+	unsigned char __i;  J  678 :V136
+  J  679 :
+	while(kbhit())                                                                		// Read while data available  J  680 :
+	{  J  681 :
+		__SerialBuffer[ __SerialCounter ] = getc();  J  682 :{630
+		if (__SerialCounter < ( __SERIAL_BUFFER_SIZE-1 ))                          	// To discard buffer overflow  J  683 :
+		{  J  684 :
+			__SerialCounter++;  J  685 :{635
+		}  J  686 :}636
+	}  J  687 :}637
+	if( __SerialBuffer[ __SerialCounter-1 ] == 13 )                               		// '\n'  J  688 :
+	{  J  689 :
+		//delay_ms(6);                                                             	// Only for HemBasicStamp  J  690 :
+		switch( __SerialBuffer[ 0 ] )  J  691 :{640
+		{  J  692 :
+			//case 'A' : Unused  J  693 :
+			case 'B' :                                                             // HemiOs Version  J  694 :
+				__B();  J  695 :
+				break;  J  696 :
+			//case 'C' : Unused  J  697 :
+			case 'D' :                                                             // Set Motors Speed  J  698 :
+				if( __SerialBuffer[2] == '-' )  J  699 :
+				{  J  700 :
+					__PwmMotLeft = - ( __SerialBuffer[3] - '0' );  J  701 :{647
+					if( __SerialBuffer[5] == '-' )  J  702 :
+					{  J  703 :
+						__PwmMotRight = - ( __SerialBuffer[6] - '0' );  J  704 :{650
+					}  J  705 :}651
+					else  J  706 :
+					{  J  707 :
+						__PwmMotRight = __SerialBuffer[5] - '0';  J  708 :{653
+					}  J  709 :}654
+				}  J  710 :}655
+				else  J  711 :
+				{  J  712 :
+					__PwmMotLeft = __SerialBuffer[2] - '0';  J  713 :{657
+					if( __SerialBuffer[4] == '-' )  J  714 :
+					{  J  715 :
+						__PwmMotRight = - ( __SerialBuffer[5] - '0' );  J  716 :{660
+					}  J  717 :}661
+					else  J  718 :
+					{  J  719 :
+						__PwmMotRight = __SerialBuffer[4] - '0';  J  720 :{663
+					}  J  721 :}664
+				}  J  722 :}665
+				printf( "d\r\n" );  J  723 :
+				break;  J  724 :
+			case 'E' :                                                             	// Read Motors Speed  J  725 :
+				__E();  J  726 :
+				break;  J  727 :
+			//case 'F' : Unused  J  728 :
+			//case 'G' : Unused  J  729 :
+			case 'H' :								// Buzzer  J  730 :
+				output_bit( PIN_D4 , __SerialBuffer[ 2 ] - '0' );  J  731 :
+				printf( "h\r\n" );  J  732 :
+				break;  J  733 :
+			case 'I' :								// Read switches  J  734 :
+				printf( "i,%d,%d,%d,%d\r\n" , __Switchs[ 0 ] , __Switchs[ 1 ] , __Switchs[ 2 ] , __Switchs[ 3 ] );  J  735 :
+				break;  J  736 :
+			case 'J' :								// Scan I2C Bus  J  737 :
+				__J();  J  738 :
+				break;  J  739 :
+			//case 'K' : Unused  J  740 :
+			case 'L' :								// Set the Leds  J  741 :
+				output_bit( PIN_D7 , __SerialBuffer[2] - '0' );  J  742 :
+				output_bit( PIN_D5 , __SerialBuffer[4] - '0' );  J  743 :
+				output_bit( PIN_D6 , __SerialBuffer[6] - '0' );  J  744 :
+				output_bit( PIN_A4 , !(__SerialBuffer[8] - '0') );  J  745 :
+				printf( "l\r\n" );  J  746 :
+				break;  J  747 :
+			case 'M' :								// Get Brightness Zone Sensors  J  748 :
+				switch(__SerialBuffer[2])  J  749 :
+				{  J  750 :
+					case '0' :  // Front Zone  J  751 :
+						printf( "m,%03u,%03u,%03u\r\n",__IR_Light[ Front ],__IR_Light[ FrontRight ],__IR_Light[ FrontLeft ] );  J  752 :
+						break;  J  753 :
+					case '1' :  // Rear Zone  J  754 :
+						printf( "m,%03u,%03u,%03u\r\n",__IR_Light[ Right],__IR_Light[ Left],__IR_Light[ Rear ] );  J  755 :
+						break;  J  756 :
+					case '2' :  // Ground Zone  J  757 :
+						printf( "m,%03u,%03u\r\n",__IR_Light[ GroundRight ],__IR_Light[ GroundLeft ]);  J  758 :
+						break;  J  759 :
+				}  J  760 :
+				break;  J  761 :
+			case 'N' :     								// Get all Proximity Sensors  J  762 :
+				printf( "n,%03u,%03u,%03u,%03u,%03u,%03u,%03u,%03u\r\n" , __IR_Proximity[ Front ] , __IR_Proximity[ FrontRight ] ,  J  763 :
+						__IR_Proximity[ FrontLeft ] , __IR_Proximity[ Right] , __IR_Proximity[ Left] , __IR_Proximity[ Rear ] ,  J  764 :
+						__IR_Proximity[ GroundRight ] , __IR_Proximity[ GroundLeft ] );  J  765 :
+				break;  J  766 :
+			case 'O' :								// Get all Brightness Sensors  J  767 :
+				printf( "o,%03u,%03u,%03u,%03u,%03u,%03u,%03u,%03u\r\n" , __IR_Light[ Front ] , __IR_Light[ FrontRight ] ,  J  768 :
+						__IR_Light[ FrontLeft ] , __IR_Light[ Right] , __IR_Light[ Left] , __IR_Light[ Rear ] ,  J  769 :
+						__IR_Light[ GroundRight ] , __IR_Light[ GroundLeft ] );  J  770 :
+				break;  J  771 :
+			case 'P' :								// Get Proximity Zone Sensors  J  772 :
+				switch(__SerialBuffer[2])  J  773 :
+				{  J  774 :
+					case '0' :  // Front Zone  J  775 :
+						printf( "p,%03u,%03u,%03u\r\n",__IR_Proximity[ Front ],__IR_Proximity[ FrontRight ],__IR_Proximity[ FrontLeft ] );  J  776 :
+						break;  J  777 :
+					case '1' :  // Rear Zone  J  778 :
+						printf( "p,%03u,%03u,%03u\r\n",__IR_Proximity[ Right],__IR_Proximity[ Left],__IR_Proximity[ Rear ] );  J  779 :
+						break;  J  780 :
+					case '2' :  // Ground Zone  J  781 :
+						printf( "p,%03u,%03u\r\n",__IR_Proximity[ GroundRight ],__IR_Proximity[ GroundLeft ]);  J  782 :
+						break;  J  783 :
+				}  J  784 :
+				break;  J  785 :
+			#ifdef firmware  J  786 :
+			case 'Q' : //Reserved for Webots-Hemisson  J  787 :
+				__Q();  J  788 :
+				break;  J  789 :
+			#endif  J  790 :
+			case 'R' :								// Read I2C  J  791 :
+				__memaddress = chartohex(__SerialBuffer[2]);  J  792 :
+				__memaddress = (__memaddress<<4) + chartohex(__SerialBuffer[3]);  J  793 :
+				i2c_start();  J  794 :
+				i2c_write( __memaddress );                                      // Writing Address of the module  J  795 :
+				__rcvalue = chartohex(__SerialBuffer[5]);  J  796 :
+				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[6]);  J  797 :
+				i2c_write( __rcvalue );                                         // Writing Address of the register  J  798 :
+				__rcvalue = chartohex(__SerialBuffer[8]);  J  799 :
+				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[9]);  J  800 :
+				i2c_start();  J  801 :
+				i2c_write( __memaddress + 1 );                                  // Writing Address of the module in Read Mode  J  802 :
+				printf("r",__TempVal);  J  803 :
+				while(__rcvalue > 1)  J  804 :
+				{  J  805 :
+					__TempVal = i2c_read();  J  806 :{806
+					printf(",%03u",__TempVal);  J  807 :
+					__rcvalue--;  J  808 :
+				}  J  809 :}810
+				__TempVal = i2c_read(0);  J  810 :
+				printf(",%03u",__TempVal);  J  811 :
+				i2c_stop();  J  812 :
+				printf("\r\n");  J  813 :
+				break;  J  814 :
+			#ifdef firmware  J  815 :
+			case 'S' : //Reserved for Webots-Hemisson  J  816 :
+				__S();  J  817 :
+				break;  J  818 :
+			#endif  J  819 :
+			case 'T' :								// Read TV Remote Sensor  J  820 :
+			__T();  J  821 :
+			break;  J  822 :
+			#ifdef firmware  J  823 :
+			case 'U' : //Reserved for Webots-Hemisson  J  824 :
+				__U();  J  825 :
+				break;  J  826 :
+			#endif  J  827 :
+			//case 'V' : Unused  J  828 :
+			case 'W' :								// Write I2C  J  829 :
+				__rcvalue = chartohex(__SerialBuffer[2]);  J  830 :
+				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[3]);  J  831 :
+				i2c_start();  J  832 :
+				i2c_write( __rcvalue );                                         // Writing Address of the module  J  833 :
+				__rcvalue = chartohex(__SerialBuffer[5]);  J  834 :
+				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[6]);  J  835 :
+				i2c_write( __rcvalue );                                         // Writing Address of the register  J  836 :
+				__rcvalue = chartohex(__SerialBuffer[8]);  J  837 :
+				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[9]);  J  838 :
+				i2c_write( __rcvalue );                                         // Writing Data in the register  J  839 :
+				i2c_stop();  J  840 :
+				printf("w\r\n");  J  841 :
+				break;  J  842 :
+			#ifdef firmware  J  843 :
+			case 'X' : //Reserved for Webots-Hemisson  J  844 :
+				__X();  J  845 :
+				break;  J  846 :
+			#endif  J  847 :
+			case 'Y' :                                                        	// Write I2C (Pointer Method)  J  848 :
+				__rcvalue = chartohex(__SerialBuffer[2]);  J  849 :
+				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[3]);  J  850 :
+				i2c_start();  J  851 :
+				i2c_write( __rcvalue );                                           // Writing Address of the module  J  852 :
+				__rcvalue = chartohex(__SerialBuffer[5]);  J  853 :
+				__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[6]);  J  854 :
+				i2c_write( __rcvalue );                                           // Writing Address of the register  J  855 :
+				__TempVal = chartohex(__SerialBuffer[8]);  J  856 :
+				__TempVal = (__TempVal<<4) + chartohex(__SerialBuffer[9]);        // Number of Data to Write  J  857 :
+				i2c_write( __TempVal );                                           // Writing Number of Data  J  858 :
+				for(__i=0;__i<__TempVal;__i++)  J  859 :
+				{  J  860 :
+					__rcvalue = chartohex(__SerialBuffer[11+__i+__i+__i]);  J  861 :{838
+					__rcvalue = (__rcvalue<<4) + chartohex(__SerialBuffer[12+__i+__i+__i]);  J  862 :
+					i2c_write( __rcvalue );                                        // Writing Data in the register  J  863 :
+					//delay_ms(1);						   // Needed for module ???? J  864 :
+				}  J  865 :}839
+				i2c_stop();  J  866 :
+				printf("y\r\n");  J  867 :
+				break;  J  868 :
+			case 'Z' :	// Reset  J  869 :
+				__Z();  J  870 :
+				break;  J  871 :
+			case '&' :	// Fast binary read  J  872 :
+				printf("&%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\r\n",__PwmMotLeft,__PwmMotRight ,__IR_Proximity[ Front ] , __IR_Proximity[ FrontRight ] ,  J  873 :
+						__IR_Proximity[ FrontLeft ] , __IR_Proximity[ Right] , __IR_Proximity[ Left] , __IR_Proximity[ Rear ] ,  J  874 :
+						__IR_Proximity[ GroundRight ] , __IR_Proximity[ GroundLeft ] , __IR_Light[ Front ] , __IR_Light[ FrontRight ] ,  J  875 :
+						__IR_Light[ FrontLeft ] , __IR_Light[ Right] , __IR_Light[ Left] , __IR_Light[ Rear ] ,  J  876 :
+						__IR_Light[ GroundRight ] , __IR_Light[ GroundLeft ] , (__Switchs[ 0 ]|(__Switchs[ 1 ]<<1)|(__Switchs[ 2 ]<<2)|(__Switchs[ 3 ]<<3)) ,  J  877 :
+						__TV_DATA , HEMIOS_VERSION, HEMIOS_REVISION );  J  878 :
+				break;  J  879 :
+			case '*' :	// Fast binary write  J  880 :
+				__PwmMotLeft = __SerialBuffer[1];  J  881 :
+				__PwmMotRight = __SerialBuffer[2];  J  882 :
+				output_bit( PIN_D7 , __SerialBuffer[3]&0x01 );  J  883 :
+				output_bit( PIN_D5 , __SerialBuffer[3]&0x02 );  J  884 :
+				output_bit( PIN_D6 , __SerialBuffer[3]&0x04 );  J  885 :
+				output_bit( PIN_A4 , !(__SerialBuffer[3]&0x08) );  J  886 :
+				printf("*\r\n");  J  887 :
+				break;  J  888 :
+			case '!' :	// To check when sensors has been refreshed  J  889 :
+				printf("!%c\r\n",__Sensors_Refreshed_Flag);  J  890 :
+				if(__Sensors_Refreshed_Flag == 1)  J  891 :
+				{  J  892 :
+					__Sensors_Refreshed_Flag = 0;  J  893 :{906
+				}  J  894 :}907
+				break;  J  895 :
+			case '1' :     // Read RB0,RB6,RB7  J  896 :
+				__1();  J  897 :
+				break;  J  898 :
+			case '2' :	// Write RB0,RB6,RB7  J  899 :
+				__2();  J  900 :
+				break;  J  901 :
+			default :	// Unknown message command  J  902 :
+				__default();    J  903 :
+				break;  J  904 :
+		}  J  905 :
+		__SerialCounter = 0;  J  906 :
+	}  J  907 :}911
+}  J  908 :}912
+  J  909 :
+  J  910 :
+  J  911 :
+  J  912 :
+  J  913 :
+  J  914 :
+  J  915 :
+  J  916 :
+  J  917 :
+  J  918 :
+  J  919 :E
+ J  919 :
+  B   55 :
+#org 0x1F00, 0x1FFF {}                                                             // Bootloader Protection  B   56 :
+  B   57 :
+////////////////////////////////////////////////////////////////////////////////  B   58 :
+/*!   \file hemisson.h  B   59 :
+      \brief This file is the library of all high level functions that can be used when programming Hemisson  B   60 :
+*/  B   61 :
+////////////////////////////////////////////////////////////////////////////////  B   62 :
+  B   63 :
+/**  B   64 :
+   * \defgroup Configuration_Functions  B   65 :
+   */  B   66 :
+/*@{*/  B   67 :
+////////////////////////////////////////////////////////////////////////////////  B   68 :
+/*!   \fn void hemisson_init(void)  B   69 :
+      \brief Hemisson Initialisation. This function initialise all Hemisson peripherals  B   70 :
+      \param None  B   71 :
+      \retval None  B   72 :
+*/  B   73 :
+////////////////////////////////////////////////////////////////////////////////  B   74 :
+void hemisson_init(void)  B   75 :f417
+{  B   76 :{914
+	__hemisson_init();  B   77 :
+}  B   78 :}916
+  B   79 :
+////////////////////////////////////////////////////////////////////////////////  B   80 :
+/*!   \fn void hemisson_config_auto_refresh_sensors(int1 Bit)  B   81 :
+      \brief Set the refresh mode of all IRs sensors  B   82 :
+      \param int1 Manual or Refresh (Default)  B   83 :
+      \retval None  B   84 :
+*/  B   85 :
+////////////////////////////////////////////////////////////////////////////////  B   86 :
+void hemisson_config_auto_refresh_sensors(int1 Bit)  B   87 :f418V160
+{  B   88 :{918
+   	__Auto_Refresh_Sensors=Bit;  B   89 :
+}  B   90 :}923
+  B   91 :
+////////////////////////////////////////////////////////////////////////////////  B   92 :
+/*!   \fn void hemisson_config_auto_refresh_tv_remote(int1 Bit)  B   93 :
+      \brief Configure the refresh mode of the TV remote receiver  B   94 :
+      \param int1 Manual or Refresh(Default)  B   95 :
+      \retval None  B   96 :
+*/  B   97 :
+////////////////////////////////////////////////////////////////////////////////  B   98 :
+void hemisson_config_auto_refresh_tv_remote(int1 Bit)  B   99 :f420V162
+{  B  100 :{925
+   	__Auto_Refresh_TV_Remote=Bit;  B  101 :
+}  B  102 :}930
+  B  103 :
+////////////////////////////////////////////////////////////////////////////////  B  104 :
+/*!   \fn void hemisson_config_rs232_control(int1 Bit)  B  105 :
+      \brief Configure the Serial Remote Control  B  106 :
+      \param int1 Disable or Enable (Default)  B  107 :
+      \retval None  B  108 :
+*/  B  109 :
+////////////////////////////////////////////////////////////////////////////////  B  110 :
+void hemisson_config_rs232_control(int1 Bit)  B  111 :f421V164
+{  B  112 :{932
+   	__Enable_RS232_Control=Bit;  B  113 :
+}  B  114 :}937
+  B  115 :
+////////////////////////////////////////////////////////////////////////////////  B  116 :
+/*!   \fn void hemisson_config_tv_remote_control(int1 Bit)  B  117 :
+      \brief Configure the TV Remote Control  B  118 :
+      \param int1 Disable or Enable (Default)  B  119 :
+      \retval None  B  120 :
+*/  B  121 :
+////////////////////////////////////////////////////////////////////////////////  B  122 :
+void hemisson_config_tv_remote_control(int1 Bit)  B  123 :f422V166
+{  B  124 :{939
+   	__Enable_TV_Remote_Control=Bit;  B  125 :
+}  B  126 :}944
+/*@}*/  B  127 :
+  B  128 :
+/**  B  129 :
+   * \defgroup Flags  B  130 :
+   */  B  131 :
+/*@{*/  B  132 :
+////////////////////////////////////////////////////////////////////////////////  B  133 :
+/*!   \fn int1 hemisson_flag_sensors_refreshed(void)  B  134 :
+      \brief Test if IRs sensors have been refreshed  B  135 :
+      \param None  B  136 :
+      \retval int1 1 if sensors have been refreshed  B  137 :
+      \warning You must then call hemisson_flag_sensors_reset() to clear the flag  B  138 :
+*/  B  139 :
+////////////////////////////////////////////////////////////////////////////////  B  140 :
+int1 hemisson_flag_sensors_refreshed(void)  B  141 :f423
+{  B  142 :{946
+   	return __Sensors_Refreshed_Flag;  B  143 :
+}  B  144 :}950
+////////////////////////////////////////////////////////////////////////////////  B  145 :
+/*!   \fn void hemisson_flag_sensors_reset(void)  B  146 :
+      \brief Clear IRs sensors refreshed flag  B  147 :
+      \param None  B  148 :
+      \retval None  B  149 :
+*/  B  150 :
+////////////////////////////////////////////////////////////////////////////////  B  151 :
+void hemisson_flag_sensors_reset(void)  B  152 :f424
+{  B  153 :{952
+   	__Sensors_Refreshed_Flag = 0;  B  154 :
+}  B  155 :}954
+////////////////////////////////////////////////////////////////////////////////  B  156 :
+/*!   \fn int1 hemisson_flag_rs232_filtering(void)  B  157 :
+      \brief Test if Serial Remote Control is active or not  B  158 :
+      \param None  B  159 :
+      \retval int1 1 if active otherwise 0  B  160 :
+*/  B  161 :
+////////////////////////////////////////////////////////////////////////////////  B  162 :
+int1 hemisson_flag_rs232_filtering(void)  B  163 :f425
+{  B  164 :{956
+   	return __Enable_RS232_Control;  B  165 :
+}  B  166 :}960
+////////////////////////////////////////////////////////////////////////////////  B  167 :
+/*!   \fn int1 hemisson_flag_tv_data_refreshed(void)  B  168 :
+      \brief Test if Tv Data have been refreshed  B  169 :
+      \param None  B  170 :
+      \retval int1 1 if active otherwise 0  B  171 :
+      \warning You must then call hemisson_flag_tv_data_reset() to clear the flag  B  172 :
+*/  B  173 :
+////////////////////////////////////////////////////////////////////////////////  B  174 :
+int1 hemisson_flag_tv_data_refreshed(void)  B  175 :f426
+{  B  176 :{962
+   	return __TV_Data_Available;  B  177 :
+}  B  178 :}966
+////////////////////////////////////////////////////////////////////////////////  B  179 :
+/*!   \fn void hemisson_flag_tv_data_reset(void)  B  180 :
+      \brief Clear TV Data flag  B  181 :
+      \param None  B  182 :
+      \retval None  B  183 :
+*/  B  184 :
+////////////////////////////////////////////////////////////////////////////////  B  185 :
+void hemisson_flag_tv_data_reset(void)  B  186 :f427
+{  B  187 :{968
+   	__TV_Data_Available = 0;  B  188 :
+}  B  189 :}970
+/*@}*/  B  190 :
+  B  191 :
+/**  B  192 :
+   * \defgroup Peripheral_Access_Functions  B  193 :
+   */  B  194 :
+/*@{*/  B  195 :
+////////////////////////////////////////////////////////////////////////////////  B  196 :
+/*!   \fn unsigned char hemisson_get_proximity(char Sensor)  B  197 :
+      \brief Get proximity value of one IR sensor  B  198 :
+      \param char Front, FrontLeft, FrontRight, Left, Right, Rear, GroundLeft, GroundRight  B  199 :
+      \retval unsigned_char Proximity Value (0 when nothing)  B  200 :
+*/  B  201 :
+////////////////////////////////////////////////////////////////////////////////  B  202 :
+unsigned char hemisson_get_proximity(char Sensor)  B  203 :f428V173
+{  B  204 :{972
+   	return __IR_Proximity[Sensor];  B  205 :
+}  B  206 :}974
+  B  207 :
+////////////////////////////////////////////////////////////////////////////////  B  208 :
+/*!   \fn unsigned char hemisson_get_brightness(char Sensor)  B  209 :
+      \brief Get brightness value of one IR sensor  B  210 :
+      \param char Front, FrontLeft, FrontRight, Left, Right, Rear, GroundLeft, GroundRight  B  211 :
+      \retval unsigned_char Brightness Value (0 when lot of light)  B  212 :
+*/  B  213 :
+////////////////////////////////////////////////////////////////////////////////  B  214 :
+unsigned char hemisson_get_brightness(char Sensor)  B  215 :f430V175
+{  B  216 :{976
+   	return __IR_Light[Sensor];  B  217 :
+}  B  218 :}978
+  B  219 :
+////////////////////////////////////////////////////////////////////////////////  B  220 :
+/*!   \fn int1 hemisson_get_switch_state(char Switch_Number)  B  221 :
+      \brief Get Switch State  B  222 :
+      \param char Number of the switch (0,1,2 or 3)  B  223 :
+      \retval int1 Position of the switch (0 or 1)  B  224 :
+*/  B  225 :
+////////////////////////////////////////////////////////////////////////////////  B  226 :
+int1 hemisson_get_switch_state(char Switch_Number)  B  227 :f431V177
+{  B  228 :{980
+   	return __Switchs[Switch_Number];  B  229 :
+}  B  230 :}982
+  B  231 :
+////////////////////////////////////////////////////////////////////////////////  B  232 :
+/*!   \fn char hemisson_get_tv_data(void)  B  233 :
+      \brief Get latest data from the TV remote receiver  B  234 :
+      \param None  B  235 :
+      \retval char Byte that have been received  B  236 :
+*/  B  237 :
+////////////////////////////////////////////////////////////////////////////////  B  238 :
+char hemisson_get_tv_data(void)  B  239 :f433
+{  B  240 :{984
+   	return __TV_DATA;  B  241 :
+}  B  242 :}986
+  B  243 :
+////////////////////////////////////////////////////////////////////////////////  B  244 :
+/*!   \fn void hemisson_set_speed(signed int8 Left, signed int8 Right)  B  245 :
+      \brief Set speed of each motor  B  246 :
+      \param signed_int8 Speed of motor (from -9 to 9, 0 = Stop)  B  247 :
+      \retval None  B  248 :
+*/  B  249 :
+////////////////////////////////////////////////////////////////////////////////  B  250 :
+void hemisson_set_speed(signed int8 LeftSpeed,signed int8 RightSpeed)  B  251 :f434V180V181
+{  B  252 :{988
+   	__PwmMotLeft = LeftSpeed;  B  253 :
+   	__PwmMotRight = RightSpeed;  B  254 :
+}  B  255 :}990
+  B  256 :
+////////////////////////////////////////////////////////////////////////////////  B  257 :
+/*!   \fn void hemisson_beep(int1 State)  B  258 :
+      \brief Set the buzzer State  B  259 :
+      \param int1 State (0=Off,1=On)  B  260 :
+      \retval None  B  261 :
+*/  B  262 :
+////////////////////////////////////////////////////////////////////////////////  B  263 :
+void hemisson_beep(int1 State)  B  264 :f437V183
+{  B  265 :{992
+   	output_bit(PIN_D4,State);  B  266 :
+}  B  267 :}997
+  B  268 :
+////////////////////////////////////////////////////////////////////////////////  B  269 :
+/*!   \fn void hemisson_led_frontleft(int1 State)  B  270 :
+      \brief Set the FrontLeft Led State  B  271 :
+      \param int1 State (0=Off,1=On)  B  272 :
+      \retval None  B  273 :
+*/  B  274 :
+////////////////////////////////////////////////////////////////////////////////  B  275 :
+void hemisson_led_frontleft(int1 State)  B  276 :f439V185
+{  B  277 :{999
+   	output_bit(PIN_D6,State);  B  278 :
+}  B  279 :}1004
+  B  280 :
+////////////////////////////////////////////////////////////////////////////////  B  281 :
+/*!   \fn void hemisson_led_frontright(int1 State)  B  282 :
+      \brief Set the FrontRight Led State  B  283 :
+      \param int1 State (0=Off,1=On)  B  284 :
+      \retval None  B  285 :
+*/  B  286 :
+////////////////////////////////////////////////////////////////////////////////  B  287 :
+void hemisson_led_frontright(int1 State)  B  288 :f440V187
+{  B  289 :{1006
+   	output_bit(PIN_A4,!State);  B  290 :
+}  B  291 :}1011
+  B  292 :
+////////////////////////////////////////////////////////////////////////////////  B  293 :
+/*!   \fn void hemisson_led_pgmexec(int1 State)  B  294 :
+      \brief Set the PgmExec Led State  B  295 :
+      \param int1 State (0=Off,1=On)  B  296 :
+      \retval None  B  297 :
+*/  B  298 :
+////////////////////////////////////////////////////////////////////////////////  B  299 :
+void hemisson_led_pgmexec(int1 State)  B  300 :f441V189
+{  B  301 :{1013
+   	output_bit(PIN_D5,State);  B  302 :
+}  B  303 :}1018
+  B  304 :
+////////////////////////////////////////////////////////////////////////////////  B  305 :
+/*!   \fn void hemisson_led_onoff(int1 State)  B  306 :
+      \brief Set the OnOff Led State  B  307 :
+      \param int1 State (0=Off,1=On)  B  308 :
+      \retval None  B  309 :
+      \warning This Led is controlled in background by the Scheduler  B  310 :
+*/  B  311 :
+////////////////////////////////////////////////////////////////////////////////  B  312 :
+void hemisson_led_onoff(int1 State)  B  313 :f442V191
+{  B  314 :{1020
+   	output_bit(PIN_D7,State);  B  315 :
+}  B  316 :}1025
+  B  317 :
+////////////////////////////////////////////////////////////////////////////////  B  318 :
+/*!   \fn void hemisson_manual_refresh_sensors(char Zone)  B  319 :
+      \brief Manualy refresh a zone  B  320 :
+      \param char Zone (FrontZone,GroundZone,RearZone)  B  321 :
+      \retval None  B  322 :
+*/  B  323 :
+////////////////////////////////////////////////////////////////////////////////  B  324 :
+void hemisson_manual_refresh_sensors(char Zone)  B  325 :f443V193
+{  B  326 :{1027
+   	__hemisson_refresh_sensors(Zone);  B  327 :
+}  B  328 :}1029
+/*@}*/  B  329 :
+  B  330 :
+/**  B  331 :
+   * \defgroup Time_Functions  B  332 :
+   */  B  333 :
+/*@{*/  B  334 :
+////////////////////////////////////////////////////////////////////////////////  B  335 :
+/*!   \fn void hemisson_delay_s(int Delay)  B  336 :
+      \brief This function stop program execution (but not the interrupts) during the defined time in second  B  337 :
+      \param Delay 1 to 255  B  338 :
+      \retval None  B  339 :
+*/  B  340 :
+////////////////////////////////////////////////////////////////////////////////  B  341 :
+void hemisson_delay_s(int Delay)  B  342 :f444V195
+{  B  343 :{1031
+   	int i;  B  344 :V196
+   	for(i = 0; i< Delay; i++)  B  345 :
+   	{  B  346 :
+		delay_ms(1000);  B  347 :{1039
+   	}  B  348 :}1041
+}  B  349 :}1042
+  B  350 :
+////////////////////////////////////////////////////////////////////////////////  B  351 :
+/*!   \fn void hemisson_delay_ms(int Delay)  B  352 :
+      \brief This function stop program execution (but not the interrupts) during the defined time in millisecond  B  353 :
+      \param Delay 1 to 255  B  354 :
+      \retval None  B  355 :
+*/  B  356 :
+////////////////////////////////////////////////////////////////////////////////  B  357 :
+void hemisson_delay_ms(int Delay)  B  358 :f447V198
+{  B  359 :{1044
+	delay_ms(Delay);  B  360 :
+}  B  361 :}1046
+  B  362 :
+////////////////////////////////////////////////////////////////////////////////  B  363 :
+/*!   \fn void hemisson_delay_us(int Delay)  B  364 :
+      \brief This function stop program execution (but not the interrupts) during the defined time in microsecond  B  365 :
+      \param Delay 1 to 255  B  366 :
+      \retval None  B  367 :
+*/  B  368 :
+////////////////////////////////////////////////////////////////////////////////  B  369 :
+void hemisson_delay_us(int Delay)  B  370 :f448V200
+{  B  371 :{1048
+	delay_us(Delay);  B  372 :
+}  B  373 :}1050
+  B  374 :
+////////////////////////////////////////////////////////////////////////////////  B  375 :
+/*!   \fn unsigned int32 hemisson_get_time(void)  B  376 :
+      \brief This function return a 32 bits value which is increased every ms  B  377 :
+      \param None  B  378 :
+      \retval unsigned int32 time value  B  379 :
+*/  B  380 :
+////////////////////////////////////////////////////////////////////////////////  B  381 :
+unsigned int32 hemisson_get_time(void)  B  382 :f449
+{  B  383 :{1052
+	return __TimeTip;  B  384 :
+}  B  385 :}1054
+  B  386 :
+////////////////////////////////////////////////////////////////////////////////  B  387 :
+/*!   \fn void hemisson_set_time(unsigned int32 time)  B  388 :
+      \brief This function allow user to set the current time value  B  389 :
+      \param unsigned int32 time  B  390 :
+      \retval None  B  391 :
+*/  B  392 :
+////////////////////////////////////////////////////////////////////////////////  B  393 :
+void hemisson_set_time(unsigned int32 Time)  B  394 :f450V203
+{  B  395 :{1056
+	__TimeTip = Time;  B  396 :
+}  B  397 :}1058
+  B  398 :
+/*@}*/  B  399 :
+  B  400 :
+  B  401 :
+/**  B  402 :
+   * \defgroup External_Access  B  403 :
+   */  B  404 :
+/*@{*/  B  405 :
+// External Access  B  406 :
+////////////////////////////////////////////////////////////////////////////////  B  407 :
+/*!   \fn int1 hemisson_ext_read_PINB0(void)  B  408 :
+      \brief Read input PORTB.0  B  409 :
+      \param None  B  410 :
+      \retval int1 input value (0 or 1)  B  411 :
+*/  B  412 :
+////////////////////////////////////////////////////////////////////////////////  B  413 :
+int1 hemisson_ext_read_PINB0(void)  B  414 :f452
+{	  B  415 :{1060
+	set_tris_b(TRISB|0x01);	  B  416 :
+	return input(PIN_B0);  B  417 :
+}  B  418 :}1064
+////////////////////////////////////////////////////////////////////////////////  B  419 :
+/*!   \fn int1 hemisson_ext_read_PINB6(void)  B  420 :
+      \brief Read input PORTB.6  B  421 :
+      \param None  B  422 :
+      \retval int1 input value (0 or 1)  B  423 :
+*/  B  424 :
+////////////////////////////////////////////////////////////////////////////////  B  425 :
+int1 hemisson_ext_read_PINB6(void)  B  426 :f453
+{  B  427 :{1066
+	set_tris_b(TRISB|0x40);  B  428 :
+	return input(PIN_B6);  B  429 :
+}  B  430 :}1070
+////////////////////////////////////////////////////////////////////////////////  B  431 :
+/*!   \fn int1 hemisson_ext_read_PINB7(void)  B  432 :
+      \brief Read input PORTB.7  B  433 :
+      \param None  B  434 :
+      \retval int1 input value (0 or 1)  B  435 :
+*/  B  436 :
+////////////////////////////////////////////////////////////////////////////////  B  437 :
+int1 hemisson_ext_read_PINB7(void)  B  438 :f454
+{  B  439 :{1072
+	set_tris_b(TRISB|0x80);  B  440 :
+	return input(PIN_B7);  B  441 :
+}  B  442 :}1076
+////////////////////////////////////////////////////////////////////////////////  B  443 :
+/*!   \fn void hemisson_ext_write_PINB0(int1 Bit)  B  444 :
+      \brief Write output PORTB.0  B  445 :
+      \param int1 Value to write (0 or 1)  B  446 :
+      \retval None  B  447 :
+*/  B  448 :
+////////////////////////////////////////////////////////////////////////////////  B  449 :
+void hemisson_ext_write_PINB0(int1 Bit)  B  450 :f455V208
+{  B  451 :{1078
+	set_tris_b(TRISB & 0xFE);  B  452 :
+	output_bit(PIN_B0,bit);  B  453 :
+}  B  454 :}1083
+////////////////////////////////////////////////////////////////////////////////  B  455 :
+/*!   \fn void hemisson_ext_write_PINB6(int1 Bit)  B  456 :
+      \brief Write output PORTB.6  B  457 :
+      \param int1 Value to write (0 or 1)  B  458 :
+      \retval None  B  459 :
+*/  B  460 :
+////////////////////////////////////////////////////////////////////////////////  B  461 :
+void hemisson_ext_write_PINB6(int1 Bit)  B  462 :f456V210
+{  B  463 :{1085
+	set_tris_b(TRISB & 0xBF);  B  464 :
+	output_bit(PIN_B6,bit);  B  465 :
+}  B  466 :}1090
+////////////////////////////////////////////////////////////////////////////////  B  467 :
+/*!   \fn void hemisson_ext_write_PINB7(int1 Bit)  B  468 :
+      \brief Write output PORTB.7  B  469 :
+      \param int1 Value to write (0 or 1)  B  470 :
+      \retval None  B  471 :
+*/  B  472 :
+////////////////////////////////////////////////////////////////////////////////  B  473 :
+void hemisson_ext_write_PINB7(int1 Bit)  B  474 :f457V212
+{  B  475 :{1092
+	set_tris_b(TRISB & 0x7F);  B  476 :
+	output_bit(PIN_B7,bit);  B  477 :
+}  B  478 :}1097
+/*@}*/  B  479 :
+  B  480 :
+  B  481 :
+  B  482 :
+  B  483 :E
+ B  483 :
+  A   35 :
+// Add your variables here  A   36 :
+// ...  A   37 :
+  A   38 :
+  A   39 :
+void main()  A   40 :f458
+{  A   41 :{1099
+  A   42 :
+   hemisson_init();        // Start Hemisson Initialisation  A   43 :
+  A   44 :
+   while(1)  A   45 :
+   {  A   46 :
+      // Add your Code here  A   47 :
+   }  A   48 :{1104}1105
+  A   49 :
+}  A   50 :}1106
+  A   51 :E
+ A   51 :
+

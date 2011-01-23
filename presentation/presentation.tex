@@ -295,18 +295,22 @@ In more general environments no bound is possible.
     \end{columns}
 }
 
-\frame{\frametitle{Geometric maps: Street polygons}
+\frame{\frametitle{Geometric maps: exploring occupancy}
     \begin{columns}[c]
     \column{5cm}
-    \begin{itemize}
-        \item Kleinberg developed an algorithm that finds the ``\em optimal \em $L_1$ ''
-        shortest path from $S$ to $T$. 
-        \item Datta, Icking and Klein developed an algorithm applicable to a
-        generalisation of the street, the ``G-street''.
-    \end{itemize}
+        Exploring for occupancy. Has limitations:
+        \begin{itemize}
+            \item difficult to know if all space explored;
+            \item can't describe complex open spaces;
+            \item external operator decides on next location.
+        \end{itemize}
     \column{5cm}
-        \includegraphics[width=5cm]{streetpolygon.png}
+        \includegraphics[width=4cm]{occupancy.png}
     \end{columns}
+}
+
+\frame{\frametitle{Geometric maps: Spiral search}
+    Used to search for object whose location is unknown.
 }
 
 \section{Topological Maps}

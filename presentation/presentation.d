@@ -145,6 +145,9 @@ presentation.pdf presentation._graphics: $$(call graphics-target,streetpolygon.p
 -include streetpolygon.png.gpi.d
 presentation.d: $$(call graphics-source,streetpolygon.png)
 presentation.pdf presentation._graphics: $$(call graphics-target,streetpolygon.png)
+-include occupancy.png.gpi.d
+presentation.d: $$(call graphics-source,occupancy.png)
+presentation.pdf presentation._graphics: $$(call graphics-target,occupancy.png)
 -include topovsmetric.png.gpi.d
 presentation.d: $$(call graphics-source,topovsmetric.png)
 presentation.pdf presentation._graphics: $$(call graphics-target,topovsmetric.png)
