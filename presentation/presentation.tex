@@ -214,7 +214,7 @@ less constrained environment, by:
 \section{Topological Maps}
 
 \begin{frame}{Topolgical Maps}
- \textbf{Topological maps}: describes the environment as a graph that connectcs specific locations in the world and represents them as nodes(vertices).
+ \textbf{Topological maps}: describes the environment as a graph that connects specific locations in the world and represents them as nodes(vertices).
  \begin{itemize}
  	\item Because metric representations cost too much memory to maintain in the long run.
  	\item Easy to understand for humans.
@@ -226,20 +226,19 @@ less constrained environment, by:
 	\textbf{Landmarks and Edges}
 	\begin{itemize}
 		\item The nodes on the graphs are landmarks or features of the environment. 
-		\item The edges are paths between the different nodes.
+		\item The edges are paths between the landmarks.
+		\item Landmarks need to be unique to good landmarks.
 		\item Landmarks can be artificial or natural.(junctions, signs)
-	 	\item Landmarks can look the same so you need to make sure you dont use two or more nodes to represent the same landmark.
 	 	\item The graph can be extended by enumerating the edges incident to the node entered. Edge you traveled along is 0 and enumerate clockwise. This enumeration is local cause it depends on the edge the robot moved over.
- 		\item Landmarks need to be unique to good landmarks.
 	\end{itemize}	
 \end{frame}
 
 \begin{frame}{Marker Based Exploration}
 	\textbf{Marker Based Exploration}: can be used when no prior information about the environment available and there aren't enough unique landmarks.
- \begin{itemize} 	
+ \begin{itemize} 
  	\item The robot needs to have something to mark where it has already been.(spray paint, bread crumbs)
  	\item Here we choose marks which it can pick up, drop and recognize.
- 	\item Using marks to explore has an $O(N^{3})$. All nodes are on one straight line.
+ 	\item Using marks to explore has a $O(N^{3})$. They say.
  \end{itemize} 
 \end{frame} 
 
@@ -247,7 +246,7 @@ less constrained environment, by:
 	\begin{itemize}
 		\item Iteratively builds up the known graph by traveling along the incident edges of a node.
 		\item $v_{i}$ is the node where the robot is currently at. $v_{j}$ is the node where the robot is moving to. $E_{i,j}$ is the edge between the two nodes.
-		\item In the transition function r stands for move along the given edge.
+		\item In the transition function r stands is the edge number from the perspective of the last edge it came from.
 		\item Transition function need to follow these properties. If $(v_{i},E_{i,j},r) = v_{j} $ and $(v_{j},E_{i,j},s) = v_{k} $, then $v_{j},E_{i,j},-s) = v_{i}$\\ Moves are invertible and can be retraced.
 		\item $t \neq -s$ then $v_{j},E_{i,j},-s) = v_{i}$ and  $(v_{j},E_{i,k},s) = v_{j}$ are not valid. To avoid redundant and degenerate paths.
 		\item Subgraph S for explored edges and Nodes. U is the for unexplored sub graph.
@@ -265,8 +264,7 @@ less constrained environment, by:
 		\item Move along edge r.		
 		\item Each marker can be in 3 different states[pickup,putdown,null]
 		\item At each vertex the robot can see two things [present, not-present]
-		\item Robot can determine the relative positions of the edges by enumerating the edges. 
-		\item Entering the same vertex from a different edge gives two different orderings. The robot needs to make a global ordering. 		
+		\item Robot can determine the relative positions of the edges by enumerating the edges. So if a Robot enters the same vertex from a different edge gives two different orderings. The robot needs to make a global ordering.
 	\end{itemize}
 \end{frame}
 
@@ -294,7 +292,7 @@ less constrained environment, by:
 \begin{frame}{Multiple Robots in Practice}
 	\textbf{Problems}
 	\begin{itemize}
-		\item \textbf{Where are teh other robots?}: Rendezvous with other robots
+		\item \textbf{Where are the other robots?}: Rendezvous with other robots
 		\item \textbf{Partitioning}: Finding a good way to distribute the work amongst the robots.
 		\item \textbf{Multi-robot planning}: Prevent the trajectories of the robots to collide. 
 		\item \textbf{Merging the data from the indivual team members}: Need to be close proximity and Sensor fusion problems.
@@ -305,7 +303,7 @@ less constrained environment, by:
 	\textbf{Rendezvous}: Is a having two or more robots meet at an appointed place and time. 
 	\begin{itemize}
 		\item A rendezvous is needed for robots that can only communicate in close proximities, but may also be needed to exchange objects between robots.
-		\item When Multiple robots try to complete a task collaborotavely without prior knowledge. They need to to exchange information while they are still working at the task at hand.  
+		\item When Multiple robots try to complete a task collaboratavely without prior knowledge. They need to to exchange information while they are still working at the task at hand.  
 		\item	If they dont meet they cannot benefit from what others have already learned. 
 	\end{itemize}
 \end{frame}
@@ -329,11 +327,19 @@ less constrained environment, by:
 \end{frame}
 
 \begin{frame}{Exploration with Multiple robots}
-	\text{The basic idea of the algorithm}: Given Robots are only allowed to communicate when they are in the same node.
+	\textbf{The basic idea of the algorithm}: Given Robots are only allowed to communicate when they are in the same node.
 	\begin{itemize}
 		\item Split all the work between all the robots and have them explore their own part of the graph.
 		\ítem Plan rendezvous, to harmonize the information they got till then and make a single consistent representation of the environment they are in.
-		\item Redevide the work and repeat this till everything is known. 
+		\item Redivide the work and repeat this till everything is known. 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusion}
+	\begin{itemize}
+		\item Topological Maps are low cost  and still give a good representation of the environment
+		\item Marker Based exploration is nice to use when you want to make a good topological map.
+		\item Using multiple robots can make exploration faster and more robust, but needs coordination.
 	\end{itemize}
 \end{frame}
 
