@@ -316,14 +316,14 @@ In more general environments no bound is possible.
 \section{Topological Maps}
 
 
-\begin{frame}{Topolgical Maps}
+\frame{\frametitle{Topolgical Maps}
  \textbf{Topological maps}: describes the environment as a graph that connects specific locations in the world and represents them as nodes(vertices).
  \begin{itemize}
  	\item Because metric representations cost too much memory to maintain in the long run.
  	\item Easy to understand for humans.
  \end{itemize}
  \includegraphics[scale = .4]{topovsmetric.png}
-\end{frame}
+}
 
 \frame{\frametitle{The Graph}
 	\textbf{Landmarks and Edges}
@@ -431,22 +431,22 @@ In more general environments no bound is possible.
 	\end{itemize}	
 }
 
-\begin{frame}{Exploration with Multiple robots}
+\frame{\frametitle{Exploration with Multiple robots}
 	\textbf{The basic idea of the algorithm}: Given Robots are only allowed to communicate when they are in the same node.
 	\begin{itemize}
 		\item Split all the work between all the robots and have them explore their own part of the graph.
 		\ítem Plan rendezvous, to harmonize the information they got till then and make a single consistent representation of the environment they are in.
 		\item Redivide the work and repeat this till everything is known. 
 	\end{itemize}
-\end{frame}
+}
 
-\begin{frame}{Conclusion}
+\frame{\frametitle{Conclusion}
 	\begin{itemize}
 		\item Topological Maps are low cost  and still give a good representation of the environment
 		\item Marker Based exploration is nice to use when you want to make a good topological map.
 		\item Using multiple robots can make exploration faster and more robust, but needs coordination.
 	\end{itemize}
-\end{frame}
+}
 
 
 \frame{\frametitle{links}
