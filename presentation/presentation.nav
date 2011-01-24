@@ -60,11 +60,11 @@
 \headcommand {\beamer@framepages {27}{27}}
 \headcommand {\slideentry {2}{3}{7}{28/28}{Geometric maps}{0}}
 \headcommand {\beamer@framepages {28}{28}}
-\headcommand {\sectionentry {3}{Topological Maps}{29}{Topological Maps}{0}}
-\headcommand {\beamer@sectionpages {10}{28}}
-\headcommand {\beamer@subsectionpages {22}{28}}
-\headcommand {\slideentry {3}{0}{8}{29/29}{}{0}}
+\headcommand {\slideentry {2}{3}{8}{29/29}{Geometric maps}{0}}
 \headcommand {\beamer@framepages {29}{29}}
+\headcommand {\sectionentry {3}{Topological Maps}{30}{Topological Maps}{0}}
+\headcommand {\beamer@sectionpages {10}{29}}
+\headcommand {\beamer@subsectionpages {22}{29}}
 \headcommand {\slideentry {3}{0}{9}{30/30}{}{0}}
 \headcommand {\beamer@framepages {30}{30}}
 \headcommand {\slideentry {3}{0}{10}{31/31}{}{0}}
@@ -77,11 +77,11 @@
 \headcommand {\beamer@framepages {34}{34}}
 \headcommand {\slideentry {3}{0}{14}{35/35}{}{0}}
 \headcommand {\beamer@framepages {35}{35}}
-\headcommand {\sectionentry {4}{Multiple Robots}{36}{Multiple Robots}{0}}
-\headcommand {\beamer@sectionpages {29}{35}}
-\headcommand {\beamer@subsectionpages {29}{35}}
-\headcommand {\slideentry {4}{0}{15}{36/36}{}{0}}
+\headcommand {\slideentry {3}{0}{15}{36/36}{}{0}}
 \headcommand {\beamer@framepages {36}{36}}
+\headcommand {\sectionentry {4}{Multiple Robots}{37}{Multiple Robots}{0}}
+\headcommand {\beamer@sectionpages {30}{36}}
+\headcommand {\beamer@subsectionpages {30}{36}}
 \headcommand {\slideentry {4}{0}{16}{37/37}{}{0}}
 \headcommand {\beamer@framepages {37}{37}}
 \headcommand {\slideentry {4}{0}{17}{38/38}{}{0}}
@@ -94,8 +94,12 @@
 \headcommand {\beamer@framepages {41}{41}}
 \headcommand {\slideentry {4}{0}{21}{42/42}{}{0}}
 \headcommand {\beamer@framepages {42}{42}}
-\headcommand {\beamer@partpages {1}{42}}
-\headcommand {\beamer@subsectionpages {36}{42}}
-\headcommand {\beamer@sectionpages {36}{42}}
-\headcommand {\beamer@documentpages {42}}
-\headcommand {\def \inserttotalframenumber {40}}
+\headcommand {\slideentry {4}{0}{22}{43/43}{}{0}}
+\headcommand {\beamer@framepages {43}{43}}
+\headcommand {\slideentry {4}{0}{23}{44/44}{}{0}}
+\headcommand {\beamer@framepages {44}{44}}
+\headcommand {\beamer@partpages {1}{44}}
+\headcommand {\beamer@subsectionpages {37}{44}}
+\headcommand {\beamer@sectionpages {37}{44}}
+\headcommand {\beamer@documentpages {44}}
+\headcommand {\def \inserttotalframenumber {42}}

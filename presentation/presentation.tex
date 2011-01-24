@@ -318,11 +318,12 @@ In more general environments no bound is possible.
 
 \section{Topological Maps}
 
+
 \frame{\frametitle{Topolgical Maps}
- \textbf{Topological maps}: describes the environment as a graph that connectcs specific locations in the world and represents them as nodes(vertices).
+ \textbf{Topological maps}: describes the environment as a graph that connects specific locations in the world and represents them as nodes(vertices).
  \begin{itemize}
- 	\item Because metric representations cost too much memory to maintain in the long run.
- 	\item Easy to understand for humans.
+ 	\item Metric representations cost too much memory to maintain in the long run.
+ 	\item Easy for us to understand aswell.
  \end{itemize}
  \includegraphics[scale = .4]{topovsmetric.png}
 }
@@ -331,28 +332,28 @@ In more general environments no bound is possible.
 	\textbf{Landmarks and Edges}
 	\begin{itemize}
 		\item The nodes on the graphs are landmarks or features of the environment. 
-		\item The edges are paths between the different nodes.
-		\item Landmarks can be artificial or natural.(junctions, signs)
-	 	\item Landmarks can look the same so you need to make sure you dont use two or more nodes to represent the same landmark.
-	 	\item The graph can be extended by enumerating the edges incident to the node entered. Edge you traveled along is 0 and enumerate clockwise. This enumeration is local cause it depends on the edge the robot moved over.
- 		\item Landmarks need to be unique to good landmarks.
+		\item The edges are paths between the landmarks.
+		\item Landmarks need to be unique to be good landmarks.
+		\item Landmarks can be artificial or natural.
+	 	\item The graph can be extended by enumerating the edges incident to the node entered. 
 	\end{itemize}	
 }
 
 \frame{\frametitle{Marker Based Exploration}
 	\textbf{Marker Based Exploration}: can be used when no prior information about the environment available and there aren't enough unique landmarks.
- \begin{itemize} 	
+ \begin{itemize}
+ 	\item Iteratively builds up the known graph by traveling along the incident edges of a node. 
  	\item The robot needs to have something to mark where it has already been.(spray paint, bread crumbs)
- 	\item Here we choose marks which it can pick up, drop and recognize.
- 	\item Using marks to explore has an $O(N^{3})$. All nodes are on one straight line.
+ 	\item Here we choose marks which it can pick up, drop and recognize. 	
+ 	\item Using marks to explore has a $O(N^{3})$.
  \end{itemize} 
 } 
 
 \frame{\frametitle{Marker Based Exploration}	
-	\begin{itemize}
-		\item Iteratively builds up the known graph by traveling along the incident edges of a node.
+	\textbf{Conventions and Restrictions}
+	\begin{itemize}		
 		\item $v_{i}$ is the node where the robot is currently at. $v_{j}$ is the node where the robot is moving to. $E_{i,j}$ is the edge between the two nodes.
-		\item In the transition function r stands for move along the given edge.
+		\item In the transition function r stands is the edge number from the perspective of the last edge it came from.
 		\item Transition function need to follow these properties. If $(v_{i},E_{i,j},r) = v_{j} $ and $(v_{j},E_{i,j},s) = v_{k} $, then $v_{j},E_{i,j},-s) = v_{i}$\\ Moves are invertible and can be retraced.
 		\item $t \neq -s$ then $v_{j},E_{i,j},-s) = v_{i}$ and  $(v_{j},E_{i,k},s) = v_{j}$ are not valid. To avoid redundant and degenerate paths.
 		\item Subgraph S for explored edges and Nodes. U is the for unexplored sub graph.
@@ -361,6 +362,7 @@ In more general environments no bound is possible.
 
 \frame{\frametitle{Marker Based Exploration}
 	\textbf{Edge Ordering}: A correct graph.
+	Edge you traveled along is 0 and enumerate clockwise. This enumeration is local cause it depends on the edge the robot moved over.
 	\includegraphics[scale= 0.6]{edgeordering.png}
 }
 
@@ -370,16 +372,15 @@ In more general environments no bound is possible.
 		\item Move along edge r.		
 		\item Each marker can be in 3 different states[pickup,putdown,null]
 		\item At each vertex the robot can see two things [present, not-present]
-		\item Robot can determine the relative positions of the edges by enumerating the edges. 
-		\item Entering the same vertex from a different edge gives two different orderings. The robot needs to make a global ordering. 		
+		\item Robot must be able to order the edges each time it enters a node. So if a robot enters the same vertex from a different it can make a global ordering.
 	\end{itemize}
 }
 
 \frame{\frametitle{}
-	\textbf{Marker Based Exploration Example}
+	\textbf{Marker Based Exploration Algorithm and Example}
 	\begin{itemize}
-		\item First validate all explored nodes. So all nodes in graph S. Make sure there aren't any doubles by looking for markers.
-		\item	Explore new nodes. If there is no marker found at a certain node v add it the subgraph S and add the edge which was taken aswell.
+		\item First validate all known nodes. So all nodes in graph S. Make sure there aren't any doubles by looking for markers.
+		\item	Explore new nodes. If there is no marker found at a certain node v add it the subgraph S, add the edge which was taken aswell and drop a marker.
 		\item Enumerate all edges incident to the new node and add them to U. 
 		\item Do this till subgraph U is empty.
 	\end{itemize}
@@ -391,7 +392,7 @@ In more general environments no bound is possible.
 \frame{\frametitle{Multiple Robots}
 	\textbf{Why would you use multiple Robots}
 	\begin{itemize}
-		\item \textbf{Improved Robustness}: A multirobot can, in principle, keep functioning even if one indiviudual robots dail completely. 
+		\item \textbf{Improved Robustness}: A multirobot system can, in principle, keep functioning even if one indiviudual robots dail completely. 
 		\item \textbf{Improved effiency}: It is possible for a group of robots to accomplish a search or exploration task faster than an equivalent single robot.
 		\item \textbf{Alternative Algorithms}: For some tasks, the availability of multiple robots allows feadible or guaranteed algorithms to be implemented when no such algorithm is available for a single robot system. 
 	\end{itemize} 
@@ -400,7 +401,7 @@ In more general environments no bound is possible.
 \frame{\frametitle{Multiple Robots in Practice}
 	\textbf{Problems}
 	\begin{itemize}
-		\item \textbf{Where are teh other robots?}: Rendezvous with other robots
+		\item \textbf{Where are the other robots?}: Rendezvous with other robots
 		\item \textbf{Partitioning}: Finding a good way to distribute the work amongst the robots.
 		\item \textbf{Multi-robot planning}: Prevent the trajectories of the robots to collide. 
 		\item \textbf{Merging the data from the indivual team members}: Need to be close proximity and Sensor fusion problems.
@@ -411,13 +412,13 @@ In more general environments no bound is possible.
 	\textbf{Rendezvous}: Is a having two or more robots meet at an appointed place and time. 
 	\begin{itemize}
 		\item A rendezvous is needed for robots that can only communicate in close proximities, but may also be needed to exchange objects between robots.
-		\item When Multiple robots try to complete a task collaborotavely without prior knowledge. They need to to exchange information while they are still working at the task at hand.  
+		\item When Multiple robots try to complete a task collaboratavely without prior knowledge. They need to to exchange information while they are still working at the task at hand.  
 		\item	If they dont meet they cannot benefit from what others have already learned. 
 	\end{itemize}
 }
 
 \frame{\frametitle{Too many rendezvous}
-	\textbf{Problems}:Robots mustn't devote too much energy to rendezvous to stay efficient.
+	\textbf{Problems}: Robots mustn't devote too much energy to rendezvous to stay efficient.
 		\begin{itemize}			
 			\item The extent to which the two robots agree on their perceptions of the environment.
 			\item The degree of synchornization of the robots can attain expressed as the likelihood that an appointed rendezvous at a common location will fail owning to a failure to arrive at the same time
@@ -430,18 +431,27 @@ In more general environments no bound is possible.
 	\begin{itemize}
 		\item Complexity of the map-merging depends on the, Odemetry error, the fidelity of the sensing and the richness of the evironment.
 		\item Fusing maps is mostly done by cross correlation. This depends on the fact that the individual maps overlap "sufficiently`.
-		\item Done by rotation and translating the given maps to minimize the difference between them.
+		\item Cross correlation is done by rotation and translating the given maps till you minimized the difference between them.
 	\end{itemize}	
 }
 
 \frame{\frametitle{Exploration with Multiple robots}
-	\text{The basic idea of the algorithm}: Given Robots are only allowed to communicate when they are in the same node.
+	\textbf{The basic idea of the algorithm}: Given Robots are only allowed to communicate when they are in the same node.
 	\begin{itemize}
 		\item Split all the work between all the robots and have them explore their own part of the graph.
-		\item Plan rendezvous, to harmonize the information they got till then and make a single consistent representation of the environment they are in.
-		\item Redevide the work and repeat this till everything is known. 
+		\ítem Plan rendezvous, to harmonize the information they got till then and make a single consistent representation of the environment they are in.
+		\item Redivide the work and repeat this till everything is known. 
 	\end{itemize}
 }
+
+\frame{\frametitle{Conclusion}
+	\begin{itemize}
+		\item Topological Maps are low cost, but still give a decent representation of the environment.
+		\item Marker Based exploration is nice to use when you want to make a good topological map.
+		\item Using multiple robots can make exploration faster and more robust, but needs coordination.
+	\end{itemize}
+}
+
 
 \frame{\frametitle{links}
 	\url{http://www.csupomona.edu/~ftang/courses/CS499/notes/navigation3.pdf }
