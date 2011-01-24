@@ -323,14 +323,14 @@ In more general environments no bound is possible.
  	\item Easy to understand for humans.
  \end{itemize}
  \includegraphics[scale = .4]{topovsmetric.png}
-}
+\end{frame}
 
 \frame{\frametitle{The Graph}
 	\textbf{Landmarks and Edges}
 	\begin{itemize}
 		\item The nodes on the graphs are landmarks or features of the environment. 
 		\item The edges are paths between the landmarks.
-		\item Landmarks need to be unique to good landmarks.
+		\item Landmarks need to be unique to be good landmarks.
 		\item Landmarks can be artificial or natural.(junctions, signs)
 	 	\item The graph can be extended by enumerating the edges incident to the node entered. Edge you traveled along is 0 and enumerate clockwise. This enumeration is local cause it depends on the edge the robot moved over.
 	\end{itemize}	
@@ -367,7 +367,7 @@ In more general environments no bound is possible.
 		\item Move along edge r.		
 		\item Each marker can be in 3 different states[pickup,putdown,null]
 		\item At each vertex the robot can see two things [present, not-present]
-		\item Robot can determine the relative positions of the edges by enumerating the edges. So if a Robot enters the same vertex from a different edge gives two different orderings. The robot needs to make a global ordering.
+		\item Robot must be able to order the edges each time it enters a node. So if a robot enters the same vertex from a different it can make a global ordering.
 	\end{itemize}
 }
 
