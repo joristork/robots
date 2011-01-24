@@ -341,13 +341,14 @@ In more general environments no bound is possible.
  \begin{itemize} 
  	\item The robot needs to have something to mark where it has already been.(spray paint, bread crumbs)
  	\item Here we choose marks which it can pick up, drop and recognize.
+ 	\item Iteratively builds up the known graph by traveling along the incident edges of a node.
  	\item Using marks to explore has a $O(N^{3})$. They say.
  \end{itemize} 
 } 
 
 \frame{\frametitle{Marker Based Exploration}	
-	\begin{itemize}
-		\item Iteratively builds up the known graph by traveling along the incident edges of a node.
+	\textbf{Conventions and Restrictions}
+	\begin{itemize}		
 		\item $v_{i}$ is the node where the robot is currently at. $v_{j}$ is the node where the robot is moving to. $E_{i,j}$ is the edge between the two nodes.
 		\item In the transition function r stands is the edge number from the perspective of the last edge it came from.
 		\item Transition function need to follow these properties. If $(v_{i},E_{i,j},r) = v_{j} $ and $(v_{j},E_{i,j},s) = v_{k} $, then $v_{j},E_{i,j},-s) = v_{i}$\\ Moves are invertible and can be retraced.
@@ -372,7 +373,7 @@ In more general environments no bound is possible.
 }
 
 \frame{\frametitle{}
-	\textbf{Marker Based Exploration Example}
+	\textbf{Marker Based Exploration Algorithm and Example}
 	\begin{itemize}
 		\item First validate all explored nodes. So all nodes in graph S. Make sure there aren't any doubles by looking for markers.
 		\item	Explore new nodes. If there is no marker found at a certain node v add it the subgraph S and add the edge which was taken aswell.

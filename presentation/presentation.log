@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (MiKTeX 2.9) (preloaded format=pdflatex 2011.1.8)  24 JAN 2011 05:58
+This is pdfTeX, Version 3.1415926-1.40.11 (MiKTeX 2.9) (preloaded format=pdflatex 2011.1.8)  24 JAN 2011 06:09
 entering extended mode
 **D:/school/Robotica/presentation/presentation.tex
 (D:/school/Robotica/presentation/presentation.tex
@@ -908,12 +908,12 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 29.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-<blueprint.png, id=117, 803.0pt x 508.90125pt>
+<blueprint.png, id=125, 803.0pt x 508.90125pt>
 File: blueprint.png Graphic file (type png)
  <use blueprint.png> [3
 
  <D:/school/Robotica/presentation/blueprint.png (PNG copy)>]
-<google_pizzas.png, id=154, 240.9pt x 184.5294pt>
+<google_pizzas.png, id=162, 240.9pt x 184.5294pt>
 File: google_pizzas.png Graphic file (type png)
  <use google_pizzas.png>
 [4
@@ -921,12 +921,12 @@ File: google_pizzas.png Graphic file (type png)
  <D:/school/Robotica/presentation/google_pizzas.png (PNG copy)>] [5
 
 ]
-<metric.png, id=221, 174.6525pt x 141.8901pt>
+<metric.png, id=229, 174.6525pt x 141.8901pt>
 File: metric.png Graphic file (type png)
  <use metric.png> [6
 
  <D:/school/Robotica/presentation/metric.png (PNG copy)>]
-<topological.png, id=255, 627.34375pt x 617.30624pt>
+<topological.png, id=263, 627.34375pt x 617.30624pt>
 File: topological.png Graphic file (type png)
  <use topological.png>
 [7
@@ -946,7 +946,7 @@ File: topological.png Graphic file (type png)
 
 ] [14
 
-] <voxels.png, id=526, 242.9075pt x 195.73125pt>
+] <voxels.png, id=534, 242.9075pt x 195.73125pt>
 File: voxels.png Graphic file (type png)
  <use voxels.png>
 [15
@@ -973,7 +973,7 @@ File: voxels.png Graphic file (type png)
 ] [25
 
 ]
-<streetpolygon.png, id=891, 165.9801pt x 157.3077pt>
+<streetpolygon.png, id=899, 165.9801pt x 157.3077pt>
 File: streetpolygon.png Graphic file (type png)
  <use streetpolygon.png>
 [26
@@ -1004,7 +1004,7 @@ If that doesn't work, type  X <return>  to quit.
 
 ] [29
 
-] <topovsmetric.png, id=1024, 575.90157pt x 353.82187pt>
+] <topovsmetric.png, id=1031, 575.90157pt x 353.82187pt>
 File: topovsmetric.png Graphic file (type png)
 
 <use topovsmetric.png> [30
@@ -1016,7 +1016,7 @@ File: topovsmetric.png Graphic file (type png)
 ] [33
 
 ]
-<edgeordering.png, id=1161, 403.5075pt x 251.43938pt>
+<edgeordering.png, id=1168, 403.5075pt x 251.43938pt>
 File: edgeordering.png Graphic file (type png)
  <use edgeordering.png>
 [34
@@ -1024,7 +1024,7 @@ File: edgeordering.png Graphic file (type png)
  <D:/school/Robotica/presentation/edgeordering.png (PNG copy)>] [35
 
 ]
-<voorbeeld.png, id=1226, 825.83531pt x 362.10281pt>
+<voorbeeld.png, id=1234, 825.83531pt x 362.10281pt>
 File: voorbeeld.png Graphic file (type png)
  <use voorbeeld.png>
 [36
@@ -1044,7 +1044,7 @@ File: voorbeeld.png Graphic file (type png)
 ! Undefined control sequence.
 \beamer@doifinframe ...r own part of the graph. \í
                                                   tem Plan rendezvous, to ha...
-l.440 \end{frame}
+l.441 \end{frame}
                  
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1062,29 +1062,23 @@ and I'll forget about whatever was undefined.
 \tf@nav=\write6
 \tf@toc=\write7
 \tf@snm=\write8
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 457.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 457.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 458.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 458.
  (D:\school\Robotica\presentation\presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 457.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 458.
+Package rerunfilecheck Info: File `presentation.out' has not changed.
+(rerunfilecheck)             Checksum: 797C184364A57C36F34A0D476BB51B50;423.
 
-
-Package rerunfilecheck Warning: File `presentation.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `presentation.out':
-(rerunfilecheck)             Before: 031F4F315574575095089781119BA8F8;320
-(rerunfilecheck)             After:  797C184364A57C36F34A0D476BB51B50;423.
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
  ) 
 Here is how much of TeX's memory you used:
- 15480 strings out of 494019
- 292848 string characters out of 3143892
- 360649 words of memory out of 3000000
- 18264 multiletter control sequences out of 15000+200000
+ 15486 strings out of 494019
+ 292908 string characters out of 3143892
+ 359649 words of memory out of 3000000
+ 18270 multiletter control sequences out of 15000+200000
  12021 words of font info for 45 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  49i,15n,61p,455b,659s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1101,9 +1095,9 @@ es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files
  (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files (
 x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Program File
 s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam7.pfb>
-Output written on presentation.pdf (44 pages, 2504232 bytes).
+Output written on presentation.pdf (44 pages, 2504908 bytes).
 PDF statistics:
- 1593 PDF objects out of 1728 (max. 8388607)
+ 1599 PDF objects out of 1728 (max. 8388607)
  96 named destinations out of 1000 (max. 500000)
- 124 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 140 words of extra memory for PDF output out of 10000 (max. 10000000)
 
