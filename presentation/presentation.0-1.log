@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010/MacPorts 2010_1) (format=pdflatex 2011.1.20)  23 JAN 2011 23:46
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010/MacPorts 2010_1) (format=pdflatex 2011.1.20)  24 JAN 2011 09:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -845,38 +845,37 @@ File: streetpolygon.png Graphic file (type png)
 File: streetpolygon.png Graphic file (type png)
 <use streetpolygon.png> [27
 
-] <occupancy.png, id=974, 169.8345pt x 371.2269pt>
+] <occupancy.png, id=975, 169.8345pt x 371.2269pt>
 File: occupancy.png Graphic file (type png)
 <use occupancy.png>
-Overfull \vbox (3.50424pt too high) detected at line 305
+Overfull \vbox (3.50424pt too high) detected at line 310
  []
 
 [28
 
- <./occupancy.png (PNG copy)>] <topovsmetric.png, id=1008, 575.90157pt x 353.82
-187pt>
+ <./occupancy.png (PNG copy)>] [29
+
+] <topovsmetric.png, id=1041, 575.90157pt x 353.82187pt>
 File: topovsmetric.png Graphic file (type png)
-<use topovsmetric.png> [29
+<use topovsmetric.png> [30
 
- <./topovsmetric.png (PNG copy)>] [30
-
-] [31
+ <./topovsmetric.png (PNG copy)>] [31
 
 ] [32
 
-] <edgeordering.png, id=1146, 403.5075pt x 251.43938pt>
+] [33
+
+] <edgeordering.png, id=1179, 403.5075pt x 251.43938pt>
 File: edgeordering.png Graphic file (type png)
-<use edgeordering.png> [33
+<use edgeordering.png> [34
 
- <./edgeordering.png (PNG copy)>] [34
+ <./edgeordering.png (PNG copy)>] [35
 
-] <voorbeeld.png, id=1213, 825.83531pt x 362.10281pt>
+] <voorbeeld.png, id=1246, 825.83531pt x 362.10281pt>
 File: voorbeeld.png Graphic file (type png)
-<use voorbeeld.png> [35
+<use voorbeeld.png> [36
 
- <./voorbeeld.png>] [36
-
-] [37
+ <./voorbeeld.png>] [37
 
 ] [38
 
@@ -888,6 +887,10 @@ File: voorbeeld.png Graphic file (type png)
 
 ] [42
 
+] [43
+
+] [44
+
 ]
 \tf@nav=\write6
 \openout6 = `presentation.nav'.
@@ -898,10 +901,10 @@ File: voorbeeld.png Graphic file (type png)
 \tf@snm=\write8
 \openout8 = `presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 440.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 440.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 462.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 462.
 (./presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 440.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 462.
 Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: 2A93F46D9132E33D817491403CE6C80F;416.
 
@@ -910,10 +913,10 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 15424 strings out of 494770
- 290787 string characters out of 3171403
- 356655 words of memory out of 3000000
- 18138 multiletter control sequences out of 15000+200000
+ 15432 strings out of 494770
+ 290861 string characters out of 3171403
+ 355655 words of memory out of 3000000
+ 18142 multiletter control sequences out of 15000+200000
  12021 words of font info for 45 fonts, out of 3000000 for 9000
  134 hyphenation exceptions out of 8191
  49i,15n,61p,422b,659s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -931,10 +934,10 @@ fb></opt/local/share/texmf-texlive-dist/fonts/type1/public/amsfonts/cm/cmtt10.p
 fb></opt/local/share/texmf-texlive-dist/fonts/type1/public/amsfonts/symbols/msa
 m10.pfb></opt/local/share/texmf-texlive-dist/fonts/type1/public/amsfonts/symbol
 s/msam7.pfb>
-Output written on presentation.pdf (42 pages, 2309471 bytes).
+Output written on presentation.pdf (44 pages, 2314751 bytes).
 PDF statistics:
- 1549 PDF objects out of 1728 (max. 8388607)
- 1460 compressed objects within 15 object streams
- 92 named destinations out of 1000 (max. 500000)
+ 1617 PDF objects out of 1728 (max. 8388607)
+ 1525 compressed objects within 16 object streams
+ 96 named destinations out of 1000 (max. 500000)
  145 words of extra memory for PDF output out of 10000 (max. 10000000)
 
