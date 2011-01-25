@@ -1,0 +1,43 @@
+IR sensors
+
+1st sensor
+R A0
+JP2: 2
+
+
+2nd sensor
+R A1
+JP2: 4
+
+3rd sensor
+R A1
+JP2: 6
+
+Motors
+
+1st motor
+RD0
+RC0 = RC0
+JP2: 18
+
+2nd motor
+RD1
+RC1 = RC1
+JP2: 20
+
+3rd motor
+RD2
+PWM = RC2
+JP2: 22
+
+LEDs
+
+Green
+RB3
+
+Yellow
+RB2
+
+Red
+RB1
+
