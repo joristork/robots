@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (MiKTeX 2.9) (preloaded format=pdflatex 2011.1.8)  24 JAN 2011 08:07
+This is pdfTeX, Version 3.1415926-1.40.11 (MiKTeX 2.9) (preloaded format=pdflatex 2011.1.8)  24 JAN 2011 08:31
 entering extended mode
 **D:/school/Robotica/presentation/presentation.tex
 (D:/school/Robotica/presentation/presentation.tex
@@ -1077,7 +1077,7 @@ LaTeX Font Warning: Size substitutions with differences
 Here is how much of TeX's memory you used:
  15486 strings out of 494019
  292908 string characters out of 3143892
- 359649 words of memory out of 3000000
+ 359650 words of memory out of 3000000
  18270 multiletter control sequences out of 15000+200000
  12021 words of font info for 45 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
@@ -1095,7 +1095,7 @@ es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files
  (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files (
 x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Program File
 s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam7.pfb>
-Output written on presentation.pdf (44 pages, 2504970 bytes).
+Output written on presentation.pdf (44 pages, 2504966 bytes).
 PDF statistics:
  1599 PDF objects out of 1728 (max. 8388607)
  96 named destinations out of 1000 (max. 500000)
