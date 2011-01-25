@@ -1,0 +1,171 @@
+CCS PCH C Compiler, Version 3.092, 15075
+
+               Filename: ex_led.LST
+
+               ROM used: 88 (1%)
+                         Largest free fragment is 16296
+               RAM used: 7 (0%) at main() level
+                         11 (1%) worst case
+               Stack:    2 locations
+
+*
+0000:  GOTO   0042
+....................  /////////////////////////////////////////////////////////////////////////  
+.................... ////                           EX_LED.C                              ////  
+.................... ////                                                                 ////  
+.................... ////  This program shows how to drive a two digit LED using input    ////  
+.................... ////  from an RS-232 port.                                           ////  
+.................... ////                                                                 ////  
+.................... ////  Configure the CCS prototype card as follows:                   ////  
+.................... ////     LED seg f    Pin 47 (B0)                                    ////  
+.................... ////     LED seg a    Pin 48 (B1)                                    ////  
+.................... ////     LED seg e    Pin 49 (B2)                                    ////  
+.................... ////     LED seg c    Pin 50 (B3)                                    ////  
+.................... ////     LED seg dp   Pin 51 (B4)                                    ////  
+.................... ////     LED seg d    Pin 52 (B5)                                    ////  
+.................... ////     LED seg b    Pin 53 (B6)                                    ////  
+.................... ////     LED seg g    Pin 54 (B7)                                    ////  
+.................... ////     LED Anode 1  Pin 16 (A0)                                    ////  
+.................... ////     LED Anode 2  Pin 15 (A1)                                    ////  
+.................... ////     See additional connections below.                           ////  
+.................... ////                                                                 ////  
+.................... ////  This example will work with the PCB, PCM and PCH compilers.    ////  
+.................... ////  The following conditional compilation lines are used to        ////  
+.................... ////  include a valid device for each compiler.  Change the device,  ////  
+.................... ////  clock and RS232 pins for your hardware if needed.              ////  
+.................... /////////////////////////////////////////////////////////////////////////  
+.................... ////        (C) Copyright 1996,2001 Custom Computer Services         ////  
+.................... //// This source code may only be used by licensed users of the CCS  ////  
+.................... //// C compiler.  This source code may only be distributed to other  ////  
+.................... //// licensed users of the CCS C compiler.  No other use,            ////  
+.................... //// reproduction or distribution is permitted without written       ////  
+.................... //// permission.  Derivative programs created using this software    ////  
+.................... //// in object code form are not restricted in any way.              ////  
+.................... /////////////////////////////////////////////////////////////////////////  
+....................   
+....................   
+....................   
+....................   
+.................... #if defined(__PCH__)  
+.................... #include "C:\pch\Devices\18f452.h" 
+....................  //////// Standard Header file for the PIC18F452 device ////////////////  
+.................... #device PIC18F452  
+.................... #list  
+....................  
+.................... #fuses HS,NOPROTECT  
+.................... #use delay(clock=20000000)  
+.................... #use rs232(baud=9600, xmit=PIN_C6, rcv=PIN_C7)  // Jumpers: 8 to 11, 7 to 12  
+.................... #endif  
+....................   
+....................   
+.................... #byte port_b=6  
+....................   
+....................   
+.................... void wait() {           // This function waits for either ~2ms or until a  
+....................   int countdown;        // event happens (in this case a rs232 character)  
+....................   
+....................   countdown=200;  
+0004:  MOVLW  C8
+0006:  MOVWF  0B
+....................   while((--countdown!=0)&&!kbhit())  
+0008:  DECF   0B,F
+000A:  BTFSC  FD8.2
+000C:  GOTO   0024
+0010:  BTFSC  F9E.5
+0012:  GOTO   0024
+....................     delay_us(10);  
+0016:  MOVLW  10
+0018:  MOVWF  00
+001A:  DECFSZ 00,F
+001C:  BRA    001A
+001E:  NOP   
+0020:  GOTO   0008
+0024:  RETLW  00
+.................... }  
+....................   
+....................   
+.................... void display( char one, char two) {  
+....................    output_high(PIN_B1);  
+0026:  BCF    F93.1
+0028:  BSF    F8A.1
+....................    wait();  
+002A:  CALL   0004
+....................    output_low(PIN_B1);  
+002E:  BCF    F93.1
+0030:  BCF    F8A.1
+....................    output_high(PIN_B3);  
+0032:  BCF    F93.3
+0034:  BSF    F8A.3
+....................    wait();  
+0036:  CALL   0004
+....................    output_low(PIN_B3);  
+003A:  BCF    F93.3
+003C:  BCF    F8A.3
+003E:  GOTO   0070 (RETURN)
+.................... }  
+....................   
+....................   
+.................... void main() {  
+....................   char pos1,pos2;  
+0042:  CLRF   FEA
+0044:  CLRF   FE9
+0046:  MOVLW  0F
+0048:  MOVWF  FC1
+004A:  MOVLW  81
+004C:  MOVWF  FAF
+004E:  MOVLW  26
+0050:  MOVWF  FAC
+0052:  MOVLW  90
+0054:  MOVWF  FAB
+....................   
+....................   set_tris_b(0);  
+0056:  MOVLW  00
+0058:  MOVWF  F93
+....................   port_b=0;  
+005A:  CLRF   06
+....................   
+....................   pos1='0';  
+005C:  MOVLW  30
+005E:  MOVWF  06
+....................   pos2='1';  
+0060:  MOVLW  31
+0062:  MOVWF  07
+....................   
+....................   while(TRUE) {  
+....................     char c;  
+....................     display(pos1,pos2);  
+0064:  MOVFF  06,09
+0068:  MOVFF  07,0A
+006C:  GOTO   0026
+....................     if(c = getc()) {  
+0070:  BTFSS  F9E.5
+0072:  GOTO   0070
+0076:  MOVF   FAE,W
+0078:  MOVWF  08
+007A:  MOVF   08,F
+007C:  BTFSC  FD8.2
+007E:  GOTO   00AA
+....................        printf("%c \n\r", c);  
+0082:  MOVF   08,W
+0084:  BTFSS  F9E.4
+0086:  GOTO   0084
+008A:  MOVWF  FAD
+008C:  MOVLW  20
+008E:  BTFSS  F9E.4
+0090:  GOTO   008E
+0094:  MOVWF  FAD
+0096:  MOVLW  0A
+0098:  BTFSS  F9E.4
+009A:  GOTO   0098
+009E:  MOVWF  FAD
+00A0:  MOVLW  0D
+00A2:  BTFSS  F9E.4
+00A4:  GOTO   00A2
+00A8:  MOVWF  FAD
+....................     }  
+....................   }  
+00AA:  GOTO   0064
+....................   
+.................... }  
+....................  
+00AE:  SLEEP 

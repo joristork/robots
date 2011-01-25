@@ -1,0 +1,23 @@
+ ////        (C) Copyright 1996,1997 Custom Computer Services            //// E    1 
+//// This source code may only be used by licensed users of the CCS C   //// E    2 
+//// compiler.  This source code may only be distributed to other       //// E    3 
+//// licensed users of the CCS C compiler.  No other use, reproduction  //// E    4 
+//// or distribution is permitted without written permission.           //// E    5 
+//// Derivative programs created using this software in object code     //// E    6 
+//// form are not restricted in any way.                                //// E    7 
+//////////////////////////////////////////////////////////////////////////// E    8 
+#nolist E    9N
+#ifndef islower E   10N
+ E   11N
+#define islower(x)  isamoung(x,"abcdefghijklmnopqrstuvwxyz") E   12N
+#define isupper(x)  isamoung(x,"ABCDEFGHIJKLMNOPQRSTUVWXYZ") E   13N
+#define isalnum(x)  isamoung(x,"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") E   14N
+#define isalpha(x)  isamoung(x,"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") E   15N
+#define isdigit(x)  isamoung(x,"0123456789") E   16N
+#define isspace(x)  (x==' ') E   17N
+#define isxdigit(x) isamoung(x,"0123456789ABCDEFabcdef") E   18N
+ E   19N
+#endif E   20N
+ E   21N
+#list E   22 
+

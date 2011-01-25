@@ -1,0 +1,8 @@
+REM This batch program will remove the CCS C compiler
+REM
+UNINSTAL\UNINSTAL
+CD..
+DEL UNINSTAL\*.EXE
+DEL UNINSTAL\*.DAT
+RD UNINSTAL
+RD EXAMPLES

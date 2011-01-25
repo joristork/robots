@@ -1,0 +1,82 @@
+
+The following are notes on this release:
+
+1. The #USE RS232 will accept the keyword ERRORS to keep track of
+    errors in the variable RS232_ERRORS and to clear the errors when
+    they occur.
+
+2. For the 14000 the interrupts #INT_ADOF, #INT_RC, #INT_I2C and #INT_BUTTON
+    have been added.
+
+3. #ASM now accepts:
+                MOVPHW label
+            and MOVPLW label
+    These convert to MOVLW where the constant is the high or low
+    byte of the label.
+
+4. The PCM/PCW compilers now allow for 16 bit pointers for parts with
+    RAM above 255.  Use a #device statement like the following to use
+    16 bit pointers.  When 8 bit pointers are used the compiler will no
+    longer use RAM above 255 except with #byte or read/write _ bank.
+
+           #DEVICE PIC16C77  *=16
+
+5. The new version of MPLAB (3.40) is very different from previous
+   versions.  To integrate with the new version PCML, PCBL and PCHL
+   have been replaced with CCSC.EXE.  This Windows program will
+   work as a bridge from MPLAB to the C compiler.  The setup is
+   a little complex and is different between 3.1 and 95.  In order
+   to make this as easy as possible we added a configuration option
+   to CCSC.  Simply enter the following from DOS:
+            Windows 95:
+                  CCSC +SETUP
+            Windows 3.1:
+                  WIN CCSC +SETUP
+   This will configure MPLAB.  When creating a new project select
+   CCS as the LANGUAGE TOOL SUITE.  Then select the .HEX file and
+   click on NODE PROPERTIES.  Here you need to select the compiler
+   you want to use (PCB,PCM,PCH).
+
+   Note that due to a MPLAB bug under Windows 3.1 the DOS compiler
+   is called instead of the Windows compiler.
+
+   If your first compile is done from the CCS IDE then it will
+   now create a MPLAB project file eliminating the need to create
+   a new project and edit the nodes as described above.
+
+6. Two new functions have been added for the 87x chips:
+              READ_PROGRAM_EEPROM(address)
+              WRITE_PROGRAM_EEPROM(address,data)
+
+7. Note that the READ_ADC returns a 16 bit result for parts that
+   have a 10 bit ADC.  If you assign the result to a 8 bit variable
+   you will only get the LSB.
+
+8. Note that the last parametter to SETUP_TIMER_2 must be in
+   the range 1-16.  There was a bug where the range was 0-15.
+   Old code must be changed.
+
+9. The #DEVICE accepts the option ICD to generate code for
+   the Microchip ICD.  For example:
+                #DEVICE PIC16F877 *=16 ICD=TRUE
+                    or
+                #include <16F877.h>
+                #DEVICE *=16 ICD=TRUE
+
+10. A preprocessor directive has been added force a function into
+    a specified memory area.  For example:
+              #ORG 0x1F00,0x1FFF
+              void loader() {
+                    ...
+              }
+
+11. #reserve now accepts a range using : for example:
+              #reserve 0x30:0x35
+              #reserve 0x30,0x40,0x50:0x5f
+
+
+
+
+
+
+
