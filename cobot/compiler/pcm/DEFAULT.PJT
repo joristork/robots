@@ -1,0 +1,30 @@
+[PROJECT]
+Target=%F.HEX
+Development_Mode=16
+Processor=0x%P
+ToolSuite=CCS
+
+[Directories]
+Include=
+Library=
+LinkerScript=
+
+[Target Data]
+FileList=%F.%E;
+BuildTool=CCSC
+OptionString=-p %O
+AdditionalOptionString=
+
+[%F.%E]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+
+[mru-list]
+1=%S
+
+[Windows]
+0=0000 %S 44 44 566 325 3 0

@@ -1,0 +1,32 @@
+[PROJECT]
+Target=ex_led.HEX
+Development_Mode=2
+Processor=0x452F
+ToolSuite=CCS
+
+[Directories]
+Include=
+Library=
+LinkerScript=
+
+[Target Data]
+FileList=ex_led.c;
+BuildTool=CCSC
+OptionString=-p +FH
+AdditionalOptionString=
+BuildRequired=1
+
+[ex_led.c]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+
+[mru-list]
+1=ex_led.c
+
+[Windows]
+0=0000 ex_led.c 0 0 796 451 3 0
+

@@ -1,0 +1,252 @@
+:Base pcw.hlp>main
+1 Overview
+2 PCM and PCB Overview=PCMandPCBOverview
+2 PCW Overview=PCWOverview
+2 Technical Support=TechnicalSupport
+2 Installation=Installation
+2 ?85057__Invoking the DOS Compiler?85057__=.85057..InvokingtheDOSCompiler.85057..
+2 MPLAB Integration=MPLABIntegration
+2 Directories=Directories
+2 File Formats=FileFormats
+2 Direct Device Programming=DirectDeviceProgramming
+2 Menu Commands=MenuCommands
+2 DOS BASIC CONTROL COMMANDS=DOSBASICCONTROLCOMMANDS
+2 DOS IDE EDITOR COMMANDS=DOSIDEEDITORCOMMANDS
+2 DOS Special Windows=DOSSpecialWindows
+2 Windows IDE Special Features=WindowsIDESpecialFeatures
+2 Windows Editor Keys=WindowsEditorKeys
+2 PCW Editor Commands=PCWEditorCommands
+2 PCW Editor C Features=PCWEditorCFeatures
+2 PCW File Handling=PCWFileHandling
+2 PCW Editor Options=PCWEditorOptions
+2 PCW New Project=PCWNewProject
+2 Make Main File=MakeMainFile
+2 PCW Compile=PCWCompile
+2 Program=Program
+2 EXIT=EXIT
+2 Device Calibration Data=DeviceCalibrationData
+2 Utility Programs=UtilityPrograms
+2 Program Syntax=ProgramSyntax
+2 Comment=Comment
+1 Pre-Processor Command Summary
+2 Pre-Processor Directives=Pre.ProcessorDirectives
+2 #ASM
+3 #ASM=.ASM
+3 #ENDASM=.ENDASM1
+2 #ENDASM
+3 #ENDASM=.ENDASM2
+2 #ASM COMMAND SUMMARY
+3 #ASM COMMAND SUMMARY=.ASMCOMMANDSUMMARY
+2 #BIT id \= x.y
+3 #BIT id \= x.y=.BITid.x.y
+2 #BYTE ID \= X
+3 #BYTE ID \= X=.BYTEID.X
+2 #CASE
+3 #CASE=.CASE
+2 _ _ DATE_ _
+3 _ _ DATE_ _=..DATE..
+2 #DEFINE ID STRING
+3 #DEFINE ID STRING=.DEFINEIDSTRING
+2 #DEVICE CHIP
+3 #DEVICE CHIP=.DEVICECHIP
+2 _ _DEVICE_ _
+3 _ _DEVICE_ _=..DEVICE..
+2 #ERROR
+3 #ERROR=.ERROR
+2 #FUSES options
+3 #FUSES options=.FUSESoptions
+2 #ID
+3 #ID=.ID
+2 #ID number, number, number
+3 #ID number, number, number=.IDnumber.number.number
+2 #ID "filename"
+3 #ID "filename"=.ID.filename.
+2 #ID CHECKSUM
+3 #ID CHECKSUM=.IDCHECKSUM
+2 #IF expr
+3 #IF expr=.IFexpr
+2 #IFDEF id
+3 #IFDEF id=.IFDEFid
+2 #ELSE
+3 #ELSE=.ELSE
+2 #ENDIF
+3 #ENDIF=.ENDIF
+2 #INCLUDE <FILENAME>
+3 #INCLUDE <FILENAME>=.INCLUDE.FILENAME.1
+2 #INCLUDE "FILENAME"
+3 #INCLUDE "FILENAME"=.INCLUDE.FILENAME.2
+2 #INLINE
+3 #INLINE=.INLINE
+2 #INTxxx
+3 #INTxxx=.INTxxx
+2 #INT_DEFAULT
+3 #INT_DEFAULT=.INT.DEFAULT
+2 #INT_GLOBAL
+3 #INT_GLOBAL=.INT.GLOBAL
+2 #LIST
+3 #LIST=.LIST
+2 #NOLIST
+3 #NOLIST=.NOLIST
+2 #OPT n
+3 #OPT n=.OPTn
+2 _ _PCB_ _
+3 _ _PCB_ _=..PCB..
+2 _ _PCM_ _
+3 _ _PCM_ _=..PCM..
+2 #PRAGMA cmd
+3 #PRAGMA cmd=.PRAGMAcmd
+2 #PRIORITY
+3 #PRIORITY=.PRIORITY
+2 #RESERVE
+3 #RESERVE=.RESERVE
+2 #ROM
+3 #ROM=.ROM
+2 #SEPARATE
+3 #SEPARATE=.SEPARATE
+2 #UNDEF id
+3 #UNDEF id=.UNDEFid
+2 #USE DELAY (CLOCK\=speed)
+3 #USE DELAY (CLOCK\=speed)=.USEDELAY.CLOCK.speed.
+2 #USE FAST_IO (port)
+3 #USE FAST_IO (port)=.USEFAST.IO.port.
+2 #USE FIXED_IO (port_OUTPUTS\=pin, pin…)
+3 #USE FIXED_IO (port_OUTPUTS\=pin, pin…)=.USEFIXED.IO.port.OUTPUTS.pin.pin..
+2 #USE I2C (Master, SDA\=Pin, SCL\=Pin options)
+3 #USE I2C (Master, SDA\=Pin, SCL\=Pin options)=.USEI2C.Master.SDA.Pin.SCL.Pinoptions.
+2 #USE RS232 (BAUD\=baud, XMIT\=pin, RCV\=pin...)
+3 #USE RS232 (BAUD\=baud, XMIT\=pin, RCV\=pin...)=.USERS232.BAUD.baud.XMIT.pin.RCV.pin....
+2 #USE STANDARD_IO (port)
+3 #USE STANDARD_IO (port)=.USESTANDARD.IO.port.
+2 #ZERO_RAM
+3 #ZERO_RAM=.ZERO.RAM
+1 Data Definition
+2 DATA DEFINITIONS=DATADEFINITIONS
+1 Function Definition
+2 FUNCTION DEFINITIONS=FUNCTIONDEFINITIONS
+1 Reference Parameters
+2 REFERENCE PARAMETER=REFERENCEPARAMETER
+2 STATEMENTS=STATEMENTS
+2 Expressions=Expressions
+2 Operators=Operators
+1 Built-In Functions Command Summary
+2 ABS(x)=ABS.x.
+2 ACOS(x)=ACOS.x.
+2 ASIN(x)=ASIN.x.
+2 ATAN(x)=ATAN.x.
+2 ATOI(char *ptr)=ATOI.char.ptr.
+2 ATOL(char *ptr)=ATOL.char.ptr.
+2 BIT_CLEAR(var,bit)=BIT.CLEAR.var.bit.
+2 BIT_SET(var,bit)=BIT.SET.var.bit.
+2 BIT_TEST(var,bit)=BIT.TEST.var.bit.
+2 f\=CEIL(x)=f.CEIL.x.
+2 DELAY_CYCLES(count)=DELAY.CYCLES.count.
+2 DELAY_MS(time)=DELAY.MS.time.
+2 DELAY_US(time)=DELAY.US.time.
+2 DISABLE_INTERRUPTS(level)=DISABLE.INTERRUPTS.level.
+2 ENABLE_INTERRUPTS(level)=ENABLE.INTERRUPTS.level.
+2 f\=EXP(x)=f.EXP.x.
+2 EXT_INT_EDGE(edge)=EXT.INT.EDGE.edge.
+2 f\=FLOOR(x)=f.FLOOR.x.
+2 i\=GET_RTCC()=i.GET.RTCC..
+2 GET_TIMER0()=GET.TIMER0..
+2 GET_TIMER1()=GET.TIMER1..
+2 GET_TIMER2()=GET.TIMER2..
+2 GETC()=GETC..
+2 GETCH()=GETCH..
+2 GETCHAR()=GETCHAR..
+2 GETS(char *string)=GETS.char.string.
+2 I2C_POLL()=I2C.POLL..
+2 I2C_READ()=I2C.READ..
+2 I2C_START()=I2C.START..
+2 I2C_STOP()=I2C.STOP..
+2 I2C_WRITE(byte)=I2C.WRITE.byte.
+2 INPUT(pin)=INPUT.pin.
+2 ISALNUM(char)=ISALNUM.char.
+2 ISALPHA(char)=ISALPHA.char.
+2 ISDIGIT(char)=ISDIGIT.char.
+2 ISLOWER(char)=ISLOWER.char.
+2 ISSPACE(char)=ISSPACE.char.
+2 ISUPPER(char)=ISUPPER.char.
+2 ISXDIGIT(char)=ISXDIGIT.char.
+2 KBHIT()=KBHIT..
+2 LABS(l)=LABS.l.
+2 LCD_LOAD(buffer_pointer, offset, length);=LCD.LOAD.buffer.pointer.offset.length..
+2 LCD_SYMBOL(symbol, b7_addr, b6_addr, b5_addr, b4_addr, b3_addr, b2_addr, b1_addr, b0_addr);=LCD.SYMBOL.symbol.b7.addr.b6.addr.b5.addr.b4.addr.b3.addr.b2.addr.b1.addr.b0.addr..
+2 LOG(x)=LOG.x.
+2 LOG10(x)=LOG10.x.
+2 MEMCPY(dest, source, n)=MEMCPY.dest.source.n.
+2 MEMSET(dest, value, n)=MEMSET.dest.value.n.
+2 OUTPUT_BIT(pin, value)=OUTPUT.BIT.pin.value.
+2 OUTPUT_FLOAT(pin)=OUTPUT.FLOAT.pin.
+2 OUTPUT_HIGH(pin)=OUTPUT.HIGH.pin.
+2 OUTPUT_LOW(pin)=OUTPUT.LOW.pin.
+2 PORT_B_PULLUPS(flag)=PORT.B.PULLUPS.flag.
+2 PRINTF([function], string, [values])=PRINTF..function..string..values..
+2 PSP_INPUT_FULL()=PSP.INPUT.FULL..
+2 PSP_OUTPUT_FULL()=PSP.OUTPUT.FULL..
+2 PSP_OVERFLOW()=PSP.OVERFLOW..
+2 PUTC()=PUTC..
+2 PUTCHAR()=PUTCHAR..
+2 PUTS(string)=PUTS.string.
+2 i\=READ_ADC()	       Some PCM=i.READ.ADC...SomePCM
+2 READ_BANK(bank, offset)=READ.BANK.bank.offset.
+2 READ_CALIBRATION(n)=READ.CALIBRATION.n.
+2 READ_EEPROM(address)=READ.EEPROM.address.
+2 RESTART_CAUSE()=RESTART.CAUSE..
+2 RESTART_WDT()=RESTART.WDT..
+2 ROTATE_LEFT(address, bytes)=ROTATE.LEFT.address.bytes.
+2 ROTATE_RIGHT(address, bytes)=ROTATE.RIGHT.address.bytes.
+2 SET_ADC_CHANNEL(chan)=SET.ADC.CHANNEL.chan.
+2 SET_PWM1_DUTY(value)=SET.PWM1.DUTY.value.
+2 SET_PWM2_DUTY(value)=SET.PWM2.DUTY.value.
+2 SET_RTCC(value)=SET.RTCC.value.
+2 SET_TIMER0(value)=SET.TIMER0.value.
+2 SET_TIMER1(value)=SET.TIMER1.value.
+2 SET_TIMER2(value)=SET.TIMER2.value.
+2 SET_TRIS_A(value)=SET.TRIS.A.value.
+2 SET_TRIS_B(value)=SET.TRIS.B.value.
+2 SET_TRIS_C(value)=SET.TRIS.C.value.
+2 SET_TRIS_D(value)=SET.TRIS.D.value.
+2 SET_TRIS_E(value)=SET.TRIS.E.value.
+2 SET_UART_SPEED(baud)=SET.UART.SPEED.baud.
+2 SETUP_ADC(mode)=SETUP.ADC.mode.
+2 SETUP_ADC_PORTS(value)=SETUP.ADC.PORTS.value.
+2 SETUP_CCP1(mode)=SETUP.CCP1.mode.
+2 SETUP_CCP2(mode)=SETUP.CCP2.mode.
+2 SETUP_COMPARATOR(mode)=SETUP.COMPARATOR.mode.
+2 SETUP_COUNTERS(rtcc_state, ps_state)=SETUP.COUNTERS.rtcc.state.ps.state.
+2 SETUP_LCD(mode,prescale,segments);=SETUP.LCD.mode.prescale.segments..
+2 SETUP_PSP(mode)=SETUP.PSP.mode.
+2 SETUP_SPI(mode)=SETUP.SPI.mode.
+2 SETUP_TIMER_1(mode)=SETUP.TIMER.1.mode.
+2 SETUP_TIMER_2(mode, period, postscale)=SETUP.TIMER.2.mode.period.postscale.
+2 SETUP_VREF(mode)=SETUP.VREF.mode.
+2 SHIFT_LEFT(address, bytes, value)=SHIFT.LEFT.address.bytes.value.
+2 SHIFT_RIGHT(address, bytes, value)=SHIFT.RIGHT.address.bytes.value.
+2 SLEEP()=SLEEP..
+2 SPI_DATA_IS_IN()=SPI.DATA.IS.IN..
+2 SPI_READ()=SPI.READ..
+2 SPI_WRITE(value)=SPI.WRITE.value.
+2 SQRT(x)=SQRT.x.
+2 STANDARD STRING FUNCTIONS=STANDARDSTRINGFUNCTIONS
+2 STRCPY(dest, SRC)=STRCPY.dest.SRC.
+2 SWAP(byte)=SWAP.byte.
+2 TOLOWER(char)=TOLOWER.char.
+2 c\=TOUPPER(char)=c.TOUPPER.char.
+2 WRITE_BANK(bank, offset, value)=WRITE.BANK.bank.offset.value.
+2 WRITE_EEPROM(address, value)=WRITE.EEPROM.address.value.
+1 Compiler Error Messages
+2 Error Messages=ErrorMessages
+1 Common Questions and Answers
+2 How does one input or output an entire byte to an I/O port?=HowdoesoneinputoroutputanentirebytetoanI.Oport.
+2 Why does a program work with standard I/O but not with fast I/O?=WhydoesaprogramworkwithstandardI.ObutnotwithfastI.O.
+2 Why is the RS-232 not working right?=WhyistheRS.232notworkingright.
+2 How can I use two or more RS-232 ports on one PIC?=HowcanIusetwoormoreRS.232portsononePIC.
+2 What can be done about an OUT OF RAM error?=WhatcanbedoneaboutanOUTOFRAMerror.
+2 Why does the compiler use the obsolete TRIS?=WhydoesthecompilerusetheobsoleteTRIS.
+2 Instead of 800, the compiler calls 0.  Why?=Insteadof800.thecompilercalls0.Why.
+2 Instead of A0, the compiler is using register 20.  Why?=InsteadofA0.thecompilerisusingregister20.Why.
+1 EXAMPLE PROGRAMS
+2 Examples=Examples
+1 Software License Agreement
+2 Software License Agreement=SoftwareLicenseAgreement2

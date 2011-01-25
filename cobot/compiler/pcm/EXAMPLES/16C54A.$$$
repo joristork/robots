@@ -1,0 +1,2 @@
+ //////// Standard Header file for the PIC16C54A device ////////     1 
+#device PIC16C54 

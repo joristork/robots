@@ -1,0 +1,30 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @SCRATCH
+006     port_b
+006     main.pos1
+007     main.pos2
+008     PSP_DATA
+008     c
+009     display.one
+00A     display.two
+00B     wait.countdown
+FBB-FBC CCP_2
+FBB     CCP_2_LOW
+FBC     CCP_2_HIGH
+FBE-FBF CCP_1
+FBE     CCP_1_LOW
+FBF     CCP_1_HIGH
+        delay_ms.P1
+        delay_us.P2
+
+0004  wait
+0026  display
+0042  main
+
+Project Files:
+ex_led.c
+C:\pch\Devices\18f452.h
