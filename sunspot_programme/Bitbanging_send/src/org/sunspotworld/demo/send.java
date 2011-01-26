@@ -54,7 +54,8 @@ public class send extends javax.microedition.midlet.MIDlet {
     IIOPin send_data_pin = pins[EDemoBoard.D1];
     IIOPin receive_pin = pins[EDemoBoard.D2];
     IIOPin receive_data_pin = pins[EDemoBoard.D3];
-    int error = 0;
+
+    public int error_threshold = 20000;
 
     protected void startApp(){
 
@@ -65,8 +66,6 @@ public class send extends javax.microedition.midlet.MIDlet {
         leds.setColor(LEDColor.RED);
         leds.setOn();
 
-        //startSenderThread();
-        //startReceiverThread();
         send_pin.setAsOutput(true);
         send_data_pin.setAsOutput(true);
         receive_pin.setAsOutput(false);
@@ -77,30 +76,11 @@ public class send extends javax.microedition.midlet.MIDlet {
 
         int i = 0;
         while(true){
-            i++;
-            if(i == 1){
-                bitbang_send(9);
+            switch( i++ % 3 ) {
+                case 0: bitbang_send(9); break;
+                case 1: bitbang_send(15); break;
+                case 2: bitbang_send(0); break;
             }
-            if(i == 2){
-                bitbang_send(15);
-            }
-            if(i == 3){
-                bitbang_send(0);
-                i = 0;
-            }
-
-//            i++;
-//            if(receive_pin.isHigh()){
-//                if(send_data_pin.getState()){
-//                    send_data_pin.setLow();
-//                }else{
-//                    send_data_pin.setHigh();
-//                }
-//                System.out.println("test send");
-//                i = 0;
-//            }
-//            Utils.sleep(500);
-//            System.out.println(i);
         }
 
     }
@@ -108,18 +88,16 @@ public class send extends javax.microedition.midlet.MIDlet {
     public int bitbang_send(int data) {
         System.out.println("Start send");
         int i;
+        int error = 0;
 
         // select device
         send_pin.setHigh();
         send_data_pin.setHigh();
 
-        while(!(receive_pin.isLow()&&receive_data_pin.isHigh())){
-                error++;
-                if(error == 20000){
-                    error = 0;
+        while(!(receive_pin.isLow()&&receive_data_pin.isHigh()))
+                if(++error == this.error_threshold)
                     return -1;
-                }
-        }
+
         send_pin.setLow();
         send_data_pin.setLow();
         Utils.sleep(20);
@@ -137,23 +115,19 @@ public class send extends javax.microedition.midlet.MIDlet {
                 send_data_pin.setLow();
                 System.out.print("0");
             }
+
             Utils.sleep(10);
             send_pin.setHigh();
             System.out.println("");
-            while (!(receive_pin.isHigh())) {
-                error++;
-                if(error == 20000){
-                    error = 0;
+
+            while (!(receive_pin.isHigh()))
+                if(++error == this.error_threshold)
                     return -1;
-                }
-            }
-            while (!(receive_pin.isLow())) {
-                error++;
-                if(error == 20000){
-                    error = 0;
+
+            while (!(receive_pin.isLow()))
+                if(++error == this.error_threshold)
                     return -1;
-                }
-            }
+
             send_pin.setLow();
 
             // shift byte left so next bit will be leftmost
