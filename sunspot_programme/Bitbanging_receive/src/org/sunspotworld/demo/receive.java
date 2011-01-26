@@ -98,7 +98,7 @@ public class receive extends javax.microedition.midlet.MIDlet {
         int received = 0;
         send_pin.setLow();
         send_data_pin.setHigh();
-        Utils.sleep(50);
+        Utils.sleep(20);
         for (int i = 0; i < 8; i++) {
             while (receive_pin.isLow()) {
                 error++;
@@ -113,11 +113,11 @@ public class receive extends javax.microedition.midlet.MIDlet {
 
             send_pin.setHigh();
 
-            Utils.sleep(50);
+            Utils.sleep(20);
             send_pin.setLow();
 
             index--;
-            Utils.sleep(50);
+            Utils.sleep(20);
         }
         return received;
     }
@@ -155,7 +155,6 @@ public class receive extends javax.microedition.midlet.MIDlet {
     }
 
     public int pow(int i, int p) {
-        System.out.println(i + " " + p);
         int result = (p==0) ? 1 : 2;
         for (int j = 1; j < p; j++) {
             result *= i;

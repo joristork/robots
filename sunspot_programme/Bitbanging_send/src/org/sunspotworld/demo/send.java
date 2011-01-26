@@ -122,7 +122,7 @@ public class send extends javax.microedition.midlet.MIDlet {
         }
         send_pin.setLow();
         send_data_pin.setLow();
-        Utils.sleep(50);
+        Utils.sleep(20);
 
         for (i = 0; i < 8; i++) {
             //System.out.println("Data: " + data);
@@ -139,7 +139,6 @@ public class send extends javax.microedition.midlet.MIDlet {
             }
             Utils.sleep(10);
             send_pin.setHigh();
-            Utils.sleep(10);
             System.out.println("");
             while (!(receive_pin.isHigh())) {
                 error++;
