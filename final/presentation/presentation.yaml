@@ -1,21 +1,54 @@
 metas:
-  title: yml2tex
+  title: Team America's Cobot # ' (syntax fix)
+  author: >
+    Harm Debois \and Joris Stork \\
+    Lucas Swartsenburg \and Sander van Veen
+  #theme_name: default
+  theme_color: blue
+  code_style: colorful
+  document: slide_pause
 
-Introduction:
-  Why?:
-    Why?:
-      - Creating Presentations in PowerPoint/Keynote etc. takes too long:
-        - No automatic TOC generation
-        - No Code Highlighting
-        - Applications not for free
-        - Proprietary formats
+Introductie:
+  Wat is een Cobot?:
+    Een samenstelling van::
+      - Een Jobot, zonder Java, als robot.
+      - Driver in C voor de microcontroller.
+      - Java (icm SunSpot) voor communicatie.
+
+      - image img/foobar.png:
+          width: 8cm
+          height: 5cm
+
+Problemen & Oplossingen:
+  Hardware problemen:
+    Probleem 1:
+      - Omschrijving
+      # - Kabeltjes solderen
+      # - Geen USB/COM kabel aangesloten
+      # - Geen stroom kabel aangesloten
+
+  Software problemen:
+    "Probleem 1: De toolchain":
+      - Microcontroller 18f452
+      - Geen compiler/linker/programmer instructies:
+        - sdcc (Small device compiler).
+        - gputils (GNU PIC utilities; linker).
+        - piklab-prog (Programmer).
+      - Geen "#use" directive in sdcc:
+        - MPLab compiler, alleen voor Windows.
+      - Programmer (Linux) en Compiler (Windows):
+        - Gebruik sshfs over sremote.
+        - Verbind Linux en Mac (VM met Windows) met sremote.
+        - Compile na source modification.
+        - Programmeer automatisch na compilatie.
+
+    include src/vars.c:
+      title: "Probleem 2: Variabelen"
+
+    "Probleem 3: Bit banging":
+      - Omschrijving
+
 Features:
-  General:
-    General:
-      - Easy & fast to generate simple presentations
-      - Adds a nice default style to the document
-      - Generates a TOC out of sections/subsections
-      - Separates content from presentation
   Lists:
     Itemized Lists:
       - Item
@@ -25,19 +58,10 @@ Features:
           - Sub-Sub-Item
       - Item
       - Item
-  Code Highlighting:
-    include src/foobar.py:
-    Source Code:
-      - Syntax:
-        - "include src/foobar.py:"
-      - Uses Pygments for highlighting
-      - Style can be changed:
-        - "highlight_style: colorful"
+
   Images:
-    image foobar:
-    Images:
-        - Syntax:
-          - "image img/foobar.png:"
-        - Optional options:
-          - "width: 10cm"
-          - "height: 15cm"
+    image img/foobar.png:
+      width: 10.8cm
+      height: 7.5cm
+
+# vim: shiftwidth=2:
