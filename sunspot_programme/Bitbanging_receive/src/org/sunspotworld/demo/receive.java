@@ -73,13 +73,12 @@ public class receive extends javax.microedition.midlet.MIDlet {
         send_data_pin.setLow();
 
         for(;;) {
-            if(receive_pin.isHigh() && receive_data_pin.isHigh()){
+            if(receive_pin.isHigh() && receive_data_pin.isHigh()) {
                 System.out.println("Start receive.");
                 int c = bitbang_receive();
                 System.out.println(c);
             }
         }
-
     }
 
     public int bitbang_receive() {
@@ -96,8 +95,9 @@ public class receive extends javax.microedition.midlet.MIDlet {
             while (receive_pin.isLow())
                 if(++error > this.error_threshold)
                     return -1;
+            error = 0;
 
-            received |= receive_data_pin.isHigh() ? 2 << i : 0 ;
+            received |= receive_data_pin.isHigh() && 2 << i ;
 
             send_pin.setHigh();
 
