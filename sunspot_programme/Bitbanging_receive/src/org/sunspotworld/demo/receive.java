@@ -96,11 +96,9 @@ public class receive extends javax.microedition.midlet.MIDlet {
     public int bitbang_receive() {
         int index = 7;
         int received = 0;
-        char result;
         send_pin.setLow();
         send_data_pin.setHigh();
         Utils.sleep(50);
-        send_data_pin.setLow();
         for (int i = 0; i < 8; i++) {
             while (receive_pin.isLow()) {
                 error++;
@@ -109,6 +107,8 @@ public class receive extends javax.microedition.midlet.MIDlet {
                     return -1;
                 }
             }
+            error = 0;
+            send_data_pin.setLow();
             received += (receive_data_pin.isHigh() ? pow(2, index) : 0);
 
             send_pin.setHigh();
@@ -119,7 +119,6 @@ public class receive extends javax.microedition.midlet.MIDlet {
             index--;
             Utils.sleep(50);
         }
-        result = (char) received;
         return received;
     }
 
