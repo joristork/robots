@@ -1,24 +1,9 @@
-/*
- * Copyright (c) 2007-2010 Sun Microsystems, Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
- * deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- **/
+/*****************************************************************************
+ * TEAM AMERICA!!                                                            *
+ *                                                                           *
+ *****************************************************************************/
+
+
 package org.sunspotworld.demo;
 
 import com.sun.spot.service.BootloaderListenerService;
@@ -33,18 +18,15 @@ import java.io.IOException;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
+import javax.microedition.io.Connector;
+import javax.microedition.io.Datagram;
+import javax.microedition.io.DatagramConnection;
+
+import com.sun.spot.io.j2me.radiogram.RadiogramConnection;
 
 /**
- * @author: David Mercier <david.mercier@sun.com>
- *
- * This simple demo shows you how to use the radio to broadcast
- * some data to any listening SPOT(s).
- *
- * There is one thread (startSenderThread) that sends data on a particular
- * channel.
- * There is a second thread (startReceiverThread) that receives
- * data on that same channel.
- *
+ * A class that receives directions from another sunspot and sends them by
+ * bitbanging to a Cobot.
  */
 public class send extends javax.microedition.midlet.MIDlet {
 
@@ -52,119 +34,338 @@ public class send extends javax.microedition.midlet.MIDlet {
     IIOPin pins[] = EDemoBoard.getInstance().getIOPins();
     IIOPin send_pin = pins[EDemoBoard.D0];
     IIOPin send_data_pin = pins[EDemoBoard.D1];
-    IIOPin receive_pin = pins[EDemoBoard.D2];
-    IIOPin receive_data_pin = pins[EDemoBoard.D3];
+    IIOPin pin_ack = pins[EDemoBoard.D2];
+    IIOPin pin_rst = pins[EDemoBoard.D3];
     int error = 0;
+    private static final int SLEEP_THRESHOLD = 2;
+    private static final int DRIVE = 0;
+    private static final int REVERSE = 1;
+    private static final int LEFT = 2;
+    private static final int RIGHT = 3;
+    private static final int STOP = 4;
 
-    protected void startApp(){
+    /**
+     * Start the sunspot, initiate all pins, the leds, make sure that there is
+     * a handshake and after the handshake initiate a receiving thread.
+     */
+    protected void startApp() {
 
-        // Listen for downloads/commands over USB connection
+        /*
+         * Listen for downloads/commands over USB connection
+         */
         new com.sun.spot.service.BootloaderListenerService().getInstance().start();
 
-        System.out.println("I'm about to rock that SPOT !");
+        System.out.println("I'm about to rock that Cobot !");
+        /*
+         * Show we are waiting for the Cobot
+         */
         leds.setColor(LEDColor.RED);
         leds.setOn();
 
-        //startSenderThread();
-        //startReceiverThread();
+
         send_pin.setAsOutput(true);
         send_data_pin.setAsOutput(true);
-        receive_pin.setAsOutput(false);
-        receive_data_pin.setAsOutput(false);
+        pin_ack.setAsOutput(false);
+        pin_rst.setAsOutput(false);
 
+        /*
+         * Set pins high so that the Cobot can see this device is ready.
+         */
         send_pin.setHigh();
         send_data_pin.setHigh();
-
-        int i = 0;
-        while(true){
-            i++;
-            if(i == 1){
-                bitbang_send(9);
-            }
-            if(i == 2){
-                bitbang_send(15);
-            }
-            if(i == 3){
-                bitbang_send(0);
-                i = 0;
-            }
-
-//            i++;
-//            if(receive_pin.isHigh()){
-//                if(send_data_pin.getState()){
-//                    send_data_pin.setLow();
-//                }else{
-//                    send_data_pin.setHigh();
-//                }
-//                System.out.println("test send");
-//                i = 0;
-//            }
-//            Utils.sleep(500);
-//            System.out.println(i);
+        /*
+         * Check if Cobot is ready.
+         */
+        while (!(pin_ack.isHigh() && pin_rst.isHigh())) {
         }
+        /**
+         * There has been a handshake.
+         */
+        show_handshake();
+        
+        send_pin.setLow();
+        send_data_pin.setLow();
+        startReceiverThread();
 
     }
 
-    public int bitbang_send(int data) {
-        System.out.println("Start send");
-        int i;
+    /**
+     * Display on the leds as well as on the std out that there has been a
+     * handshake.
+     */
+    public void show_handshake(){
+        System.out.println("Hands have been shaken, but not stirred");
+        leds.setColor(LEDColor.YELLOW);
+        leds.getLED(0).setOff();
+        leds.getLED(7).setOff();
+    }
 
-        // select device
-        send_pin.setHigh();
-        send_data_pin.setHigh();
+    /**
+     * Receive what has to be done in a thread.
+     */
+    public void startReceiverThread() {
+        new Thread() {
+            public void run() {
+                System.out.println("Start receiving");
+                int direction = STOP;
+                /*
+                 * Connect...
+                 */
+                RadiogramConnection dgConnection = null;
+                Datagram dg = null;
 
-        while(!(receive_pin.isLow()&&receive_data_pin.isHigh())){
-                error++;
-                if(error == 20000){
-                    error = 0;
-                    return -1;
+                try {
+                    dgConnection = (RadiogramConnection) Connector.open("radiogram://:37");
+                    // Then, we ask for a datagram with the maximum size allowed
+                    dg = dgConnection.newDatagram(dgConnection.getMaximumLength());
+                } catch (IOException e) {
+                    System.out.println("Could not open radiogram receiver connection");
+                    return;
                 }
-        }
+
+                /*
+                 * The receiving variables are ready. Start receiving.
+                 */
+                while (true) {
+                    try {
+                        dg.reset();
+                        dgConnection.receive(dg);
+                        direction = dg.readInt();
+                        /*
+                         * Show on the leds which direction has been received.
+                         */
+                        set_Leds(direction);
+                        /*
+                         * Bitbang the received direction to the Cobot
+                         */
+                        bitbang_send(direction);
+                    } catch (IOException e) {
+                        System.out.println("Nothing received");
+                    }
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * This function uses bitbanging to send data to the Cobot. We send a 6 bit
+     * code. The first three bits contain the data, the other three contain the
+     * same data so that the Cobot can check the data.
+     * @param data
+     * @return
+     */
+    public int bitbang_send(int data) {
+        System.out.println("---- Start send ----");
+        int i;
+        int data_cop = data;
+        /**
+         * Start by setting both pins low. This is to prevent confusing the
+         * Cobot.
+         */
         send_pin.setLow();
         send_data_pin.setLow();
-        Utils.sleep(20);
 
-        for (i = 0; i < 8; i++) {
-            //System.out.println("Data: " + data);
+        /*
+         * Loop for every bit to be send.
+         */
+        for (i = 0; i < 6; i++) {
+            /*
+             * Wait until the Cobot is done handling the last received bit.
+             */
+            while (!(pin_rst.isLow()&&pin_ack.isLow())) {
+                error++;
+                if (error == 20000) {
+                    error = 0;
+                    print_state("In while waiting for rst off");
+                }
+            }
+            error = 0;
 
-            //System.out.println("Bitmask: " + (data & 0x80));
-            // consider leftmost bit
-            // set line high if bit is 1, low if bit is 0
-            if ((data & 0x80) > 0) {
+            /*
+             * If the first three bits have been send (by bitshift), restore the
+             * data var to what is was before bitshifting.
+             */
+            if (i == 2) {
+                data = data_cop;
+            }
+
+            /*
+             * Bitwise AND.
+             */
+            if ((data & 0x2) > 0) {
                 send_data_pin.setHigh();
-                System.out.print("1");
+                System.out.print("Set data: 1");
             } else {
                 send_data_pin.setLow();
-                System.out.print("0");
+                System.out.print("Set data: 0");
             }
-            Utils.sleep(10);
+            /*
+             * Give it a LITTLE time....
+             */
+            Utils.sleep(SLEEP_THRESHOLD);
+            /*
+             * Tell the Cobot that there is new data.
+             */
             send_pin.setHigh();
             System.out.println("");
-            while (!(receive_pin.isHigh())) {
+
+            /*
+             * Wait until the cobot says it has received the bit.
+             */
+            while (!(pin_ack.isHigh())) {
                 error++;
-                if(error == 20000){
+                if (error == 20000) {
                     error = 0;
-                    return -1;
+                    print_state("In while waiting for ack on");
                 }
             }
-            while (!(receive_pin.isLow())) {
-                error++;
-                if(error == 20000){
-                    error = 0;
-                    return -1;
-                }
-            }
+            error = 0;
+
+            /*
+             * Give it a little time...
+             */
+            Utils.sleep(SLEEP_THRESHOLD);
+            /*
+             * Make sure that the ack pin is off before sending new data.
+             */
             send_pin.setLow();
 
-            // shift byte left so next bit will be leftmost
+            /*
+             * The reset pin is on means that the Cobot didn't receive the data
+             * properly.
+             */
+            if (pin_rst.isHigh()) {
+                print_state("ERROR!");
+                bitbang_send(data_cop);
+                return -1;
+            }
+            /*
+             * Bitshift to send the next bit.
+             */
             data <<= 1;
         }
 
-        // deselect device
+        /*
+         * Cleanup the datapin.
+         */
         send_data_pin.setLow();
+        print_state("Finished");
         return 1;
     }
 
+    /**
+     * Put a appropriate combination on the leds according to the received
+     * direction.
+     * @param drive
+     */
+    public void set_Leds(int drive) {
+        switch (drive) {
+            case DRIVE:
+                for (int i = 0; i < 2; i++) {
+                    leds.getLED(i).setOff();
+                }
+                for (int i = 6; i < 8; i++) {
+                    leds.getLED(i).setOff();
+                }
+                for (int i = 2; i < 6; i++) {
+                    leds.getLED(i).setColor(LEDColor.GREEN);
+                    leds.getLED(i).setOn();
+                }
+                break;
+            case REVERSE:
+                for (int i = 0; i < 2; i++) {
+                    leds.getLED(i).setOff();
+                }
+                for (int i = 6; i < 8; i++) {
+                    leds.getLED(i).setOff();
+                }
+                for (int i = 2; i < 6; i++) {
+                    leds.getLED(i).setColor(LEDColor.ORANGE);
+                    leds.getLED(i).setOn();
+                }
+                break;
+            case LEFT:
+                for (int i = 0; i < 4; i++) {
+                    leds.getLED(i).setOff();
+                }
+                for (int i = 4; i < 8; i++) {
+                    leds.getLED(i).setColor(LEDColor.BLUE);
+                }
+                for (int i = 4; i < 8; i++) {
+                    leds.getLED(i).setOn();
+                }
+                break;
+
+            case RIGHT:
+                for (int i = 4; i < 8; i++) {
+                    leds.getLED(i).setOff();
+                }
+
+                for (int i = 0; i < 4; i++) {
+                    leds.getLED(i).setColor(LEDColor.WHITE);
+                }
+                for (int i = 0; i < 4; i++) {
+                    leds.getLED(i).setOn();
+                }
+                break;
+
+            case STOP:
+                for (int i = 0; i < 3; i++) {
+                    leds.getLED(i).setOff();
+                }
+                for (int i = 5; i < 8; i++) {
+                    leds.getLED(i).setOff();
+                }
+                leds.getLED(3).setColor(LEDColor.RED);
+                leds.getLED(3).setOn();
+                leds.getLED(4).setColor(LEDColor.RED);
+                leds.getLED(4).setOn();
+                break;
+        }
+
+    }
+
+    /**
+     * Print the state in words to std out.
+     *
+     * @param dir
+     */
+    public void print_dir(int dir){
+       switch (dir) {
+            case DRIVE:
+                System.out.println("Drive");
+                break;
+            case REVERSE:
+                System.out.println("Reverse");
+                break;
+            case LEFT:
+                System.out.println("Left");
+                break;
+
+            case RIGHT:
+                System.out.println("Right");
+                break;
+            case STOP:
+                System.out.println("Stop");
+                break;
+        }
+    }
+
+    /**
+     * Used in while loops...
+     * Print the current state of the pins and print the message.
+     *
+     * @param event
+     */
+    public void print_state(String event) {
+        System.out.println(event);
+        System.out.println("Pin_ack: " + pin_ack.isHigh() + " | " + "Pin_rst: " + pin_rst.isHigh() + "");
+        System.out.println("Send_ack: " + send_pin.isHigh() + " | " + "Send_data: " + send_data_pin.isHigh() + "");
+    }
+
+    /**
+     * Not used.
+     */
     protected void pauseApp() {
     }
 

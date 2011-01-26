@@ -53,6 +53,13 @@ public class receive extends javax.microedition.midlet.MIDlet {
     IIOPin receive_pin = pins[EDemoBoard.D0];
     IIOPin receive_data_pin = pins[EDemoBoard.D1];
 
+    private static final int DRIVE = 1;
+    private static final int REVERSE = 2;
+    private static final int LEFT = 3;
+    private static final int RIGHT = 4;
+    private static final int STOP = 5;
+
+
     public int sleep_interval = 50;
     public int error_threshold = 2000;
 
@@ -76,6 +83,19 @@ public class receive extends javax.microedition.midlet.MIDlet {
             if(receive_pin.isHigh() && receive_data_pin.isHigh()) {
                 System.out.println("Start receive.");
                 int c = bitbang_receive();
+                if(c==DRIVE){
+                    System.out.println("DRIVE");
+                }
+                if(c==REVERSE){
+                    System.out.println("REVERSE");
+                }
+                if(c==LEFT){
+                    System.out.println("LEFT");
+                }
+                if(c==RIGHT){
+                    System.out.println("RIGHT");
+                }
+
                 System.out.println(c);
             }
         }
@@ -89,7 +109,7 @@ public class receive extends javax.microedition.midlet.MIDlet {
         send_data_pin.setHigh();
 
         Utils.sleep(this.sleep_interval);
-        send_data_pin.setLow();
+
 
         for (int i = 7; i >= 0; i--) {
             while (receive_pin.isLow())
@@ -106,7 +126,7 @@ public class receive extends javax.microedition.midlet.MIDlet {
 
             Utils.sleep(this.sleep_interval);
         }
-
+        send_data_pin.setLow();
         return received;
     }
 
