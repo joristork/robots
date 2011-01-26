@@ -97,7 +97,7 @@ public class receive extends javax.microedition.midlet.MIDlet {
                     return -1;
             error = 0;
 
-            received |= receive_data_pin.isHigh() && 2 << i ;
+            received |= receive_data_pin.isHigh() ? 1 << i : 0;
 
             send_pin.setHigh();
 
