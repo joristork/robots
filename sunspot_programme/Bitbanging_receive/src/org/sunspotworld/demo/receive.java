@@ -52,7 +52,9 @@ public class receive extends javax.microedition.midlet.MIDlet {
     IIOPin send_data_pin = pins[EDemoBoard.D3];
     IIOPin receive_pin = pins[EDemoBoard.D0];
     IIOPin receive_data_pin = pins[EDemoBoard.D1];
-    int error = 0;
+
+    public int sleep_interval = 50;
+    public int error_threshold = 2000;
 
     protected void startApp() {
         // Listen for downloads/commands over USB connection
@@ -62,10 +64,6 @@ public class receive extends javax.microedition.midlet.MIDlet {
         leds.setColor(LEDColor.MAUVE);
         leds.setOn();
 
-
-
-        //startSenderThread();
-        //startReceiverThread();
         send_pin.setAsOutput(true);
         send_data_pin.setAsOutput(true);
         receive_pin.setAsOutput(false);
@@ -74,92 +72,45 @@ public class receive extends javax.microedition.midlet.MIDlet {
         send_pin.setLow();
         send_data_pin.setLow();
 
-
-
-        while (true) {
-            if(receive_pin.isHigh()&&receive_data_pin.isHigh()){
+        for(;;) {
+            if(receive_pin.isHigh() && receive_data_pin.isHigh()) {
                 System.out.println("Start receive.");
                 int c = bitbang_receive();
                 System.out.println(c);
             }
-//            if(send_pin.getState()){
-//                send_pin.setLow();
-//            }
-//            else{
-//                send_pin.setHigh();
-//                Utils.sleep(500);
-//                send_pin.setLow();
-//            }
         }
-
     }
+
     public int bitbang_receive() {
-        int index = 7;
         int received = 0;
+        int error = 0;
+
         send_pin.setLow();
         send_data_pin.setHigh();
-        Utils.sleep(20);
-        for (int i = 0; i < 8; i++) {
-            while (receive_pin.isLow()) {
-                error++;
-                if(error == 2000){
-                    error = 0;
+
+        Utils.sleep(this.sleep_interval);
+        send_data_pin.setLow();
+
+        for (int i = 7; i >= 0; i--) {
+            while (receive_pin.isLow())
+                if(++error > this.error_threshold)
                     return -1;
-                }
-            }
             error = 0;
-            send_data_pin.setLow();
-            received += (receive_data_pin.isHigh() ? pow(2, index) : 0);
+
+            received |= receive_data_pin.isHigh() && 2 << i ;
 
             send_pin.setHigh();
 
-            Utils.sleep(20);
+            Utils.sleep(this.sleep_interval);
             send_pin.setLow();
 
-            index--;
-            Utils.sleep(20);
+            Utils.sleep(this.sleep_interval);
         }
+
         return received;
     }
 
-
-
-//    public int bitbang_receive() {
-//        int index = 8;
-//        int received = 0;
-//        char result;
-//        send_pin.isLow();
-//        send_data_pin.isHigh();
-//        System.out.println("Test 1");
-//        System.out.println("D0: " + receive_pin.isHigh() + "|| D1: " + receive_data_pin.isHigh());
-//        for (int i = 0; i < 8; i++) {
-//            while (receive_pin.isLow()) {
-//                System.out.println("Test 2");
-//                System.out.println("D0: " + receive_pin.isHigh() + "|| D1: " + receive_data_pin.isHigh());
-//                Utils.sleep(5000);
-//            }
-//            received += (receive_data_pin.isHigh() ? pow(2, index) : 0);
-//
-//            send_pin.setHigh();
-//            send_data_pin.setLow();
-//            Utils.sleep(20);
-//            send_pin.setLow();
-//
-//            index--;
-//        }
-//        result = (char) received;
-//        return received;
-//    }
-
     protected void pauseApp() {
-    }
-
-    public int pow(int i, int p) {
-        int result = (p==0) ? 1 : 2;
-        for (int j = 1; j < p; j++) {
-            result *= i;
-        }
-        return result;
     }
 
     /**
