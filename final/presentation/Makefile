@@ -5,8 +5,8 @@ compile: presentation.pdf
 		cat /dev/null | pdflatex $^ | ~/.vim/script/latex-errorfilter ; \
 		cat /dev/null | pdflatex $^ > /dev/null; \
 	else \
-		cat /dev/null pdflatex $^ ; \
-		cat /dev/null pdflatex $^ > /dev/null; \
+		cat /dev/null | pdflatex $^ ; \
+		cat /dev/null | pdflatex $^ > /dev/null; \
 	fi
 
 presentation.tex: presentation.yaml
