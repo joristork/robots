@@ -1,7 +1,7 @@
 metas:
   title: Team America's Cobot # ' (syntax fix)
   author: >
-    Harm Debois \and Joris Stork \\
+    Harm Dermois \and Joris Stork \\
     Lucas Swartsenburg \and Sander van Veen
   #theme_name: default
   theme_color: blue
@@ -21,7 +21,16 @@ Introductie:
 
 Problemen & Oplossingen:
   Hardware problemen:
-    Probleem 1:
+    "Probleem 1: Computer met COM poort":
+      - "Dus: \\Huge{ }\\pause"
+      - \Huge{We} \pause
+      - \Huge{Were} \pause
+      - \Huge{Screwed}
+
+    "Probleem 2: I2C bus":
+      - Omschrijving
+
+    Probleem 2:
       - Omschrijving
       # - Kabeltjes solderen
       # - Geen USB/COM kabel aangesloten
@@ -31,13 +40,13 @@ Problemen & Oplossingen:
     "Probleem 1: De toolchain":
       - Microcontroller 18f452
       - Geen compiler/linker/programmer instructies:
-        - sdcc (Small device compiler).
-        - gputils (GNU PIC utilities; linker).
-        - piklab-prog (Programmer).
-      - Geen "#use" directive in sdcc:
+        - \texttt{sdcc} (Small device compiler).
+        - \texttt{gputils} (GNU PIC utilities; linker).
+        - \texttt{piklab-prog} (Programmer).
+      - Geen ``\texttt{#use}'' directive in sdcc: # ' (Vim syntax fix)
         - MPLab compiler, alleen voor Windows.
       - Programmer (Linux) en Compiler (Windows):
-        - Gebruik sshfs over sremote.
+        - Gebruik \texttt{sshfs} over sremote.
         - Verbind Linux en Mac (VM met Windows) met sremote.
         - Compile na source modification.
         - Programmeer automatisch na compilatie.
@@ -47,6 +56,9 @@ Problemen & Oplossingen:
 
     "Probleem 3: Bit banging":
       - Omschrijving
+      - image img/bit-banging.pdf:
+          width: 8cm
+          height: 5cm
 
 Features:
   Lists:

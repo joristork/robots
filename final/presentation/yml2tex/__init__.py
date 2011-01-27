@@ -71,8 +71,9 @@ def _escape_output(text):
            '%': '\%',
            '#': '\#',
            '_': '\_',
-           '{': '\{',
-           '}': '\}'}
+     #      '{': '\{',
+     #      '}': '\}',
+            }
 
     for i, j in dic.iteritems():
         text = text.replace(i, j)
