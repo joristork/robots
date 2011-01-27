@@ -6,7 +6,7 @@ metas:
   #theme_name: default
   theme_color: blue
   code_style: colorful
-  document: slide_pause
+  #document: slide_pause
 
 Introductie:
   Wat is een Cobot?:
@@ -38,42 +38,51 @@ Problemen & Oplossingen:
 
   Software problemen:
     "Probleem 1: De toolchain":
-      - Microcontroller 18f452
+      - Microcontroller 18f452 \pause
       - Geen compiler/linker/programmer instructies:
-        - \texttt{sdcc} (Small device compiler).
+        - \texttt{sdcc} (Small device C compiler).
         - \texttt{gputils} (GNU PIC utilities; linker).
-        - \texttt{piklab-prog} (Programmer).
+        - \texttt{piklab-prog} (Programmer). \pause
       - Geen ``\texttt{#use}'' directive in sdcc: # ' (Vim syntax fix)
-        - MPLab compiler, alleen voor Windows.
+        - MPLab compiler, alleen voor Windows. \pause
       - Programmer (Linux) en Compiler (Windows):
         - Gebruik \texttt{sshfs} over sremote.
-        - Verbind Linux en Mac (VM met Windows) met sremote.
+        - Verbind Linux en Mac (VM met Windows) met Deze.
         - Compile na source modification.
         - Programmeer automatisch na compilatie.
+
+    "Probleem 1: De toolchain (vervolg)":
+      - Linux, Mac en Windows (Virtual Machine) met Deze (UvA).
+      - image img/toolchain.png:
+          width: 7cm
+          height: 6cm
 
     include src/vars.c:
       title: "Probleem 2: Variabelen"
 
-    "Probleem 3: Bit banging":
-      - Omschrijving
-      - image img/bit-banging.pdf:
+    include src/loops.c:
+      title: "Probleem 3: Loop conditie"
+
+    "Probleem 4: Bit banging":
+      - Een voor een (3 bits) met error checking (2 rounds).
+      - image img/bit-banging.png:
           width: 8cm
-          height: 5cm
+          height: 6cm
 
-Features:
-  Lists:
-    Itemized Lists:
-      - Item
-      - Item:
-        - Sub-Item:
-          - Sub-Sub-Item
-          - Sub-Sub-Item
-      - Item
-      - Item
-
-  Images:
-    image img/foobar.png:
-      width: 10.8cm
-      height: 7.5cm
+#Features:
+#  Lists:
+#    Itemized Lists:
+#      - Item
+#      - Item:
+#        - Sub-Item:
+#          - Sub-Sub-Item
+#          - Sub-Sub-Item
+#      - Item
+#      - Item
+#
+#  Images:
+#    image img/foobar.png:
+#      width: 10.8cm
+#      height: 7.5cm
 
 # vim: shiftwidth=2:
