@@ -1,0 +1,79 @@
+metas:
+  title: Team America's Cobot # ' (syntax fix)
+  author: >
+    Harm Dermois \and Joris Stork \\
+    Lucas Swartsenburg \and Sander van Veen
+  #theme_name: default
+  theme_color: blue
+  code_style: colorful
+  document: slide_pause
+
+Introductie:
+  Wat is een Cobot?:
+    Een samenstelling van::
+      - Een Jobot, zonder Java, als robot.
+      - Driver in C voor de microcontroller.
+      - Java (icm SunSpot) voor communicatie.
+
+      - image img/foobar.png:
+          width: 8cm
+          height: 5cm
+
+Problemen & Oplossingen:
+  Hardware problemen:
+    "Probleem 1: Computer met COM poort":
+      - "Dus: \\Huge{ }\\pause"
+      - \Huge{We} \pause
+      - \Huge{Were} \pause
+      - \Huge{Screwed}
+
+    "Probleem 2: I2C bus":
+      - Omschrijving
+
+    Probleem 2:
+      - Omschrijving
+      # - Kabeltjes solderen
+      # - Geen USB/COM kabel aangesloten
+      # - Geen stroom kabel aangesloten
+
+  Software problemen:
+    "Probleem 1: De toolchain":
+      - Microcontroller 18f452
+      - Geen compiler/linker/programmer instructies:
+        - \texttt{sdcc} (Small device compiler).
+        - \texttt{gputils} (GNU PIC utilities; linker).
+        - \texttt{piklab-prog} (Programmer).
+      - Geen ``\texttt{#use}'' directive in sdcc: # ' (Vim syntax fix)
+        - MPLab compiler, alleen voor Windows.
+      - Programmer (Linux) en Compiler (Windows):
+        - Gebruik \texttt{sshfs} over sremote.
+        - Verbind Linux en Mac (VM met Windows) met sremote.
+        - Compile na source modification.
+        - Programmeer automatisch na compilatie.
+
+    include src/vars.c:
+      title: "Probleem 2: Variabelen"
+
+    "Probleem 3: Bit banging":
+      - Omschrijving
+      - image img/bit-banging.pdf:
+          width: 8cm
+          height: 5cm
+
+Features:
+  Lists:
+    Itemized Lists:
+      - Item
+      - Item:
+        - Sub-Item:
+          - Sub-Sub-Item
+          - Sub-Sub-Item
+      - Item
+      - Item
+
+  Images:
+    image img/foobar.png:
+      width: 10.8cm
+      height: 7.5cm
+
+# vim: shiftwidth=2:

@@ -22,15 +22,20 @@
 // this #include pulls in the correct processor-specific registers
 // definition file
 
-#include "pic18fregs.h"
-#include "stdio.h"
-#include "ctype.h"
+//#include "pic18fregs.h"
+//#include "stdio.h"
+//#include "ctype.h"
 
 // Inform the compiler the clock frequency is 20 MHz
 #use delay(clock=20000000)
 
 // Setup the RS232 communication
 #use rs232(baud=9600, xmit=PIN_C6, rcv=PIN_C7,  bits=8)
+
+//#define FOSC 20000000L
+
+//typedef unsigned int config;
+//config __at 0x2007 __CONFIG = _CP_OFF &  _WDT_OFF &  _PWRTE_OFF &  _XT_OSC;
 
 /*
  * Delay function.
@@ -53,6 +58,14 @@ void main() {
 
     //LED_PIN = 1;
     //delay_ms(3000);
+
+    TRISAbits.TRISA0 = 1;
+    TRISAbits.TRISA1 = 1;
+    TRISAbits.TRISA2 = 1;
+    TRISAbits.TRISA3 = 1;
+    TRISAbits.TRISA4 = 1;
+    TRISAbits.TRISA5 = 1;
+    TRISAbits.TRISA6 = 1;
 
     TRISBbits.TRISB0 = 1;
     TRISBbits.TRISB1 = 1;
@@ -84,6 +97,14 @@ void main() {
     //    //delay_ms(250);
     //    //LED_PIN = 1;
 
+        PORTAbits.RA0 = 0;
+        PORTAbits.RA1 = 0;
+        PORTAbits.RA2 = 0;
+        PORTAbits.RA3 = 0;
+        PORTAbits.RA4 = 0;
+        PORTAbits.RA5 = 0;
+        PORTAbits.RA6 = 0;
+
         PORTBbits.RB0 = 0;
         PORTBbits.RB1 = 0;
         PORTBbits.RB2 = 0;
@@ -109,6 +130,14 @@ void main() {
         PORTDbits.RD6 = 0;
 
         for (i=0; i < 100; i++);
+
+        PORTAbits.RA0 = 1;
+        PORTAbits.RA1 = 1;
+        PORTAbits.RA2 = 1;
+        PORTAbits.RA3 = 1;
+        PORTAbits.RA4 = 1;
+        PORTAbits.RA5 = 1;
+        PORTAbits.RA6 = 1;
 
         PORTBbits.RB0 = 1;
         PORTBbits.RB1 = 1;
