@@ -15,7 +15,7 @@ Introductie:
       - Driver in C voor de microcontroller
       - Java (icm SunSpot) voor communicatie
 
-      - image img/foobar.png:
+      - image img/2011-01-27_03.07.40.jpg:
           width: 8cm
           height: 5cm
 
@@ -29,11 +29,11 @@ Introductie:
       - "\\pause Compile een hex bestand geschikt voor de Cobot"
       - "\\pause Krijg het hex bestand geprogrammeerd op de Cobot"
       - "\\pause Laat de Cobot en Sunspot communiceren"
- 
+
 
 Problemen & Oplossingen:
   Hardware problemen:
-   
+
     "Probleem 1: Geen computer met een com poort":
       - "Dus: \\Huge{ }\\pause"
       - \Huge{We} \pause
@@ -48,17 +48,17 @@ Problemen & Oplossingen:
     "Probleem 2: Hoe gaan we een programma op de Cobot krijgen?":
       - Geen reactie van over de com poort
       - Picprog? Hoe aansluiten?
-     
+
     "Oplossing 2: Hoe gaan we een programma op de Cobot krijgen?":
-      - Contact met Australi\"e -$>$ Purmerend 
-    
+      - Contact met Australi\"e -$>$ Purmerend
+
     "Componenten overzicht":
-      - "Om je een beeld te geven:" 
+      - "Om je een beeld te geven:"
       - image img/diagram_overview.png:
           width: 8cm
           height: 5cm
     "Componenten overzicht 2":
-      - "Om je een beeld te geven:" 
+      - "Om je een beeld te geven:"
       - image img/Total2.jpg:
           width: 8cm
           height: 5cm
@@ -75,7 +75,7 @@ Problemen & Oplossingen:
       - \Huge{We} \pause
       - \Huge{Were} \pause
       - \Huge{Screwed}
-    
+
     "Oplossing x: De $I^2C$ bus en spanning":
       - Bitbangen
       - Serie bits over digitale pinnen sturen
@@ -84,7 +84,7 @@ Problemen & Oplossingen:
           width: 6cm
           height: 5cm
 
-      
+
 
       # - Kabeltjes solderen
       # - Geen USB/COM kabel aangesloten
@@ -109,6 +109,18 @@ Problemen & Oplossingen:
       - Linux, Mac en Windows (Virtual Machine) met Deze (UvA).
       - image img/toolchain.png:
           width: 7cm
+          height: 6cm
+
+    "Probleem 1: De toolchain (workspace)":
+      - Linux workspace (programmer, build log en Vim).
+      - image img/workspace.png:
+          width: 8.5cm
+          height: 6cm
+
+    "Probleem 1: De toolchain (virtual machine)":
+      - Mac met Windows virtual machine.
+      - image img/screenshot_windows_vm.png:
+          width: 8.5cm
           height: 6cm
 
     include src/vars.c:
