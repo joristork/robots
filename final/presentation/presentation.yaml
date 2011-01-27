@@ -26,13 +26,13 @@ Introductie:
       - "\\pause Geschrapt"
 
     "Bijgestelde doel: realistisch":
-      - "\\pause Compile een hex bestand geschikt voor de Cobot"
-      - "\\pause Krijg het hex bestand geprogrammeerd op de Cobot"
-      - "\\pause Laat de Cobot en Sunspot communiceren"
+      - "\\pause Compile hex bestand voor de Cobot"
+      - "\\pause Programmeer de Cobot"
+      - "\\pause Cobot en Sunspot communiceren"
 
   Materiaal:
     "Cobot":
-      - "Microcontroller: 18f542"
+      - "Microcontroller: 18f452"
       - "3 servo's"
       - "3 IR sensors"
       - image img/cobot_bus_pins_layout.png:
@@ -78,51 +78,47 @@ Problemen & Oplossingen:
       - image img/Total2.jpg:
           width: 8cm
           height: 5cm
-    
+
     "Probleem 3: Het compilen en programmeren zelf":
       - "LAPTOP A: Programmer (Linux)"
       - "LAPTOP B: Compiler (Windows)"
       - "LAPTOP B: Niet genoeg stroom voor de programmer (12v)"
       - "\\pause De oplossing bespreek Sander onder het software gedeelte"
-      
+
     "Wat te doen 1":
-      - "Lijkt te uploaden, maar geen resultaat te zien:" 
+      - "Lijkt te uploaden, maar geen resultaat te zien:"
       - image img/2011-01-27_03.02.58.jpg:
           width: 7cm
           height: 5cm
     "Wat te doen oplossing 1":
-      - "Wat is het veschil?" 
+      - "Wat is het veschil?"
       - image img/2011-01-27_03.03.58.jpg:
           width: 7cm
           height: 5cm
 
     "Wat te doen 2":
-      - "Uploaden is gelukt, maar rijdt niet:" 
+      - "Uploaden is gelukt, maar rijdt niet:"
       - image img/2011-01-27_03.04.40.jpg:
           width: 7cm
           height: 5cm
 
     "Wat te doen oplossing 2":
-      - "Wat is het veschil?" 
+      - "Wat is het veschil?"
       - image img/2011-01-27_03.04.54.jpg:
           width: 7cm
           height: 5cm
-                
 
-
-
-
-    "Probleem X: De $I^2C$ bus en spanning":
+    "Probleem 4: De $I^2C$ bus en spanning":
       - "\\pause Sunspot: 3v"
       - "Cobot:   5v"
 
-    "De $I^2C$ bus en spanning":
+    "Probleem 4: De $I^2C$ bus en spanning (vervolg 1)":
       - "Dus: \\Huge{ }\\pause"
       - \Huge{We} \pause
       - \Huge{Were} \pause
       - \Huge{Screwed}
 
-    "Oplossing x: De $I^2C$ bus en spanning":
+    "Oplossing 4: De $I^2C$ bus en spanning (vervolg 2)":
       - Bitbangen
       - Serie bits over digitale pinnen sturen
       - Opgelost met weerstanden
