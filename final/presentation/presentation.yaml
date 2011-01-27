@@ -6,7 +6,7 @@ metas:
   #theme_name: default
   theme_color: blue
   code_style: colorful
-  document: slide_pause
+  #document: slide_pause
 
 Introductie:
   Wat is een Cobot?:
@@ -29,11 +29,11 @@ Introductie:
       - "\\pause Compile een hex bestand geschikt voor de Cobot"
       - "\\pause Krijg het hex bestand geprogrammeerd op de Cobot"
       - "\\pause Laat de Cobot en Sunspot communiceren"
- 
+
 
 Problemen & Oplossingen:
   Hardware problemen:
-   
+
     "Probleem 1: Geen computer met een com poort":
       - "Dus: \\Huge{ }\\pause"
       - \Huge{We} \pause
@@ -49,19 +49,19 @@ Problemen & Oplossingen:
     "Probleem 2: Hoe gaan we een programma op de Cobot krijgen?":
       - Geen reactie van over de com poort
       - Picprog? Hoe aansluiten?
-     
+
     "Oplossing 2: Hoe gaan we een programma op de Cobot krijgen?":
       - Contact met Australi\"e, James Caska
       - Doorverwezen naar Purmerend, Peter van de Lith
-    
+
     "Componenten overzicht":
-      - "Om je een beeld te geven:" 
+      - "Om je een beeld te geven:"
       - image img/diagram_overview.png:
           width: 8cm
           height: 5cm
 
     "Componenten overzicht 2":
-      - "Om je een beeld te geven:" 
+      - "Om je een beeld te geven:"
       - image img/Total2.jpg:
           width: 8cm
           height: 5cm
@@ -97,7 +97,7 @@ Problemen & Oplossingen:
       - \Huge{We} \pause
       - \Huge{Were} \pause
       - \Huge{Screwed}
-    
+
     "Oplossing x: De $I^2C$ bus en spanning":
       - Bitbangen
       - Serie bits over digitale pinnen sturen
@@ -110,9 +110,6 @@ Problemen & Oplossingen:
        - "\\pause Batterij"
        - "\\pause Aarde naar de Cobot"
        - "\\pause We wisten geen signaal specificatie van de servo"
-       
-
-      
 
       # - Kabeltjes solderen
       # - Geen USB/COM kabel aangesloten
@@ -120,42 +117,63 @@ Problemen & Oplossingen:
 
   Software problemen:
     "Probleem 1: De toolchain":
-      - Microcontroller 18f452
+      - Microcontroller 18f452 \pause
       - Geen compiler/linker/programmer instructies:
-        - \texttt{sdcc} (Small device compiler).
+        - \texttt{sdcc} (Small device C compiler).
         - \texttt{gputils} (GNU PIC utilities; linker).
-        - \texttt{piklab-prog} (Programmer).
+        - \texttt{piklab-prog} (Programmer). \pause
       - Geen ``\texttt{#use}'' directive in sdcc: # ' (Vim syntax fix)
-        - MPLab compiler, alleen voor Windows.
+        - MPLab compiler, alleen voor Windows. \pause
       - Programmer (Linux) en Compiler (Windows):
         - Gebruik \texttt{sshfs} over sremote.
-        - Verbind Linux en Mac (VM met Windows) met sremote.
+        - Verbind Linux en Mac (VM met Windows) met Deze.
         - Compile na source modification.
         - Programmeer automatisch na compilatie.
+
+    "Probleem 1: De toolchain (vervolg)":
+      - Linux, Mac en Windows (Virtual Machine) met Deze (UvA).
+      - image img/toolchain.png:
+          width: 7cm
+          height: 6cm
+
+    "Probleem 1: De toolchain (workspace)":
+      - Linux workspace (programmer, build log en Vim).
+      - image img/workspace.png:
+          width: 8.5cm
+          height: 6cm
+
+    "Probleem 1: De toolchain (virtual machine)":
+      - Mac met Windows virtual machine.
+      - image img/screenshot_windows_vm.png:
+          width: 8.5cm
+          height: 6cm
 
     include src/vars.c:
       title: "Probleem 2: Variabelen"
 
-    "Probleem 3: Bit banging":
-      - Omschrijving
-      - image img/bit-banging.pdf:
+    include src/loops.c:
+      title: "Probleem 3: Loop conditie"
+
+    "Probleem 4: Bit banging":
+      - Een voor een (3 bits) met error checking (2 rounds).
+      - image img/bit-banging.png:
           width: 8cm
-          height: 5cm
+          height: 6cm
 
-Features:
-  Lists:
-    Itemized Lists:
-      - Item
-      - Item:
-        - Sub-Item:
-          - Sub-Sub-Item
-          - Sub-Sub-Item
-      - Item
-      - Item
-
-  Images:
-    image img/foobar.png:
-      width: 10.8cm
-      height: 7.5cm
+#Features:
+#  Lists:
+#    Itemized Lists:
+#      - Item
+#      - Item:
+#        - Sub-Item:
+#          - Sub-Sub-Item
+#          - Sub-Sub-Item
+#      - Item
+#      - Item
+#
+#  Images:
+#    image img/foobar.png:
+#      width: 10.8cm
+#      height: 7.5cm
 
 # vim: shiftwidth=2:
