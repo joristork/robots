@@ -1,8 +1,0 @@
-This directory includes sample source code for application note 696.  It
-can be used to verify correct installation of MPLAB C18 or as reference
-code for using C18 interrupts or library functions.  Included are the
-following files:
-
-* 00696a.pdf  - application note 696
-* 18motor.c   - source code for application note
-* buildit.bat - command-line batch file for building AN696
