@@ -37,12 +37,14 @@ public class send extends javax.microedition.midlet.MIDlet {
     IIOPin pin_ack = pins[EDemoBoard.D2];
     IIOPin pin_rst = pins[EDemoBoard.D3];
     int error = 0;
-    private static final int SLEEP_THRESHOLD = 2;
+    private static final int SLEEP_THRESHOLD = 0;
     private static final int DRIVE = 0;
     private static final int REVERSE = 1;
     private static final int LEFT = 2;
     private static final int RIGHT = 3;
     private static final int STOP = 4;
+
+    private static final int BITS = 4;
 
     /**
      * Start the sunspot, initiate all pins, the leds, make sure that there is
@@ -185,14 +187,15 @@ public class send extends javax.microedition.midlet.MIDlet {
              * If the first three bits have been send (by bitshift), restore the
              * data var to what is was before bitshifting.
              */
-            if (i == 2) {
+            if (i == 3) {
                 data = data_cop;
+                System.out.println("DATA: " + data);
             }
 
             /*
              * Bitwise AND.
              */
-            if ((data & 0x2) > 0) {
+            if ((data & 0x4) > 0) {
                 send_data_pin.setHigh();
                 System.out.print("Set data: 1");
             } else {
