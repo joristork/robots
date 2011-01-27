@@ -11,27 +11,81 @@ metas:
 Introductie:
   Wat is een Cobot?:
     Een samenstelling van::
-      - Een Jobot, zonder Java, als robot.
-      - Driver in C voor de microcontroller.
-      - Java (icm SunSpot) voor communicatie.
+      - Een Jobot, zonder Java, als robot
+      - Driver in C voor de microcontroller
+      - Java (icm SunSpot) voor communicatie
 
       - image img/foobar.png:
           width: 8cm
           height: 5cm
 
+  Wat was ons doel?:
+    "Oorspronkelijke doel: filosoferen":
+      - Twee Cobots die elkaar volgen door infrarood
+      - Pathfinding
+      - "\\pause Geschrapt"
+
+    "Bijgestelde doel: filosoferen":
+      - "\\pause Compile een hex bestand geschikt voor de Cobot"
+      - "\\pause Krijg het hex bestand geprogrammeerd op de Cobot"
+      - "\\pause Laat de Cobot en Sunspot communiceren"
+ 
+
 Problemen & Oplossingen:
   Hardware problemen:
-    "Probleem 1: Computer met COM poort":
+   
+    "Probleem 1: Geen computer met een com poort":
       - "Dus: \\Huge{ }\\pause"
       - \Huge{We} \pause
       - \Huge{Were} \pause
       - \Huge{Screwed}
 
-    "Probleem 2: I2C bus":
-      - Omschrijving
+    "Oplossing 1: Geen Computer met een com poort":
+      - "2x usb naar com converter gekocht"
+      - "Worstelen met de converter"
+      - "Tijd gekost: 1 dag"
+# Hoe te programmeren?
+    "Probleem 2: Hoe gaan we een programma op de Cobot krijgen?":
+      - Geen reactie van over de com poort
+      - Picprog? Hoe aansluiten?
+     
+    "Oplossing 2: Hoe gaan we een programma op de Cobot krijgen?":
+      - Contact met Australi\"e -$>$ Purmerend 
+    
+    "Componenten overzicht":
+      - "Om je een beeld te geven:" 
+      - image img/diagram_overview.png:
+          width: 8cm
+          height: 5cm
+    "Componenten overzicht 2":
+      - "Om je een beeld te geven:" 
+      - image img/Total2.jpg:
+          width: 8cm
+          height: 5cm
 
-    Probleem 2:
-      - Omschrijving
+
+
+
+    "Probleem X: De $I^2C$ bus en spanning":
+      - "\\pause Sunspot: 3v"
+      - "Cobot:   5v"
+
+    "De $I^2C$ bus en spanning":
+      - "Dus: \\Huge{ }\\pause"
+      - \Huge{We} \pause
+      - \Huge{Were} \pause
+      - \Huge{Screwed}
+    
+    "Oplossing x: De $I^2C$ bus en spanning":
+      - Bitbangen
+      - Serie bits over digitale pinnen sturen
+      - Opgelost met weerstanden
+      - image img/bitbang.png:
+          width: 6cm
+          height: 5cm
+
+      
+
       # - Kabeltjes solderen
       # - Geen USB/COM kabel aangesloten
       # - Geen stroom kabel aangesloten
