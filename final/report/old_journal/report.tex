@@ -1,0 +1,312 @@
+\documentclass[a4paper, 12pt, titlepage]{article}
+\usepackage{hyperref, listings,amssymb, amsmath, amsthm, graphicx, float}
+\author{Joris Stork: 6185320 \and Lucas Swartsenburg: 6174388 \and Sander van
+Veen: 6167969 \and Harm Dermois: 0527963}
+\title{Laboratory log book: Robotics final project}
+\begin{document}
+\maketitle
+
+\section{Objective} % {{{
+
+Our objective was to combine the relatively advanced and portable communications 
+and sensor functionality of wireless sensor network motes with the mobility 
+and sensor functionality of three wheeled robots.
+
+% }}}
+
+\section{Method} % {{{
+
+
+\subsection{Day 1: COM vintage} % {{{
+
+We wanted to avoid re-inventing the wheel. Our department provided a
+pre-existing driver for the Hemisson device, also provided, which sports a
+microcontroller similar to that found on the jobot. The two devices have similar
+functionality. Our intention was to alter the drivers for the Hemisson to work
+with the jobot.
+
+Our first challenge was to establish a connection between our PCs and the
+Hemisson via the device's serial port. Since none of our PCs had a ``COM'' port,
+we procured a USB to COM port adapter. During the first day our attempts to
+establish a connection with the Hemisson device through this adapter failed. Our
+attempts involved both a Linux PC and a Windows PC.
+
+% }}}
+
+\subsection{Day 2: Getting to grips} % {{{
+
+Early during our second day we established that the COM port for the USB to
+serial adapter needed to be set in the Windows device driver list. An analogous
+solution applied in the case of the linux computer. With this obstacle out of
+the way, we split our
+group into two: Lucas and Harm were assigned the task of configuring the
+SunSpots, and Sander and Joris were to port the C code that drives the Hemisson
+to the jobots. 
+
+\subsubsection{Joris and Sander} % {{{
+
+Once we had established that the normal bootloader and demo code were on board
+the Hemisson, we set about trying to drive the device over a serial connection.
+To do this we used a Linux machine and the USB to serial port adapter. The
+Hemisson's manual contained details of parameters for establishing a serial port 
+connection to the Hemisson's MCU: baud rate of 115,200 bps; byte size of 8 bits; 
+no parit
+data; one stop bit; no flow control. We were successfully able to open a serial
+port connection to the Hemisson MCU using the pySerial python module under
+Linux. Using the command syntax outlined in the Hemisson manual, with commands
+such as \texttt{D,-5,5} to drive the MCU's peripherals, our first successful
+command over the serial port was to set the Hemisson's wheels in motion, with
+the command: 
+\begin{verbatim}D\r\end{verbatim}
+We decided to pursue this route towards controlling the Hemisson from the linux
+machine a little further in order to have a small framework from which to test
+the Hemisson's and later the Jobot's configuration over the serial port.
+See appendix \ref{python} for the python code we wrote to
+control the Hemisson over the serial port.
+
+% }}}
+
+% }}}
+
+\subsection{Day 3: Jobot in C} % {{{
+
+
+\subsubsection{Joris and Sander} % {{{
+
+We finished writing a python script to control the Hemisson over a serial port 
+connection. Appendix \ref{python} is a verbatim printout of the
+python code. The script contains a number of definitions, effectively functions
+that translate higher level commands in a test code section of the script into
+the necessary serial port data. The test code section as displayed in the
+appendix instructs the Hemisson to drive forwards at half thrust, then to turn 
+
+% }}}
+
+% }}}
+
+% }}}
+
+\section{Hardware}
+\begin{itemize}
+    \item SunSpots: Wireless Sensor Network motes. See also 
+    \href{http://en.wikipedia.org/wiki/Sun_SPOT}
+        {this wikipedia article} - which includes some useful links. The sunspot
+        includes the following:
+        \subitem Microcontroller: $180 MHz$ 32 bit ARM920T core - $512K$ RAM -
+        $4M$
+        Flash;
+        \subitem $2.4 GHz$ IEEE $802.15.4$ radio with integrated antenna;
+        \subitem $AT91$ timer chip;
+        \subitem USB interface;
+        \subitem $2G/6G$ three-axis accelerometer;
+        \subitem Temperature sensor;
+        \subitem Light sensor;
+        \subitem 8 tri-color LEDs;
+        \subitem 6 analog inputs;
+        \subitem 2 momentary switches;
+        \subitem 5 general purpose I/O pins;
+        \subitem 4 high current output pins;
+        \subitem $3.7V$ rechargeable $750 mAh$ lithium-ion battery;
+    \item jobot: Predesigned robot with three wheels in a triangular
+    configuration, and including:
+        \subitem a PIC16F452 microcontroller with max $40MHz$ CPU clock, 256 byte
+        EEPROM data, $32KB$ program memory, and digital communication peripherals
+        (1-A/E/USART, 1-MSSP(SPI/I2C));
+    \item Hemisson: Predesigned robot with two wheels for mobility, that includes:
+        \subitem a PIC16F877 microcontroller with $20MHz$ CPU clock, 8bit,
+        $8K$ $\times$ 14 bit words program memory, 368 bytes data memory, 256 bytes
+        EEPROM data memory, 14 interrupts, I/O ports A,B,C,D,E, three timers,
+        serial communications (MSSP, USART), parallel communications (PSP), 8
+        input channel, 10 bit analog to digital module;
+        \subitem two DC motors for independent control of two wheel. Open loop
+        control without encoders;
+        \subitem eight IR ambient light sensors;
+        \subitem six IR obstacle detection sensors;
+        \subitem two line detection sensors;
+        \subitem a standard $9V$ (PP3) battery connector;
+        \subitem serial port with DB9 connector;
+        \subitem a TV remote receiver;
+        \subitem a buzzer;
+        \subitem four LEDs;
+        \subitem four programmable switches;
+        \subitem an extension bus for extra modules;
+    \item Linux, Mac OS X, Windows XP and Windows 7 driven PCs;
+    \item USB to RS232 / DB9 converter. Make: K\"onig;
+        
+
+\end{itemize}
+
+\section{Software}
+% }}}
+
+% }}}
+
+\section{results} % {{{
+% }}}
+
+\section{assumptions} % {{{
+
+% }}}
+
+\newpage
+\appendix
+
+\section{Python code to control the Hemisson} % {{{
+\label{python}
+\begin{verbatim}
+from serial import Serial, PARITY_NONE, EIGHTBITS, STOPBITS_ONE
+from time import sleep
+
+class HemissonException(Exception):
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return repr(self.value)
+
+class Hemisson:
+    def __init__(self):
+        """
+        Initialise the serial connection to the Hemisson robot.
+        """
+
+        self.serial = Serial(0)
+        self.serial.setParity(PARITY_NONE)
+        self.serial.setByteSize(EIGHTBITS)
+        self.serial.setStopbits(STOPBITS_ONE)
+        self.serial.setBaudrate(115200)
+
+        print 'i Initialised serial connection "%s".' % self.serial.portstr
+        self.serial.write(chr(254)+'\r')
+        self.readline()
+        self.readline()
+        self.readline()
+
+    def __delete__(self):
+        """
+        Disconnect the serial connnection to the Hemisson robot.
+        """
+
+        print 'i Destroying serial connection "%s".' % self.serial.portstr
+        self.write(chr(8))
+        self.serial.close()
+
+    def beep(self, state):
+        """
+        Generates a continuous beep, depending on state (0 = Off, 1 = On).
+        """
+
+        if state not in (0, 1):
+            raise HemissionException('Beep state should be 0 (Off) or 1 (On).')
+
+        self.write('H,%d' % state)
+        self.readline()
+
+    def drive(self):
+        """
+        Drive forward (setting both wheel's drive speed to '2').
+        """
+
+        self.set_speed(2)
+
+    def get_switches(self):
+        """
+        Read the current status of the four top switches. Possible values are 0
+        (= robot's right handside) and 1 (= robot's left handside). The first
+        value is the value of the first switch from the front of the robot.
+        """
+
+        self.write('I')
+        self.readline()
+
+    def set_speed(self, left, right=None):
+        """
+        Set driving speed of left and right wheel. If only the left wheel drive
+        speed is given, the right wheel's drive speed is set to the left
+        wheel's drive speed.
+        """
+
+        if right == None:
+            right = left
+
+        if not( -9 <= left <= 9 and -9 <= right <= 9):
+            raise HemissonException(
+                'Keep the wheel drive speed value between -9 and 9.')
+
+        self.write('D,%d,%d' % (left, right))
+        self.readline()
+
+    def stop(self):
+        """
+        Stop moving forward (setting both wheel's drive speed to zero).
+        """
+
+        self.write('D,0,0')
+        self.readline()
+
+    def readline(self):
+        """
+        Read a single newline terminated line from the serial connection.
+        """
+
+        print '< %s' % self.serial.readline()[:-1]
+
+    def remote_version(self):
+        """
+        Display version of the HemiOS running on the connected Hemisson robot.
+        """
+
+        self.write('B')
+        self.readline()
+
+    def reset(self):
+        """
+        Reset the robot's processor as if the On/Off switch is cycled.
+        """
+
+        self.serial.write('Z')
+        self.readline()
+
+    def write(self, msg):
+        """
+        Write a message through the serial connection to the Hemisson robot.
+        """
+
+        print '> %s\\n\\r' % msg
+        self.serial.write(msg+'\n\r')
+
+if __name__ == '__main__':
+    robot = Hemisson()
+    robot.remote_version()
+    robot.get_switches()
+
+    #robot.drive()
+    for i in range(4):
+        robot.set_speed(4)
+        sleep(2)
+        robot.set_speed(-4,4)
+        sleep(1.5)
+
+    robot.stop()
+    #robot.beep(1)
+    #sleep(2)
+    #robot.beep(0)
+    #del robot
+
+\end{verbatim}
+
+% }}}
+
+\section{Appendix B: microcontroller program source} % {{{
+
+\begin{verbatim}
+
+\end{verbatim}
+
+% }}}
+
+\section{Appendix C: sunspot source} % {{{
+
+% }}}
+
+\end{document}

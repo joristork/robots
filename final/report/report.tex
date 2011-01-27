@@ -1,0 +1,84 @@
+\documentclass[a4paper, 12pt, titlepage]{article}
+\usepackage{listings,amssymb, amsmath, amsthm, graphicx, float, hyperref}
+\hypersetup{
+    colorlinks=false,
+    pdfborder={0 0 0},
+}
+\newcommand{\tsup}[1]{\ensuremath{\sp{\text{#1}}}}
+
+\author{Harm Dermois: 0527963\and Joris Stork: 6185320\and Lucas Swartsenburg: 6174388\and Sander van Veen: 6167969}
+
+\title{Cobots (and Sun SPOTS)}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\begin{abstract}
+\end{abstract}
+
+\section{Introduction}
+
+This project concludes our team's involvement in a January 2011 
+robotics course at the University of Amsterdam (UvA). The team consists 
+of four second-year UvA students enrolled for the BSc in Computer Science. The
+overall aim of this project is to address the challenges inherent in building a
+microcontroller based mobile robot.
+
+Our team was given the task, firstly, of ``ressuscitating'' the UvA's
+Java-programmable ``Jobot'' robots, whose software development platform 
+had become defunct and inoperative. Our second task was to combine the 
+Jobots' mobility and sensing capabilities with the enhanced communications, 
+sensing and processing functionality of 
+Sun SPOTS -- wireless sensor network devices from the Sun Labs
+stable. In this way we hoped to achieve a few things, namely to:
+
+\begin{itemize}
+    \item write, compile and load programs from scratch for a PIC based
+    microcontroller board;
+    \item create drivers for the servos and sensors connected the the above
+    board;
+    \item further explore the Sun SPOTS' sensing and communications
+    characteristics through those devices' Java frameworks;
+    \item build a data transport between the Sun
+    SPOTS and the standard microcontrollers on the Jobots, possibly over 
+    an $I^2C$ bus;
+    \item design an interface between our respective software implementations
+    on the Jobot and on the Sun SPOTS;
+    \item build a remote control system using the above interface;
+    \item attempt some basic robot activities using our adapated, Sun SPOT
+    controlled robot(s), such as: obstacle avoidance; reaching a goal;
+    recognising a fellow robot; following a fellow robot, and so on, and;
+    \item learn!
+\end{itemize}
+
+Strict time and resource limitations took precedence over any adherence
+to pre-formulated goals and methods. That said, our project was successful,
+and our team achieved a bonus on the way.
+
+This report describes the principal materials at our disposal and our approach
+to completing the given project tasks. Our results are described per
+challenge, in chronological order of their occurence. 
+This approach reflects the exploratory
+nature of the project, in which a string of unexpected obstacles dictated 
+the structure of our efforts over the past two weeks. 
+
+\section{Materials and approach}
+Appendix 
+
+\section{Results}
+
+\subsection{Cobot}
+
+\subsection{SunSpots}
+
+\section{Discussion}
+
+\section{Conclusion}
+
+\Appendix
+
+\bibliographystyle{plain}
+\bibliography{cited}
+\end{document}
