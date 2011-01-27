@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment name="EmulatorDemo" divider="606" width="617" height="727" zoom="1.0" scroll-x="0" scroll-y="0" expand-description="false">
+  <description>
+    <![CDATA[A demonstration of the SPOT Emulator. Press the "Deploy & Run All" button 
+below to get started. Then try out the various MIDlets described below.]]>
+  </description>
+  <spots>
+    <role name="Sample MIDlets" show-role="true" expand-description="true">
+      <project file="build.xml"/>
+      <description>
+ 
+      </description>
+    <spot address="VirtualSPOT" collapsed="false" show-status="false">
+        <map-position x="200" y="300"/>
+        <location value="in Emulator"/>
+      </spot>
+    <spot address="VirtualSPOT" collapsed="false" show-status="false">
+        <map-position x="200" y="300"/>
+        <location value="in Emulator"/>
+      </spot>
+    <spot address="VirtualSPOT" collapsed="false" show-status="false">
+        <map-position x="200" y="300"/>
+        <location value="in Emulator"/>
+      </spot>
+    <spot address="VirtualSPOT" collapsed="false" show-status="false">
+        <map-position x="200" y="300"/>
+        <location value="in Emulator"/>
+      </spot>
+    </role>
+  </spots>
+  <host-apps>
+  </host-apps>
+</deployment>
