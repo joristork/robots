@@ -35,6 +35,10 @@ Introductie:
       - "Microcontroller: 18f542"
       - "3 servo's"
       - "3 IR sensors"
+      - image img/cobot_bus_pins_layout.png:
+          width: 8cm
+          height: 5cm
+
     "Sunspot":
       - "Accelerator/helling meter"
       - "802.15.4 wireless protocol"
