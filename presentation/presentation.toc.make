@@ -1,4 +1,4 @@
-\beamer@endinputifotherversion {3.10pt}
+\beamer@endinputifotherversion {3.07pt}
 \beamer@sectionintoc {1}{Robots and maps}{3}{0}{1}
 \beamer@sectionintoc {2}{Sensorial maps}{10}{0}{2}
 \beamer@subsectionintoc {2}{1}{Image based mapping}{11}{0}{2}

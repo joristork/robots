@@ -1,4 +1,5 @@
-\@writefile{nav}{\beamer@endinputifotherversion {3.10pt}}
+
+\@writefile{nav}{\beamer@endinputifotherversion {3.07pt}}
 \@writefile{nav}{\headcommand {\beamer@documentpages {44}}}
 \@writefile{nav}{\headcommand {\beamer@framepages {10}{10}}}
 \@writefile{nav}{\headcommand {\beamer@framepages {11}{11}}}
@@ -103,7 +104,7 @@
 \@writefile{nav}{\headcommand {\slideentry {4}{0}{21}{42/42}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {4}{0}{22}{43/43}{}{0}}}
 \@writefile{nav}{\headcommand {\slideentry {4}{0}{23}{44/44}{}{0}}}
-\@writefile{toc}{\beamer@endinputifotherversion {3.10pt}}
+\@writefile{toc}{\beamer@endinputifotherversion {3.07pt}}
 \@writefile{toc}{\beamer@sectionintoc {1}{Robots and maps}{3}{0}{1}}
 \@writefile{toc}{\beamer@sectionintoc {2}{Sensorial maps}{10}{0}{2}}
 \@writefile{toc}{\beamer@sectionintoc {3}{Topological Maps}{30}{0}{3}}
@@ -111,18 +112,14 @@
 \@writefile{toc}{\beamer@subsectionintoc {2}{1}{Image based mapping}{11}{0}{2}}
 \@writefile{toc}{\beamer@subsectionintoc {2}{2}{Spacial occupancy representations}{14}{0}{2}}
 \@writefile{toc}{\beamer@subsectionintoc {2}{3}{Geometric maps}{22}{0}{2}}
-\AtEndDocument{\ifx\hyper@anchor\@undefined
-\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
-\fi}
-\fi}
-\gdef\HyperFirstAtBeginDocument#1{#1}
-\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
-\gdef\newlabel#1#2{\newlabelxx{#1}#2}
-\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
-\global\let\hyper@last\relax 
-\global\let\oldcontentsline\contentsline
-\global\let\oldnewlabel\newlabel
-\let\contentsline\oldcontentsline
-\let\newlabel\oldnewlabel
-\providecommand\HyField@AuxAddToFields[1]{}
-\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\AtEndDocument{\let \contentsline\oldcontentsline
+\else
+\fi
+\gdef \contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\gdef \newlabel#1#2{\newlabelxx{#1}#2}
+\gdef \newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\global \let \hyper@last\relax 
+\global \let \oldcontentsline\contentsline
+\global \let \oldnewlabel\newlabel
+\ifx\hyper@anchor\@undefined
+\let \newlabel\oldnewlabel}
