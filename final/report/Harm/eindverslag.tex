@@ -1,24 +1,75 @@
-
 \documentclass[a4,english]{article}
 \usepackage{babel}
+\usepackage{graphicx}
 
 \begin{document}
-\section{The Sun Spot}
-The Sunspot is a vital part of our project. We use the Sun Spot to control the robots and intially it was our plan to have communication between the robots via these Sun Spots. Also the information from the Robot's  sensors were to be sent to the Sun Spots to be interpreted and handle accordingly.
-\subsection{Communication between the spots} 
-The first order of business was getting the Sun Spots to talk to eachother. To do this you need to open a function on the board of the Sun Spot to start listening for information you might get from other Sun Spots. It is almost always required to filter some of these packages, because if there are other Sun Spots communicating with eachother, you need to be sure you are receiving the right packages. We havn't implemented this, because we were working in a secluded area away from other sunspots which might interfer with out Sun Spots, but this is easily implemented. \\
-
-We send some random information in the form of tilting the Sun Spot. This chosen to figure out both how to send the information and to get to know how the sensors of the Sun Spot function. We wanted the communication between to be both ways. So we had to use threads to get this working properly. Wihtout threads you will get stuck often because of desynchronization. 
-
-We finally managed to corectly send the information between the two Sun Spot and we build the fundations of the communications between the two robots or as application as a remote control. With this basis it could be used to implement any sort of data transfer in an orderly fashion.  
+\section{The Sun SPOT}
+\label{sec:sunspot}
+The Sun SPOT is a vital part of our project. We use the Sun SPOT\ref{app:sunspot} to control the robots and initially it was our plan to have communication between the robots via these Sun Spots. Also the information from the Robot's sensors were to be sent to the Sun Spots to be interpreted and handled accordingly.
+\subsection{Communication between the SPOTs}
+\label{subsec:comm}
+The first order of business was getting the Sun SPOTs to communicate with each other. To do this you needed to open a function on the board of the Sun Spot to start listening for information you might get from other Sun Spots. It is almost always required to filter some of these packages, because if there are other Sun Spots communicating with each other. You need to be sure you are receiving the right packages. We haven't implemented this, because we were working in a secluded area away from other sunspots which might interfere with out Sun Spots, but this is easily implemented in the code we made. In the final code we do filter out packages without valid commands. This will avoid most of the unwanted traffic, but we can still get some messages that were not intended for us. \\
+We send some random information in the form of tilting the Sun Spot. This chosen to figure out both how to send the information and to get to know how the sensors(EDemoboard) of the Sun Spot functioned. We wanted the communication between to be both ways. So we had to use threads to get this working properly. Without threads you will often get stuck because of desynchronization and would be waiting on each other.
+With the implementation of theses thread we finally managed to correctly send the information between the two Sun Spot. 
+We built the foundations of the communications between the two robots or as application as a remote control. With this foundation it could be used to implement any sort of data transfer in an orderly fashion and with the way we made the code it is very easy too expand it for more difficult problems. 
 
 \subsection{Bit-banging}
+\label{subsec:bitbang}
 Bit-banging can be implemented at very low cost, and is used in, for example, embedded systems.\\
+First we thought we could send the data between the Sun Spot and the CoBot via the $I^2C$ bus, but halfway through the project. It was found out this wasn't possible, because of a technical issues. Namely the Sun SPOT can only handle a voltage of 3V and the CoBot can only send signals of 5V. This Sis a big problem if you want to communicate between the two without frying the Sun Spot. Luckily the Cobot can register voltages of 2V and higher so no modification had to be made to get this to work. 
+This meant we had to use another method to get the information to the Cobot. The solution that was given to us was the use of bit-banging. Bit-banging is a technique for serial communications using software instead of dedicated hardware. This means you got to send all the information bit by bit instead of sending a full package of bytes in the form on any given data type. If you want to use this method it is needed to have good control of how and when the information is sent. This means you are responsible for all the timings and synchronizations between the parties. The good thing about bit-banging is that it is low cost. it gives you more control and the best thing is that it can be used in every languages and can be used on every system that can communicate with software, because it is so low level.
 
-First we thought we could send the data between the Sun Spot and the CoBot via the the $I^2C$ bus, but half way through the project. It was found out this was't possible, because of technical issues. Namely the Sun Spot can only handle a voltage of 3V and the CoBot can only send signals of 5V. This is a big problem if you want to communicate between the two without frying the Sun Spot. So we had to use a technique called big-banging. Bit-banging is a technique for serial communications using software instead of dedicated hardware. This means you got to send all the information bit by bit instead of sending a full package of bytes in the form on any given data type. If you want to use this method it is needed to have good control of how and when the information is sent. This means you are responsible for all the timings and synchronisations between the parties. The good thing about  bit-banging is that it is low cost. it gives you more control and the best thing is that it can be used in every languages and can be used on every system that can communicate with software, because it is so low level. 
+In our case we started by first sending information between two Sun Spots. We wanted to implement big-banging without the use of a clock. So there's a handshaking protocol need to get the two aligned. Here goes a picture of our handshaking protocol so just a picture of when each line is high or low.
+As you can expect is the hardest part of implementing this are synchronizations. As you can see in the picture the basic idea is really simple, but you always need to make sure it really sent. insert something about the sending the information twice to makes sure it is ok data.
+\begin{figure}
+\label{fig:handshaking}
+\includegraphics[scale = 0.5]{handshaking.png}
+\caption{This is how the handshaking protocol for bit banging works without using a clock. To send one bit from the Sun SPOT(or any other device). First put your data pin on the value you want to send. Then you put your ack on so the receiver knows you are sending. When he sees this is up he take the value of the data pin and on his turn puts his acknowledge on so the sender knows he received the message. Both acknowledges go down and the process start over. In the right picture there is also a reset button which restarts the whole process when an invalid value is given. }
+\end{figure}
 
-In our case we started by first sending information between two Sun Spots. We wanted to implement big-banging without the use of a clock. So there's a handshaking protocol need to get the two alligned. Here goes a picture of our handshaking protocol so just a picture of when each line is high or low. 
-As you can expect is the hardest part of implementing this are synchronisations. As you can see in the picture the basic idea is really simple, but youalways need to make sure it really sent. insert something about the sending the information twice to makes sure it is ok data.
+\subsection{Bringing the two together}
+\label{subsec:together}
+Now that we have both the Cobot ready to drive and the bit-banging between the Sun Spots. We can finally start putting the pieces together. Although we had all the piece it was still hard to get them to work together properly. We still had some difficulties converting the implementation we had working on our Sun SPOT(JAVA) to work on the Cobot(C). The problems were mostly because of the limitations of the compiler we had in for the Cobot. also the timings we had working for the Sun SPOTs were still in need of improvement. This was done on the last day of the project. We also implemented a simple protocol give command to the Cobot to move. 
 
+\section{Discussion}
+\label{sec:discussion}
+\subsection{Problems}
+\label{subsec:problems}
+\subsection{Future}
+\label{subsec:future}
+With all the code we have right now the most logical step would be to use Cobots and let them communicate. One Cobot would be the master and the other one the slave. We would give the master a route to walk and we would want the slave to follow the master. After this we could use the sensors on the cobot to avoid collision and let it autonomously wander. While still sending information to the slave to follow it. the list goes on and on. There were so many other things we would want to do, but cause of lack of time we couldn't manage. 
+
+\appendix
+\section{Hardware}
+\label{app:hardware}
+In this section we will give the specs and features of the hardware we have used throughout the project. 
+\subsection{Sunspot}
+\label{app:sunspot}
+The Sun SPOT Device is a small, wireless, battery powered experimental platform. It is programmed almost entirely in Java to allow regular programmers to create projects that used to require specialized embedded system development skills. The hardware platform includes a range of built-in sensors as well as the ability to easily interface to external devices. \\
+Each Sun SPOT has a 180MHz 32-bit ARM920T core processor with 512K RAM and 4M Flash.\\
+On the sensor board we have:
+\begin{enumerate}
+    \item a 3-axis accelerometer (with two range settings: 2G or 6G)
+    \item a temperature sensor
+    \item a light sensor
+    \item 8 tri-color LEDs
+    \item 6 analog inputs readable by an ADC
+    \item 2 momentary switches
+    \item 5 general purpose I/O pins and
+    \item 4 high current output pins	
+\end{enumerate}
+We also have a radio sensor board.
+The Sun SPOTs use a fully capable Java ME implementation, called Squawk, that supports CLDC 1.1 and MIDP 1.0, plus provides basic OS functionality. The VM executes directly out of flash memory. All the device drivers are also written in Java.
+
+The Sun SPOTS can be upgrade by a lot side.
+
+\subsection{Jobot/Cobot}
+\label{app:cobot}
+\begin{enumerate} 
+	\item MicroController 18f452
+	\item 3 servos
+	\item 3 IR sensors
+\end{enumerate}
 
 \end{document}
+
