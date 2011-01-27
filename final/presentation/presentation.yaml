@@ -15,7 +15,7 @@ Introductie:
       - Driver in C voor de microcontroller
       - Java (icm SunSpot) voor communicatie
 
-      - image img/foobar.png:
+      - image img/cobot_face_sensor.png:
           width: 8cm
           height: 5cm
 
@@ -25,7 +25,7 @@ Introductie:
       - Pathfinding
       - "\\pause Geschrapt"
 
-    "Bijgestelde doel: filosoferen":
+    "Bijgestelde doel: realistisch":
       - "\\pause Compile een hex bestand geschikt voor de Cobot"
       - "\\pause Krijg het hex bestand geprogrammeerd op de Cobot"
       - "\\pause Laat de Cobot en Sunspot communiceren"
@@ -44,24 +44,46 @@ Problemen & Oplossingen:
       - "2x usb naar com converter gekocht"
       - "Worstelen met de converter"
       - "Tijd gekost: 1 dag"
+
 # Hoe te programmeren?
     "Probleem 2: Hoe gaan we een programma op de Cobot krijgen?":
       - Geen reactie van over de com poort
       - Picprog? Hoe aansluiten?
      
     "Oplossing 2: Hoe gaan we een programma op de Cobot krijgen?":
-      - Contact met Australi\"e -$>$ Purmerend 
+      - Contact met Australi\"e, James Caska
+      - Doorverwezen naar Purmerend, Peter van de Lith
     
     "Componenten overzicht":
       - "Om je een beeld te geven:" 
       - image img/diagram_overview.png:
           width: 8cm
           height: 5cm
+
     "Componenten overzicht 2":
       - "Om je een beeld te geven:" 
       - image img/Total2.jpg:
           width: 8cm
           height: 5cm
+    
+    "Probleem 3: Het compilen en programmeren zelf":
+      - "LAPTOP A: Programmer (Linux)"
+      - "LAPTOP B: Compiler (Windows)"
+      - "LAPTOP B: Niet genoeg stroom voor de programmer (12v)"
+      - "\\pause De oplossing bespreek Sander onder het software gedeelte"
+      
+    "Wat te doen 1":
+      - "Lijkt te uploaden, maar geen resultaat te zien:" 
+      - image img/2011-01-27_03.02.58.jpg:
+          width: 8cm
+          height: 5cm
+    "Wat te doen oplossing":
+      - "Wat is het veschil?:" 
+      - image img/2011-01-27_03.03.58.jpg:
+          width: 8cm
+          height: 5cm
+
+                
 
 
 
@@ -83,6 +105,12 @@ Problemen & Oplossingen:
       - image img/bitbang.png:
           width: 6cm
           height: 5cm
+
+    "Overig...":
+       - "\\pause Batterij"
+       - "\\pause Aarde naar de Cobot"
+       - "\\pause We wisten geen signaal specificatie van de servo"
+       
 
       
 
