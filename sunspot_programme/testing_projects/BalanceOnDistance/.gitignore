@@ -1,4 +1,4 @@
 suite
 build
 j2meclasses
-nbproject
+*/*.jar
