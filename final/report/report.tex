@@ -64,20 +64,133 @@ This approach reflects the exploratory
 nature of the project, in which a string of unexpected obstacles dictated 
 the structure of our efforts over the past two weeks. 
 
-\section{Materials and approach}
-Appendix 
+\section{Methods}
+
+Appendix \ref{hardware} provides a more exhaustive description of the various
+pieces of hardware used in this project. This section provides an overview:
+
+\section{Hardware}
+Our 
 
 \section{Results}
+\subsection{Day 1: COM vintage} % {{{
 
-\subsection{Cobot}
+We wanted to avoid re-inventing the wheel. Our department provided a
+pre-existing driver for the Hemisson device, also provided, which sports a
+microcontroller similar to that found on the jobot. The two devices have similar
+functionality. Our intention was to alter the drivers for the Hemisson to work
+with the jobot.
 
-\subsection{SunSpots}
+Our first challenge was to establish a connection between our PCs and the
+Hemisson via the device's serial port. Since none of our PCs had a ``COM'' port,
+we procured a USB to COM port adapter. During the first day our attempts to
+establish a connection with the Hemisson device through this adapter failed. Our
+attempts involved both a Linux PC and a Windows PC.
+
+% }}}
+
+\subsection{Day 2: Getting to grips} % {{{
+
+Early during our second day we established that the COM port for the USB to
+serial adapter needed to be set in the Windows device driver list. An analogous
+solution applied in the case of the linux computer. With this obstacle out of
+the way, we split our
+group into two: Lucas and Harm were assigned the task of configuring the
+SunSpots, and Sander and Joris were to port the C code that drives the Hemisson
+to the jobots. 
+
+
+Once we had established that the normal bootloader and demo code were on board
+the Hemisson, we set about trying to drive the device over a serial connection.
+To do this we used a Linux machine and the USB to serial port adapter. The
+Hemisson's manual contained details of parameters for establishing a serial port 
+connection to the Hemisson's MCU: baud rate of 115,200 bps; byte size of 8 bits; 
+no parit
+data; one stop bit; no flow control. We were successfully able to open a serial
+port connection to the Hemisson MCU using the pySerial python module under
+Linux. Using the command syntax outlined in the Hemisson manual, with commands
+such as \texttt{D,-5,5} to drive the MCU's peripherals, our first successful
+command over the serial port was to set the Hemisson's wheels in motion, with
+the command: 
+\begin{verbatim}D\r\end{verbatim}
+We decided to pursue this route towards controlling the Hemisson from the linux
+machine a little further in order to have a small framework from which to test
+the Hemisson's and later the Jobot's configuration over the serial port.
+See appendix \ref{python} for the python code we wrote to
+control the Hemisson over the serial port.
+
+% }}}
+
+% }}}
+
+\subsection{Day 3: Jobot in C} % {{{
+
+
+We finished writing a python script to control the Hemisson over a serial port 
+connection. Appendix \ref{python} is a verbatim printout of the
+python code. The script contains a number of definitions, effectively functions
+that translate higher level commands in a test code section of the script into
+the necessary serial port data. The test code section as displayed in the
+appendix instructs the Hemisson to drive forwards at half thrust, then to turn 
+
 
 \section{Discussion}
 
 \section{Conclusion}
 
-\Appendix
+\newpage
+\appendix
+
+\section{Hardware in detail}
+\label{hardware}
+\begin{itemize}
+    \item SunSpots: Wireless Sensor Network motes. See also 
+    \href{http://en.wikipedia.org/wiki/Sun_SPOT}
+        {this wikipedia article} - which includes some useful links. The sunspot
+        includes the following:
+        \subitem Microcontroller: $180 MHz$ 32 bit ARM920T core - $512K$ RAM -
+        $4M$
+        Flash;
+        \subitem $2.4 GHz$ IEEE $802.15.4$ radio with integrated antenna;
+        \subitem $AT91$ timer chip;
+        \subitem USB interface;
+        \subitem $2G/6G$ three-axis accelerometer;
+        \subitem Temperature sensor;
+        \subitem Light sensor;
+        \subitem 8 tri-color LEDs;
+        \subitem 6 analog inputs;
+        \subitem 2 momentary switches;
+        \subitem 5 general purpose I/O pins;
+        \subitem 4 high current output pins;
+        \subitem $3.7V$ rechargeable $750 mAh$ lithium-ion battery;
+    \item jobot: Predesigned robot with three wheels in a triangular
+    configuration, and including:
+        \subitem a PIC16F452 microcontroller with max $40MHz$ CPU clock, 256 byte
+        EEPROM data, $32KB$ program memory, and digital communication peripherals
+        (1-A/E/USART, 1-MSSP(SPI/I2C));
+    \item Hemisson: Predesigned robot with two wheels for mobility, that includes:
+        \subitem a PIC16F877 microcontroller with $20MHz$ CPU clock, 8bit,
+        $8K$ $\times$ 14 bit words program memory, 368 bytes data memory, 256 bytes
+        EEPROM data memory, 14 interrupts, I/O ports A,B,C,D,E, three timers,
+        serial communications (MSSP, USART), parallel communications (PSP), 8
+        input channel, 10 bit analog to digital module;
+        \subitem two DC motors for independent control of two wheel. Open loop
+        control without encoders;
+        \subitem eight IR ambient light sensors;
+        \subitem six IR obstacle detection sensors;
+        \subitem two line detection sensors;
+        \subitem a standard $9V$ (PP3) battery connector;
+        \subitem serial port with DB9 connector;
+        \subitem a TV remote receiver;
+        \subitem a buzzer;
+        \subitem four LEDs;
+        \subitem four programmable switches;
+        \subitem an extension bus for extra modules;
+    \item Linux, Mac OS X, Windows XP and Windows 7 driven PCs;
+    \item USB to RS232 / DB9 converter. Make: K\"onig;
+        
+
+\end{itemize}
 
 \bibliographystyle{plain}
 \bibliography{cited}
