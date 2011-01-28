@@ -86,9 +86,9 @@ Appendix
 \label{sec:sunspot}
 
 The Sun SPOT is a vital part of our project. We use the Sun SPOT to control the
-robots and initially it was our plan to have communication between the robots
-via these Sun SPOTs. Also, the information from the Robot's sensors were to be
-sent to the Sun SPOTs to be interpreted and handled accordingly.
+robots. Initially, it was our plan to have communication between the robots
+through these Sun SPOTs. Also, the information from the Robot's sensors were to
+be sent to the Sun SPOTs to be interpreted and handled accordingly.
 
 % }}}
 
@@ -104,7 +104,7 @@ this, because we were working in a secluded area away from other sunspots which
 might interfere with out Sun SPOTs, but this is easily implemented in the code
 we made. In the final code we do filter out packages without valid commands.
 This will avoid most of the unwanted traffic, but we can still get some messages
-that were not intended for us. \\
+that were not intended for us.
 
 We send some information in the form of tilting the Sun SPOT. This chosen to
 figure out both how to send the information and to get to know how the
@@ -153,23 +153,6 @@ wanted to implement big-banging without the use of a clock. So there's a
 handshaking protocol need to get the two aligned. Here goes a picture of our
 handshaking protocol so just a picture of when each line is high or low.
 
-As you can expect is the hardest part of implementing this are synchronizations.
-As you can see in the picture the basic idea is really simple, but you always
-need to make sure it really sent.
-
-\begin{figure}
-\label{fig:handshaking}
-\includegraphics[scale=0.5]{img/handshaking.png}
-\caption{This is how the handshaking protocol for bit banging works without
-using a clock. To send one bit from the Sun SPOT(or any other device). First
-put your data pin on the value you want to send. Then you put your ack on so
-the receiver knows you are sending. When he sees this is up he take the value
-of the data pin and on his turn puts his acknowledge on so the sender knows he
-received the message. Both acknowledges go down and the process start over. In
-the right picture there is also a reset button which restarts the whole process
-when an invalid value is given.}
-\end{figure}
-
 % }}}
 
 \subsection{Bringing the two together} % {{{
@@ -177,22 +160,44 @@ when an invalid value is given.}
 
 Now that we have both the Cobot ready to drive and the bit-banging between the
 Sun SPOTs. We can finally start putting the pieces together. Although we had all
-the piece it was still hard to get them to work together properly. We still had
-some difficulties converting the implementation we had working on our Sun SPOT
-(in Java) to work on the Cobot (written in C). The problems were mostly because
-of the limitations of the compiler we had in for the Cobot. Also the timings we
-had working for the Sun SPOTs were still in need of improvement. This was done on
-the last day of the project. We also implemented a simple protocol give command
-to the Cobot to move.
+the pieces, it was still hard to get them to work together properly. We had some
+difficulties converting the implementation we had working on our Sun SPOT (in
+Java) to work on the Cobot (written in C). The problems were mostly because of
+the limitations of the compiler we had in for the Cobot.
+
+Also, the timers we had working for the Sun SPOTs were still in need of
+improvement. Eventually, we removed the timers from the Java code, since those
+timers did not guarantee that a bit is transmitted. We went for a deterministic
+approach by implementing a state machine. The basic idea is really simple (you
+could only transition from one state into another), but you have to make sure
+acknowledge bits are continuously sent to both sides. In figure
+~\ref{fig:handshaking} is shown how the transmission protocol for bit banging
+works, without using a clock.
+
+\begin{figure}[H]
+\label{fig:handshaking}
+\centering
+\includegraphics[width=11cm]{img/handshaking.png}
+\caption{The left image is a bit diagram of a normal transmission and right is a
+simplified example of an error occurred during the transmission. To send one bit
+from a device (blue labelled lines; sender) to another device (green labelled
+lines; receiver), first put your data pin on the value you want to send. Then
+you put your ACK flag on. Now, the receiver knows the sender is ready to send a
+bit.  When the receiver sees the sender's ACK flag, the receiver read the value
+of the data pin and puts his acknowledge flag on. When the receiver set its ACK
+flag, the sender knows the message bit is received. The sender lowers its
+acknowledge flag, and the receiver will followed by lowering its own ACK flag as
+well. When both ACK flags are down, the process starts all over again. There is
+also a reset flag, which indicates a restart of the whole process is required.
+The receiver will set its reset flag, when an invalid value is received.}
+\end{figure}
 
 % }}}
 
 % }}}
-
 
 \section{Implementation} % {{{
 \label{sec:Implementation}
-
 
 \subsection{Cobot implementation} % {{{
 \label{sub:Cobot implementation}
@@ -201,6 +206,83 @@ to the Cobot to move.
 
 \subsection{Sun SPOT implementation} % {{{
 \label{sub:Sun SPOT implementation}
+
+For this project we used one Sunspot to determine the movement of the robot (by
+measuring the tilt) and sending that information using a wireless connection to
+the other Sun SPOT. The other Sun SPOT will receive the datagram sent and uses
+bit banging to send the received movement to the Cobot. Both Sun SPOTs start up
+a \texttt{BootloaderListenerService}, so that we can read the debug output at
+real-time on our computer. This was very useful to debug the Java code. Both
+Sunspots extend the \texttt{javax.microedition.midlet.MIDlet} class, so that all
+the functions the Sun SPOT needs to operate are in the code.
+
+\subsubsection{Measure tilt and send wireless datagrams.} % {{{
+
+Two threads are used to enable measuring tilt while sending datagrams. It is
+necessary to create two threads, because sending/receiving datagrams is a
+blocking operation. If a single thread is used for both tasks, the tilt is not
+measured until the sending/receiving process is done.
+\\
+\\
+\noindent Thread 1: \textbf{Measuring the tilt and determine what the next Cobot's
+movement is or if the Cobot should halt.}
+\\
+\\
+This thread continuously measures the tilt of the Sunspot. After measuring the
+tilt, the next movement of the Cobot is determined by checking if the Y tilt is
+larger than the X direction and by measuring if the tilt of either the Y or the
+X direction is larger than 25 degrees. When this is not the case, the Sunspot
+will set the movement to ``stop'' (thus no movement). If this is the case and X
+is larger than Y, the Sunspot will set the direction to left or right. If the
+tilt is negative, the Sun SPOT will turn right and vice versa.  Pretty much the
+same case if the tilt in the Y direction is larger than the tilt in the X
+direction. After the movement of the Cobot is determined, the LEDs are set in
+such way that it is clear what is measured.
+\\
+\\
+\noindent Thread 2: \textbf{Sending a wireless package to the other Sunspot
+containing the direction.}
+\\
+\\
+This thread determines if the movement variable has been changed. If the
+movement variable has changed, it will send a radiogram containing the
+corresponding value of the movement to the other sunspot. Before this is
+possible, a radio connection has to be established. The connection is made using
+this function call: \texttt{Connector.open("radiogram://broadcast:37")}.
+
+And a so called ``datagram'' has to be made. We write the integer that contains
+the direction information to the datagram and this datagram is send to the other
+Sunspot.
+
+% }}}
+
+\subsubsection{Receive movement and communicate with the Cobot} % {{{
+TODO ...
+\\
+\\
+\noindent Thread 1: \textbf{Receive the datagrams sent by the Sun SPOT.}
+\\
+\\
+After the direction has been sent, the Sun SPOT sets the LEDs in a way that
+it is clear what the received direction is. It will also start up the bit
+banging process.
+
+% }}}
+
+\subsubsection{Sun SPOT handshake} % {{{
+\label{subsub:Sun SPOT handshake}
+
+Before the second Sunspot starts receiving it first needs to get a handshake
+from the Cobot. The handshake is given when the Sunspot receives two high
+signals on the digital pins that are used for input. If the Sunspot receives a
+high signal on the reset input pin after the handshake, the Cobot didn't
+receive the bits like they were send. When this happens, the same byte is send
+again (twice for checking) to the Cobot. Every step of the bit banging process
+has to get conformation from the Cobot that everything is OK. This is done by
+setting the pins in a certain way. For more information about how this is done,
+we refer to the comments in the Sunspot code.
+
+% }}}
 
 % }}}
 
@@ -269,6 +351,8 @@ implementation, called Squawk, that supports CLDC 1.1 and MIDP 1.0, plus
 provides basic OS functionality. The VM executes directly out of flash memory.
 All the device drivers are also written in Java, only a minimal part of the
 virtual machine is written in C. The Sun SPOTs can be upgrade by a lot side.
+
+% TODO: what is a ``lot side''?
 
 % }}}
 
