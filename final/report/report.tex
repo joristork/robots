@@ -1,53 +1,56 @@
-\documentclass[a4paper, 12pt, titlepage]{article}
-\usepackage{listings,amssymb, amsmath, amsthm, graphicx, float, hyperref}
+\documentclass[a4paper,12pt]{article}
+\usepackage{listings,amssymb,amsmath,amsthm,graphicx,float,hyperref}
+
 \hypersetup{
     colorlinks=false,
     pdfborder={0 0 0},
 }
 \newcommand{\tsup}[1]{\ensuremath{\sp{\text{#1}}}}
 
-\author{Harm Dermois: 0527963\and Joris Stork: 6185320\and Lucas Swartsenburg: 6174388\and Sander van Veen: 6167969}
+\author{Harm Dermois (5027963) \\ Joris Stork (6185320) \and
+Lucas Swartsenburg (6174388) \\ Sander van Veen (6167969)}
 
-\title{Cobots (and Sun SPOTS)}
+\title{Cobots and SunSPOTs}
 
 \begin{document}
-\maketitle
-\tableofcontents
-\newpage
 
-\begin{abstract}
-\end{abstract}
+\maketitle
+
+\abstract{A}
+
+\tableofcontents
+
+\pagebreak
 
 \section{Introduction}
 
-This project concludes our team's involvement in a January 2011 
-robotics course at the University of Amsterdam (UvA). The team consists 
-of four second-year UvA students enrolled for the BSc in Computer Science. The
-overall aim of this project is to address the challenges inherent in building a
-microcontroller based mobile robot.
+This project concludes our team's involvement in a January 2011 robotics course
+at the University of Amsterdam (UvA). The team consists of four second-year UvA
+students enrolled for the BSc in Computer Science. The overall aim of this
+project is to address the challenges inherent in building a microcontroller
+based mobile robot.
 
 Our team was given the task, firstly, of ``ressuscitating'' the UvA's
-Java-programmable ``Jobot'' robots, whose software development platform 
-had become defunct and inoperative. Our second task was to combine the 
-Jobots' mobility and sensing capabilities with the enhanced communications, 
-sensing and processing functionality of 
-Sun SPOTS -- wireless sensor network devices from the Sun Labs
-stable. In this way we hoped to achieve a few things, namely to:
+Java-programmable ``Jobot'' robots, whose software development platform had
+become defunct and inoperative. Our second task was to combine the Jobots'
+mobility and sensing capabilities with the enhanced communications, sensing and
+processing functionality of SunSPOTs -- wireless sensor network devices from the
+SunLabs stable. In this way we hoped to achieve a few things, namely to:
 
 \begin{itemize}
     \item write, compile and load programs from scratch for a PIC based
     microcontroller board;
     \item create drivers for the servos and sensors connected the the above
     board;
-    \item further explore the Sun SPOTS' sensing and communications
+    \item further explore the SunSPOTs' sensing and communications
     characteristics through those devices' Java frameworks;
     \item build a data transport between the Sun
-    SPOTS and the standard microcontrollers on the Jobots, possibly over 
+    SPOTS and the standard microcontrollers on the Jobots, possibly over
     an $I^2C$ bus;
     \item design an interface between our respective software implementations
-    on the Jobot and on the Sun SPOTS;
+    on the Jobot and on the SunSPOTs;
     \item build a remote control system using the above interface;
-    \item attempt some basic robot activities using our adapated, Sun SPOT
+    \item attempt some basic robot activities using our adapated, SunSPOT
     controlled robot(s), such as: obstacle avoidance; reaching a goal;
     recognising a fellow robot; following a fellow robot, and so on, and;
     \item learn!
@@ -58,27 +61,178 @@ to pre-formulated goals and methods. That said, our project was successful,
 and our team achieved a bonus on the way.
 
 This report describes the principal materials at our disposal and our approach
-to completing the given project tasks. Our results are described per
-challenge, in chronological order of their occurence. 
-This approach reflects the exploratory
-nature of the project, in which a string of unexpected obstacles dictated 
-the structure of our efforts over the past two weeks. 
+to completing the given project tasks. Our results are described per challenge,
+in chronological order of their occurrence. This approach reflects the
+exploratory nature of the project, in which a string of unexpected obstacles
+dictated the structure of our efforts over the past two weeks.
 
 \section{Materials and approach}
-Appendix 
+Appendix
 
 \section{Results}
 
 \subsection{Cobot}
 
-\subsection{SunSpots}
+\subsection{SunSPOTs}
+\label{sec:sunspot}
+
+The SunSPOT is a vital part of our project. We use the SunSPOT to control the
+robots and initially it was our plan to have communication between the robots
+via these SunSPOTs. Also the information from the Robot's sensors were to be
+sent to the SunSPOTs to be interpreted and handled accordingly.
+
+\subsection{Communication between the SunSPOTs}
+\label{subsec:comm}
+
+The first order of business was getting the SunSPOTs to communicate with each
+other. To do this you need to use the function on the SunSPOT to start
+listening for information. It is almost always required to filter some of these
+packages, because if there are other SunSPOTs communicating with each other.
+You need to be sure you are receiving the right packages. We haven't implemented
+this, because we were working in a secluded area away from other sunspots which
+might interfere with out SunSPOTs, but this is easily implemented in the code
+we made. In the final code we do filter out packages without valid commands.
+This will avoid most of the unwanted traffic, but we can still get some messages
+that were not intended for us. \\
+
+We send some information in the form of tilting the SunSPOT. This chosen to
+figure out both how to send the information and to get to know how the
+sensors(EDemoboard) of the SunSPOT functioned. We wanted the communication
+between to be both ways. So we had to use threads to get this working properly.
+Without threads you will often get stuck because of desynchronization and would
+be waiting on each other.
+
+With the implementation of theses thread we finally managed to correctly send
+the information between the two SunSPOT. We built the foundations of the
+communications between the two robots or as application as a remote control.
+With this foundation it could be used to implement any sort of data transfer in
+an orderly fashion and with the way we made the code it is very easy too expand
+it for more difficult problems.
+
+\subsection{Bit-banging}
+\label{subsec:bitbang}
+
+%Bit-banging can be implemented at very low cost, and is used in, for example,
+%embedded systems.
+
+First we thought we could send the data between the SunSPOT and the CoBot via
+the $I^2C$ bus, but halfway through the project. It was found out this wasn't
+possible, because of a technical issues. Namely the SunSPOT can only handle a
+voltage of 3V and the CoBot can only send signals of 5V. This is a big problem
+if you want to communicate between the two without frying the SunSPOT. Luckily
+the Cobot can register voltages of 2V and higher so no modification had to be
+made to get this to work.
+
+This meant we had to use another method to get the information to the Cobot. The
+solution that was given to us was the use of bit-banging. Bit-banging is a
+technique for serial communications using software instead of dedicated
+hardware. This means you got to send all the information bit by bit instead of
+sending a full package of bytes in the form on any given data type. If you want
+to use this method it is needed to have good control of how and when the
+information is sent. This means you are responsible for all the timings and
+synchronizations between the parties. The good thing about bit-banging is that
+it is low cost. it gives you more control and the best thing is that it can be
+used in every languages and can be used on every system that can communicate
+with software, because it is so low level.
+
+In our case we started by first sending information between two SunSPOTs. We
+wanted to implement big-banging without the use of a clock. So there's a
+handshaking protocol need to get the two aligned. Here goes a picture of our
+handshaking protocol so just a picture of when each line is high or low.
+
+As you can expect is the hardest part of implementing this are synchronizations.
+As you can see in the picture the basic idea is really simple, but you always
+need to make sure it really sent.
+
+%\begin{figure}
+%\label{fig:handshaking}
+%\includegraphics[scale = 0.5]{handshaking.png}
+%\caption{This is how the handshaking protocol for bit banging works without
+%using a clock. To send one bit from the SunSPOT(or any other device). First
+%put your data pin on the value you want to send. Then you put your ack on so
+%the receiver knows you are sending. When he sees this is up he take the value
+%of the data pin and on his turn puts his acknowledge on so the sender knows he
+%received the message. Both acknowledges go down and the process start over. In
+%the right picture there is also a reset button which restarts the whole process
+%when an invalid value is given.}
+%\end{figure}
+
+\subsection{Bringing the two together}
+\label{subsec:together}
+
+Now that we have both the Cobot ready to drive and the bit-banging between the
+SunSPOTs. We can finally start putting the pieces together. Although we had all
+the piece it was still hard to get them to work together properly. We still had
+some difficulties converting the implementation we had working on our SunSPOT
+(in Java) to work on the Cobot (written in C). The problems were mostly because
+of the limitations of the compiler we had in for the Cobot. also the timings we
+had working for the SunSPOTs were still in need of improvement. This was done on
+the last day of the project. We also implemented a simple protocol give command
+to the Cobot to move.
 
 \section{Discussion}
 
 \section{Conclusion}
 
-\Appendix
+\section{Future}
+\label{sec:future}
+
+With all the code we have right now the most logical step would be to use Cobots
+and let them communicate. One Cobot would be the master and the other one the
+slave. We would give the master a route to walk and we would want the slave to
+follow the master. After this we could use the sensors on the cobot to avoid
+collision and let it autonomously wander. While still sending information to the
+slave to follow it. the list goes on and on. There were so many other things we
+would want to do, but cause of lack of time we couldn't manage.
+
+\appendix
+
+\section{Hardware specification}
+\label{app:hardware}
+
+In this section we will give the specs and features of the hardware we have used
+throughout the project.
+
+\subsection{Sunspot}
+\label{app:sunspot}
+
+The SunSPOT Device is a small, wireless, battery powered experimental platform.
+It is programmed almost entirely in Java (hence ``Sun'', main developer of the
+Java platform, in SunSPOT) to allow regular programmers to create projects that
+used to require specialized embedded system development skills. The hardware
+platform includes a range of built-in sensors as well as the ability to easily
+interface to external devices.
+
+Each SunSPOT has a 180MHz 32-bit ARM920T core processor with 512K RAM and 4M
+Flash. The sensor board contains:
+
+\begin{itemize}
+    \item One 3-axis accelerometer (with two range settings: 2G or 6G).
+    \item One temperature sensor.
+    \item One light sensor.
+    \item Eight tri-color LEDs.
+    \item Six analog inputs readable by an ADC.
+    \item Two momentary switches.
+    \item Five general purpose I/O pins.
+    \item Four high current output pins.
+\end{itemize}
+
+We also have a radio sensor board. The SunSPOTs use a fully capable Java ME
+implementation, called Squawk, that supports CLDC 1.1 and MIDP 1.0, plus
+provides basic OS functionality. The VM executes directly out of flash memory.
+All the device drivers are also written in Java, only a minimal part of the
+virtual machine is written in C. The SunSPOTs can be upgrade by a lot side.
+
+\subsection{Jobot/Cobot}
+\label{app:cobot}
+
+\begin{enumerate}
+	\item MicroController 18f452
+	\item 3 servos
+	\item 3 IR sensors
+\end{enumerate}
 
 \bibliographystyle{plain}
 \bibliography{cited}
+
 \end{document}
