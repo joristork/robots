@@ -155,24 +155,29 @@ handshaking protocol so just a picture of when each line is high or low.
 
 % }}}
 
-\subsection{Bringing the two together} % {{{
-\label{subsec:together}
+\subsection{Bringing the pieces together} % {{{
+\label{subsec:Bringing the pieces together}
 
 Now that we have both the Cobot ready to drive and the bit-banging between the
 Sun SPOTs. We can finally start putting the pieces together. Although we had all
-the pieces, it was still hard to get them to work together properly. We had some
-difficulties converting the implementation we had working on our Sun SPOT (in
-Java) to work on the Cobot (written in C). The problems were mostly because of
-the limitations of the compiler we had in for the Cobot.
+the pieces, it was still hard to get them to work together properly.
 
-Also, the timers we had working for the Sun SPOTs were still in need of
-improvement. Eventually, we removed the timers from the Java code, since those
-timers did not guarantee that a bit is transmitted. We went for a deterministic
-approach by implementing a state machine. The basic idea is really simple (you
-could only transition from one state into another), but you have to make sure
-acknowledge bits are continuously sent to both sides. In figure
-~\ref{fig:handshaking} is shown how the transmission protocol for bit banging
-works, without using a clock.
+% TODO: describe different Voltage of the devices, since that is the reason we
+% couldn't use I^2C for data transfer between the Sun SPOT and the Cobot.
+
+% We had some difficulties converting the implementation we had working on our Sun
+% SPOT (in Java) to work on the Cobot (written in C). The problems were mostly
+% because of the limitations of the compiler we had in for the Cobot.
+
+Also, we initially used timers for the Sun SPOTs to send datagrams to each
+other. We could not use this timers from the Java code, since those timers did
+not guarantee that a bit is transmitted: there is no guarantee the timers of
+both devices are working correctly. We went for a deterministic approach by
+implementing a state machine. The basic idea is really simple (you could only
+transition from one state into another), but you have to make sure acknowledge
+bits are continuously sent to both sides. In figure ~\ref{fig:handshaking} is
+shown how the transmission protocol for bit banging works, without using a
+clock.
 
 \begin{figure}[H]
 \label{fig:handshaking}
@@ -269,18 +274,18 @@ banging process.
 
 % }}}
 
-\subsubsection{Sun SPOT handshake} % {{{
-\label{subsub:Sun SPOT handshake}
+\subsubsection{Sun SPOT / Cobot handshake} % {{{
+\label{subsub:Sun SPOT / Cobot handshake}
 
-Before the second Sunspot starts receiving it first needs to get a handshake
+Before the second Sun SPOT starts receiving, it first needs to get a handshake
 from the Cobot. The handshake is given when the Sunspot receives two high
 signals on the digital pins that are used for input. If the Sunspot receives a
-high signal on the reset input pin after the handshake, the Cobot didn't
-receive the bits like they were send. When this happens, the same byte is send
-again (twice for checking) to the Cobot. Every step of the bit banging process
-has to get conformation from the Cobot that everything is OK. This is done by
-setting the pins in a certain way. For more information about how this is done,
-we refer to the comments in the Sunspot code.
+high signal on the reset input pin after the handshake, the Cobot didn't receive
+the bits like they were send. When this happens, the same byte is send again
+(twice for checking) to the Cobot. Every step of the bit banging process has to
+get conformation from the Cobot that everything is OK. This is done by setting
+the pins in a certain way. For more information about how the initial handshake
+is done, we refer to the comments in the Sun SPOT and Cobot source code.
 
 % }}}
 
@@ -322,8 +327,8 @@ would want to do, but cause of lack of time we couldn't manage.
 In this section we will give the specs and features of the hardware we have used
 throughout the project.
 
-\subsection{Sunspot} % {{{
-\label{app:sunspot}
+\subsection{Sun SPOT} % {{{
+\label{app:Sun SPOT}
 
 The Sun SPOT Device is a small, wireless, battery powered experimental platform.
 It is programmed almost entirely in Java (hence ``Sun'', main developer of the
