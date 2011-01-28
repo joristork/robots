@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,10pt]{article} % {{{
 \usepackage{listings,amssymb,amsmath,amsthm,graphicx,float,hyperref}
 
 \hypersetup{
@@ -10,7 +10,9 @@
 \author{Harm Dermois (5027963) \\ Joris Stork (6185320) \and
 Lucas Swartsenburg (6174388) \\ Sander van Veen (6167969)}
 
-\title{Cobots and SunSPOTs}
+\title{Cobots and Sun SPOTs}
+
+% }}}
 
 \begin{document}
 
@@ -22,7 +24,7 @@ Lucas Swartsenburg (6174388) \\ Sander van Veen (6167969)}
 
 \pagebreak
 
-\section{Introduction}
+\section{Introduction} % {{{
 
 This project concludes our team's involvement in a January 2011 robotics course
 at the University of Amsterdam (UvA). The team consists of four second-year UvA
@@ -34,7 +36,7 @@ Our team was given the task, firstly, of ``ressuscitating'' the UvA's
 Java-programmable ``Jobot'' robots, whose software development platform had
 become defunct and inoperative. Our second task was to combine the Jobots'
 mobility and sensing capabilities with the enhanced communications, sensing and
-processing functionality of SunSPOTs -- wireless sensor network devices from the
+processing functionality of Sun SPOTs -- wireless sensor network devices from the
 SunLabs stable. In this way we hoped to achieve a few things, namely to:
 
 \begin{itemize}
@@ -42,15 +44,15 @@ SunLabs stable. In this way we hoped to achieve a few things, namely to:
     microcontroller board;
     \item create drivers for the servos and sensors connected the the above
     board;
-    \item further explore the SunSPOTs' sensing and communications
+    \item further explore the Sun SPOTs' sensing and communications
     characteristics through those devices' Java frameworks;
     \item build a data transport between the Sun
     SPOTS and the standard microcontrollers on the Jobots, possibly over
     an $I^2C$ bus;
     \item design an interface between our respective software implementations
-    on the Jobot and on the SunSPOTs;
+    on the Jobot and on the Sun SPOTs;
     \item build a remote control system using the above interface;
-    \item attempt some basic robot activities using our adapated, SunSPOT
+    \item attempt some basic robot activities using our adapated, Sun SPOT
     controlled robot(s), such as: obstacle avoidance; reaching a goal;
     recognising a fellow robot; following a fellow robot, and so on, and;
     \item learn!
@@ -66,60 +68,71 @@ in chronological order of their occurrence. This approach reflects the
 exploratory nature of the project, in which a string of unexpected obstacles
 dictated the structure of our efforts over the past two weeks.
 
-\section{Materials and approach}
+% }}}
+
+\section{Materials and approach} % {{{
+
 Appendix
 
-\section{Results}
+% }}}
 
-\subsection{Cobot}
+\section{Results} % {{{
 
-\subsection{SunSPOTs}
+\subsection{Cobot} % {{{
+
+% }}}
+
+\subsection{Sun SPOTs} % {{{
 \label{sec:sunspot}
 
-The SunSPOT is a vital part of our project. We use the SunSPOT to control the
+The Sun SPOT is a vital part of our project. We use the Sun SPOT to control the
 robots and initially it was our plan to have communication between the robots
-via these SunSPOTs. Also the information from the Robot's sensors were to be
-sent to the SunSPOTs to be interpreted and handled accordingly.
+via these Sun SPOTs. Also the information from the Robot's sensors were to be
+sent to the Sun SPOTs to be interpreted and handled accordingly.
 
-\subsection{Communication between the SunSPOTs}
+% }}}
+
+\subsection{Communication between the Sun SPOTs} % {{{
 \label{subsec:comm}
 
-The first order of business was getting the SunSPOTs to communicate with each
-other. To do this you need to use the function on the SunSPOT to start
+The first order of business was getting the Sun SPOTs to communicate with each
+other. To do this you need to use the function on the Sun SPOT to start
 listening for information. It is almost always required to filter some of these
-packages, because if there are other SunSPOTs communicating with each other.
+packages, because if there are other Sun SPOTs communicating with each other.
 You need to be sure you are receiving the right packages. We haven't implemented
 this, because we were working in a secluded area away from other sunspots which
-might interfere with out SunSPOTs, but this is easily implemented in the code
+might interfere with out Sun SPOTs, but this is easily implemented in the code
 we made. In the final code we do filter out packages without valid commands.
 This will avoid most of the unwanted traffic, but we can still get some messages
 that were not intended for us. \\
 
-We send some information in the form of tilting the SunSPOT. This chosen to
+We send some information in the form of tilting the Sun SPOT. This chosen to
 figure out both how to send the information and to get to know how the
-sensors(EDemoboard) of the SunSPOT functioned. We wanted the communication
+sensors(EDemoboard) of the Sun SPOT functioned. We wanted the communication
 between to be both ways. So we had to use threads to get this working properly.
 Without threads you will often get stuck because of desynchronization and would
 be waiting on each other.
 
 With the implementation of theses thread we finally managed to correctly send
-the information between the two SunSPOT. We built the foundations of the
+the information between the two Sun SPOT. We built the foundations of the
 communications between the two robots or as application as a remote control.
 With this foundation it could be used to implement any sort of data transfer in
 an orderly fashion and with the way we made the code it is very easy too expand
 it for more difficult problems.
 
-\subsection{Bit-banging}
+% }}}
+
+\subsection{Bit-banging} % {{{
 \label{subsec:bitbang}
 
 %Bit-banging can be implemented at very low cost, and is used in, for example,
 %embedded systems.
 
-First we thought we could send the data between the SunSPOT and the CoBot via
+First we thought we could send the data between the Sun SPOT and the CoBot via
 the $I^2C$ bus, but halfway through the project. It was found out this wasn't
-possible, because of a technical issues. Namely the SunSPOT can only handle a
+possible, because of a technical issues. Namely the Sun SPOT can only handle a
 voltage of 3V and the CoBot can only send signals of 5V. This is a big problem
-if you want to communicate between the two without frying the SunSPOT. Luckily
+if you want to communicate between the two without frying the Sun SPOT. Luckily
 the Cobot can register voltages of 2V and higher so no modification had to be
 made to get this to work.
 
@@ -135,7 +148,7 @@ it is low cost. it gives you more control and the best thing is that it can be
 used in every languages and can be used on every system that can communicate
 with software, because it is so low level.
 
-In our case we started by first sending information between two SunSPOTs. We
+In our case we started by first sending information between two Sun SPOTs. We
 wanted to implement big-banging without the use of a clock. So there's a
 handshaking protocol need to get the two aligned. Here goes a picture of our
 handshaking protocol so just a picture of when each line is high or low.
@@ -148,7 +161,7 @@ need to make sure it really sent.
 %\label{fig:handshaking}
 %\includegraphics[scale = 0.5]{handshaking.png}
 %\caption{This is how the handshaking protocol for bit banging works without
-%using a clock. To send one bit from the SunSPOT(or any other device). First
+%using a clock. To send one bit from the Sun SPOT(or any other device). First
 %put your data pin on the value you want to send. Then you put your ack on so
 %the receiver knows you are sending. When he sees this is up he take the value
 %of the data pin and on his turn puts his acknowledge on so the sender knows he
@@ -157,24 +170,34 @@ need to make sure it really sent.
 %when an invalid value is given.}
 %\end{figure}
 
-\subsection{Bringing the two together}
+% }}}
+
+\subsection{Bringing the two together} % {{{
 \label{subsec:together}
 
 Now that we have both the Cobot ready to drive and the bit-banging between the
-SunSPOTs. We can finally start putting the pieces together. Although we had all
+Sun SPOTs. We can finally start putting the pieces together. Although we had all
 the piece it was still hard to get them to work together properly. We still had
-some difficulties converting the implementation we had working on our SunSPOT
+some difficulties converting the implementation we had working on our Sun SPOT
 (in Java) to work on the Cobot (written in C). The problems were mostly because
 of the limitations of the compiler we had in for the Cobot. also the timings we
-had working for the SunSPOTs were still in need of improvement. This was done on
+had working for the Sun SPOTs were still in need of improvement. This was done on
 the last day of the project. We also implemented a simple protocol give command
 to the Cobot to move.
 
-\section{Discussion}
+% }}}
 
-\section{Conclusion}
+% }}}
 
-\section{Future}
+\section{Discussion} % {{{
+
+% }}}
+
+\section{Conclusion} % {{{
+
+% }}}
+
+\section{Future} % {{{
 \label{sec:future}
 
 With all the code we have right now the most logical step would be to use Cobots
@@ -185,25 +208,27 @@ collision and let it autonomously wander. While still sending information to the
 slave to follow it. the list goes on and on. There were so many other things we
 would want to do, but cause of lack of time we couldn't manage.
 
+% }}}
+
 \appendix
 
-\section{Hardware specification}
+\section{Hardware specification} % {{{
 \label{app:hardware}
 
 In this section we will give the specs and features of the hardware we have used
 throughout the project.
 
-\subsection{Sunspot}
+\subsection{Sunspot} % {{{
 \label{app:sunspot}
 
-The SunSPOT Device is a small, wireless, battery powered experimental platform.
+The Sun SPOT Device is a small, wireless, battery powered experimental platform.
 It is programmed almost entirely in Java (hence ``Sun'', main developer of the
-Java platform, in SunSPOT) to allow regular programmers to create projects that
+Java platform, in Sun SPOT) to allow regular programmers to create projects that
 used to require specialized embedded system development skills. The hardware
 platform includes a range of built-in sensors as well as the ability to easily
 interface to external devices.
 
-Each SunSPOT has a 180MHz 32-bit ARM920T core processor with 512K RAM and 4M
+Each Sun SPOT has a 180MHz 32-bit ARM920T core processor with 512K RAM and 4M
 Flash. The sensor board contains:
 
 \begin{itemize}
@@ -217,13 +242,15 @@ Flash. The sensor board contains:
     \item Four high current output pins.
 \end{itemize}
 
-We also have a radio sensor board. The SunSPOTs use a fully capable Java ME
+We also have a radio sensor board. The Sun SPOTs use a fully capable Java ME
 implementation, called Squawk, that supports CLDC 1.1 and MIDP 1.0, plus
 provides basic OS functionality. The VM executes directly out of flash memory.
 All the device drivers are also written in Java, only a minimal part of the
-virtual machine is written in C. The SunSPOTs can be upgrade by a lot side.
+virtual machine is written in C. The Sun SPOTs can be upgrade by a lot side.
 
-\subsection{Jobot/Cobot}
+% }}}
+
+\subsection{Jobot/Cobot} % {{{
 \label{app:cobot}
 
 \begin{enumerate}
@@ -232,7 +259,12 @@ virtual machine is written in C. The SunSPOTs can be upgrade by a lot side.
 	\item 3 IR sensors
 \end{enumerate}
 
+% }}}
+
+% }}}
+
 \bibliographystyle{plain}
 \bibliography{cited}
 
 \end{document}
+% vim: foldmethod=marker:
