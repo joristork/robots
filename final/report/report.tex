@@ -37,25 +37,25 @@ Java-programmable ``Jobot'' robots, whose software development platform had
 become defunct and inoperative. Our second task was to combine the Jobots'
 mobility and sensing capabilities with the enhanced communications, sensing and
 processing functionality of Sun SPOTs -- wireless sensor network devices from the
-SunLabs stable. In this way we hoped to achieve a few things, namely to:
+Sun Labs stable. In this way, we hoped to achieve a few things, namely to:
 
 \begin{itemize}
     \item write, compile and load programs from scratch for a PIC based
     microcontroller board;
-    \item create drivers for the servos and sensors connected the the above
-    board;
+    \item create drivers for the servos and sensors connected to the board
+    mentioned above;
     \item further explore the Sun SPOTs' sensing and communications
     characteristics through those devices' Java frameworks;
-    \item build a data transport between the Sun
-    SPOTS and the standard microcontrollers on the Jobots, possibly over
-    an $I^2C$ bus;
-    \item design an interface between our respective software implementations
-    on the Jobot and on the Sun SPOTs;
+    \item build a data communication channel between the Sun SPOTs and the
+    standard microcontrollers on the Jobots. Investigate if it is possible
+    to transmit the data over an $I^2C$ bus;
+    \item design an interface between our respective software implementations on
+    the Jobot and on the Sun SPOTs;
     \item build a remote control system using the above interface;
-    \item attempt some basic robot activities using our adapated, Sun SPOT
+    \item attempt some basic robot activities using our adapted, Sun SPOT
     controlled robot(s), such as: obstacle avoidance; reaching a goal;
     recognising a fellow robot; following a fellow robot, and so on, and;
-    \item learn!
+    \item learn to work with embedded chips and low-level signal handling.
 \end{itemize}
 
 Strict time and resource limitations took precedence over any adherence
@@ -87,7 +87,7 @@ Appendix
 
 The Sun SPOT is a vital part of our project. We use the Sun SPOT to control the
 robots and initially it was our plan to have communication between the robots
-via these Sun SPOTs. Also the information from the Robot's sensors were to be
+via these Sun SPOTs. Also, the information from the Robot's sensors were to be
 sent to the Sun SPOTs to be interpreted and handled accordingly.
 
 % }}}
@@ -128,10 +128,10 @@ it for more difficult problems.
 %Bit-banging can be implemented at very low cost, and is used in, for example,
 %embedded systems.
 
-First we thought we could send the data between the Sun SPOT and the CoBot via
+First we thought we could send the data between the Sun SPOT and the Cobot via
 the $I^2C$ bus, but halfway through the project. It was found out this wasn't
 possible, because of a technical issues. Namely the Sun SPOT can only handle a
-voltage of 3V and the CoBot can only send signals of 5V. This is a big problem
+voltage of 3V and the Cobot can only send signals of 5V. This is a big problem
 if you want to communicate between the two without frying the Sun SPOT. Luckily
 the Cobot can register voltages of 2V and higher so no modification had to be
 made to get this to work.
@@ -144,7 +144,7 @@ sending a full package of bytes in the form on any given data type. If you want
 to use this method it is needed to have good control of how and when the
 information is sent. This means you are responsible for all the timings and
 synchronizations between the parties. The good thing about bit-banging is that
-it is low cost. it gives you more control and the best thing is that it can be
+it is low cost. It gives you more control and the best thing is that it can be
 used in every languages and can be used on every system that can communicate
 with software, because it is so low level.
 
@@ -180,7 +180,7 @@ Sun SPOTs. We can finally start putting the pieces together. Although we had all
 the piece it was still hard to get them to work together properly. We still had
 some difficulties converting the implementation we had working on our Sun SPOT
 (in Java) to work on the Cobot (written in C). The problems were mostly because
-of the limitations of the compiler we had in for the Cobot. also the timings we
+of the limitations of the compiler we had in for the Cobot. Also the timings we
 had working for the Sun SPOTs were still in need of improvement. This was done on
 the last day of the project. We also implemented a simple protocol give command
 to the Cobot to move.
@@ -203,9 +203,9 @@ to the Cobot to move.
 With all the code we have right now the most logical step would be to use Cobots
 and let them communicate. One Cobot would be the master and the other one the
 slave. We would give the master a route to walk and we would want the slave to
-follow the master. After this we could use the sensors on the cobot to avoid
+follow the master. After this we could use the sensors on the Cobot to avoid
 collision and let it autonomously wander. While still sending information to the
-slave to follow it. the list goes on and on. There were so many other things we
+slave to follow it. The list goes on and on. There were so many other things we
 would want to do, but cause of lack of time we couldn't manage.
 
 % }}}
@@ -228,7 +228,7 @@ used to require specialized embedded system development skills. The hardware
 platform includes a range of built-in sensors as well as the ability to easily
 interface to external devices.
 
-Each Sun SPOT has a 180MHz 32-bit ARM920T core processor with 512K RAM and 4M
+Each Sun SPOT has a 180MHz 32-bit ARM920T core processor with 512Kb RAM and 4Mb
 Flash. The sensor board contains:
 
 \begin{itemize}
@@ -254,7 +254,7 @@ virtual machine is written in C. The Sun SPOTs can be upgrade by a lot side.
 \label{app:cobot}
 
 \begin{enumerate}
-	\item MicroController 18f452
+	\item Microcontroller 18f452
 	\item 3 servos
 	\item 3 IR sensors
 \end{enumerate}
