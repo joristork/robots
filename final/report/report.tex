@@ -157,18 +157,18 @@ As you can expect is the hardest part of implementing this are synchronizations.
 As you can see in the picture the basic idea is really simple, but you always
 need to make sure it really sent.
 
-%\begin{figure}
-%\label{fig:handshaking}
-%\includegraphics[scale = 0.5]{handshaking.png}
-%\caption{This is how the handshaking protocol for bit banging works without
-%using a clock. To send one bit from the Sun SPOT(or any other device). First
-%put your data pin on the value you want to send. Then you put your ack on so
-%the receiver knows you are sending. When he sees this is up he take the value
-%of the data pin and on his turn puts his acknowledge on so the sender knows he
-%received the message. Both acknowledges go down and the process start over. In
-%the right picture there is also a reset button which restarts the whole process
-%when an invalid value is given.}
-%\end{figure}
+\begin{figure}
+\label{fig:handshaking}
+\includegraphics[scale=0.5]{img/handshaking.png}
+\caption{This is how the handshaking protocol for bit banging works without
+using a clock. To send one bit from the Sun SPOT(or any other device). First
+put your data pin on the value you want to send. Then you put your ack on so
+the receiver knows you are sending. When he sees this is up he take the value
+of the data pin and on his turn puts his acknowledge on so the sender knows he
+received the message. Both acknowledges go down and the process start over. In
+the right picture there is also a reset button which restarts the whole process
+when an invalid value is given.}
+\end{figure}
 
 % }}}
 
