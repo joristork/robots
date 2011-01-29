@@ -117,10 +117,12 @@ The first order of business was getting the Sun SPOTs to communicate with each
 other. To do this you need to use the function on the Sun SPOT to start
 listening for information. It is almost always required to filter some of these
 packages, because if there are other Sun SPOTs communicating with each other.
-You need to be sure you are receiving the right packages. We haven't implemented this, because we were working in a secluded area away from other sunspots which
+You need to be sure you are receiving the right packages. We haven't implemented
+this, because we were working in a secluded area away from other sunspots which
 might interfere with out Sun SPOTs, but this is easily implemented in the code
 we made. In the final code we do filter out packages without valid commands.
-This will avoid most of the unwanted traffic, but we can still get some messages that were not intended for us.
+This will avoid most of the unwanted traffic, but we can still get some messages
+that were not intended for us.
 
 We send some information in the form of tilting the Sun SPOT. This chosen to
 figure out both how to send the information and to get to know how the
@@ -149,7 +151,8 @@ if you want to communicate between the two without frying the Sun SPOT. Luckily
 the Cobot can register voltages of 2V and higher so no modification had to be
 made to get this to work.
 
-This meant we had to use another method to get the information to the Cobot. The solution that was given to us was the use of bit-banging. Bit-banging is a
+This meant we had to use another method to get the information to the Cobot. The
+solution that was given to us was the use of bit-banging. Bit-banging is a
 technique for serial communications using software instead of dedicated
 hardware. This means you got to send all the information bit by bit instead of
 sending a full package of bytes in the form on any given data type. If you want
@@ -171,14 +174,18 @@ handshaking protocol so just a picture of when each line is high or low.
 \label{subsec:Bringing the pieces together}
 
 Now that we have both the Cobot ready to drive and the bit-banging between the
-Sun SPOTs. We can finally start putting the pieces together. Although we had all the pieces, it was still hard to get them to work together properly.
-The main problem was touched on in the last part. The difference is voltage the two pieces of hardware used. The Cobot uses a voltage of 5 and the Sun SPOT a voltage of 3. This gives problems when you, want to send signals to from the Cobot to the Sun SPOT. 
-\begin{equation}
-\label{eq:voltage}
-U = I*R
+Sun SPOTs. We can finally start putting the pieces together. Although we had all
+the pieces, it was still hard to get them to work together properly.  The main
+problem was touched on in the last part. The difference is voltage the two
+pieces of hardware used. The Cobot uses a voltage of 5 and the Sun SPOT a
+voltage of 3. This gives problems when you, want to send signals to from the
+Cobot to the Sun SPOT.  \begin{equation} \label{eq:voltage} U = I*R
 \end{equation}
-%TODO: Good explanation why we couldn't use the i2c, dont know exactly why we %couldn't do the same had for the i2c 
-So to solve this problem we had to make a wire with 2 serial resistances of 300 and 200 K $\Omega$. This makes sure only 0.1 mA gets to the Sun Spot and the other 2V gets grounded through the other side. Like you can see in figure.
+%TODO: Good explanation why we couldn't use the i2c, dont know exactly why we
+%%couldn't do the same had for the i2c
+So to solve this problem we had to make a wire with 2 serial resistances of 300
+and 200 K $\Omega$. This makes sure only 0.1 mA gets to the Sun Spot and the
+other 2V gets grounded through the other side. Like you can see in figure.
 
 % TODO: figure of the resistance.
 Also, we initially used timers for the Sun SPOTs to send datagrams to each
@@ -395,7 +402,7 @@ We also have a radio sensor board. The Sun SPOTs use a fully capable Java ME
 implementation, called Squawk, that supports CLDC 1.1 and MIDP 1.0, plus
 provides basic OS functionality. The VM executes directly out of flash memory.
 All the device drivers are also written in Java, only a minimal part of the
-virtual machine is written in C. 
+virtual machine is written in C.
 
 % }}}
 
