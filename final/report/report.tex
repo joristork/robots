@@ -172,7 +172,7 @@ handshaking protocol so just a picture of when each line is high or low.
 \label{fig:sunspotconnections}
 \centering
 \includegraphics{img/sunspotconnections1.png}
-\caption{The Sun SPOT with connections added to the ground and the digital 
+\caption{The Sun SPOT with connections added to the ground and the digital
 I/O}
 \end{figure}
 
@@ -192,9 +192,9 @@ Cobot to the Sun SPOT.  \begin{equation} \label{eq:voltage} U = I*R
 \end{equation}
 So to solve this problem we had to make a wire with 2 serial resistances of 300
 and 200 K $\Omega$. This makes sure only 3V gets to the Sun Spot and the
-other 2V leaks out through the other side to the ground. Like you can see in 
+other 2V leaks out through the other side to the ground. Like you can see in
 figure.
-%This solution is not valid if you are trying to send more complex information 
+%This solution is not valid if you are trying to send more complex information
 %than just a giving a high signal, because the message will get distorted if
 %there is a resistance between the sender and receiver.
 % Not sure about this explaination
@@ -380,8 +380,8 @@ wanted to do, but cause of lack of time we could not.
 
 \appendix
 
-\section{Hardware specification} % {{{
-\label{app:hardware}
+\section{Robot hardware specification} % {{{
+\label{app:robot-hardware}
 
 In this section we will give the specs and features of the hardware we have used
 throughout the project.
@@ -408,6 +408,19 @@ Flash. The sensor board contains:
     \item Two momentary switches.
     \item Five general purpose I/O pins.
     \item Four high current output pins.
+
+    \item $2.4 GHz$ IEEE $802.15.4$ radio with integrated antenna;
+    \item $AT91$ timer chip;
+    \item USB interface;
+    \item $2G/6G$ three-axis accelerometer;
+    \item One temperature sensor;
+    \item One light sensor;
+    % \item 8 tri-color LEDs;
+    % \item 6 analog inputs;
+    % \item 2 momentary switches;
+    % \item 5 general purpose I/O pins;
+    % \item 4 high current output pins;
+    \item $3.7V$ rechargeable $750 mAh$ lithium-ion battery;
 \end{itemize}
 
 We also have a radio sensor board. The Sun SPOTs use a fully capable Java ME
@@ -421,11 +434,39 @@ virtual machine is written in C.
 \subsection{Jobot/Cobot} % {{{
 \label{app:cobot}
 
-\begin{enumerate}
-	\item Microcontroller 18f452
-	\item 3 servos
-	\item 3 IR sensors
-\end{enumerate}
+\begin{itemize}
+    \item PIC16F452 microcontroller with max $40MHz$ CPU clock, 256 byte
+    EEPROM data, $32KB$ program memory
+    \item Digital communication peripherals (1-A/E/USART, 1-MSSP(SPI/I2C))
+	\item Three servos
+	\item Three IR sensors
+\end{itemize}
+
+% }}}
+
+\subsection{Hemisson} % {{{
+\label{sub:Hemisson}
+
+The Hemisson is a two-wheeled robot designed for mobility, that includes:
+\begin{itemize}
+    \item a PIC16F877 microcontroller with $20MHz$ CPU clock, 8bit,
+    $8K$ $\times$ 14 bit words program memory, 368 bytes data memory, 256 bytes
+    EEPROM data memory, 14 interrupts, I/O ports A,B,C,D,E, three timers,
+    serial communications (MSSP, USART), parallel communications (PSP), 8
+    input channel, 10 bit analog to digital module;
+    \item two DC motors for independent control of two wheel. Open loop
+    control without encoders;
+    \item eight IR ambient light sensors;
+    \item six IR obstacle detection sensors;
+    \item two line detection sensors;
+    \item a standard $9V$ (PP3) battery connector;
+    \item serial port with DB9 connector;
+    \item a TV remote receiver;
+    \item a buzzer;
+    \item four LEDs;
+    \item four programmable switches;
+    \item an extension bus for extra modules;
+\end{itemize}
 
 % }}}
 
