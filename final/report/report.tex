@@ -106,7 +106,9 @@ TODO
 The Sun SPOT is a vital part of our project. We use the Sun SPOT to control the
 robots. Initially, it was our plan to have communication between the robots
 through these Sun SPOTs. Also, the information from the Robot's sensors were to
-be sent to the Sun SPOTs to be interpreted and handled accordingly.
+be sent to the Sun SPOTs to be interpreted and handled accordingly. For more
+detailed information on the implementations see section \ref{sub:Sun SPOT
+implementation}.
 
 % }}}
 
@@ -118,20 +120,19 @@ other. To do this you need to use the function on the Sun SPOT to start
 listening for information. It is almost always required to filter some of these
 packages, because if there are other Sun SPOTs communicating with each other.
 You need to be sure you are receiving the right packages. We haven't implemented
-this, because we were working in a secluded area away from other sunspots which
+this, because we were working in a secluded area away from other Sun SPOTs which
 might interfere with out Sun SPOTs, but this is easily implemented in the code
 we made. In the final code we do filter out packages without valid commands.
-This will avoid most of the unwanted traffic, but we can still get some messages
-that were not intended for us.
+This will avoid most of the unwanted traffic, but we can still get some messages that were not intended for us.
 
-We send some information in the form of tilting the Sun SPOT. This chosen to
-figure out both how to send the information and to get to know how the
+We send some information in the form of tilting the Sun SPOT. This was chosen
+to figure out both how to send the information and to get to know how the
 sensors(EDemoboard) of the Sun SPOT functioned. We wanted the communication
 between to be both ways. So we had to use threads to get this working properly.
 Without threads you will often get stuck because of desynchronization and would
-be waiting on each other.
+be waiting on each other(Deadlock).
 
-With the implementation of theses thread we finally managed to correctly send
+With the implementation of these thread we finally managed to correctly send
 the information between the two Sun SPOT. We built the foundations of the
 communications between the two robots or as application as a remote control.
 With this foundation it could be used to implement any sort of data transfer in
@@ -167,6 +168,14 @@ In our case we started by first sending information between two Sun SPOTs. We
 wanted to implement big-banging without the use of a clock. So there's a
 handshaking protocol need to get the two aligned. Here goes a picture of our
 handshaking protocol so just a picture of when each line is high or low.
+\begin{figure}
+\label{fig:sunspotconnections}
+\centering
+\includegraphics{img/sunspotconnections1.png}
+\caption{The Sun SPOT with connections added to the ground and the digital 
+I/O}
+\end{figure}
+
 
 % }}}
 
@@ -181,11 +190,14 @@ pieces of hardware used. The Cobot uses a voltage of 5 and the Sun SPOT a
 voltage of 3. This gives problems when you, want to send signals to from the
 Cobot to the Sun SPOT.  \begin{equation} \label{eq:voltage} U = I*R
 \end{equation}
-%TODO: Good explanation why we couldn't use the i2c, dont know exactly why we
-%%couldn't do the same had for the i2c
 So to solve this problem we had to make a wire with 2 serial resistances of 300
-and 200 K $\Omega$. This makes sure only 0.1 mA gets to the Sun Spot and the
-other 2V gets grounded through the other side. Like you can see in figure.
+and 200 K $\Omega$. This makes sure only 3V gets to the Sun Spot and the
+other 2V leaks out through the other side to the ground. Like you can see in 
+figure.
+%This solution is not valid if you are trying to send more complex information 
+%than just a giving a high signal, because the message will get distorted if
+%there is a resistance between the sender and receiver.
+% Not sure about this explaination
 
 % TODO: figure of the resistance.
 Also, we initially used timers for the Sun SPOTs to send datagrams to each
@@ -340,7 +352,7 @@ is done, we refer to the comments in the Sun SPOT and Cobot source code.
 
 \section{Results} % {{{
 \label{sec:Results}
-
+%Not the same as the Conclusion in this case?
 % }}}
 
 \section{Discussion} % {{{
@@ -360,7 +372,7 @@ slave. We would give the master a route to walk and we would want the slave to
 follow the master. After this we could use the sensors on the Cobot to avoid
 collision and let it autonomously wander. While still sending information to the
 slave to follow it. The list goes on and on. There were so many other things we
-would want to do, but cause of lack of time we couldn't manage.
+wanted to do, but cause of lack of time we could not.
 
 % }}}
 
