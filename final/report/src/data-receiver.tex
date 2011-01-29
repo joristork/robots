@@ -1,0 +1,58 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{// Buffer for data receiving}
+\PY{k+kt}{int} \PY{n}{data\PYZus{}previous}\PY{p}{,} \PY{n}{data\PYZus{}current}\PY{p}{,} \PY{n}{data\PYZus{}received}\PY{p}{,} \PY{n}{receive\PYZus{}round}\PY{p}{;}
+\PY{k+kt}{int} \PY{n}{b}\PY{p}{,} \PY{n}{bit\PYZus{}count} \PY{o}{=} \PY{l+m+mi}{3}\PY{p}{;}
+
+\PY{k+kt}{void} \PY{n+nf}{receive\PYZus{}data}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{c+c1}{// Clear data buffers}
+    \PY{n}{data\PYZus{}received} \PY{o}{=} \PY{n}{data\PYZus{}previous} \PY{o}{=} \PY{n}{data\PYZus{}current} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;}
+
+    \PY{c+c1}{// Receive two times (= "rounds") three bits. Most significant bits are}
+    \PY{c+c1}{// transmitted first (thus from left to right)}
+    \PY{k}{for}\PY{p}{(} \PY{n}{receive\PYZus{}round} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;} \PY{n}{receive\PYZus{}round} \PY{o}{<} \PY{l+m+mi}{2}\PY{p}{;} \PY{n}{receive\PYZus{}round}\PY{o}{+}\PY{o}{+} \PY{p}{)} \PY{p}{\PYZob{}}
+        \PY{k}{for}\PY{p}{(}\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;} \PY{n}{b} \PY{o}{<} \PY{n}{bit\PYZus{}count}\PY{p}{;} \PY{n}{b}\PY{o}{+}\PY{o}{+}\PY{p}{)} \PY{p}{\PYZob{}}
+            \PY{c+c1}{//printf("round: %d, b: %d\PYZbs{}n", receive\PYZus{}round, bit\PYZus{}count - b);}
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{get\PYZus{}sender\PYZus{}ack() first}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+            \PY{k}{while}\PY{p}{(}\PY{o}{!}\PY{n}{get\PYZus{}sender\PYZus{}ack}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                \PY{n}{wait}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{get\PYZus{}sender\PYZus{}data()}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+            \PY{n}{data\PYZus{}current} \PY{o}{|}\PY{o}{=} \PY{n}{get\PYZus{}sender\PYZus{}data}\PY{p}{(}\PY{p}{)} \PY{o}{<}\PY{o}{<} \PY{p}{(}\PY{n}{bit\PYZus{}count}\PY{o}{-}\PY{n}{b}\PY{o}{-}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+
+            \PY{c+c1}{// First round is simply storing the data and emits an acknowledge}
+            \PY{c+c1}{// signal (= 1). The second round is used for error checking. The}
+            \PY{c+c1}{// second round will emit an acknowledge signal when the data is}
+            \PY{c+c1}{// properly transmitted / received. The second round will send an}
+            \PY{c+c1}{// acknowledge and reset signal (= 3), when the current data bit is}
+            \PY{c+c1}{// not matching data of the previous round.}
+            \PY{k}{if}\PY{p}{(}\PY{n}{receive\PYZus{}round} \PY{o}{=}\PY{o}{=} \PY{l+m+mi}{0}
+                    \PY{o}{|}\PY{o}{|} \PY{p}{(}\PY{n}{data\PYZus{}previous} \PY{o}{&} \PY{p}{(}\PY{l+m+mi}{1}\PY{o}{<}\PY{o}{<}\PY{p}{(}\PY{n}{bit\PYZus{}count}\PY{o}{-}\PY{n}{b}\PY{o}{-}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                            \PY{o}{=}\PY{o}{=} \PY{p}{(}\PY{n}{data\PYZus{}current} \PY{o}{&} \PY{p}{(}\PY{l+m+mi}{1}\PY{o}{<}\PY{o}{<}\PY{p}{(}\PY{n}{bit\PYZus{}count}\PY{o}{-}\PY{n}{b}\PY{o}{-}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+            \PY{k}{else} \PY{p}{\PYZob{}}
+                \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Error during transmission}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+                \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{;}
+
+                \PY{c+c1}{// Wait until the sender sees the acknowledge and reset signal.}
+                \PY{c+c1}{// When the sender emits his acknowledge signal, the receive}
+                \PY{c+c1}{// procedure is restarted.}
+                \PY{k}{while}\PY{p}{(}\PY{n}{get\PYZus{}sender\PYZus{}ack}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                    \PY{n}{wait}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+                \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+                \PY{k}{return} \PY{n}{receive\PYZus{}data}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+            \PY{p}{\PYZcb{}}
+
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{get\PYZus{}sender\PYZus{}ack() last}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+            \PY{k}{while}\PY{p}{(}\PY{n}{get\PYZus{}sender\PYZus{}ack}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                \PY{n}{wait}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+
+            \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+        \PY{p}{\PYZcb{}}
+
+        \PY{n}{data\PYZus{}previous} \PY{o}{=} \PY{n}{data\PYZus{}current}\PY{p}{;}
+        \PY{n}{data\PYZus{}current} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;}
+    \PY{p}{\PYZcb{}}
+
+    \PY{n}{data\PYZus{}received} \PY{o}{=} \PY{n}{data\PYZus{}previous}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+\end{Verbatim}

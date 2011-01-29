@@ -1,0 +1,145 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c}{#!/usr/bin/env python}
+\PY{c}{#}
+\PY{c}{# This script is used to read and write data from/to the COM-to-USB port.}
+\PY{c}{# Created by Sander van Veen <sandervv@gmail.com>, Jan 27, 2011.}
+\PY{c}{# This script is public domain; feel free to do anything with it you want.}
+\PY{c}{#}
+\PY{c}{# Example invocation: $ python -i hemisson.py}
+
+\PY{k+kn}{from} \PY{n+nn}{serial} \PY{k+kn}{import} \PY{n}{Serial}\PY{p}{,} \PY{n}{PARITY\PYZus{}NONE}\PY{p}{,} \PY{n}{EIGHTBITS}\PY{p}{,} \PY{n}{STOPBITS\PYZus{}ONE}
+\PY{k+kn}{from} \PY{n+nn}{time} \PY{k+kn}{import} \PY{n}{sleep}
+
+\PY{k}{class} \PY{n+nc}{HemissonException}\PY{p}{(}\PY{n+ne}{Exception}\PY{p}{)}\PY{p}{:}
+    \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{value}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{value} \PY{o}{=} \PY{n}{value}
+
+    \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}str\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n+nb}{repr}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{value}\PY{p}{)}
+
+\PY{k}{class} \PY{n+nc}{Hemisson}\PY{p}{:}
+    \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{"""}
+        \PY{l+s+sd}{Initialise the serial connection to the Hemisson robot.}
+        \PY{l+s+sd}{"""}
+
+        \PY{c}{# Initialise serial connection on /dev/ttyUSB0}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial} \PY{o}{=} \PY{n}{Serial}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial}\PY{o}{.}\PY{n}{setParity}\PY{p}{(}\PY{n}{PARITY\PYZus{}NONE}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial}\PY{o}{.}\PY{n}{setByteSize}\PY{p}{(}\PY{n}{EIGHTBITS}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial}\PY{o}{.}\PY{n}{setStopbits}\PY{p}{(}\PY{n}{STOPBITS\PYZus{}ONE}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial}\PY{o}{.}\PY{n}{setBaudrate}\PY{p}{(}\PY{l+m+mi}{115200}\PY{p}{)}
+
+        \PY{c}{# Connection established, read welcome message from Hemisson.}
+        \PY{k}{print} \PY{l+s}{'}\PY{l+s}{i Initialised serial connection }\PY{l+s}{"}\PY{l+s+si}{%s}\PY{l+s}{"}\PY{l+s}{.}\PY{l+s}{'} \PY{o}{%} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial}\PY{o}{.}\PY{n}{portstr}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n+nb}{chr}\PY{p}{(}\PY{l+m+mi}{254}\PY{p}{)}\PY{o}{+}\PY{l+s}{'}\PY{l+s+se}{\PYZbs{}r}\PY{l+s}{'}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}delete\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{"""}
+        \PY{l+s+sd}{Disconnect the serial connnection to the Hemisson robot.}
+        \PY{l+s+sd}{"""}
+
+        \PY{k}{print} \PY{l+s}{'}\PY{l+s}{i Destroying serial connection }\PY{l+s}{"}\PY{l+s+si}{%s}\PY{l+s}{"}\PY{l+s}{.}\PY{l+s}{'} \PY{o}{%} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial}\PY{o}{.}\PY{n}{portstr}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n+nb}{chr}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{beep}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{state}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{"""}
+        \PY{l+s+sd}{Generates a continuous beep, depending on state (0 = Off, 1 = On).}
+        \PY{l+s+sd}{"""}
+
+        \PY{k}{if} \PY{n}{state} \PY{o+ow}{not} \PY{o+ow}{in} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+            \PY{k}{raise} \PY{n}{HemissionException}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{Beep state should be 0 (Off) or 1 (On).}\PY{l+s}{'}\PY{p}{)}
+
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{H,}\PY{l+s+si}{%d}\PY{l+s}{'} \PY{o}{%} \PY{n}{state}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{drive}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{"""}
+        \PY{l+s+sd}{Drive forward (setting both wheel's drive speed to '2').}
+        \PY{l+s+sd}{"""}
+
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{set\PYZus{}speed}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{get\PYZus{}switches}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{"""}
+        \PY{l+s+sd}{Read the current status of the four top switches. Possible values are 0}
+        \PY{l+s+sd}{(= robot's right handside) and 1 (= robot's left handside). The first}
+        \PY{l+s+sd}{value is the value of the first switch from the front of the robot.}
+        \PY{l+s+sd}{"""}
+
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{I}\PY{l+s}{'}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{set\PYZus{}speed}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{left}\PY{p}{,} \PY{n}{right}\PY{o}{=}\PY{n+nb+bp}{None}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{"""}
+        \PY{l+s+sd}{Set driving speed of left and right wheel. If only the left wheel drive}
+        \PY{l+s+sd}{speed is given, the right wheel's drive speed is set to the left}
+        \PY{l+s+sd}{wheel's drive speed.}
+        \PY{l+s+sd}{"""}
+
+        \PY{k}{if} \PY{n}{right} \PY{o}{==} \PY{n+nb+bp}{None}\PY{p}{:}
+            \PY{n}{right} \PY{o}{=} \PY{n}{left}
+
+        \PY{k}{if} \PY{o+ow}{not}\PY{p}{(} \PY{o}{-}\PY{l+m+mi}{9} \PY{o}{<}\PY{o}{=} \PY{n}{left} \PY{o}{<}\PY{o}{=} \PY{l+m+mi}{9} \PY{o+ow}{and} \PY{o}{-}\PY{l+m+mi}{9} \PY{o}{<}\PY{o}{=} \PY{n}{right} \PY{o}{<}\PY{o}{=} \PY{l+m+mi}{9}\PY{p}{)}\PY{p}{:}
+            \PY{k}{raise} \PY{n}{HemissonException}\PY{p}{(}
+                \PY{l+s}{'}\PY{l+s}{Keep the wheel drive speed value between -9 and 9.}\PY{l+s}{'}\PY{p}{)}
+
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{D,}\PY{l+s+si}{%d}\PY{l+s}{,}\PY{l+s+si}{%d}\PY{l+s}{'} \PY{o}{%} \PY{p}{(}\PY{n}{left}\PY{p}{,} \PY{n}{right}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{stop}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{"""}
+        \PY{l+s+sd}{Stop moving forward (setting both wheel's drive speed to zero).}
+        \PY{l+s+sd}{"""}
+
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{D,0,0}\PY{l+s}{'}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{readline}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{"""}
+        \PY{l+s+sd}{Read a single newline terminated line from the serial connection.}
+        \PY{l+s+sd}{"""}
+
+        \PY{k}{print} \PY{l+s}{'}\PY{l+s}{< }\PY{l+s+si}{%s}\PY{l+s}{'} \PY{o}{%} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{-}\PY{l+m+mi}{1}\PY{p}{]}
+
+    \PY{k}{def} \PY{n+nf}{remote\PYZus{}version}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{"""}
+        \PY{l+s+sd}{Display version of the HemiOS running on the connected Hemisson robot.}
+        \PY{l+s+sd}{"""}
+
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{B}\PY{l+s}{'}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{reset}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{"""}
+        \PY{l+s+sd}{Reset the robot's processor as if the On/Off switch is cycled.}
+        \PY{l+s+sd}{"""}
+
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{Z}\PY{l+s}{'}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{write}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{msg}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{"""}
+        \PY{l+s+sd}{Write a message through the serial connection to the Hemisson robot.}
+        \PY{l+s+sd}{"""}
+
+        \PY{k}{print} \PY{l+s}{'}\PY{l+s}{> }\PY{l+s+si}{%s}\PY{l+s+se}{\PYZbs{}\PYZbs{}}\PY{l+s}{n}\PY{l+s+se}{\PYZbs{}\PYZbs{}}\PY{l+s}{r}\PY{l+s}{'} \PY{o}{%} \PY{n}{msg}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{msg}\PY{o}{+}\PY{l+s}{'}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}r}\PY{l+s}{'}\PY{p}{)}
+
+\PY{k}{if} \PY{n}{\PYZus{}\PYZus{}name\PYZus{}\PYZus{}} \PY{o}{==} \PY{l+s}{'}\PY{l+s}{\PYZus{}\PYZus{}main\PYZus{}\PYZus{}}\PY{l+s}{'}\PY{p}{:}
+    \PY{n}{robot} \PY{o}{=} \PY{n}{Hemisson}\PY{p}{(}\PY{p}{)}
+    \PY{n}{robot}\PY{o}{.}\PY{n}{remote\PYZus{}version}\PY{p}{(}\PY{p}{)}
+    \PY{n}{robot}\PY{o}{.}\PY{n}{get\PYZus{}switches}\PY{p}{(}\PY{p}{)}
+
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:}
+        \PY{n}{robot}\PY{o}{.}\PY{n}{set\PYZus{}speed}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}
+        \PY{n}{sleep}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{robot}\PY{o}{.}\PY{n}{set\PYZus{}speed}\PY{p}{(}\PY{o}{-}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}
+        \PY{n}{sleep}\PY{p}{(}\PY{l+m+mf}{1.5}\PY{p}{)}
+
+    \PY{n}{robot}\PY{o}{.}\PY{n}{stop}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
