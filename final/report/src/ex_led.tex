@@ -1,0 +1,27 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{// Device configuration: 20 Mhz processor and enable rs232,}
+\PY{c+c1}{// which is the COM port. The COM port uses a baudrate of 9600.}
+\PY{c+cp}{#}\PY{c+cp}{if defined(\PYZus{}\PYZus{}PCH\PYZus{}\PYZus{})}
+\PY{c+cp}{#}\PY{c+cp}{include "18f452.h"}
+\PY{c+cp}{#}\PY{c+cp}{fuses HS,NOPROTECT}
+\PY{c+cp}{#}\PY{c+cp}{use delay(clock=20000000)}
+\PY{c+cp}{#}\PY{c+cp}{use rs232(baud=9600, xmit=PIN\PYZus{}C6, rcv=PIN\PYZus{}C7)}
+\PY{c+cp}{#}\PY{c+cp}{endif}
+
+\PY{k+kt}{void} \PY{n+nf}{main}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{c+c1}{// Set B pins to 'output' mode}
+    \PY{n}{set\PYZus{}tris\PYZus{}b}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+
+    \PY{c+c1}{// Blink two LEDs (located on the microcontroller board).}
+    \PY{c+c1}{// Wait for 2 ms between toggling the pins' value.}
+    \PY{k}{while}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)} \PY{p}{\PYZob{}}
+        \PY{n}{output\PYZus{}high}\PY{p}{(}\PY{n}{PIN\PYZus{}B1}\PY{p}{)}\PY{p}{;}
+        \PY{n}{delay\PYZus{}us}\PY{p}{(}\PY{l+m+mi}{2000}\PY{p}{)}\PY{p}{;}
+        \PY{n}{output\PYZus{}low}\PY{p}{(}\PY{n}{PIN\PYZus{}B1}\PY{p}{)}\PY{p}{;}
+
+        \PY{n}{output\PYZus{}high}\PY{p}{(}\PY{n}{PIN\PYZus{}B3}\PY{p}{)}\PY{p}{;}
+        \PY{n}{delay\PYZus{}us}\PY{p}{(}\PY{l+m+mi}{2000}\PY{p}{)}\PY{p}{;}
+        \PY{n}{output\PYZus{}low}\PY{p}{(}\PY{n}{PIN\PYZus{}B3}\PY{p}{)}\PY{p}{;}
+    \PY{p}{\PYZcb{}}
+\PY{p}{\PYZcb{}}
+\end{Verbatim}
