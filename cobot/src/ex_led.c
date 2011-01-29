@@ -173,13 +173,10 @@ int i;
 
 // Buffer for data receiving
 int data_previous, data_current, data_received, receive_round;
-
 int b, bit_count = 3;
 
 void receive_data() {
-
-restart_receive:
-
+    // Clear data buffers
     data_received = data_previous = data_current = 0;
 
     // Receive two times (= "rounds") three bits. Most significant bits are
@@ -214,7 +211,7 @@ restart_receive:
                 while(get_sender_ack())
                     wait(1);
                 set_output(0);
-                goto restart_receive;
+                return receive_data();
             }
 
             debug("get_sender_ack() last\n");

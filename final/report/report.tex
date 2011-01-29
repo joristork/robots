@@ -72,19 +72,34 @@ dictated the structure of our efforts over the past two weeks.
 
 % }}}
 
-\section{Materials} % {{{
-
-Appendix
-
-% TODO: Is it wise to store this section in the appendix or here?
-
-% }}}
+%\section{Materials} % {{{
+%
+%Appendix
+%
+%% TODO: Is it wise to store this section in the appendix or here?
+%
+%% }}}
+%
 
 \pagebreak
 
 \section{Approach} % {{{
 
-\subsection{Cobot} % {{{
+\subsection{Establishing COM-to-USB connection} % {{{
+\label{sub:Establishing COM-to-USB connection}
+
+In order to see if a Cobot or Hemisson is performing some action, it is wise to
+write debug information to a file or serial port. In this case, the serial port
+is available on both robots, which will provide us a ``real-time'' view of the
+robot's current and next actions to perform. Sander developed the following code
+to be able to command the Hemisson robot using a python console connected with a
+serial port:
+
+\input{src/hemisson}
+
+% }}}
+
+\subsection{Cobot preparations} % {{{
 
 % TODO: write a general approach to solve the problems occurred during
 % development of Cobot's code.
@@ -264,6 +279,13 @@ example file \texttt{ex\_led.c}, which is part of the CCS C compiler's examples.
 
 % }}}
 
+\subsubsection{Cobot's data receiver and error checker} % {{{
+\label{ssub:Cobot's data receiver and error checker}
+
+\input{src/data-receiver}
+
+% }}}
+
 % }}}
 
 \subsection{Sun SPOT implementation} % {{{
@@ -350,16 +372,16 @@ is done, we refer to the comments in the Sun SPOT and Cobot source code.
 
 % }}}
 
-\section{Results} % {{{
-\label{sec:Results}
-%Not the same as the Conclusion in this case?
-% }}}
+%\section{Results} % {{{
+%\label{sec:Results}
+%%Not the same as the Conclusion in this case?
+%% }}}
 
-\section{Discussion} % {{{
+%\section{Discussion} % {{{
+%
+%% }}}
 
-% }}}
-
-\section{Conclusion} % {{{
+\section{Results and conclusion} % {{{
 
 % }}}
 

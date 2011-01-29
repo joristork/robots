@@ -1,24 +1,13 @@
 #!/usr/bin/env python
-from serial import Serial, PARITY_NONE, EIGHTBITS, STOPBITS_ONE
-from time import sleep
-
+#
 # This script is used to read and write data from/to the COM-to-USB port.
 # Created by Sander van Veen <sandervv@gmail.com>, Jan 27, 2011.
 # This script is public domain; feel free to do anything with it you want.
 #
-# Dependencies of this script:
-#  - Python 2.x
-#  - python-serial
-#
-# The python-serial package does not recognise the USB-to-COM port properly. To
-# fix this, you should change the python source code line containing the string
-# "/dev/tty%d" to "/dev/ttyUSB%d".
-#
-# I prefer the ipython console, because it has better auto completion than the
-# default python console. However, this script should work with the default
-# python console as well.
-#
-# Example invocation: $ ipython -i -nobanner -noconfirm_exit hemisson.py
+# Example invocation: $ python -i hemisson.py
+
+from serial import Serial, PARITY_NONE, EIGHTBITS, STOPBITS_ONE
+from time import sleep
 
 class HemissonException(Exception):
     def __init__(self, value):
@@ -138,14 +127,13 @@ class Hemisson:
         """
 
         print '> %s\\n\\r' % msg
-        self.serial.write(msg+'\n\r')
+        self.serial.write('%s \n\r' % msg)
 
 if __name__ == '__main__':
     robot = Hemisson()
     robot.remote_version()
     robot.get_switches()
 
-    #robot.drive()
     for i in range(4):
         robot.set_speed(4)
         sleep(2)
@@ -153,8 +141,3 @@ if __name__ == '__main__':
         sleep(1.5)
 
     robot.stop()
-    #robot.beep(1)
-    #sleep(2)
-    #robot.beep(0)
-    #del robot
-
