@@ -772,25 +772,47 @@ The Hemisson is a two-wheeled robot designed for mobility, that includes:
 
 % }}}
 
-\subsection{Tools} % {{{
-
-% TODO: the following tools should include make, and key characteristics.
-
-\subsubsection{Hardware} % {{{
-
 % }}}
 
-\subsubsection{Software} % {{{
+\section{Software used during development} % {{{
+\label{app:robot-software}
+
+During the development of the Cobot and Sun SPOTs, we used various software
+tools to accomplice our project goals. Sander does prefer using free libre open
+source software (FLOSS) to develop the Cobot's source code (software should be
+available to all platforms, not just Windows). The only proprietary exception to
+the toolchain used for the Cobot, was the CCS C compiler. Unfortunately, it was
+not possible to replace this compiler with SDCC (Small device C compiler), which
+is an open source alternative for PIC microcontrollers. The reason was the SDCC
+did not support the \texttt{\#use} en \texttt{\#fuse} compiler directives (since
+those are only supported by the CCS C compiler). If there was more time
+available, we would have compiled the file using the proprietary compiler,
+analysed the produced assembly code and added that assembly code to the source
+code of the Cobot. We would have added the assembly as inline assembly code to
+avoid the need of compiling with the proprietary CCS C compiler. We did not
+spend any time in the analysis of those compiler directives, because those had
+not a high priority (since that analysis was not part of the project goals).
+
+\noindent We used the following software to program the Cobot (done by Sander
+and Joris):
+
 \begin{itemize}
-    \item Netbeans IDE with Sun SPOT modules(Latest version);
-    \item Apache Ant(Latest version);
+    \item Vim (code editor)
+    \item iPython (interactive python console; used for debugging the Cobot)
+    \item CCS C compiler (proprietary; compiler for PIC microcontrollers)
+\end{itemize}
+
+\noindent And the software used to program the Sun SPOTs (done by Lucas and
+Harm):
+
+\begin{itemize}
+    \item Netbeans IDE with Sun SPOT modules (Latest version);
+    \item Apache Ant (Latest version);
     \item Sun SPOT manager;
 \end{itemize}
-% }}}
 
 % }}}
 
-% }}}
 
 \bibliographystyle{plain}
 \bibliography{cited}
