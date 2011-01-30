@@ -334,7 +334,6 @@ handshaking protocol so just a picture of when each line is high or low.
 I/O}
 \end{figure}
 
-
 % }}}
 
 \subsubsection{Bit banging: hardware bus} % {{{
@@ -427,7 +426,31 @@ example file \texttt{ex\_led.c}, which is part of the CCS C compiler's examples.
 \subsubsection{Cobot's data receiver and error checker} % {{{
 \label{ssub:Cobot's data receiver and error checker}
 
+Transferring data between the Cobot and Sun SPOT is a bit fragile due to
+external dependencies. For example, if a single bit is somehow not set to HIGH
+when it should be, all the following and preceding bits of the message are
+useless. To prevent these external dependencies from corrupting the messages, we
+implemented a simple form of error checking: send the message twice and compare
+the first message with the second. It was also possible to implement a more
+robust error checking algorithm (e.g. Hamming code), but that would be overkill,
+since we're just sending messages of three bits. There was no real benefit for
+us to implementing a more complex algorithm, thus we kept our simple error
+checker.
+
 \input{src/data-receiver}
+
+\noindent The expression \texttt{bit\_count-b-1} looks stupid, but is necessary,
+because the CCS C compiler does not handle all branch conditions well. For
+example, it does not handle these loops as expected:
+
+\input{src/loops}
+
+\noindent The first loop does print \text{i} with 0, 1 and 2. The second loop
+prints a reversed output of the first loop, except it does not stop after 0. The
+loop will continue and will print output until minus infinity is reached.
+Therefore, we rewrote the loop of the receiver to the expression stated above.
+As you can imagine, the lack of these simple operations make it really hard to
+implement a driver for a robot.
 
 % }}}
 
