@@ -298,48 +298,6 @@ an orderly fashion and with the way we made the code it is very easy too expand
 it for more difficult problems.
 
 % }}}
-%Dit is dubbel moeten bepalen of het hier komt of bij de implementatie..
-\subsubsection{Measuring and encoding tilt} % {{{
-
-Two threads are used to enable measuring tilt while sending datagrams. It is
-necessary to create two threads, because sending/receiving datagrams is a
-blocking operation. If a single thread is used for both tasks, the tilt is not
-measured until the sending/receiving process is done.
-\\
-\\
-\noindent Thread 1: \textbf{Measuring the tilt and determine what the next
-Cobot's movement is or if the Cobot should halt.}
-\\
-\\
-This thread continuously measures the tilt of the Sunspot. After measuring the
-tilt, the next movement of the Cobot is determined by checking if the Y tilt is
-larger than the X direction and by measuring if the tilt of either the Y or the
-X direction is larger than 25 degrees. When this is not the case, the Sunspot
-will set the movement to ``stop'' (thus no movement). If this is the case and X
-is larger than Y, the Sunspot will set the direction to left or right. If the
-tilt is negative, the Sun SPOT will turn right and vice versa.  Pretty much the
-same case if the tilt in the Y direction is larger than the tilt in the X
-direction. After the movement of the Cobot is determined, the LEDs are set in
-such way that it is clear what is measured.
-\\
-\\
-\noindent Thread 2: \textbf{Sending a wireless package to the other Sunspot
-containing the direction.}
-\\
-\\
-This thread determines if the movement variable has been changed. If the
-movement variable has changed, it will send a radiogram containing the
-corresponding value of the movement to the other sunspot. Before this is
-possible, a radio connection has to be established. The connection is made using
-this function call: \texttt{Connector.open("radiogram://broadcast:37")}.
-
-And a so called ``datagram'' has to be made. We write the integer that contains
-the direction information to the datagram and this datagram is send to the other
-Sunspot.
-
-% }}}
-
-% }}}
 
 \subsection{Bringing the pieces together} % {{{
 \label{subsec:Bringing the pieces together}
@@ -514,6 +472,52 @@ tilt is negative, the Sun SPOT will turn right and vice versa.  Pretty much the
 same case if the tilt in the Y direction is larger than the tilt in the X
 direction. After the movement of the Cobot is determined, the LEDs are set in
 such way that it is clear what is measured.
+The code of thread 1.
+\begin{verbatim}
+new Thread() {
+  public void run() {
+		int tiltX = 0;
+		int tiltY = 0;
+		while (true) {
+		  	try {
+		    	/*
+		    	* Measure the degrees.
+		      */
+		      tiltX = (int) Math.toDegrees(accel.getTiltX());
+		      tiltY = (int) Math.toDegrees(accel.getTiltY());
+		      result = STOP;
+		      /*
+		      * If the Sunspot is in a bigger sideways tilt than a
+		      * frontal tilt. If none of the tilts is more than 15,
+		      * the Sunspot is in a STOP state.
+		      */
+		      if ((Math.abs(tiltX) > Math.abs(tiltY)) && Math.abs(tiltX) >
+		      		 ANGLE) {
+		      	if (tiltX < 0) {
+		      			result = RIGHT;
+		 	     	} else {
+		       			result = LEFT;
+			     	}
+		  		}	else if ((Math.abs(tiltX) < Math.abs(tiltY)) && 
+		  								Math.abs(tiltY) > ANGLE) {
+		      	if (tiltY > 0) {
+		        		result = DRIVE;
+		        } else {
+		        		result = REVERSE;
+		          }
+		        }
+		        /*
+		         * Set the result on the leds.
+		         */
+		         set_Leds(result);
+		         } catch (IOException ex) {
+		    }
+		}  
+	}
+}.start();
+\end{verbatim}
+
+
 \\
 \\
 \noindent Thread 2: \textbf{Sending a wireless package to the other Sunspot
@@ -529,6 +533,50 @@ this function call: \texttt{Connector.open("radiogram://broadcast:37")}.
 And a so called ``datagram'' has to be made. We write the integer that contains
 the direction information to the datagram and this datagram is send to the other
 Sunspot.
+The code of thread 2.
+\begin{verbatim}
+new Thread() {
+	public void run() {
+  	 /*
+   		* We create a DatagramConnection
+   		*/
+     DatagramConnection dgConnection = null;
+     Datagram dg = null;
+     try {
+     /*
+      * The Connection is a broadcast so we specify it in the creation string
+      */
+      dgConnection =
+      	 	(DatagramConnection)Connecor.open("radiogram://broadcast:37");
+     /*
+      * Then, we ask for a datagram with the maximum size allowed
+       */
+      dg = dgConnection.newDatagram(dgConnection.getMaximumLength());
+      } catch (IOException ex) {
+        	System.out.println("Could not open radiogram broadcast connection");
+        	return;
+      }
+      while (true) {
+      	try {
+        	/*
+         	 * If there is a change in direction, send the direction
+         	 * in the form of a integer to a other Sunspot.
+         	 */
+          if (result != result_old) {
+          	result_old = result;
+            dg.reset();
+            dg.writeInt(result);
+            dgConnection.send(dg);
+            System.out.println("Broadcast is going through");
+          }
+         } catch (IOException ex) {
+           }
+      }
+    }
+	}.start();
+}
+
+\end{verbatim}
 
 % }}}
 
@@ -560,11 +608,13 @@ is done, we refer to the comments in the Sun SPOT and Cobot source code.
 
 % }}}
 
-\subsubsection{Tilt control and use} % {{{
-
+%\subsubsection{Tilt control and use} % {{{
 % TODO: describe protocol for turning tilt information into control functions,
 % and then describe how the user interacts with the system and the LEDs help
 % with this.
+
+
+
 
 Thread 1: Receive the datagrams sent by the Sun SPOT.
 
