@@ -83,7 +83,6 @@ our efforts over the past two weeks.
 %% TODO: Is it wise to store this section in the appendix or here?
 %
 %% }}}
-%
 
 \pagebreak
 
@@ -126,6 +125,8 @@ Other hardware included:
     board to the 3V output voltage specified for the Sun SPOTs;
 \end{itemize}
 
+% }}}
+
 \subsection{Establishing COM-to-USB connection} % {{{
 \label{sub:Establishing COM-to-USB connection}
 
@@ -140,10 +141,10 @@ serial port:
 
 % }}}
 
-
 \subsection{Cobot preparations} % {{{
 
-To program the Cobot we built a toolchain consisting of the following mixture of pre-existing and custom-made software tools:
+To program the Cobot we built a toolchain consisting of the following mixture of
+pre-existing and custom-made software tools:
 
 \begin{itemize}
     \item source code and compiled code for the Cobot, stored in a common
@@ -177,6 +178,50 @@ For the Sun SPOT we used the % TODO: Lucas' software setup.
 
 \subsubsection{Toolchain used to program the Cobot} % {{{
 \label{ssub:Toolchain used to program the Cobot}
+
+First, we connected the shared directory using SSHFS:
+\begin{verbatim}
+$ sshfs USERNAME@deze.science.uva.nl:~/ ~/sremote -C -o cache=no
+\end{verbatim}
+
+The argument \texttt{-C} enables data compression during the transfer and
+\texttt{-o cache=no} disables the file system cache (e.g. stat will respond with
+the most recent data). If we did not disable the file system cache, the overall
+duration of the toolchain is larger due to the default four seconds file system
+cache. These four seconds are visible when the Mac machine running the Windows
+VM was waiting for the source file to update and the second time when the Linux
+machine was waiting for the hex file to update. Disabling the file system cache
+reduced the overall toolchain process by four to eight seconds. Data compression
+did not reduce the overall process that much, but we used it because we were
+transferring text files (and those benefit for compression mostly).
+
+Once we had the shared directory mounted on both the Linux and Mac machine, we
+could transfer data between the Windows virtual machine and the Linux machine.
+\footnote{Windows does not support SSHFS easily, and because we weren't working
+actively a Windows machine, we started a virtual machine on the Mac.} The
+Windows virtual machine started the compilation daemon (using \texttt{\$ python
+compile.py}) and the Linux machine started the programming daemon (using
+\texttt{python upload.py}).\footnote{See appendix for the source code of these
+daemons.} Both daemons use the modification time of the source respectively the
+compiled hex file to determine if the daemon should perform an action.
+
+The programmer daemon uses the ``piklab'' package (in Debian-based
+distributions: \texttt{sudo apt-get install piklab}) to write the hex file to
+the Jobot. Be aware of the fact that piklab does not program the Jobot's
+microcontroller right away, it is necessary to use the ICD2 Programmer, since
+it is not possible to program the Jobot directly. The daemon will spawn a
+sub process executing the Makefile's default target. The default target will
+execute the following commands to program the Jobot:
+
+\begin{verbatim}
+$ sudo piklab-prog --port usb -p icd2 -d 18F450 -c connect
+$ sudo piklab-prog --port usb -p icd2 -d 18F450 -c program file.hex
+\end{verbatim}
+
+It was necessary the execute these commands using \texttt{sudo}, because
+piklab was not able to lock the USB-to-COM port otherwise. The second command
+will also verify the programming process, thus verifying if the Jobot's
+microcontroller contains the hex file we were uploading.
 
 % }}}
 
@@ -595,7 +640,7 @@ banging process.
 % }}}
 
 \section{Discussion} % {{{
-%think this belongs in the discussion cause this you talk about the problems 
+%think this belongs in the discussion cause this you talk about the problems
 % you had while doing the project.
 % TODO: might want to add what ever is on your heart.
 While we were doing the project there were a lot of hurdles to overcome which
@@ -604,16 +649,17 @@ or not available at the time :like there were not enough working batteries.
 The software used for the project was not available on the computers(Sun SPOT
 manager, ANT and the SDK). Also,
 the robots mainly use a com port to do the programming which mostly not
-available anymore on most of the newer computers and laptops. but I think 
+available anymore on most of the newer computers and laptops. but I think
 the efforts we made this year will make it proceed more smoothly in the coming
 years. This project taught us more than just how to work with program robots
 but also the hardships you have to deal with if were to start your own project.
 In the end thinking out of the box and hard work paid off. Because we
-got the robot working in the end.  
+got the robot working in the end.
 % }}}
 
 \section{Results and conclusion} % {{{
-% TODO: explain characteristics of the behaviour, and any differences between the behaviour and the expected behaviour.
+% TODO: explain characteristics of the behaviour, and any differences between
+% the behaviour and the expected behaviour.
 
 % }}}
 
