@@ -87,7 +87,7 @@ our efforts over the past two weeks.
 
 \pagebreak
 
-\section{Approach} % {{{
+\section{Methods} % {{{
 
 This section provides an overview of the materials used in this project. More
 detailed specifications of materials used in this project are listed in appendix
@@ -107,7 +107,7 @@ Two hardware devices formed the centrepiece of this project:
     matchbox.
 \end{itemize}
 
-Other hardware included:
+\noindent Other hardware included:
 
 \begin{itemize}
     \item a portable digital oscilloscope, for measuring voltages on the various
@@ -165,10 +165,6 @@ For the Sun SPOT we used the % TODO: Lucas' software setup.
 
 
 % }}}
-
-% }}}
-
-\section{Methods} % {{{
 
 \subsection{Cobot} % {{{
 
@@ -262,20 +258,11 @@ be sent to the Sun SPOTs to be interpreted and handled accordingly. For more
 detailed information on the implementations see section \ref{sub:Sun SPOT
 implementation}.
 
-<<<<<<< HEAD
-Both Sun SPOTs start up
-a \texttt{BootloaderListenerService}, so that we can read the debug output at
-real-time on our computer. This was very useful to debug the Java code. Both
-Sunspots extend the 
-\texttt{javax.microedition.midlet.MIDlet} class, so that all
-the functions the Sun SPOT needs to operate are in the code.
-=======
 Both Sun SPOTs start up a \texttt{BootloaderListenerService}, so that we can
 read the debug output at real-time on our computer. This was very useful to
 debug the Java code. Both Sunspots extend the
 \texttt{javax.microedition.midlet.MIDlet} class, so that all the functions the
 Sun SPOT needs to operate are in the code.
->>>>>>> 1e158d60beb19a2db13471aa096d23755146aa2a
 
 \subsubsection{Communication between the Sun SPOTs} % {{{
 \label{subsec:comm}
@@ -483,51 +470,18 @@ is larger than Y, the Sunspot will set the direction to left or right. If the
 tilt is negative, the Sun SPOT will turn right and vice versa.  Pretty much the
 same case if the tilt in the Y direction is larger than the tilt in the X
 direction. After the movement of the Cobot is determined, the LEDs are set in
-such way that it is clear what is measured.
-The code of thread 1.
-\begin{verbatim}
-new Thread() {
-  public void run() {
-		int tiltX = 0;
-		int tiltY = 0;
-		while (true) {
-		  	try {
-		    	/*
-		    	* Measure the degrees.
-		      */
-		      tiltX = (int) Math.toDegrees(accel.getTiltX());
-		      tiltY = (int) Math.toDegrees(accel.getTiltY());
-		      result = STOP;
-		      /*
-		      * If the Sunspot is in a bigger sideways tilt than a
-		      * frontal tilt. If none of the tilts is more than 15,
-		      * the Sunspot is in a STOP state.
-		      */
-		      if ((Math.abs(tiltX) > Math.abs(tiltY)) && Math.abs(tiltX) >
-		      		 ANGLE) {
-		      	if (tiltX < 0) {
-		      			result = RIGHT;
-		 	     	} else {
-		       			result = LEFT;
-			     	}
-		  		}	else if ((Math.abs(tiltX) < Math.abs(tiltY)) && 
-		  								Math.abs(tiltY) > ANGLE) {
-		      	if (tiltY > 0) {
-		        		result = DRIVE;
-		        } else {
-		        		result = REVERSE;
-		          }
-		        }
-		        /*
-		         * Set the result on the leds.
-		         */
-		         set_Leds(result);
-		         } catch (IOException ex) {
-		    }
-		}  
-	}
-}.start();
-\end{verbatim}
+such way that it is clear what is measured. The code of thread 1:
+
+\input{src/measuring}
+
+\noindent The constants ANGLE, RIGHT, LEFT, STOP, DRIVE and REVERSE are
+specified in the main class. The constant ANGLE is set to \texttt{15} (= minimum
+degrees used to filter unintended movements). The constants RIGHT, LEFT, STOP,
+DRIVE and REVERSE are movement identifiers, since only bits are transferred
+between the Sun SPOTs and the Sun SPOT and the Jobot, it is better to create
+readable identifiers.
+\\
+\\
 \noindent Thread 2: \textbf{Sending a wireless package to the other Sunspot
 containing the direction.}
 \\
@@ -540,52 +494,11 @@ this function call: \texttt{Connector.open("radiogram://broadcast:37")}.
 
 And a so called ``datagram'' has to be made. We write the integer that contains
 the direction information to the datagram and this datagram is send to the other
-Sunspot.
-The code of thread 2.
-\begin{verbatim}
-new Thread() {
-	public void run() {
-  	 /*
-   		* We create a DatagramConnection
-   		*/
-     DatagramConnection dgConnection = null;
-     Datagram dg = null;
-     try {
-     /*
-      * The Connection is a broadcast so we specify it in the creation string
-      */
-      dgConnection =
-      	 	(DatagramConnection)Connecor.open("radiogram://broadcast:37");
-     /*
-      * Then, we ask for a datagram with the maximum size allowed
-       */
-      dg = dgConnection.newDatagram(dgConnection.getMaximumLength());
-      } catch (IOException ex) {
-        	System.out.println("Could not open radiogram broadcast connection");
-        	return;
-      }
-      while (true) {
-      	try {
-        	/*
-         	 * If there is a change in direction, send the direction
-         	 * in the form of a integer to a other Sunspot.
-         	 */
-          if (result != result_old) {
-          	result_old = result;
-            dg.reset();
-            dg.writeInt(result);
-            dgConnection.send(dg);
-            System.out.println("Broadcast is going through");
-          }
-         } catch (IOException ex) {
-           }
-      }
-    }
-	}.start();
-}
+Sunspot. The code of thread 2:
 
-\end{verbatim}
+\input{src/sending}
 
+\noindent The leds are set accordingly.
 % }}}
 
 \subsubsection{Receive movement and communicate with Cobot} % {{{
@@ -753,8 +666,8 @@ virtual machine is written in C.
     \item PIC16F452 microcontroller with max $40MHz$ CPU clock, 256 byte
     EEPROM data, $32KB$ program memory
     \item Digital communication peripherals (1-A/E/USART, 1-MSSP(SPI/I2C))
-	\item Three servos
-	\item Three IR sensors
+    \item Three servos
+    \item Three IR sensors
 \end{itemize}
 
 % }}}
