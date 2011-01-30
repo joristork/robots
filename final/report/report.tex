@@ -586,31 +586,6 @@ is done, we refer to the comments in the Sun SPOT and Cobot source code.
 
 % }}}
 
-%\subsubsection{Tilt control and use} % {{{
-% TODO: describe protocol for turning tilt information into control functions,
-% and then describe how the user interacts with the system and the LEDs help
-% with this.
-
-
-
-
-%Thread 1: Receive the datagrams sent by the Sun SPOT.
-
-%After the direction has been sent, the Sun SPOT sets the LEDs in a way that
-%it is clear what the received direction is. It will also start up the bit
-%banging process.
-
-% }}}
-
-% }}}
-
-% }}}
-
-%\section{Results} % {{{
-%\label{sec:Results}
-%%Not the same as the Conclusion in this case?
-
-%Not the same as the Conclusion in this case? -- no:
 % TODO: results should describe the behaviour of the cobot implementation,
 %including serial output; the behaviour of the communications link
 %implementation between cobot and sun spot; the behaviour of the Sun SPOT tilt
@@ -623,7 +598,7 @@ is done, we refer to the comments in the Sun SPOT and Cobot source code.
 % you had while doing the project.
 % TODO: might want to add what ever is on your heart.
 We did implement a way to send information between the two Sun Spots, but the
-packets we have send are not safe, because we have not give them a signature. 
+packets we have send are not safe, because we have not given them a signature. 
 We should have 
 given the packages a "magic number` so we could recognize our packets and
 ignore other traffic which might be going on. We have not tested this
@@ -649,9 +624,9 @@ a program which we made.
 This goal was ultimately met. Our goals for the Sun SPOT was to send information
 between the Sun SPOTs and between the Sun SPOT and Cobot. We almost succeeded
 in doing this, but since we lacked time and we were missing one wire to
-send information back to the Sun SPOT. We did not read the IR values of the
-Cobot and we have not send any information to the Sun SPOT except for
-confirmations.
+send information back to the Sun SPOT and we did not read the IR values of the
+Cobot. We have not sent any information to the Sun SPOT except for
+confirmations from the Cobot.
 
 While we were doing the project there were a lot of hurdles to overcome which
 were not necessarily part of the project. Some of the materials were lacking
