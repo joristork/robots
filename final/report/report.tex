@@ -322,10 +322,12 @@ it is low cost. It gives you more control and the best thing is that it can be
 used in every languages and can be used on every system that can communicate
 with software, because it is so low level.
 
-In our case we started by first sending information between two Sun SPOTs. We
-wanted to implement big-banging without the use of a clock. So there's a
-handshaking protocol need to get the two aligned. Here goes a picture of our
-handshaking protocol so just a picture of when each line is high or low.
+In our case we started by first devising a deterministic bit banging protocol,
+i.e. a protocol that does not make use of a clock signal. This involved
+designing a hand shaking protocol to align the devices to the same starting
+point on a transfer. We then simulated this between two Sun SPOTs. Here goes a
+picture of our handshaking protocol so just a picture of when each line is high
+or low.
 \begin{figure}
 \label{fig:sunspotconnections}
 \centering
@@ -339,7 +341,7 @@ I/O}
 
 \subsubsection{Bit banging: hardware bus} % {{{
 
-Now that we have both the Cobot ready to drive and the bit-banging between the
+Now that we have both the Cobot ready to drive and have tested the bit-banging between the
 Sun SPOTs. We can finally start putting the pieces together. Although we had all
 the pieces, it was still hard to get them to work together properly.  The main
 problem was touched on in the last part. The difference is voltage the two
