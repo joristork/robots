@@ -227,7 +227,20 @@ piklab was not able to lock the USB-to-COM port otherwise. The second command
 will also verify the programming process, thus verifying if the Jobot's
 microcontroller contains the hex file we were uploading.
 
-For the Sun SPOT we used the recommended software. Which is all 
+\begin{figure}[H]
+\hspace{-1.2in}
+\includegraphics[scale=0.5]{img/workspace}
+\caption{Workspace used to develop the Cobot's source code. On the left is Vim
+(an highly configurable text editor built to enable efficient text editing). On
+the top right is a build log displayed (using the shell command: \texttt{\$
+watch tail -n20 build.log}) and at the right bottom is a reader of the
+connection to the serial port. It will simply display all the messages sent to
+the RS-232 COM port. Those three windows are just terminals and Awesome
+Window Manager is used to tile those windows together. Combined with the
+toolchain, you have a full-featured IDE for development of the Cobot.}
+\end{figure}
+
+For the Sun SPOT we used the recommended software. Which is all
 the software the Sun SPOT manager asks you to install when running it. This
 might change as time progresses so I would recommend doing the same while
 working with the SPOT. This gives you the most reliable software. The

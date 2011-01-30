@@ -1,0 +1,34 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{new} \PY{n+nf}{Thread}\PY{o}{(}\PY{o}{)} \PY{o}{\PYZob{}}
+    \PY{k+kd}{public} \PY{k+kt}{void} \PY{n+nf}{run}\PY{o}{(}\PY{o}{)} \PY{o}{\PYZob{}}
+        \PY{c+cm}{/* We create a DatagramConnection */}
+        \PY{n}{DatagramConnection} \PY{n}{dgConnection} \PY{o}{=} \PY{k+kc}{null}\PY{o}{;}
+        \PY{n}{Datagram} \PY{n}{dg} \PY{o}{=} \PY{k+kc}{null}\PY{o}{;}
+        \PY{k}{try} \PY{o}{\PYZob{}}
+            \PY{n}{dgConnection} \PY{o}{=}
+                \PY{o}{(}\PY{n}{DatagramConnection}\PY{o}{)} \PY{n}{Connecor}\PY{o}{.}\PY{n+na}{open}\PY{o}{(}\PY{l+s}{"radiogram://broadcast:37"}\PY{o}{)}\PY{o}{;}
+            \PY{c+cm}{/* Ask for a datagram with the maximum size allowed */}
+            \PY{n}{dg} \PY{o}{=} \PY{n}{dgConnection}\PY{o}{.}\PY{n+na}{newDatagram}\PY{o}{(}\PY{n}{dgConnection}\PY{o}{.}\PY{n+na}{getMaximumLength}\PY{o}{(}\PY{o}{)}\PY{o}{)}\PY{o}{;}
+        \PY{o}{\PYZcb{}} \PY{k}{catch} \PY{o}{(}\PY{n}{IOException} \PY{n}{ex}\PY{o}{)} \PY{o}{\PYZob{}}
+            \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Could not open radiogram connection"}\PY{o}{)}\PY{o}{;}
+            \PY{k}{return}\PY{o}{;}
+        \PY{o}{\PYZcb{}}
+
+        \PY{k}{while} \PY{o}{(}\PY{k+kc}{true}\PY{o}{)} \PY{o}{\PYZob{}}
+            \PY{k}{try} \PY{o}{\PYZob{}}
+                \PY{c+cm}{/*}
+\PY{c+cm}{                 * If there is a change in direction, send the direction}
+\PY{c+cm}{                 * in the form of an integer to an other Sunspot.}
+\PY{c+cm}{                 */}
+                \PY{k}{if} \PY{o}{(}\PY{n}{result} \PY{o}{!}\PY{o}{=} \PY{n}{result\PYZus{}old}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{result\PYZus{}old} \PY{o}{=} \PY{n}{result}\PY{o}{;}
+                    \PY{n}{dg}\PY{o}{.}\PY{n+na}{reset}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                    \PY{n}{dg}\PY{o}{.}\PY{n+na}{writeInt}\PY{o}{(}\PY{n}{result}\PY{o}{)}\PY{o}{;}
+                    \PY{n}{dgConnection}\PY{o}{.}\PY{n+na}{send}\PY{o}{(}\PY{n}{dg}\PY{o}{)}\PY{o}{;}
+                    \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Broadcast is going through"}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+            \PY{o}{\PYZcb{}} \PY{k}{catch} \PY{o}{(}\PY{n}{IOException} \PY{n}{ex}\PY{o}{)} \PY{o}{\PYZob{}} \PY{o}{\PYZcb{}}
+        \PY{o}{\PYZcb{}}
+    \PY{o}{\PYZcb{}}
+\PY{o}{\PYZcb{}}\PY{o}{.}\PY{n+na}{start}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+\end{Verbatim}

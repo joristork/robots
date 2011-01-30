@@ -1,4 +1,6 @@
-compile: report.tex
+compile: report.pdf
+
+report.pdf: report.tex
 	make -C src/
 	pdflatex $^
 	pdflatex $^
