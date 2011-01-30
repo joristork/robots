@@ -3,7 +3,7 @@ colorize=pygmentize -O -style=colorfull -f latex
 all: highlight
 
 highlight: hemisson.tex ex_led.tex data-receiver.tex sending.tex \
-	measuring.tex loops.tex
+	measuring.tex loops.tex cobot-start.tex
 
 %.tex: %.c
 	${colorize} $^ | sed 's#\(\\PY{l+s+sd}{\)\( \+\)#\21#' > $@
