@@ -586,19 +586,10 @@ is done, we refer to the comments in the Sun SPOT and Cobot source code.
 
 % }}}
 
-% TODO: results should describe the behaviour of the cobot implementation,
-%including serial output; the behaviour of the communications link
-%implementation between cobot and sun spot; the behaviour of the Sun SPOT tilt
-%implementation; and the overall behaviour of the RC setup.
-
-% }}}
-
 % }}}
 
 \section{Discussion} % {{{
-%think this belongs in the discussion cause this you talk about the problems
-% you had while doing the project.
-% TODO: might want to add what ever is on your heart.
+% TODO: More decisions we made which we could have done better.
 
 We did implement a way to send information between the two Sun SPOTs, but the
 packets we have send are not safe, because we have not give them a signature.
@@ -609,16 +600,16 @@ need to secure the communication (no benefit for this project). Also, we kept
 the commands we could give to the Cobot to a bare minimum of five. Forward,
 left, right, stop and backwards. This can be upgraded to do some more complex
 motions like a combination of forward and left, or a certain rotation angle.
+This goes together with an upgrade of the Sun SPOT program to give such 
+commands to the Cobot. 
+Lastly, we use directly give a signal from the digital I/O ports to the 
+Cobot, but it would be nice to use the high output ports to give these signals.
+This gives you more security and allows for the Cobot to be less sensitive.
 
 % }}}
 
 \section{Results and conclusion} % {{{
-% TODO: explain characteristics of the behaviour, and any differences between
-% the behaviour and the expected behaviour.
-
-% TODO: What we've learned, what we might have done better, what we did well.
-
-% Have moved the future bit into the conclusion:
+%TODO: more things to add
 
 Although our initial goals were not met. We managed to accomplish a lot with
 respect to getting the Cobot to work. When we first got the assignment, we
@@ -652,7 +643,7 @@ slave to follow it. The list goes on and on. There were so many other things we
 wanted to do, but cause of lack of time we could not. \\
 
 \noindent \textbf{Conclusion}: We have not met our initial goals, but we did
-managed to meet all our revised goals. Which was to get the Cobot to run a
+manage to meet all our revised goals. Which was to get the Cobot to run a
 program we wrote ourselves and to get it to communicate with the Sun SPOT.
 
 % }}}
