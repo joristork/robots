@@ -149,11 +149,24 @@ software development, compilation and upload stages in the programming cycle.
 In order to see if a Cobot or Hemisson is performing some action, it is wise to
 write debug information to a file or serial port. In this case, the serial port
 is available on both robots, which will provide us a ``real-time'' view of the
-robot's current and next actions to perform. Sander developed the following code
-to be able to command the Hemisson robot using a python console connected with a
-serial port:
+robot's current and next actions to perform.
+
+Sander developed some python code to be able to command the Hemisson robot using
+a python console connected in combination with a serial port. The following code
+is an implementation of most of the features available in the Hemisson GUI.
+This code has two advantages: platform independent (Mac and Linux could also
+command the Hemisson) and enables the user to automate certain actions (e.g to
+create a loop to let the Hemisson drive around a rectangle).
 
 \input{src/hemisson}
+
+\noindent This code was developed to demonstrate the communication over the
+RS-232 COM port was successful. When we started to develop code for the Cobot,
+we did not need this code any more, since the Cobot had no code running to
+interpret the commands sent through the RS-232 COM port. We had to code the
+Cobot from scratch, however this Hemisson code was not useless, because it did
+provide us with the information needed to establish a RS-232 COM port
+connection successfully.
 
 % }}}
 
@@ -184,7 +197,8 @@ pre-existing and custom-made software tools:
     output from the Cobot over the Cobot's RS-232 serial port;
 \end{itemize}
 
-First, we connected the shared directory using SSHFS:
+\noindent First, we connected the shared directory using SSHFS:
+
 \begin{verbatim}
 $ sshfs USERNAME@deze.science.uva.nl:~/ ~/sremote -C -o cache=no
 \end{verbatim}
@@ -228,7 +242,25 @@ piklab was not able to lock the USB-to-COM port otherwise. The second command
 will also verify the programming process, thus verifying if the Jobot's
 microcontroller contains the hex file we were uploading.
 
-For the Sun SPOT we used the % TODO: Lucas' software setup.
+\begin{figure}[H]
+\hspace{-1.2in}
+\includegraphics[scale=0.5]{img/workspace}
+\caption{Workspace used to develop the Cobot's source code. On the left is Vim
+(an highly configurable text editor built to enable efficient text editing). On
+the top right is a build log displayed (using the shell command: \texttt{\$
+watch tail -n20 build.log}) and at the right bottom is a reader of the
+connection to the serial port. It will simply display all the messages sent to
+the RS-232 COM port. Those three windows are just terminals and Awesome
+Window Manager is used to tile those windows together. Combined with the
+toolchain, you have a full-featured IDE for development of the Cobot.}
+\end{figure}
+
+For the Sun SPOT we used the recommended software. Which is all
+the software the Sun SPOT manager asks you to install when running it. This
+might change as time progresses so I would recommend doing the same while
+working with the SPOT. This gives you the most reliable software. The
+SPOT manager handles all the environment variables needed to get
+the program running.
 
 % }}}
 
@@ -280,22 +312,21 @@ Sun SPOT needs to operate are in the code.
 The first order of business was getting the Sun SPOTs to communicate with each
 other. To do this you need to use the function on the Sun SPOT to start
 listening for information. It is almost always required to filter some of these
-packages, because if there are other Sun SPOTs communicating with each other.
-You need to be sure you are receiving the right packages. We haven't implemented
+packets, because if there are other Sun SPOTs communicating with each other.
+You need to be sure you are receiving the right packets. We haven't implemented
 this, because we were working in a secluded area away from other Sun SPOTs which
 might interfere with out Sun SPOTs, but this is easily implemented in the code
-we made. In the final code we do filter out packages without valid commands.
+we made. In the final code we do filter out packets without valid commands.
 This will avoid most of the unwanted traffic, but we can still get some messages
 that were not intended for us.
 
 We send some information in the form of tilting the Sun SPOT. This was chosen
 to figure out both how to send the information and to get to know how the
-sensors(EDemoboard) of the Sun SPOT functioned. We wanted the communication
+sensors (EDemoboard) of the Sun SPOT functioned. We wanted the communication
 between to be both ways. So we had to use threads to get this working properly.
-Without threads you will often get stuck because of desynchronization and would
-be waiting on each other(Deadlock).
+Without threads, the Sun SPOTs will often get stuck because of desynchronization.
 
-With the implementation of these thread we finally managed to correctly send
+With the implementation of these threads we finally managed to correctly send
 the information between the two Sun SPOT. We built the foundations of the
 communications between the two robots or as application as a remote control.
 With this foundation it could be used to implement any sort of data transfer in
@@ -318,8 +349,8 @@ bit banging to send the received movement to the Cobot.
 \label{ssub:bitbang}
 
 First we thought we could send the data between the Sun SPOT and the Cobot via
-the $I^2C$ bus, but halfway through the project. It was found out this wasn't
-possible, because of a technical issues. Namely the Sun SPOT can only handle a
+the $I^2C$ bus, but halfway through the project, it was found out this wasn't
+possible, because of a technical issues. Namely, the Sun SPOT can only handle a
 voltage of 3V and the Cobot can only send signals of 5V. This is a big problem
 if you want to communicate between the two without frying the Sun SPOT. Luckily
 the Cobot can register voltages of 2V and higher so no modification had to be
@@ -329,7 +360,7 @@ This meant we had to use another method to get the information to the Cobot. The
 solution that was given to us was the use of bit-banging. Bit-banging is a
 technique for serial communications using software instead of dedicated
 hardware. This means you got to send all the information bit by bit instead of
-sending a full package of bytes in the form on any given data type. If you want
+sending a full packet of bytes in the form on any given data type. If you want
 to use this method it is needed to have good control of how and when the
 information is sent. This means you are responsible for all the timings and
 synchronizations between the parties. The good thing about bit-banging is that
@@ -340,17 +371,15 @@ with software, because it is so low level.
 In our case we started by first devising a deterministic bit banging protocol,
 i.e. a protocol that does not make use of a clock signal. This involved
 designing a hand shaking protocol to align the devices to the same starting
-point on a transfer. We then simulated this between two Sun SPOTs. Here goes a
-picture of our handshaking protocol so just a picture of when each line is high
-or low.
-\begin{figure}
+point on a transfer. We then simulated this between two Sun SPOTs.
+
+\begin{figure}[H]
 \label{fig:sunspotconnections}
 \centering
 \includegraphics{img/sunspotconnections1.png}
 \caption{The Sun SPOT with connections added to the ground and the digital
 I/O}
 \end{figure}
-
 
 % }}}
 
@@ -373,14 +402,20 @@ than just a giving a high signal, because the message will get distorted if
 there is a resistance between the sender and receiver.
 % Not sure about this explaination
 
-% TODO: figure of the resistance.
+\begin{figure}[H]
+\label{fig:connection-schema}
+\centering
+\includegraphics[scale=0.5]{img/connection-schema.png}
+\caption{Schema of the the Sun SPOT and Cobot connected using a resistance.}
+\end{figure}
+
 Also, we initially used timers for the Sun SPOTs to send datagrams to each
 other. We could not use this timers from the Java code, since those timers did
 not guarantee that a bit is transmitted: there is no guarantee the timers of
 both devices are working correctly. We went for a deterministic approach by
 implementing a state machine. The basic idea is really simple (you could only
 transition from one state into another), but you have to make sure acknowledge
-bits are continuously sent to both sides. In figure ~\ref{fig:handshaking} is
+bits are continuously sent to both sides. In the figure displayed below is
 shown how the transmission protocol for bit banging works, without using a
 clock.
 
@@ -400,6 +435,14 @@ acknowledge flag, and the receiver will followed by lowering its own ACK flag as
 well. When both ACK flags are down, the process starts all over again. There is
 also a reset flag, which indicates a restart of the whole process is required.
 The receiver will set its reset flag, when an invalid value is received.}
+\end{figure}
+
+\begin{figure}[H]
+\label{fig:cobot-sun-spot}
+\centering
+\includegraphics[scale=0.5]{img/cobot_and_sunspot.jpg}
+\caption{Picture of the Sun SPOT and the Cobot connected to each other using our
+custom-made bit banging connection.}
 \end{figure}
 
 % }}}
@@ -444,7 +487,38 @@ example file \texttt{ex\_led.c}, which is part of the CCS C compiler's examples.
 \subsubsection{Cobot's data receiver and error checker} % {{{
 \label{ssub:Cobot's data receiver and error checker}
 
+Transferring data between the Cobot and Sun SPOT is a bit fragile due to
+external dependencies. For example, if a single bit is somehow not set to HIGH
+when it should be, all the following and preceding bits of the message are
+useless. To prevent these external dependencies from corrupting the messages, we
+implemented a simple form of error checking: send the message twice and compare
+the first message with the second. It was also possible to implement a more
+robust error checking algorithm (e.g. Hamming code), but that would be overkill,
+since we're just sending messages of three bits. There was no real benefit for
+us to implementing a more complex algorithm, thus we kept our simple error
+checker.
+
 \input{src/data-receiver}
+
+\noindent The expression \texttt{bit\_count-b-1} looks stupid, but is necessary,
+because the CCS C compiler does not handle all branch conditions well. For
+example, it does not handle these loops as expected:
+
+\input{src/loops}
+
+\noindent The first loop does print \text{i} with 0, 1 and 2. The second loop
+prints a reversed output of the first loop, except it does not stop after 0. The
+loop will continue and will print output until minus infinity is reached.
+Therefore, we rewrote the loop of the receiver to the expression stated above.
+As you can imagine, the lack of these simple operations make it really hard to
+implement a driver for a robot.
+
+% }}}
+
+\subsubsection{Cobot's handshake and start} % {{{
+\label{ssub:Cobot's handshake and start}
+
+\input{src/cobot-start}
 
 % }}}
 
@@ -495,7 +569,7 @@ between the Sun SPOTs and the Sun SPOT and the Jobot, it is better to create
 readable identifiers.
 \\
 \\
-\noindent Thread 2: \textbf{Sending a wireless package to the other Sunspot
+\noindent Thread 2: \textbf{Sending a wireless packet to the other Sunspot
 containing the direction.}
 \\
 \\
@@ -540,71 +614,65 @@ is done, we refer to the comments in the Sun SPOT and Cobot source code.
 
 % }}}
 
-%\subsubsection{Tilt control and use} % {{{
-% TODO: describe protocol for turning tilt information into control functions,
-% and then describe how the user interacts with the system and the LEDs help
-% with this.
-
-
-
-
-%Thread 1: Receive the datagrams sent by the Sun SPOT.
-
-%After the direction has been sent, the Sun SPOT sets the LEDs in a way that
-%it is clear what the received direction is. It will also start up the bit
-%banging process.
-
-% }}}
-
-% }}}
-
 % }}}
 
 \section{Discussion} % {{{
-%think this belongs in the discussion cause this you talk about the problems
-% you had while doing the project.
-% TODO: might want to add what ever is on your heart.
-While we were doing the project there were a lot of hurdles to overcome which
-were not necessarily part of the project. Some of the materials were lacking
-or not available at the time :like there were not enough working batteries.
-The software used for the project was not available on the computers(Sun SPOT
-manager, ANT and the SDK). Also,
-the robots mainly use a com port to do the programming which mostly not
-available anymore on most of the newer computers and laptops. but I think
-the efforts we made this year will make it proceed more smoothly in the coming
-years. This project taught us more than just how to work with program robots
-but also the hardships you have to deal with if were to start your own project.
-In the end thinking out of the box and hard work paid off. Because we
-got the robot working in the end.
+% TODO: More decisions we made which we could have done better.
+
+We did implement a way to send information between the two Sun SPOTs, but the
+packets we have send are not safe, because we have not give them a signature.
+We should have given the packet a ``magic number'' so we could recognize our
+packets and ignore other traffic which might be going on. We have not tested
+this thoroughly to see if this is might be a problem. Simply because there is no
+need to secure the communication (no benefit for this project). Also, we kept
+the commands we could give to the Cobot to a bare minimum of five. Forward,
+left, right, stop and backwards. This can be upgraded to do some more complex
+motions like a combination of forward and left, or a certain rotation angle.
+This goes together with an upgrade of the Sun SPOT program to give such 
+commands to the Cobot. 
+Lastly, we use directly give a signal from the digital I/O ports to the 
+Cobot, but it would be nice to use the high output ports to give these signals.
+This gives you more security and allows for the Cobot to be less sensitive.
+
 % }}}
 
 \section{Results and conclusion} % {{{
-%\section{Results} % {{{
-%\label{sec:Results}
-%%Not the same as the Conclusion in this case?
+%TODO: more things to add
 
-%Not the same as the Conclusion in this case? -- no:
-% TODO: results should describe the behaviour of the cobot implementation,
-%including serial output; the behaviour of the communications link
-%implementation between cobot and sun spot; the behaviour of the Sun SPOT tilt
-%implementation; and the overall behaviour of the RC setup.
+Although our initial goals were not met. We managed to accomplish a lot with
+respect to getting the Cobot to work. When we first got the assignment, we
+thought most of the hardware and software were in order. After we found out this
+was not the case our goal changed to getting the Cobot to work with our own
+program. This goal was ultimately met. Our goals for the Sun SPOT was to send
+information between the Sun SPOTs and between the Sun SPOT and Cobot. We almost
+succeeded in doing this, but since we lacked time and we were missing one wire
+to send information back to the Sun SPOT. We did not read the IR values of the
+Cobot and we have not send any information to the Sun SPOT except for
+confirmations (using the ACK flags).
 
-% }}}
-%
-% TODO: explain characteristics of the behaviour, and any differences between
-% the behaviour and the expected behaviour.
+While we were working on the project, there were a lot of hurdles to overcome
+which were not necessarily part of the project. Some of the materials were
+lacking or not available at the time like there were not enough working/charged
+batteries. There was no information about the software to use for the project.
+Also, the robots mainly use a COM port to do the programming which is mostly not
+available any more on the newer computers and laptops. But I think the efforts
+we made this year will make it proceed more smoothly in the coming years. This
+project taught us more than just how to work with program robots but also the
+hardships you have to deal with if were to start your own project. In the end we
+were thinking out of the box and the hard work did pay off. Because we succeeded
+in execute our code on the Jobot.
 
-% TODO: What we've learned, what we might have done better, what we did well.
-
-% Have moved the future bit into the conclusion:
 With all the code we have right now the most logical step would be to use Cobots
 and let them communicate. One Cobot would be the master and the other one the
 slave. We would give the master a route to walk and we would want the slave to
 follow the master. After this we could use the sensors on the Cobot to avoid
 collision and let it autonomously wander. While still sending information to the
 slave to follow it. The list goes on and on. There were so many other things we
-wanted to do, but cause of lack of time we could not.
+wanted to do, but cause of lack of time we could not. \\
 
+\noindent \textbf{Conclusion}: We have not met our initial goals, but we did
+manage to meet all our revised goals. Which was to get the Cobot to run a
+program we wrote ourselves and to get it to communicate with the Sun SPOT.
 
 % }}}
 
@@ -719,7 +787,11 @@ The Hemisson is a two-wheeled robot designed for mobility, that includes:
 % }}}
 
 \subsubsection{Software} % {{{
-
+\begin{itemize}
+    \item Netbeans IDE with Sun SPOT modules(Latest version);
+    \item Apache Ant(Latest version);
+    \item Sun SPOT manager;
+\end{itemize}
 % }}}
 
 % }}}

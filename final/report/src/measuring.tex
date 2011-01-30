@@ -1,0 +1,39 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{new} \PY{n+nf}{Thread}\PY{o}{(}\PY{o}{)} \PY{o}{\PYZob{}}
+    \PY{k+kd}{public} \PY{k+kt}{void} \PY{n+nf}{run}\PY{o}{(}\PY{o}{)} \PY{o}{\PYZob{}}
+        \PY{k+kt}{int} \PY{n}{tiltX} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;}
+        \PY{k+kt}{int} \PY{n}{tiltY} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;}
+        \PY{k}{while} \PY{o}{(}\PY{k+kc}{true}\PY{o}{)} \PY{o}{\PYZob{}}
+            \PY{k}{try} \PY{o}{\PYZob{}}
+                \PY{c+cm}{/* Measure the degrees. */}
+                \PY{n}{tiltX} \PY{o}{=} \PY{o}{(}\PY{k+kt}{int}\PY{o}{)} \PY{n}{Math}\PY{o}{.}\PY{n+na}{toDegrees}\PY{o}{(}\PY{n}{accel}\PY{o}{.}\PY{n+na}{getTiltX}\PY{o}{(}\PY{o}{)}\PY{o}{)}\PY{o}{;}
+                \PY{n}{tiltY} \PY{o}{=} \PY{o}{(}\PY{k+kt}{int}\PY{o}{)} \PY{n}{Math}\PY{o}{.}\PY{n+na}{toDegrees}\PY{o}{(}\PY{n}{accel}\PY{o}{.}\PY{n+na}{getTiltY}\PY{o}{(}\PY{o}{)}\PY{o}{)}\PY{o}{;}
+                \PY{n}{result} \PY{o}{=} \PY{n}{STOP}\PY{o}{;}
+
+                \PY{c+cm}{/*}
+\PY{c+cm}{                 * If the Sunspot is in a bigger sideways tilt than a}
+\PY{c+cm}{                 * frontal tilt. If none of the tilts is more than 15,}
+\PY{c+cm}{                 * the Sunspot is in a STOP state.}
+\PY{c+cm}{                 */}
+                \PY{k}{if} \PY{o}{(}\PY{o}{(}\PY{n}{Math}\PY{o}{.}\PY{n+na}{abs}\PY{o}{(}\PY{n}{tiltX}\PY{o}{)} \PY{o}{>} \PY{n}{Math}\PY{o}{.}\PY{n+na}{abs}\PY{o}{(}\PY{n}{tiltY}\PY{o}{)}\PY{o}{)}
+                        \PY{o}{&}\PY{o}{&} \PY{n}{Math}\PY{o}{.}\PY{n+na}{abs}\PY{o}{(}\PY{n}{tiltX}\PY{o}{)} \PY{o}{>} \PY{n}{ANGLE}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{k}{if} \PY{o}{(}\PY{n}{tiltX} \PY{o}{<} \PY{l+m+mi}{0}\PY{o}{)} \PY{o}{\PYZob{}}
+                        \PY{n}{result} \PY{o}{=} \PY{n}{RIGHT}\PY{o}{;}
+                    \PY{o}{\PYZcb{}} \PY{k}{else} \PY{o}{\PYZob{}}
+                        \PY{n}{result} \PY{o}{=} \PY{n}{LEFT}\PY{o}{;}
+                    \PY{o}{\PYZcb{}}
+                \PY{o}{\PYZcb{}} \PY{k}{else} \PY{k}{if} \PY{o}{(}\PY{o}{(}\PY{n}{Math}\PY{o}{.}\PY{n+na}{abs}\PY{o}{(}\PY{n}{tiltX}\PY{o}{)} \PY{o}{<} \PY{n}{Math}\PY{o}{.}\PY{n+na}{abs}\PY{o}{(}\PY{n}{tiltY}\PY{o}{)}\PY{o}{)}
+                        \PY{o}{&}\PY{o}{&} \PY{n}{Math}\PY{o}{.}\PY{n+na}{abs}\PY{o}{(}\PY{n}{tiltY}\PY{o}{)} \PY{o}{>} \PY{n}{ANGLE}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{k}{if} \PY{o}{(}\PY{n}{tiltY} \PY{o}{>} \PY{l+m+mi}{0}\PY{o}{)} \PY{o}{\PYZob{}}
+                        \PY{n}{result} \PY{o}{=} \PY{n}{DRIVE}\PY{o}{;}
+                    \PY{o}{\PYZcb{}} \PY{k}{else} \PY{o}{\PYZob{}}
+                        \PY{n}{result} \PY{o}{=} \PY{n}{REVERSE}\PY{o}{;}
+                    \PY{o}{\PYZcb{}}
+                \PY{o}{\PYZcb{}}
+                \PY{c+cm}{/* Set the result on the leds. */}
+                \PY{n}{set\PYZus{}Leds}\PY{o}{(}\PY{n}{result}\PY{o}{)}\PY{o}{;}
+            \PY{o}{\PYZcb{}} \PY{k}{catch} \PY{o}{(}\PY{n}{IOException} \PY{n}{ex}\PY{o}{)} \PY{o}{\PYZob{}} \PY{o}{\PYZcb{}}
+        \PY{o}{\PYZcb{}}
+    \PY{o}{\PYZcb{}}
+\PY{o}{\PYZcb{}}\PY{o}{.}\PY{n+na}{start}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+\end{Verbatim}
