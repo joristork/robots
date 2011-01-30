@@ -1,0 +1,49 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kt}{void} \PY{n+nf}{start\PYZus{}handshake}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{n}{printf}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Hello sender (start handshake)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+    \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{printf}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Waiting for sender handshake.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+    \PY{k}{while}\PY{p}{(}\PY{o}{!}\PY{n}{get\PYZus{}sender\PYZus{}ack}\PY{p}{(}\PY{p}{)} \PY{o}{|}\PY{o}{|} \PY{o}{!}\PY{n}{get\PYZus{}sender\PYZus{}data}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{wait}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{printf}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Waiting for sender to finish the handshake.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+    \PY{k}{while}\PY{p}{(}\PY{n}{get\PYZus{}sender\PYZus{}ack}\PY{p}{(}\PY{p}{)} \PY{o}{|}\PY{o}{|} \PY{n}{get\PYZus{}sender\PYZus{}data}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{wait}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{printf}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Handshake completed}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+    \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{void} \PY{n+nf}{main}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{c+c1}{// Be nice, say hello to the user}
+    \PY{n}{printf}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Hello, this is 18f452}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+
+    \PY{c+c1}{// Set microcontroller output pin states}
+    \PY{c+c1}{// Get microcontroller input pin states}
+    \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+    \PY{n}{get\PYZus{}input}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+
+    \PY{c+c1}{// Start handshake with the sender. This call is blocking, which will ensure}
+    \PY{c+c1}{// the sender and this microcontroller do not send or receive data while the}
+    \PY{c+c1}{// other is booting / resetting.}
+    \PY{n}{start\PYZus{}handshake}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+
+    \PY{k}{for}\PY{p}{(}\PY{p}{;}\PY{p}{;}\PY{p}{)} \PY{p}{\PYZob{}}
+        \PY{n}{receive\PYZus{}data}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+        \PY{n}{printf}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Received data: %d}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{,} \PY{n}{data\PYZus{}received}\PY{p}{)}\PY{p}{;}
+
+        \PY{c+c1}{// Continue the movement until the sender emits an acknowledge signal,}
+        \PY{c+c1}{// which means the sender is trying to send new data.}
+        \PY{k}{while}\PY{p}{(}\PY{o}{!}\PY{n}{get\PYZus{}sender\PYZus{}ack}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{p}{\PYZob{}}
+            \PY{k}{switch}\PY{p}{(}\PY{n}{data\PYZus{}received}\PY{p}{)} \PY{p}{\PYZob{}}
+                \PY{k}{case} \PY{n}{STATE\PYZus{}FORWARD}:  \PY{n}{forward}\PY{p}{(}\PY{p}{)}\PY{p}{;}     \PY{k}{break}\PY{p}{;}
+                \PY{k}{case} \PY{n}{STATE\PYZus{}BACKWARD}: \PY{n}{backward}\PY{p}{(}\PY{p}{)}\PY{p}{;}    \PY{k}{break}\PY{p}{;}
+                \PY{k}{case} \PY{n}{STATE\PYZus{}LEFT}:     \PY{n}{rotateLeft}\PY{p}{(}\PY{p}{)}\PY{p}{;}  \PY{k}{break}\PY{p}{;}
+                \PY{k}{case} \PY{n}{STATE\PYZus{}RIGHT}:    \PY{n}{rotateRight}\PY{p}{(}\PY{p}{)}\PY{p}{;} \PY{k}{break}\PY{p}{;}
+                \PY{k}{case} \PY{n}{STATE\PYZus{}STOPPED}:  \PY{n}{stop}\PY{p}{(}\PY{p}{)}\PY{p}{;}        \PY{k}{break}\PY{p}{;}
+            \PY{p}{\PYZcb{}}
+        \PY{p}{\PYZcb{}}
+    \PY{p}{\PYZcb{}}
+\PY{p}{\PYZcb{}}
+\end{Verbatim}
