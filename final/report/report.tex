@@ -142,9 +142,9 @@ dividers for the bit banging bus.
 
 A number of off-the-shelf software tools complemented a software toolchain
 developed especially by our team for this project. The former notably included
-Microchip's compiler for the Cobot microchip; Sun's development toolkit for the
-Sun SPOT platform. Our own toolchain included scripts written in Python, and an
-assemblage of open source UNIX-like command line utilities to link up the
+Microchip's compiler for the Cobot microcontroller, and Sun's development toolkit
+for the Sun SPOT platform. Our own toolchain included scripts written in Python,
+and an assemblage of open source UNIX-like command line utilities to link up the
 software development, compilation and upload stages in the programming cycle.
 
 % }}}
@@ -154,25 +154,21 @@ software development, compilation and upload stages in the programming cycle.
 
 In order to see if a Cobot or Hemisson is performing some action, it is wise to
 write debug information to a file or serial port. In this case, the serial port
-is available on both robots, which will provide us a ``real-time'' view of the
-robot's current and next actions to perform.
+was available on both robots, providing a ``real-time'' view of the
+robot's successive actions.
 
 Sander developed some python code to be able to command the Hemisson robot using
 a python console connected in combination with a serial port. The following code
 is an implementation of most of the features available in the Hemisson GUI.
-This code has two advantages: platform independent (Mac and Linux could also
-command the Hemisson) and enables the user to automate certain actions (e.g to
-create a loop to let the Hemisson drive around a rectangle).
+This code has two advantages: it is platform independent (enabling Mac and Linux
+PCs to send commands the Hemisson) and enables the user to automate certain
+actions, such as creating a software loop that causes the Hemisson to drive
+around a rectangle.
 
 \input{src/hemisson}
 
-\noindent This code was developed to demonstrate the communication over the
-RS-232 COM port was successful. When we started to develop code for the Cobot,
-we did not need this code any more, since the Cobot had no code running to
-interpret the commands sent through the RS-232 COM port. We had to code the
-Cobot from scratch, however this Hemisson code was not useless, because it did
-provide us with the information needed to establish a RS-232 COM port
-connection successfully.
+\noindent We developed this utility to verify that communication over the
+Hemisson's RS-232 COM port had been successful. When we started to develop code for the Cobot, the utility was initially useless, since the Cobot did not have a program in place to interpret the commands sent through the RS-232 COM port. The Cobot had to be programmed from scratch. Once we had written the necessary software handlers on the Cobot, though, our utility became useful once again.
 
 % }}}
 
