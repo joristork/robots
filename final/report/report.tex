@@ -264,7 +264,8 @@ implementation}.
 Both Sun SPOTs start up
 a \texttt{BootloaderListenerService}, so that we can read the debug output at
 real-time on our computer. This was very useful to debug the Java code. Both
-Sunspots extend the \texttt{javax.microedition.midlet.MIDlet} class, so that all
+Sunspots extend the 
+\texttt{javax.microedition.midlet.MIDlet} class, so that all
 the functions the Sun SPOT needs to operate are in the code.
 
 \subsubsection{Communication between the Sun SPOTs} % {{{
@@ -514,10 +515,6 @@ new Thread() {
 	}
 }.start();
 \end{verbatim}
-
-
-\\
-\\
 \noindent Thread 2: \textbf{Sending a wireless package to the other Sunspot
 containing the direction.}
 \\
@@ -614,11 +611,11 @@ is done, we refer to the comments in the Sun SPOT and Cobot source code.
 
 
 
-Thread 1: Receive the datagrams sent by the Sun SPOT.
+%Thread 1: Receive the datagrams sent by the Sun SPOT.
 
-After the direction has been sent, the Sun SPOT sets the LEDs in a way that
-it is clear what the received direction is. It will also start up the bit
-banging process.
+%After the direction has been sent, the Sun SPOT sets the LEDs in a way that
+%it is clear what the received direction is. It will also start up the bit
+%banging process.
 
 % }}}
 
