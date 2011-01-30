@@ -17,7 +17,7 @@ new Thread() {
             try {
                 /*
                  * If there is a change in direction, send the direction
-                 * in the form of a integer to a other Sunspot.
+                 * in the form of an integer to an other Sunspot.
                  */
                 if (result != result_old) {
                     result_old = result;
