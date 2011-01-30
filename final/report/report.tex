@@ -399,12 +399,13 @@ The receiver will set its reset flag, when an invalid value is received.}
 \subsection{Cobot implementation} % {{{
 \label{sub:Cobot implementation}
 
-Since there was no manual or documentation available about the toolchain, nor
-about the internals of the Jobot, the first week's progress of this assignment
-was slow. Most of the time, we were trying to solve problems and looking for
-more information about the microcontroller and servos on the internet.
-Eventually, when all tools for the toolchain were obtained and successfully
-working together, we were able to run example code on the Jobot. This was the
+Since there was no manual or documentation available about the toolchain (there
+was no information available about what tools should be used), nor about the
+internals of the Jobot, the first week's progress of this assignment was slow.
+Most of the time, we were trying to solve problems and looking for more
+information about the microcontroller and servos on the internet.  Eventually,
+when all tools for the toolchain were obtained and successfully working
+together, we were able to run example code on the Jobot. This was the
 breakthrough we were waiting for: we were able to write our own code and program
 the Jobot with our compiled source code.
 
@@ -497,8 +498,7 @@ Sunspot. The code of thread 2:
 % }}}
 
 \subsubsection{Receive movement and communicate with Cobot} % {{{
-\\
-\\
+
 \noindent Thread 1: \textbf{Receive the datagrams sent by the Sun SPOT.}
 \\
 \\
