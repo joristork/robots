@@ -297,11 +297,11 @@ Sun SPOT needs to operate are in the code.
 The first order of business was getting the Sun SPOTs to communicate with each
 other. To do this you need to use the function on the Sun SPOT to start
 listening for information. It is almost always required to filter some of these
-packages, because if there are other Sun SPOTs communicating with each other.
-You need to be sure you are receiving the right packages. We haven't implemented
+packets, because if there are other Sun SPOTs communicating with each other.
+You need to be sure you are receiving the right packets. We haven't implemented
 this, because we were working in a secluded area away from other Sun SPOTs which
 might interfere with out Sun SPOTs, but this is easily implemented in the code
-we made. In the final code we do filter out packages without valid commands.
+we made. In the final code we do filter out packets without valid commands.
 This will avoid most of the unwanted traffic, but we can still get some messages
 that were not intended for us.
 
@@ -345,7 +345,7 @@ This meant we had to use another method to get the information to the Cobot. The
 solution that was given to us was the use of bit-banging. Bit-banging is a
 technique for serial communications using software instead of dedicated
 hardware. This means you got to send all the information bit by bit instead of
-sending a full package of bytes in the form on any given data type. If you want
+sending a full packet of bytes in the form on any given data type. If you want
 to use this method it is needed to have good control of how and when the
 information is sent. This means you are responsible for all the timings and
 synchronizations between the parties. The good thing about bit-banging is that
@@ -541,7 +541,7 @@ between the Sun SPOTs and the Sun SPOT and the Jobot, it is better to create
 readable identifiers.
 \\
 \\
-\noindent Thread 2: \textbf{Sending a wireless package to the other Sunspot
+\noindent Thread 2: \textbf{Sending a wireless packet to the other Sunspot
 containing the direction.}
 \\
 \\
@@ -622,15 +622,16 @@ is done, we refer to the comments in the Sun SPOT and Cobot source code.
 %think this belongs in the discussion cause this you talk about the problems
 % you had while doing the project.
 % TODO: might want to add what ever is on your heart.
-We did implement a way to send information between the two Sun Spots, but the
-packets we have send are not safe, because we have not give them a signature. 
-We should have 
-given the packages a "magic number` so we could recognize our packets and
-ignore other traffic which might be going on. We have not tested this
-thoroughly to see if this is might be a problem. Also, we kept the commands
-we could give to the Cobot to a bare minimum of five. Forward, left, right,
-stop and backwards. This can be upgraded to do some more complex motions like
-a combination of forward and left.
+
+We did implement a way to send information between the two Sun SPOTs, but the
+packets we have send are not safe, because we have not give them a signature.
+We should have given the packet a ``magic number'' so we could recognize our
+packets and ignore other traffic which might be going on. We have not tested
+this thoroughly to see if this is might be a problem. Simply because there is no
+need to secure the communication (no benefit for this project). Also, we kept
+the commands we could give to the Cobot to a bare minimum of five. Forward,
+left, right, stop and backwards. This can be upgraded to do some more complex
+motions like a combination of forward and left, or a certain rotation angle.
 
 % }}}
 
@@ -641,30 +642,29 @@ a combination of forward and left.
 % TODO: What we've learned, what we might have done better, what we did well.
 
 % Have moved the future bit into the conclusion:
-Although our initial goals were not not met. We managed to accomplish a lot 
-with respect to getting the Cobot to work. When we first got the assignment
-we thought most of the hardware and software were in order. After we found
-out this was not the case our goal changed to getting the Cobot to work with 
-a program which we made.
-This goal was ultimately met. Our goals for the Sun SPOT was to send information
-between the Sun SPOTs and between the Sun SPOT and Cobot. We almost succeeded
-in doing this, but since we lacked time and we were missing one wire to
-send information back to the Sun SPOT. We did not read the IR values of the
-Cobot and we have not send any information to the Sun SPOT except for
-confirmations.
 
-While we were doing the project there were a lot of hurdles to overcome which
-were not necessarily part of the project. Some of the materials were lacking
-or not available at the time :like there were not enough working batteries.
-The software used for the project was not available on the computers(Sun SPOT
-manager, ANT and the SDK). Also,
-the robots mainly use a com port to do the programming which mostly not
-available anymore on most of the newer computers and laptops. but I think
-the efforts we made this year will make it proceed more smoothly in the coming
-years. This project taught us more than just how to work with program robots
-but also the hardships you have to deal with if were to start your own project.
-In the end thinking out of the box and hard work paid off. Because we
-got the robot working in the end.
+Although our initial goals were not met. We managed to accomplish a lot with
+respect to getting the Cobot to work. When we first got the assignment, we
+thought most of the hardware and software were in order. After we found out this
+was not the case our goal changed to getting the Cobot to work with our own
+program. This goal was ultimately met. Our goals for the Sun SPOT was to send
+information between the Sun SPOTs and between the Sun SPOT and Cobot. We almost
+succeeded in doing this, but since we lacked time and we were missing one wire
+to send information back to the Sun SPOT. We did not read the IR values of the
+Cobot and we have not send any information to the Sun SPOT except for
+confirmations (using the ACK flags).
+
+While we were working on the project, there were a lot of hurdles to overcome
+which were not necessarily part of the project. Some of the materials were
+lacking or not available at the time like there were not enough working/charged
+batteries. There was no information about the software to use for the project.
+Also, the robots mainly use a COM port to do the programming which is mostly not
+available any more on the newer computers and laptops. But I think the efforts
+we made this year will make it proceed more smoothly in the coming years. This
+project taught us more than just how to work with program robots but also the
+hardships you have to deal with if were to start your own project. In the end we
+were thinking out of the box and the hard work did pay off. Because we succeeded
+in execute our code on the Jobot.
 
 With all the code we have right now the most logical step would be to use Cobots
 and let them communicate. One Cobot would be the master and the other one the
@@ -672,10 +672,12 @@ slave. We would give the master a route to walk and we would want the slave to
 follow the master. After this we could use the sensors on the Cobot to avoid
 collision and let it autonomously wander. While still sending information to the
 slave to follow it. The list goes on and on. There were so many other things we
-wanted to do, but cause of lack of time we could not.
+wanted to do, but cause of lack of time we could not. \\
 
-\textbf{Conclusion}: We have not met our initial goals, but we did managed to meet all our revised goals. Which was to get the Cobot to run a program we 
-wrote ourselves and to get it to communicate with the Sun SPOT
+\noindent \textbf{Conclusion}: We have not met our initial goals, but we did
+managed to meet all our revised goals. Which was to get the Cobot to run a
+program we wrote ourselves and to get it to communicate with the Sun SPOT.
+
 % }}}
 
 \section{Acknowledgements} % {{{
