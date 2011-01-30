@@ -142,7 +142,15 @@ serial port:
 
 % }}}
 
-\subsection{Cobot preparations} % {{{
+\subsection{Cobot} % {{{
+
+% TODO: our initial approach
+
+% TODO: write a general approach to solve the problems occurred during
+% development of Cobot's code. -- what does this mean?
+
+\subsubsection{Toolchain used to program the Cobot} % {{{
+\label{ssub:Toolchain used to program the Cobot}
 
 To program the Cobot we built a toolchain consisting of the following mixture of
 pre-existing and custom-made software tools:
@@ -160,21 +168,6 @@ pre-existing and custom-made software tools:
     \item a python script on the Linux laptop to send commands to and read program
     output from the Cobot over the Cobot's RS-232 serial port;
 \end{itemize}
-
-For the Sun SPOT we used the % TODO: Lucas' software setup.
-
-
-% }}}
-
-\subsection{Cobot} % {{{
-
-% TODO: our initial approach
-
-% TODO: write a general approach to solve the problems occurred during
-% development of Cobot's code. -- what does this mean?
-
-\subsubsection{Toolchain used to program the Cobot} % {{{
-\label{ssub:Toolchain used to program the Cobot}
 
 First, we connected the shared directory using SSHFS:
 \begin{verbatim}
@@ -219,6 +212,8 @@ It was necessary the execute these commands using \texttt{sudo}, because
 piklab was not able to lock the USB-to-COM port otherwise. The second command
 will also verify the programming process, thus verifying if the Jobot's
 microcontroller contains the hex file we were uploading.
+
+For the Sun SPOT we used the % TODO: Lucas' software setup.
 
 % }}}
 
