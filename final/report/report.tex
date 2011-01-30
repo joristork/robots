@@ -334,8 +334,8 @@ bit banging to send the received movement to the Cobot.
 \label{ssub:bitbang}
 
 First we thought we could send the data between the Sun SPOT and the Cobot via
-the $I^2C$ bus, but halfway through the project. It was found out this wasn't
-possible, because of a technical issues. Namely the Sun SPOT can only handle a
+the $I^2C$ bus, but halfway through the project, it was found out this wasn't
+possible, because of a technical issues. Namely, the Sun SPOT can only handle a
 voltage of 3V and the Cobot can only send signals of 5V. This is a big problem
 if you want to communicate between the two without frying the Sun SPOT. Luckily
 the Cobot can register voltages of 2V and higher so no modification had to be
@@ -356,10 +356,9 @@ with software, because it is so low level.
 In our case we started by first devising a deterministic bit banging protocol,
 i.e. a protocol that does not make use of a clock signal. This involved
 designing a hand shaking protocol to align the devices to the same starting
-point on a transfer. We then simulated this between two Sun SPOTs. Here goes a
-picture of our handshaking protocol so just a picture of when each line is high
-or low.
-\begin{figure}
+point on a transfer. We then simulated this between two Sun SPOTs.
+
+\begin{figure}[H]
 \label{fig:sunspotconnections}
 \centering
 \includegraphics{img/sunspotconnections1.png}
@@ -388,14 +387,20 @@ than just a giving a high signal, because the message will get distorted if
 there is a resistance between the sender and receiver.
 % Not sure about this explaination
 
-% TODO: figure of the resistance.
+\begin{figure}[H]
+\label{fig:connection-schema}
+\centering
+\includegraphics[scale=0.5]{img/connection-schema.png}
+\caption{Schema of the the Sun SPOT and Cobot connected using a resistance.}
+\end{figure}
+
 Also, we initially used timers for the Sun SPOTs to send datagrams to each
 other. We could not use this timers from the Java code, since those timers did
 not guarantee that a bit is transmitted: there is no guarantee the timers of
 both devices are working correctly. We went for a deterministic approach by
 implementing a state machine. The basic idea is really simple (you could only
 transition from one state into another), but you have to make sure acknowledge
-bits are continuously sent to both sides. In figure ~\ref{fig:handshaking} is
+bits are continuously sent to both sides. In the figure displayed below is
 shown how the transmission protocol for bit banging works, without using a
 clock.
 
@@ -415,6 +420,14 @@ acknowledge flag, and the receiver will followed by lowering its own ACK flag as
 well. When both ACK flags are down, the process starts all over again. There is
 also a reset flag, which indicates a restart of the whole process is required.
 The receiver will set its reset flag, when an invalid value is received.}
+\end{figure}
+
+\begin{figure}[H]
+\label{fig:cobot-sun-spot}
+\centering
+\includegraphics[scale=0.5]{img/cobot_and_sunspot.jpg}
+\caption{Picture of the Sun SPOT and the Cobot connected to each other using our
+custom-made bit banging connection.}
 \end{figure}
 
 % }}}
