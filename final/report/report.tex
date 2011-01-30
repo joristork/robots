@@ -1,5 +1,5 @@
 \documentclass[a4paper,10pt]{article} % {{{
-\usepackage{listings,amssymb,amsmath,amsthm,graphicx,float,hyperref}
+\usepackage{listings,amssymb,amsmath,amsthm,graphicx,float,hyperref,wrapfig, subfig}
 
 \hypersetup{
     colorlinks=false,
@@ -10,10 +10,10 @@
 \include{colors}
 
 % gebruik '\and' tussen authors, '\\' voor extra info over een author.
-\author{Harm Dermois (5027963) \and Joris Stork (6185320) \and
-Lucas Swartsenburg (6174388) \and Sander van Veen (6167969)}
+\author{harm dermois (5027963) \and joris stork (6185320) \and
+lucas swartsenburg (6174388) \and sander van veen (6167969)}
 
-\title{Cobots and Sun SPOTs: a robotics project}
+\title{cobots and sun spots: a robotics project}
 
 % }}}
 
@@ -33,32 +33,32 @@ Lucas Swartsenburg (6174388) \and Sander van Veen (6167969)}
 
 This project concludes our team's involvement in a January 2011 robotics course
 at the University of Amsterdam. The team consists of four second-year UvA
-students enrolled for the BSc in Computer Science. The overall aim of this
-project has been to address the challenges inherent in programming a microcontroller
-based mobile robot and handling communication between multiple, differing
-devices as might be required for many robotics applications.
+students enrolled for the BSc in computer science. The overall aim of this
+project has been to address the challenges inherent in programming a
+microcontroller based mobile robot and handling communication between multiple,
+differing devices as might be required for many robotics applications.
 
-In this project, our team was given the task, firstly, of ``resuscitating'' the
+Tn this project, our team was given the task, firstly, of ``resuscitating'' the
 UvA's Java-programmable ``Jobot'' robots, whose software development platform
-had become defunct and inoperative. Our second task was to combine the Jobots'
+had become defunct and inoperative. Our second task was to combine the jobots'
 mobility and sensing capabilities with the enhanced communications, sensing and
-processing functionality of Sun SPOTs -- wireless sensor network devices from
-the Sun Labs stable. In this way, we hoped to achieve a few things, namely to:
+processing functionality of Sun SPOTs -- wireless sensor network devices
+Developed by Sun Labs. In this way, we hoped to achieve a few things, namely to:
 
 \begin{itemize}
-    \item write, compile and load programs from scratch for a PIC based
+    \item write, compile and load programs from scratch for a pic based
     microcontroller board;
     \item create drivers for the servos and sensors connected to the board
     mentioned above;
-    \item further explore the Sun SPOTs' sensing and communications
-    characteristics through those devices' Java frameworks;
-    \item build a data communication channel between the Sun SPOTs and the
-    standard microcontrollers on the Jobots. Investigate whether this could be
-    achieved over an $I^2C$ bus;
+    \item further explore the sun spots' sensing and communications
+    characteristics through those devices' java frameworks;
+    \item build a data communication channel between the sun spots and the
+    standard microcontrollers on the jobots. investigate whether this could be
+    achieved over an $i^2c$ bus;
     \item design an interface between our respective software implementations on
-    the Jobot and on the Sun SPOTs;
+    the jobot and on the sun spots;
     \item build a remote control system using the above interface;
-    \item attempt some basic robot activities using our adapted, Sun SPOT
+    \item attempt some basic robot activities using our adapted, sun spot
     controlled robot(s), such as: obstacle avoidance; reaching a goal;
     recognising a fellow robot; following a fellow robot, and so on, and;
     \item learn to work with embedded chips and low-level signal handling.
@@ -70,61 +70,76 @@ and our team achieved a bonus on the way.
 
 This report describes the principal materials at our disposal and our approach
 to completing the given project tasks. Our methods are described per challenge,
-in chronological order of their occurrence, for each of the Sun SPOT; Cobot; and
-Sun SPOT -- Cobot combination. This approach reflects the exploratory nature of
+in chronological order of their occurrence, for each of the sun spot; cobot; and
+sun spot -- cobot combination. This approach reflects the exploratory nature of
 the project, in which a string of unexpected obstacles dictated the structure of
 our efforts over the past two weeks.
 
 % }}}
 
-%\section{Materials} % {{{
-%
-%Appendix
-%
-%% TODO: Is it wise to store this section in the appendix or here?
-%
-%% }}}
-
 \pagebreak
 
 \section{Methods} % {{{
 
-This section provides an overview of the materials used in this project. More
+This section provides an overview of the materials used in this project. more
 detailed specifications of materials used in this project are listed in appendix
 \ref{app:robot-hardware}, as relevant.
 
-\subsection{Hardware} % {{{
+\subsection{Materials} % {{{
 
-Two hardware devices formed the centrepiece of this project:
+\subsubsection{Cobot}
 
-\begin{itemize}
-    \item a set of three ``Jobots'', re-christened by our group to
-    ``Cobots'': three-wheeled, battery powered and PIC microcontroller-based mobile
-    robots, about 10cm high and 25cm across, built around a rigid aluminium frame;
-    and
-    \item a set of three Sun SPOTs: battery powered wireless sensor network
-    devices ranging in number from three to six, and each a little bigger than a
-    matchbox.
-\end{itemize}
+\begin{figure}[h]
+    \centering
+    \subfloat[front]{\label{fig:cobotface}\includegraphics[width=0.4\textwidth]{img/cobot_face_sensor.png}}
+    \subfloat[topview]{\label{fig:cobottop}\includegraphics[width=0.4\textwidth]{img/cobot_top_view.png}}
+    \caption{The Cobot}
+    \label{fig:cobotviews}
+\end{figure}
 
-\noindent Other hardware included:
+The Cobot, the centrepiece of our project, is an adapted ``Jobot'',
+re-christened to reflect the fact that our team reprogrammed the device in a
+C-like language. The Jobot/Cobot is a battery powered, PIC microcontroller-based
+mobile robot. It is about 10cm high and 25cm across. We disposed over three
+Jobot/Cobot devices.
 
-\begin{itemize}
-    \item a portable digital oscilloscope, for measuring voltages on the various
-    I/O pins on the SUN SPOTs and microcontroller boards (as well as the odd
-    misbehaving battery);
-    \item a USB compatible Microchip programming device designed to load compiled code
-    onto the 8 bit PIC microcontroller;
-    \item an 8P8C type connector attached on the port location marked ``J1'' on
-    one of the Cobot' microcontroller boards;
-    \item a USB to RS-232 adapter cable;
-    \item standard soldering equipment;
-    \item pins and wires adapted for the Sun SPOTs' as well as the Cobots' I/O
-    connectors; and
-    \item two potential dividers built by our university department for the
-    purpose of converting a 5V input voltage from the Cobot's microcontroller
-    board to the 3V output voltage specified for the Sun SPOTs;
-\end{itemize}
+\subsubsection{Sun SPOTs}
+
+\begin{figure}[H]
+    \centering
+    \subfloat[closed unit]{\label{fig:sunspot}\includegraphics[width=0.4\textwidth]{img/sunspot.png}}
+    \subfloat[Cobot cabling attached]{\includegraphics[width=0.4\textwidth]{img/sunspot_cabled.png}}
+    \caption{The Sun SPOT}
+    \label{fig:sunspotviews}
+\end{figure}
+
+Then, the Sun SPOT: the device intended to enhance the Cobot's sensing and
+communications capabilities. Sun SPOTs are relatively new, battery powered
+wireless sensor network devices from the Sun Labs stable. Our team received one
+set, comprising three Sun SPOTs.
+
+\subsubsection{Other hardware}
+
+\noindent In addition to these two key components, our project relied heavily on
+a several hardware tools and devices, as follows: We used a portable digital
+oscilloscope to measure voltages on the various I/O pins on the SUN SPOTs and
+microcontroller boards (as well testing the odd misbehaving battery). A USB
+compatible Microchip programming device served to load compiled code onto the
+Cobot, via a specially attached 8P8C type connector on Cobot's microcontroller
+board. We sourced a USB to RS-232 adapter cable to make the serial connection to
+the Cobot. For the various I/O connections we made use of standard soldering
+equipment. Department staff helped build pins and wires adapted for the Sun
+SPOTs' as well as the Cobots' I/O connectors, and provided two potential
+dividers for the bit banging bus.
+
+\subsubsection{Software}
+
+A number of off-the-shelf software tools complemented a software toolchain
+developed especially by our team for this project. The former notably included
+Microchip's compiler for the Cobot microchip; Sun's development toolkit for the
+Sun SPOT platform. Our own toolchain included scripts written in Python, and an
+assemblage of open source UNIX-like command line utilities to link up the
+software development, compilation and upload stages in the programming cycle.
 
 % }}}
 
@@ -545,18 +560,6 @@ is done, we refer to the comments in the Sun SPOT and Cobot source code.
 
 % }}}
 
-%\section{Results} % {{{
-%\label{sec:Results}
-%%Not the same as the Conclusion in this case?
-
-%Not the same as the Conclusion in this case? -- no:
-% TODO: results should describe the behaviour of the cobot implementation,
-%including serial output; the behaviour of the communications link
-%implementation between cobot and sun spot; the behaviour of the Sun SPOT tilt
-%implementation; and the overall behaviour of the RC setup.
-
-% }}}
-
 \section{Discussion} % {{{
 %think this belongs in the discussion cause this you talk about the problems
 % you had while doing the project.
@@ -576,6 +579,18 @@ got the robot working in the end.
 % }}}
 
 \section{Results and conclusion} % {{{
+%\section{Results} % {{{
+%\label{sec:Results}
+%%Not the same as the Conclusion in this case?
+
+%Not the same as the Conclusion in this case? -- no:
+% TODO: results should describe the behaviour of the cobot implementation,
+%including serial output; the behaviour of the communications link
+%implementation between cobot and sun spot; the behaviour of the Sun SPOT tilt
+%implementation; and the overall behaviour of the RC setup.
+
+% }}}
+%
 % TODO: explain characteristics of the behaviour, and any differences between
 % the behaviour and the expected behaviour.
 
