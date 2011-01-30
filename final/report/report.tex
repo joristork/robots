@@ -476,7 +476,7 @@ checker.
 because the CCS C compiler does not handle all branch conditions well. For
 example, it does not handle these loops as expected:
 
-%\input{src/loops}
+\input{src/loops}
 
 \noindent The first loop does print \text{i} with 0, 1 and 2. The second loop
 prints a reversed output of the first loop, except it does not stop after 0. The
@@ -531,7 +531,7 @@ same case if the tilt in the Y direction is larger than the tilt in the X
 direction. After the movement of the Cobot is determined, the LEDs are set in
 such way that it is clear what is measured. The code of thread 1:
 
-%\input{src/measuring}
+\input{src/measuring}
 
 \noindent The constants ANGLE, RIGHT, LEFT, STOP, DRIVE and REVERSE are
 specified in the main class. The constant ANGLE is set to \texttt{15} (= minimum
@@ -555,7 +555,7 @@ And a so called ``datagram'' has to be made. We write the integer that contains
 the direction information to the datagram and this datagram is send to the other
 Sunspot. The code of thread 2:
 
-%\input{src/sending}
+\input{src/sending}
 
 \noindent The leds are set accordingly.
 % }}}
