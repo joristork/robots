@@ -1,5 +1,5 @@
 \documentclass[a4paper,10pt]{article} % {{{
-\usepackage{listings,amssymb,amsmath,amsthm,graphicx,float,hyperref,wrapfig, subfig}
+\usepackage{listings,amssymb,amsmath,amsthm,graphicx,float,hyperref}
 
 \hypersetup{
     colorlinks=false,
@@ -23,12 +23,6 @@ Lucas Swartsenburg (6174388) \and Sander van Veen (6167969)}
 
 \abstract{}
 
-\begin{figure}[H]
-    \label{fig:cobot_sunspot_final}
-    \centering
-    \includegraphics[width=0.8\textwidth]{img/sunspot_cobot_final_together.png}
-\end{figure}
-
 \pagebreak
 
 \tableofcontents
@@ -39,17 +33,17 @@ Lucas Swartsenburg (6174388) \and Sander van Veen (6167969)}
 
 This project concludes our team's involvement in a January 2011 robotics course
 at the University of Amsterdam. The team consists of four second-year UvA
-students enrolled for the BSc in computer science. The overall aim of this
-project has been to address the challenges inherent in programming a
-microcontroller based mobile robot and handling communication between multiple,
-differing devices as might be required for a typical robotics application.
+students enrolled for the BSc in Computer Science. The overall aim of this
+project has been to address the challenges inherent in programming a microcontroller
+based mobile robot and handling communication between multiple, differing
+devices as might be required for many robotics applications.
 
 In this project, our team was given the task, firstly, of ``resuscitating'' the
 UvA's Java-programmable ``Jobot'' robots, whose software development platform
 had become defunct and inoperative. Our second task was to combine the Jobots'
 mobility and sensing capabilities with the enhanced communications, sensing and
-processing functionality of Sun SPOTs -- wireless sensor network devices
-Developed by Sun Labs. In this way, we hoped to achieve a few things, namely to:
+processing functionality of Sun SPOTs -- wireless sensor network devices from
+the Sun Labs stable. In this way, we hoped to achieve a few things, namely to:
 
 \begin{itemize}
     \item write, compile and load programs from scratch for a PIC based
@@ -57,7 +51,7 @@ Developed by Sun Labs. In this way, we hoped to achieve a few things, namely to:
     \item create drivers for the servos and sensors connected to the board
     mentioned above;
     \item further explore the Sun SPOTs' sensing and communications
-    characteristics through those devices' java frameworks;
+    characteristics through those devices' Java frameworks;
     \item build a data communication channel between the Sun SPOTs and the
     standard microcontrollers on the Jobots. Investigate whether this could be
     achieved over an $I^2C$ bus;
@@ -66,7 +60,7 @@ Developed by Sun Labs. In this way, we hoped to achieve a few things, namely to:
     \item build a remote control system using the above interface;
     \item attempt some basic robot activities using our adapted, Sun SPOT
     controlled robot(s), such as: obstacle avoidance; reaching a goal;
-    recognising a fellow robot; following a fellow robot, and so on; and
+    recognising a fellow robot; following a fellow robot, and so on, and;
     \item learn to work with embedded chips and low-level signal handling.
 \end{itemize}
 
@@ -83,69 +77,54 @@ our efforts over the past two weeks.
 
 % }}}
 
+%\section{Materials} % {{{
+%
+%Appendix
+%
+%% TODO: Is it wise to store this section in the appendix or here?
+%
+%% }}}
+
 \pagebreak
 
 \section{Methods} % {{{
-
-\subsection{Materials} % {{{
 
 This section provides an overview of the materials used in this project. More
 detailed specifications of materials used in this project are listed in appendix
 \ref{app:robot-hardware}, as relevant.
 
-\subsubsection{Cobot}
+\subsection{Hardware} % {{{
 
-\begin{figure}[h]
-    \centering
-    \subfloat[front]{\label{fig:cobotface}\includegraphics[width=0.4\textwidth]{img/cobot_face_sensor.png}}
-    \subfloat[topview]{\label{fig:cobottop}\includegraphics[width=0.4\textwidth]{img/cobot_top_view.png}}
-    \caption{The Cobot}
-    \label{fig:cobotviews}
-\end{figure}
+Two hardware devices formed the centrepiece of this project:
 
-The Cobot, the centrepiece of our project, is an adapted ``Jobot'',
-re-christened to reflect the fact that our team reprogrammed the device in a
-C-like language. The Jobot/Cobot is a battery powered, PIC microcontroller-based
-mobile robot. It is about 10cm high and 25cm across. We disposed over three
-Jobot/Cobot devices.
+\begin{itemize}
+    \item a set of three ``Jobots'', re-christened by our group to
+    ``Cobots'': three-wheeled, battery powered and PIC microcontroller-based mobile
+    robots, about 10cm high and 25cm across, built around a rigid aluminium frame;
+    and
+    \item a set of three Sun SPOTs: battery powered wireless sensor network
+    devices ranging in number from three to six, and each a little bigger than a
+    matchbox.
+\end{itemize}
 
-\subsubsection{Sun SPOTs}
+\noindent Other hardware included:
 
-\begin{figure}[H]
-    \centering
-    \subfloat[closed unit]{\label{fig:sunspot}\includegraphics[width=0.4\textwidth]{img/sunspot.png}}
-    \subfloat[Cobot cabling attached]{\includegraphics[width=0.4\textwidth]{img/sunspot_cabled.png}}
-    \caption{The Sun SPOT}
-    \label{fig:sunspotviews}
-\end{figure}
-
-Then, the Sun SPOT: the device intended to enhance the Cobot's sensing and
-communications capabilities. Sun SPOTs are relatively new, battery powered
-wireless sensor network devices from the Sun Labs stable. Our team received one
-set, comprising three Sun SPOTs.
-
-\subsubsection{Other hardware}
-
-\noindent In addition to these two key components, our project relied heavily on
-several hardware tools and devices, as follows: We used a portable digital
-oscilloscope to measure voltages on the various I/O pins on the SUN SPOTs and
-microcontroller boards (as well testing the odd misbehaving battery). A USB
-compatible Microchip programming device served to load compiled code onto the
-Cobot, via a specially attached 8P8C type connector on Cobot's microcontroller
-board. We sourced a USB to RS-232 adapter cable to make the serial connection to
-the Cobot. For the various I/O connections we made use of standard soldering
-equipment. Department staff helped build pins and wires adapted for the Sun
-SPOTs' as well as the Cobots' I/O connectors, and provided two potential
-dividers for the bit banging bus.
-
-\subsubsection{Software}
-
-A number of off-the-shelf software tools complemented a software toolchain
-developed especially by our team for this project. The former notably included
-Microchip's compiler for the Cobot microchip; Sun's development toolkit for the
-Sun SPOT platform. Our own toolchain included scripts written in Python, and an
-assemblage of open source UNIX-like command line utilities to link up the
-software development, compilation and upload stages in the programming cycle.
+\begin{itemize}
+    \item a portable digital oscilloscope, for measuring voltages on the various
+    I/O pins on the SUN SPOTs and microcontroller boards (as well as the odd
+    misbehaving battery);
+    \item a USB compatible Microchip programming device designed to load compiled code
+    onto the 8 bit PIC microcontroller;
+    \item an 8P8C type connector attached on the port location marked ``J1'' on
+    one of the Cobot' microcontroller boards;
+    \item a USB to RS-232 adapter cable;
+    \item standard soldering equipment;
+    \item pins and wires adapted for the Sun SPOTs' as well as the Cobots' I/O
+    connectors; and
+    \item two potential dividers built by our university department for the
+    purpose of converting a 5V input voltage from the Cobot's microcontroller
+    board to the 3V output voltage specified for the Sun SPOTs;
+\end{itemize}
 
 % }}}
 
@@ -406,6 +385,7 @@ figure \ref{fig:handshaking}.
 This solution is not valid if you are trying to send more complex information
 than just a giving a high signal, because the message will get distorted if
 there is a resistance between the sender and receiver.
+% Not sure about this explaination
 
 \begin{figure}[H]
 \label{fig:connection-schema}
@@ -541,8 +521,6 @@ real-time on our computer. This was very useful to debug the Java code. Both
 Sunspots extend the \texttt{javax.microedition.midlet.MIDlet} class, so that all
 the functions the Sun SPOT needs to operate are in the code.
 
-% }}}
-
 \subsubsection{Measure tilt and send wireless datagrams.} % {{{
 
 Two threads are used to enable measuring tilt while sending datagrams. It is
@@ -621,10 +599,19 @@ is done, we refer to the comments in the Sun SPOT and Cobot source code.
 
 % }}}
 
+% TODO: results should describe the behaviour of the cobot implementation,
+%including serial output; the behaviour of the communications link
+%implementation between cobot and sun spot; the behaviour of the Sun SPOT tilt
+%implementation; and the overall behaviour of the RC setup.
+
+% }}}
+
 % }}}
 
 \section{Discussion} % {{{
-% TODO: More decisions we made which we could have done better.
+%think this belongs in the discussion cause this you talk about the problems
+% you had while doing the project.
+% TODO: might want to add what ever is on your heart.
 
 We did implement a way to send information between the two Sun SPOTs, but the
 packets we have send are not safe, because we have not give them a signature.
@@ -635,16 +622,16 @@ need to secure the communication (no benefit for this project). Also, we kept
 the commands we could give to the Cobot to a bare minimum of five. Forward,
 left, right, stop and backwards. This can be upgraded to do some more complex
 motions like a combination of forward and left, or a certain rotation angle.
-This goes together with an upgrade of the Sun SPOT program to give such 
-commands to the Cobot. 
-Lastly, we use directly give a signal from the digital I/O ports to the 
-Cobot, but it would be nice to use the high output ports to give these signals.
-This gives you more security and allows for the Cobot to be less sensitive.
 
 % }}}
 
 \section{Results and conclusion} % {{{
-%TODO: more things to add
+% TODO: explain characteristics of the behaviour, and any differences between
+% the behaviour and the expected behaviour.
+
+% TODO: What we've learned, what we might have done better, what we did well.
+
+% Have moved the future bit into the conclusion:
 
 Although our initial goals were not met. We managed to accomplish a lot with
 respect to getting the Cobot to work. When we first got the assignment, we
@@ -678,7 +665,7 @@ slave to follow it. The list goes on and on. There were so many other things we
 wanted to do, but cause of lack of time we could not. \\
 
 \noindent \textbf{Conclusion}: We have not met our initial goals, but we did
-manage to meet all our revised goals. Which was to get the Cobot to run a
+managed to meet all our revised goals. Which was to get the Cobot to run a
 program we wrote ourselves and to get it to communicate with the Sun SPOT.
 
 % }}}
@@ -730,6 +717,11 @@ Flash. The sensor board contains:
     \item $2G/6G$ three-axis accelerometer;
     \item One temperature sensor;
     \item One light sensor;
+    % \item 8 tri-color LEDs;
+    % \item 6 analog inputs;
+    % \item 2 momentary switches;
+    % \item 5 general purpose I/O pins;
+    % \item 4 high current output pins;
     \item $3.7V$ rechargeable $750 mAh$ lithium-ion battery;
 \end{itemize}
 
@@ -780,25 +772,47 @@ The Hemisson is a two-wheeled robot designed for mobility, that includes:
 
 % }}}
 
-\subsection{Tools} % {{{
-
-% TODO: the following tools should include make, and key characteristics.
-
-\subsubsection{Hardware} % {{{
-
 % }}}
 
-\subsubsection{Software} % {{{
+\section{Software used during development} % {{{
+\label{app:robot-software}
+
+During the development of the Cobot and Sun SPOTs, we used various software
+tools to accomplice our project goals. Sander does prefer using free libre open
+source software (FLOSS) to develop the Cobot's source code (software should be
+available to all platforms, not just Windows). The only proprietary exception to
+the toolchain used for the Cobot, was the CCS C compiler. Unfortunately, it was
+not possible to replace this compiler with SDCC (Small device C compiler), which
+is an open source alternative for PIC microcontrollers. The reason was the SDCC
+did not support the \texttt{\#use} en \texttt{\#fuse} compiler directives (since
+those are only supported by the CCS C compiler). If there was more time
+available, we would have compiled the file using the proprietary compiler,
+analysed the produced assembly code and added that assembly code to the source
+code of the Cobot. We would have added the assembly as inline assembly code to
+avoid the need of compiling with the proprietary CCS C compiler. We did not
+spend any time in the analysis of those compiler directives, because those had
+not a high priority (since that analysis was not part of the project goals).
+
+\noindent We used the following software to program the Cobot (done by Sander
+and Joris):
+
 \begin{itemize}
-    \item Netbeans IDE with Sun SPOT modules(Latest version);
-    \item Apache Ant(Latest version);
+    \item Vim (code editor)
+    \item iPython (interactive python console; used for debugging the Cobot)
+    \item CCS C compiler (proprietary; compiler for PIC microcontrollers)
+\end{itemize}
+
+\noindent And the software used to program the Sun SPOTs (done by Lucas and
+Harm):
+
+\begin{itemize}
+    \item Netbeans IDE with Sun SPOT modules (Latest version);
+    \item Apache Ant (Latest version);
     \item Sun SPOT manager;
 \end{itemize}
-% }}}
 
 % }}}
 
-% }}}
 
 \bibliographystyle{plain}
 \bibliography{cited}
