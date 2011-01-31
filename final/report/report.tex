@@ -207,24 +207,23 @@ $ sshfs USERNAME@deze.science.uva.nl:~/ ~/sremote -C -o cache=no
 
 The argument \texttt{-C} enables data compression during the transfer and
 \texttt{-o cache=no} disables the file system cache (e.g. stat will respond with
-the most recent data). If we did not disable the file system cache, the overall
-duration of the toolchain is larger due to the default four seconds file system
-cache. These four seconds are visible when the Mac machine running the Windows
-VM was waiting for the source file to update and the second time when the Linux
-machine was waiting for the hex file to update. Disabling the file system cache
-reduced the overall toolchain process by four to eight seconds. Data compression
-did not reduce the overall process that much, but we used it because we were
-transferring text files (and those benefit for compression mostly).
+the most recent data). With the file system cache left enabled, the overall
+duration of the toolchain would have been larger due to the default four-second
+file system cache. These four seconds were visible when the Mac machine running
+the Windows VM waited for the source file to update, and again when the Linux
+machine waited for the compiled hex file to update. Disabling the file system
+cache reduced the overall toolchain process by four to eight seconds. Data
+compression did not significantly reduce the overall process duration. We used
+it because the transfers consisted largely of text files, which are especially
+susceptible to compression.
 
-Once we had the shared directory mounted on both the Linux and Mac machine, we
-could transfer data between the Windows virtual machine and the Linux machine.
-\footnote{Windows does not support SSHFS easily, and because we weren't working
-actively a Windows machine, we started a virtual machine on the Mac.} The
-Windows virtual machine started the compilation daemon (using \texttt{\$ python
-compile.py}) and the Linux machine started the programming daemon (using
+Once we had the shared directory mounted on both the Linux and the Mac machine, we
+were able to transfer data between those two.
+\footnote{SSHFS is not easily employed from within Windows: this was our motivation for running Windows as a virtual machine on a Mac, which offers a more convenient implementation of SSHFS.} The
+Windows virtual machine ran the compilation daemon (using \texttt{\$ python
+compile.py}) and the Linux machine ran the programming daemon (using
 \texttt{python upload.py}).\footnote{See appendix for the source code of these
-daemons.} Both daemons use the modification time of the source respectively the
-compiled hex file to determine if the daemon should perform an action.
+daemons.} Both daemons use the respective modification times of the source and compiled hex files to trigger the necessary toolchain actions.
 
 The programmer daemon uses the ``piklab'' package (in Debian-based
 distributions: \texttt{sudo apt-get install piklab}) to write the hex file to
