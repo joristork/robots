@@ -5,7 +5,10 @@
     colorlinks=false,
     pdfborder={0 0 0},
 }
-\newcommand{\tsup}[1]{\ensuremath{\sp{\text{#1}}}}
+
+\newcommand{\tsup}[1]{\ensuremath{
+    \sp{\text{#1}}
+}}
 
 \include{colors}
 
@@ -31,7 +34,6 @@ Lucas Swartsenburg (6174388) \and Sander van Veen (6167969)}
 \centering
 \includegraphics[width=0.8\textwidth]{img/sunspot_cobot_final_together.png}
 \end{figure}
-
 
 \pagebreak
 
@@ -103,15 +105,20 @@ This section provides an overview of the materials used in this project. More
 detailed specifications of materials used in this project are listed in appendix
 \ref{app:robot-hardware}, as relevant.
 
-\subsubsection{Cobot}
+\subsubsection{Cobot} % {{{
 
 \begin{figure}[h]
     \centering
-    \subfloat[front]{\label{fig:cobotface}\includegraphics[width=0.4\textwidth]{img/cobot_face_sensor.png}}
-    \subfloat[topview]{\label{fig:cobottop}\includegraphics[width=0.4\textwidth]{img/cobot_top_view.png}}
+    \subfloat[front]{\label{fig:cobotface}
+    \includegraphics[width=0.4\textwidth]{img/cobot_face_sensor.png}}
+    \subfloat[topview]{\label{fig:cobottop}
+    \includegraphics[width=0.4\textwidth]{img/cobot_top_view.png}}
     \caption{The Cobot}
     \label{fig:cobotviews}
 \end{figure}
+
+% }}}
+
 \subsection{Hardware} % {{{
 
 The Cobot, the centrepiece of our project, is an adapted ``Jobot'',
@@ -119,6 +126,8 @@ re-christened to reflect the fact that our team reprogrammed the device in a
 C-like language. The Jobot/Cobot is a battery powered, PIC microcontroller-based
 mobile robot. It is about 10cm high and 25cm across. We disposed over three
 Jobot/Cobot devices.
+
+% }}}
 
 \subsection{Hardware} % {{{
 
@@ -300,7 +309,7 @@ the program running.
 % }}}
 
 \subsubsection{Controlling the actuators} % {{{
-\label{sub:Cobot implementation}
+\label{sub:Controlling the actuators}
 
 Since there was no manual or documentation available about the toolchain, nor
 about the internals of the Jobot, the first week's progress of this assignment
@@ -552,6 +561,22 @@ implement a driver for a robot.
 
 \subsubsection{Cobot's handshake and start} % {{{
 \label{ssub:Cobot's handshake and start}
+
+In order to start the communication between the Cobot and Sun SPOT in a proper
+way, we implemented a handshake protocol to ensure the Cobot and Sun SPOT are in
+the same state. Before we implemented the handshake, the Sun SPOT or Cobot sent
+some data to its output pins which caused the other device to do some unwanted
+action. To prevent this from happening, the handshake protocol ensures both
+devices are ready for action.
+
+The handshake is simple: put both pins up on both devices and wait until both
+pins on both devices are down. This handshake protocol is defined as a state
+machine. The Sun SPOT requires the Cobot's output pins to be high. Once those
+pins are high, the Sun SPOT raises both pins. The Cobot detects both pins of the
+Sun SPOT are high and will wait until the Sun SPOT's pins are both low again.
+The Sun SPOT waits a few milliseconds before lowering its pins. When the Sun
+SPOT has lowered its pins, the Cobot will lower its pins and the handshake is
+completed. Below is the initialisation code of the Cobot:
 
 \input{src/cobot-start}
 
@@ -900,6 +925,8 @@ Harm):
 \label{sub:Upload daemon source code}
 
 \input{src/upload}
+
+% }}}
 
 % }}}
 
