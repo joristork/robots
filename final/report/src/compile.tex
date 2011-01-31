@@ -1,0 +1,71 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c}{#!/usr/bin/env python}
+\PY{k+kn}{import} \PY{n+nn}{os}
+\PY{k+kn}{import} \PY{n+nn}{sys}
+\PY{k+kn}{import} \PY{n+nn}{subprocess}
+\PY{k+kn}{from} \PY{n+nn}{time} \PY{k+kn}{import} \PY{n}{sleep}\PY{p}{,} \PY{n}{gmtime}\PY{p}{,} \PY{n}{strftime}
+
+\PY{c}{# This script is used compile a source file with the CCS C command line compiler}
+\PY{c}{# (PCH) for the 16-bit microcontroller 18F452. This script will monitor a source}
+\PY{c}{# file (defined below) for modification (by comparing the time of last}
+\PY{c}{# modification) and, if it is modified, compile the source file.}
+\PY{c}{#}
+\PY{c}{# Created by Sander van Veen <sandervv@gmail.com>, Jan 27, 2011.}
+\PY{c}{# This script is public domain; feel free to do anything with it you want.}
+\PY{c}{#}
+\PY{c}{# Example invocation: python compile.py}
+\PY{c}{#}
+\PY{c}{# Unfortunately, this script is only useful for Windows, since the used CCS C}
+\PY{c}{# compiler is only available for Windows. This script automates the compilation}
+\PY{c}{# while running the compiler in a Virtual Machine with Windows. This way, we}
+\PY{c}{# were no longer required to run Windows actively (you can minimize the VM) and}
+\PY{c}{# could use our decent OS (Linux / Mac) to develop the Jobot's source code ;-).}
+
+\PY{c}{# Source file to monitor}
+\PY{n}{source\PYZus{}file} \PY{o}{=} \PY{l+s}{'}\PY{l+s}{ex\PYZus{}led.c}\PY{l+s}{'}
+
+\PY{c}{# Log files used during compilation}
+\PY{n}{build\PYZus{}log}   \PY{o}{=} \PY{l+s}{'}\PY{l+s}{ex\PYZus{}led.log}\PY{l+s}{'}
+\PY{n}{error\PYZus{}log}   \PY{o}{=} \PY{l+s}{'}\PY{l+s}{ex\PYZus{}led.err}\PY{l+s}{'}
+
+\PY{c}{# Previous modification time of source file}
+\PY{n}{old\PYZus{}mtime} \PY{o}{=} \PY{l+m+mi}{0}
+
+\PY{k}{while} \PY{n+nb+bp}{True}\PY{p}{:}
+    \PY{k}{try}\PY{p}{:}
+        \PY{c}{# Check modification date of source file}
+        \PY{n}{mtime} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{stat}\PY{p}{(}\PY{n}{source\PYZus{}file}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{8}\PY{p}{]}
+        \PY{k}{if} \PY{n}{mtime} \PY{o}{>} \PY{n}{old\PYZus{}mtime}\PY{p}{:}
+            \PY{c}{# Append log info to build log}
+            \PY{n}{log} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{build\PYZus{}log}\PY{p}{,} \PY{l+s}{'}\PY{l+s}{a}\PY{l+s}{'}\PY{p}{)}
+            \PY{n}{log}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{Compile: }\PY{l+s+si}{%s}\PY{l+s}{ (started)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{'} \PY{o}{%} \PY{n}{strftime}\PY{p}{(}\PY{l+s}{'}\PY{l+s+si}{%X}\PY{l+s}{ }\PY{l+s+si}{%x}\PY{l+s}{'}\PY{p}{)}\PY{p}{)}
+
+            \PY{c}{# Compile source file}
+            \PY{n}{os}\PY{o}{.}\PY{n}{system}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{ccsc +FH }\PY{l+s}{'} \PY{o}{+} \PY{n}{source\PYZus{}file}\PY{p}{)}
+
+            \PY{c}{# Append error log to build log}
+            \PY{n}{err} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{error\PYZus{}log}\PY{p}{,} \PY{l+s}{'}\PY{l+s}{r}\PY{l+s}{'}\PY{p}{)}
+            \PY{n}{last\PYZus{}line} \PY{o}{=} \PY{l+s}{'}\PY{l+s}{'}
+            \PY{k}{while} \PY{l+m+mi}{1}\PY{p}{:}
+                \PY{n}{line} \PY{o}{=} \PY{n}{err}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}
+                \PY{k}{if} \PY{o+ow}{not} \PY{n}{line}\PY{p}{:}
+                    \PY{k}{break}
+                \PY{n}{log}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{line}\PY{p}{)}
+                \PY{n}{last\PYZus{}line} \PY{o}{=} \PY{n}{line}
+            \PY{n}{err}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+
+            \PY{c}{# Exit code of ccsc or Windows is not set properly.}
+            \PY{c}{# Therefore, check the error log for errors.}
+            \PY{k}{if} \PY{n}{last\PYZus{}line} \PY{o}{==} \PY{l+s}{'}\PY{l+s}{No Errors}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{'}\PY{p}{:}
+                \PY{n}{log}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{Compile: }\PY{l+s+si}{%s}\PY{l+s}{ (finished)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{'} \PY{o}{%} \PY{n}{strftime}\PY{p}{(}\PY{l+s}{'}\PY{l+s+si}{%X}\PY{l+s}{ }\PY{l+s+si}{%x}\PY{l+s}{'}\PY{p}{)}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n}{log}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{Compile: }\PY{l+s+si}{%s}\PY{l+s}{ (failed; check your source file)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{'} \PYZbs{}
+                        \PY{o}{%} \PY{n}{strftime}\PY{p}{(}\PY{l+s}{'}\PY{l+s+si}{%X}\PY{l+s}{ }\PY{l+s+si}{%x}\PY{l+s}{'}\PY{p}{)}\PY{p}{)}
+
+            \PY{c}{# Update cached modification date}
+            \PY{n}{old\PYZus{}mtime} \PY{o}{=} \PY{n}{mtime}
+            \PY{n}{log}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+        \PY{n}{sleep}\PY{p}{(}\PY{l+m+mf}{0.5}\PY{p}{)}
+    \PY{k}{except} \PY{n+ne}{WindowsError}\PY{p}{:}
+        \PY{n}{sleep}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}

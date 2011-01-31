@@ -1,0 +1,379 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+cm}{/*}
+\PY{c+cm}{ * Source code of the receiving Sun SPOT. This source code is part of our Cobot}
+\PY{c+cm}{ * project (for the robotics course on the University of Amsterdam).}
+\PY{c+cm}{ *}
+\PY{c+cm}{ * Authors: Lucas Swartsenburg, Harm Dermois}
+\PY{c+cm}{ **/}
+\PY{k+kn}{package} \PY{n}{org}\PY{o}{.}\PY{n+na}{sunspotworld}\PY{o}{.}\PY{n+na}{demo}\PY{o}{;}
+
+\PY{k+kn}{import} \PY{n+nn}{com.sun.spot.service.BootloaderListenerService}\PY{o}{;}
+\PY{k+kn}{import} \PY{n+nn}{com.sun.spot.resources.Resources}\PY{o}{;}
+\PY{k+kn}{import} \PY{n+nn}{com.sun.spot.resources.transducers.*}\PY{o}{;}
+\PY{k+kn}{import} \PY{n+nn}{com.sun.spot.sensorboard.*}\PY{o}{;}
+
+\PY{k+kn}{import} \PY{n+nn}{com.sun.spot.util.Utils}\PY{o}{;}
+
+\PY{k+kn}{import} \PY{n+nn}{java.io.IOException}\PY{o}{;}
+
+\PY{k+kn}{import} \PY{n+nn}{javax.microedition.midlet.MIDlet}\PY{o}{;}
+\PY{k+kn}{import} \PY{n+nn}{javax.microedition.midlet.MIDletStateChangeException}\PY{o}{;}
+
+\PY{k+kn}{import} \PY{n+nn}{javax.microedition.io.Connector}\PY{o}{;}
+\PY{k+kn}{import} \PY{n+nn}{javax.microedition.io.Datagram}\PY{o}{;}
+\PY{k+kn}{import} \PY{n+nn}{javax.microedition.io.DatagramConnection}\PY{o}{;}
+
+\PY{k+kn}{import} \PY{n+nn}{com.sun.spot.io.j2me.radiogram.RadiogramConnection}\PY{o}{;}
+
+\PY{c+cm}{/**}
+\PY{c+cm}{ * A class that receives directions from another sunspot and sends them by}
+\PY{c+cm}{ * bitbanging to a Cobot.}
+\PY{c+cm}{ */}
+\PY{k+kd}{public} \PY{k+kd}{class} \PY{n+nc}{send} \PY{k+kd}{extends} \PY{n}{javax}\PY{o}{.}\PY{n+na}{microedition}\PY{o}{.}\PY{n+na}{midlet}\PY{o}{.}\PY{n+na}{MIDlet} \PY{o}{\PYZob{}}
+
+    \PY{k+kd}{private} \PY{n}{ITriColorLEDArray} \PY{n}{leds} \PY{o}{=}
+        \PY{o}{(}\PY{n}{ITriColorLEDArray}\PY{o}{)} \PY{n}{Resources}\PY{o}{.}\PY{n+na}{lookup}\PY{o}{(}\PY{n}{ITriColorLEDArray}\PY{o}{.}\PY{n+na}{class}\PY{o}{)}\PY{o}{;}
+    \PY{n}{IIOPin} \PY{n}{pins}\PY{o}{[}\PY{o}{]} \PY{o}{=} \PY{n}{EDemoBoard}\PY{o}{.}\PY{n+na}{getInstance}\PY{o}{(}\PY{o}{)}\PY{o}{.}\PY{n+na}{getIOPins}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+    \PY{n}{IIOPin} \PY{n}{send\PYZus{}pin} \PY{o}{=} \PY{n}{pins}\PY{o}{[}\PY{n}{EDemoBoard}\PY{o}{.}\PY{n+na}{D0}\PY{o}{]}\PY{o}{;}
+    \PY{n}{IIOPin} \PY{n}{send\PYZus{}data\PYZus{}pin} \PY{o}{=} \PY{n}{pins}\PY{o}{[}\PY{n}{EDemoBoard}\PY{o}{.}\PY{n+na}{D1}\PY{o}{]}\PY{o}{;}
+    \PY{n}{IIOPin} \PY{n}{pin\PYZus{}ack} \PY{o}{=} \PY{n}{pins}\PY{o}{[}\PY{n}{EDemoBoard}\PY{o}{.}\PY{n+na}{D2}\PY{o}{]}\PY{o}{;}
+    \PY{n}{IIOPin} \PY{n}{pin\PYZus{}rst} \PY{o}{=} \PY{n}{pins}\PY{o}{[}\PY{n}{EDemoBoard}\PY{o}{.}\PY{n+na}{D3}\PY{o}{]}\PY{o}{;}
+    \PY{k+kt}{int} \PY{n}{error} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;}
+    \PY{k+kd}{private} \PY{k+kd}{static} \PY{k+kd}{final} \PY{k+kt}{int} \PY{n}{DRIVE} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;}
+    \PY{k+kd}{private} \PY{k+kd}{static} \PY{k+kd}{final} \PY{k+kt}{int} \PY{n}{REVERSE} \PY{o}{=} \PY{l+m+mi}{1}\PY{o}{;}
+    \PY{k+kd}{private} \PY{k+kd}{static} \PY{k+kd}{final} \PY{k+kt}{int} \PY{n}{LEFT} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{;}
+    \PY{k+kd}{private} \PY{k+kd}{static} \PY{k+kd}{final} \PY{k+kt}{int} \PY{n}{RIGHT} \PY{o}{=} \PY{l+m+mi}{3}\PY{o}{;}
+    \PY{k+kd}{private} \PY{k+kd}{static} \PY{k+kd}{final} \PY{k+kt}{int} \PY{n}{STOP} \PY{o}{=} \PY{l+m+mi}{4}\PY{o}{;}
+
+    \PY{k+kd}{private} \PY{k+kd}{static} \PY{k+kd}{final} \PY{k+kt}{int} \PY{n}{BITS} \PY{o}{=} \PY{l+m+mi}{4}\PY{o}{;}
+
+    \PY{c+cm}{/**}
+\PY{c+cm}{     * Start the sunspot, initiate all pins, the leds, make sure that there is}
+\PY{c+cm}{     * a handshake and after the handshake initiate a receiving thread.}
+\PY{c+cm}{     */}
+    \PY{k+kd}{protected} \PY{k+kt}{void} \PY{n+nf}{startApp}\PY{o}{(}\PY{o}{)} \PY{o}{\PYZob{}}
+
+        \PY{c+cm}{/*}
+\PY{c+cm}{         * Listen for downloads/commands over USB connection}
+\PY{c+cm}{         */}
+        \PY{k}{new} \PY{n}{com}\PY{o}{.}\PY{n+na}{sun}\PY{o}{.}\PY{n+na}{spot}\PY{o}{.}\PY{n+na}{service}\PY{o}{.}\PY{n+na}{BootloaderListenerService}\PY{o}{(}\PY{o}{)}
+                \PY{o}{.}\PY{n+na}{getInstance}\PY{o}{(}\PY{o}{)}\PY{o}{.}\PY{n+na}{start}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+        \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"I'm about to rock that Cobot !"}\PY{o}{)}\PY{o}{;}
+        \PY{c+cm}{/*}
+\PY{c+cm}{         * Show we are waiting for the Cobot}
+\PY{c+cm}{         */}
+        \PY{n}{leds}\PY{o}{.}\PY{n+na}{setColor}\PY{o}{(}\PY{n}{LEDColor}\PY{o}{.}\PY{n+na}{RED}\PY{o}{)}\PY{o}{;}
+        \PY{n}{leds}\PY{o}{.}\PY{n+na}{setOn}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+        \PY{n}{send\PYZus{}pin}\PY{o}{.}\PY{n+na}{setAsOutput}\PY{o}{(}\PY{k+kc}{true}\PY{o}{)}\PY{o}{;}
+        \PY{n}{send\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{setAsOutput}\PY{o}{(}\PY{k+kc}{true}\PY{o}{)}\PY{o}{;}
+        \PY{n}{pin\PYZus{}ack}\PY{o}{.}\PY{n+na}{setAsOutput}\PY{o}{(}\PY{k+kc}{false}\PY{o}{)}\PY{o}{;}
+        \PY{n}{pin\PYZus{}rst}\PY{o}{.}\PY{n+na}{setAsOutput}\PY{o}{(}\PY{k+kc}{false}\PY{o}{)}\PY{o}{;}
+
+        \PY{c+cm}{/*}
+\PY{c+cm}{         * Set pins high so that the Cobot can see this device is ready.}
+\PY{c+cm}{         */}
+        \PY{n}{send\PYZus{}pin}\PY{o}{.}\PY{n+na}{setHigh}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+        \PY{n}{send\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{setHigh}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+        \PY{c+cm}{/*}
+\PY{c+cm}{         * Check if Cobot is ready.}
+\PY{c+cm}{         */}
+        \PY{k}{while} \PY{o}{(}\PY{o}{!}\PY{o}{(}\PY{n}{pin\PYZus{}ack}\PY{o}{.}\PY{n+na}{isHigh}\PY{o}{(}\PY{o}{)} \PY{o}{&}\PY{o}{&} \PY{n}{pin\PYZus{}rst}\PY{o}{.}\PY{n+na}{isHigh}\PY{o}{(}\PY{o}{)}\PY{o}{)}\PY{o}{)} \PY{o}{\PYZob{}}
+        \PY{o}{\PYZcb{}}
+        \PY{c+cm}{/**}
+\PY{c+cm}{         * There has been a handshake.}
+\PY{c+cm}{         */}
+        \PY{n}{show\PYZus{}handshake}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+        \PY{n}{send\PYZus{}pin}\PY{o}{.}\PY{n+na}{setLow}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+        \PY{n}{send\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{setLow}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+        \PY{n}{startReceiverThread}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+    \PY{o}{\PYZcb{}}
+
+    \PY{c+cm}{/**}
+\PY{c+cm}{     * Display on the leds as well as on the std out that there has been a}
+\PY{c+cm}{     * handshake.}
+\PY{c+cm}{     */}
+    \PY{k+kd}{public} \PY{k+kt}{void} \PY{n+nf}{show\PYZus{}handshake}\PY{o}{(}\PY{o}{)}\PY{o}{\PYZob{}}
+        \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Hands have been shaken, but not stirred"}\PY{o}{)}\PY{o}{;}
+        \PY{n}{leds}\PY{o}{.}\PY{n+na}{setColor}\PY{o}{(}\PY{n}{LEDColor}\PY{o}{.}\PY{n+na}{YELLOW}\PY{o}{)}\PY{o}{;}
+        \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{l+m+mi}{0}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOff}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+        \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{l+m+mi}{7}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOff}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+    \PY{o}{\PYZcb{}}
+
+    \PY{c+cm}{/**}
+\PY{c+cm}{     * Receive what has to be done in a thread.}
+\PY{c+cm}{     */}
+    \PY{k+kd}{public} \PY{k+kt}{void} \PY{n+nf}{startReceiverThread}\PY{o}{(}\PY{o}{)} \PY{o}{\PYZob{}}
+        \PY{k}{new} \PY{n+nf}{Thread}\PY{o}{(}\PY{o}{)} \PY{o}{\PYZob{}}
+            \PY{k+kd}{public} \PY{k+kt}{void} \PY{n+nf}{run}\PY{o}{(}\PY{o}{)} \PY{o}{\PYZob{}}
+                \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Start receiving"}\PY{o}{)}\PY{o}{;}
+                \PY{k+kt}{int} \PY{n}{direction} \PY{o}{=} \PY{n}{STOP}\PY{o}{;}
+                \PY{c+cm}{/*}
+\PY{c+cm}{                 * Connect...}
+\PY{c+cm}{                 */}
+                \PY{n}{RadiogramConnection} \PY{n}{dgConnection} \PY{o}{=} \PY{k+kc}{null}\PY{o}{;}
+                \PY{n}{Datagram} \PY{n}{dg} \PY{o}{=} \PY{k+kc}{null}\PY{o}{;}
+
+                \PY{k}{try} \PY{o}{\PYZob{}}
+                    \PY{n}{dgConnection} \PY{o}{=} \PY{o}{(}\PY{n}{RadiogramConnection}\PY{o}{)} \PY{n}{Connector}\PY{o}{.}\PY{n+na}{open}\PY{o}{(}\PY{l+s}{"radiogram://:37"}\PY{o}{)}\PY{o}{;}
+                    \PY{c+c1}{// Then, we ask for a datagram with the maximum size allowed}
+                    \PY{n}{dg} \PY{o}{=} \PY{n}{dgConnection}\PY{o}{.}\PY{n+na}{newDatagram}\PY{o}{(}\PY{n}{dgConnection}\PY{o}{.}\PY{n+na}{getMaximumLength}\PY{o}{(}\PY{o}{)}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}} \PY{k}{catch} \PY{o}{(}\PY{n}{IOException} \PY{n}{e}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Could not open radiogram receiver connection"}\PY{o}{)}\PY{o}{;}
+                    \PY{k}{return}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+
+                \PY{c+cm}{/*}
+\PY{c+cm}{                 * The receiving variables are ready. Start receiving.}
+\PY{c+cm}{                 */}
+                \PY{k}{while} \PY{o}{(}\PY{k+kc}{true}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{k}{try} \PY{o}{\PYZob{}}
+                        \PY{n}{dg}\PY{o}{.}\PY{n+na}{reset}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                        \PY{n}{dgConnection}\PY{o}{.}\PY{n+na}{receive}\PY{o}{(}\PY{n}{dg}\PY{o}{)}\PY{o}{;}
+                        \PY{n}{direction} \PY{o}{=} \PY{n}{dg}\PY{o}{.}\PY{n+na}{readInt}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                        \PY{c+cm}{/*}
+\PY{c+cm}{                         * Show on the leds which direction has been received.}
+\PY{c+cm}{                         */}
+                        \PY{n}{set\PYZus{}Leds}\PY{o}{(}\PY{n}{direction}\PY{o}{)}\PY{o}{;}
+                        \PY{c+cm}{/*}
+\PY{c+cm}{                         * Bitbang the received direction to the Cobot}
+\PY{c+cm}{                         */}
+                        \PY{n}{bitbang\PYZus{}send}\PY{o}{(}\PY{n}{direction}\PY{o}{)}\PY{o}{;}
+                    \PY{o}{\PYZcb{}} \PY{k}{catch} \PY{o}{(}\PY{n}{IOException} \PY{n}{e}\PY{o}{)} \PY{o}{\PYZob{}}
+                        \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Nothing received"}\PY{o}{)}\PY{o}{;}
+                    \PY{o}{\PYZcb{}}
+                \PY{o}{\PYZcb{}}
+            \PY{o}{\PYZcb{}}
+        \PY{o}{\PYZcb{}}\PY{o}{.}\PY{n+na}{start}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+    \PY{o}{\PYZcb{}}
+
+    \PY{c+cm}{/**}
+\PY{c+cm}{     * This function uses bitbanging to send data to the Cobot. We send a 6 bit}
+\PY{c+cm}{     * code. The first three bits contain the data, the other three contain the}
+\PY{c+cm}{     * same data so that the Cobot can check the data.}
+\PY{c+cm}{     */}
+    \PY{k+kd}{public} \PY{k+kt}{int} \PY{n+nf}{bitbang\PYZus{}send}\PY{o}{(}\PY{k+kt}{int} \PY{n}{data}\PY{o}{)} \PY{o}{\PYZob{}}
+        \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"---- Start send ----"}\PY{o}{)}\PY{o}{;}
+        \PY{k+kt}{int} \PY{n}{i}\PY{o}{;}
+        \PY{k+kt}{int} \PY{n}{data\PYZus{}cop} \PY{o}{=} \PY{n}{data}\PY{o}{;}
+        \PY{c+cm}{/*}
+\PY{c+cm}{         * Start by setting both pins low. This is to prevent confusing the}
+\PY{c+cm}{         * Cobot.}
+\PY{c+cm}{         */}
+        \PY{n}{send\PYZus{}pin}\PY{o}{.}\PY{n+na}{setLow}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+        \PY{n}{send\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{setLow}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+        \PY{c+cm}{/*}
+\PY{c+cm}{         * Loop for every bit to be send.}
+\PY{c+cm}{         */}
+        \PY{k}{for} \PY{o}{(}\PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{6}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+            \PY{c+cm}{/*}
+\PY{c+cm}{             * Wait until the Cobot is done handling the last received bit.}
+\PY{c+cm}{             */}
+            \PY{k}{while} \PY{o}{(}\PY{o}{!}\PY{o}{(}\PY{n}{pin\PYZus{}rst}\PY{o}{.}\PY{n+na}{isLow}\PY{o}{(}\PY{o}{)}\PY{o}{&}\PY{o}{&}\PY{n}{pin\PYZus{}ack}\PY{o}{.}\PY{n+na}{isLow}\PY{o}{(}\PY{o}{)}\PY{o}{)}\PY{o}{)} \PY{o}{\PYZob{}}
+                \PY{n}{error}\PY{o}{+}\PY{o}{+}\PY{o}{;}
+                \PY{k}{if} \PY{o}{(}\PY{n}{error} \PY{o}{=}\PY{o}{=} \PY{l+m+mi}{20000}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{error} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;}
+                    \PY{n}{print\PYZus{}state}\PY{o}{(}\PY{l+s}{"In while waiting for rst off"}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+            \PY{o}{\PYZcb{}}
+            \PY{n}{error} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;}
+
+            \PY{c+cm}{/*}
+\PY{c+cm}{             * If the first three bits have been send (by bitshift), restore the}
+\PY{c+cm}{             * data var to what is was before bitshifting.}
+\PY{c+cm}{             */}
+            \PY{k}{if} \PY{o}{(}\PY{n}{i} \PY{o}{=}\PY{o}{=} \PY{l+m+mi}{3}\PY{o}{)} \PY{o}{\PYZob{}}
+                \PY{n}{data} \PY{o}{=} \PY{n}{data\PYZus{}cop}\PY{o}{;}
+                \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"DATA: "} \PY{o}{+} \PY{n}{data}\PY{o}{)}\PY{o}{;}
+            \PY{o}{\PYZcb{}}
+
+            \PY{c+cm}{/*}
+\PY{c+cm}{             * Bitwise AND on most left bit (the data is 3 bits in total).}
+\PY{c+cm}{             */}
+            \PY{k}{if} \PY{o}{(}\PY{o}{(}\PY{n}{data} \PY{o}{&} \PY{l+m+mh}{0x4}\PY{o}{)} \PY{o}{>} \PY{l+m+mi}{0}\PY{o}{)} \PY{o}{\PYZob{}}
+                \PY{n}{send\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{setHigh}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{print}\PY{o}{(}\PY{l+s}{"Set data: 1"}\PY{o}{)}\PY{o}{;}
+            \PY{o}{\PYZcb{}} \PY{k}{else} \PY{o}{\PYZob{}}
+                \PY{n}{send\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{setLow}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{print}\PY{o}{(}\PY{l+s}{"Set data: 0"}\PY{o}{)}\PY{o}{;}
+            \PY{o}{\PYZcb{}}
+
+            \PY{c+cm}{/*}
+\PY{c+cm}{             * Tell the Cobot that there is new data.}
+\PY{c+cm}{             */}
+            \PY{n}{send\PYZus{}pin}\PY{o}{.}\PY{n+na}{setHigh}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+            \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{""}\PY{o}{)}\PY{o}{;}
+
+            \PY{c+cm}{/*}
+\PY{c+cm}{             * Wait until the cobot says it has received the bit.}
+\PY{c+cm}{             */}
+            \PY{k}{while} \PY{o}{(}\PY{o}{!}\PY{o}{(}\PY{n}{pin\PYZus{}ack}\PY{o}{.}\PY{n+na}{isHigh}\PY{o}{(}\PY{o}{)}\PY{o}{)}\PY{o}{)} \PY{o}{\PYZob{}}
+                \PY{n}{error}\PY{o}{+}\PY{o}{+}\PY{o}{;}
+                \PY{k}{if} \PY{o}{(}\PY{n}{error} \PY{o}{=}\PY{o}{=} \PY{l+m+mi}{20000}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{error} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;}
+                    \PY{n}{print\PYZus{}state}\PY{o}{(}\PY{l+s}{"In while waiting for ack on"}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+            \PY{o}{\PYZcb{}}
+            \PY{n}{error} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;}
+
+            \PY{c+cm}{/*}
+\PY{c+cm}{             * Make sure that the ack pin is off before sending new data.}
+\PY{c+cm}{             */}
+            \PY{n}{send\PYZus{}pin}\PY{o}{.}\PY{n+na}{setLow}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+            \PY{c+cm}{/*}
+\PY{c+cm}{             * The reset pin is on means that the Cobot didn't receive the data}
+\PY{c+cm}{             * properly.}
+\PY{c+cm}{             */}
+            \PY{k}{if} \PY{o}{(}\PY{n}{pin\PYZus{}rst}\PY{o}{.}\PY{n+na}{isHigh}\PY{o}{(}\PY{o}{)}\PY{o}{)} \PY{o}{\PYZob{}}
+                \PY{n}{print\PYZus{}state}\PY{o}{(}\PY{l+s}{"ERROR!"}\PY{o}{)}\PY{o}{;}
+                \PY{n}{bitbang\PYZus{}send}\PY{o}{(}\PY{n}{data\PYZus{}cop}\PY{o}{)}\PY{o}{;}
+                \PY{k}{return} \PY{o}{-}\PY{l+m+mi}{1}\PY{o}{;}
+            \PY{o}{\PYZcb{}}
+
+            \PY{n}{data} \PY{o}{<}\PY{o}{<}\PY{o}{=} \PY{l+m+mi}{1}\PY{o}{;}
+        \PY{o}{\PYZcb{}}
+
+        \PY{c+cm}{/*}
+\PY{c+cm}{         * Cleanup the datapin.}
+\PY{c+cm}{         */}
+        \PY{n}{send\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{setLow}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+        \PY{n}{print\PYZus{}state}\PY{o}{(}\PY{l+s}{"Finished"}\PY{o}{)}\PY{o}{;}
+        \PY{k}{return} \PY{l+m+mi}{1}\PY{o}{;}
+    \PY{o}{\PYZcb{}}
+
+    \PY{c+cm}{/**}
+\PY{c+cm}{     * Put a appropriate combination on the leds according to the received}
+\PY{c+cm}{     * direction.}
+\PY{c+cm}{     * @param drive}
+\PY{c+cm}{     */}
+    \PY{k+kd}{public} \PY{k+kt}{void} \PY{n+nf}{set\PYZus{}Leds}\PY{o}{(}\PY{k+kt}{int} \PY{n}{drive}\PY{o}{)} \PY{o}{\PYZob{}}
+        \PY{k}{switch} \PY{o}{(}\PY{n}{drive}\PY{o}{)} \PY{o}{\PYZob{}}
+            \PY{k}{case} \PY{n+nl}{DRIVE:}
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{2}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOff}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{6}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{8}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOff}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{6}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setColor}\PY{o}{(}\PY{n}{LEDColor}\PY{o}{.}\PY{n+na}{GREEN}\PY{o}{)}\PY{o}{;}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOn}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{break}\PY{o}{;}
+            \PY{k}{case} \PY{n+nl}{REVERSE:}
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{2}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOff}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{6}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{8}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOff}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{6}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setColor}\PY{o}{(}\PY{n}{LEDColor}\PY{o}{.}\PY{n+na}{ORANGE}\PY{o}{)}\PY{o}{;}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOn}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{break}\PY{o}{;}
+            \PY{k}{case} \PY{n+nl}{LEFT:}
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{4}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOff}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{4}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{8}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setColor}\PY{o}{(}\PY{n}{LEDColor}\PY{o}{.}\PY{n+na}{BLUE}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{4}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{8}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOn}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{break}\PY{o}{;}
+
+            \PY{k}{case} \PY{n+nl}{RIGHT:}
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{4}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{8}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOff}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{4}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setColor}\PY{o}{(}\PY{n}{LEDColor}\PY{o}{.}\PY{n+na}{WHITE}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{4}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOn}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{break}\PY{o}{;}
+
+            \PY{k}{case} \PY{n+nl}{STOP:}
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{3}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOff}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{5}\PY{o}{;} \PY{n}{i} \PY{o}{<} \PY{l+m+mi}{8}\PY{o}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{o}{)} \PY{o}{\PYZob{}}
+                    \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{n}{i}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOff}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{l+m+mi}{3}\PY{o}{)}\PY{o}{.}\PY{n+na}{setColor}\PY{o}{(}\PY{n}{LEDColor}\PY{o}{.}\PY{n+na}{RED}\PY{o}{)}\PY{o}{;}
+                \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{l+m+mi}{3}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOn}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{l+m+mi}{4}\PY{o}{)}\PY{o}{.}\PY{n+na}{setColor}\PY{o}{(}\PY{n}{LEDColor}\PY{o}{.}\PY{n+na}{RED}\PY{o}{)}\PY{o}{;}
+                \PY{n}{leds}\PY{o}{.}\PY{n+na}{getLED}\PY{o}{(}\PY{l+m+mi}{4}\PY{o}{)}\PY{o}{.}\PY{n+na}{setOn}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{k}{break}\PY{o}{;}
+        \PY{o}{\PYZcb{}}
+
+    \PY{o}{\PYZcb{}}
+
+    \PY{c+cm}{/**}
+\PY{c+cm}{     * Print the state in words to std out.}
+\PY{c+cm}{     *}
+\PY{c+cm}{     * @param dir}
+\PY{c+cm}{     */}
+    \PY{k+kd}{public} \PY{k+kt}{void} \PY{n+nf}{print\PYZus{}dir}\PY{o}{(}\PY{k+kt}{int} \PY{n}{dir}\PY{o}{)}\PY{o}{\PYZob{}}
+       \PY{k}{switch} \PY{o}{(}\PY{n}{dir}\PY{o}{)} \PY{o}{\PYZob{}}
+            \PY{k}{case} \PY{n+nl}{DRIVE:}
+                \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Drive"}\PY{o}{)}\PY{o}{;}
+                \PY{k}{break}\PY{o}{;}
+            \PY{k}{case} \PY{n+nl}{REVERSE:}
+                \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Reverse"}\PY{o}{)}\PY{o}{;}
+                \PY{k}{break}\PY{o}{;}
+            \PY{k}{case} \PY{n+nl}{LEFT:}
+                \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Left"}\PY{o}{)}\PY{o}{;}
+                \PY{k}{break}\PY{o}{;}
+
+            \PY{k}{case} \PY{n+nl}{RIGHT:}
+                \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Right"}\PY{o}{)}\PY{o}{;}
+                \PY{k}{break}\PY{o}{;}
+            \PY{k}{case} \PY{n+nl}{STOP:}
+                \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Stop"}\PY{o}{)}\PY{o}{;}
+                \PY{k}{break}\PY{o}{;}
+        \PY{o}{\PYZcb{}}
+    \PY{o}{\PYZcb{}}
+
+    \PY{c+cm}{/**}
+\PY{c+cm}{     * Used in while loops...}
+\PY{c+cm}{     * Print the current state of the pins and print the message.}
+\PY{c+cm}{     *}
+\PY{c+cm}{     * @param event}
+\PY{c+cm}{     */}
+    \PY{k+kd}{public} \PY{k+kt}{void} \PY{n+nf}{print\PYZus{}state}\PY{o}{(}\PY{n}{String} \PY{n}{event}\PY{o}{)} \PY{o}{\PYZob{}}
+        \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{n}{event}\PY{o}{)}\PY{o}{;}
+        \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Pin\PYZus{}ack: "} \PY{o}{+} \PY{n}{pin\PYZus{}ack}\PY{o}{.}\PY{n+na}{isHigh}\PY{o}{(}\PY{o}{)} \PY{o}{+} \PY{l+s}{" | "}
+                \PY{o}{+} \PY{l+s}{"Pin\PYZus{}rst: "} \PY{o}{+} \PY{n}{pin\PYZus{}rst}\PY{o}{.}\PY{n+na}{isHigh}\PY{o}{(}\PY{o}{)} \PY{o}{+} \PY{l+s}{""}\PY{o}{)}\PY{o}{;}
+        \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Send\PYZus{}ack: "} \PY{o}{+} \PY{n}{send\PYZus{}pin}\PY{o}{.}\PY{n+na}{isHigh}\PY{o}{(}\PY{o}{)} \PY{o}{+} \PY{l+s}{" | "}
+                \PY{o}{+} \PY{l+s}{"Send\PYZus{}data: "} \PY{o}{+} \PY{n}{send\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{isHigh}\PY{o}{(}\PY{o}{)} \PY{o}{+} \PY{l+s}{""}\PY{o}{)}\PY{o}{;}
+    \PY{o}{\PYZcb{}}
+
+    \PY{k+kd}{protected} \PY{k+kt}{void} \PY{n+nf}{pauseApp}\PY{o}{(}\PY{o}{)} \PY{o}{\PYZob{}}
+    \PY{o}{\PYZcb{}}
+
+    \PY{c+cm}{/**}
+\PY{c+cm}{     * Called if the MIDlet is terminated by the system.}
+\PY{c+cm}{     * I.e. if startApp throws any exception other than MIDletStateChangeException,}
+\PY{c+cm}{     * if the isolate running the MIDlet is killed with Isolate.exit(), or}
+\PY{c+cm}{     * if VM.stopVM() is called.}
+\PY{c+cm}{     *}
+\PY{c+cm}{     * It is not called if MIDlet.notifyDestroyed() was called.}
+\PY{c+cm}{     *}
+\PY{c+cm}{     * @param unconditional If true when this method is called, the MIDlet must}
+\PY{c+cm}{     *    cleanup and release all resources. If false the MIDlet may throw}
+\PY{c+cm}{     *    MIDletStateChangeException  to indicate it does not want to be destroyed}
+\PY{c+cm}{     *    at this time.}
+\PY{c+cm}{     */}
+    \PY{k+kd}{protected} \PY{k+kt}{void} \PY{n+nf}{destroyApp}\PY{o}{(}\PY{k+kt}{boolean} \PY{n}{unconditional}\PY{o}{)} \PY{o}{\PYZob{}}
+    \PY{o}{\PYZcb{}}
+\PY{o}{\PYZcb{}}
+\end{Verbatim}

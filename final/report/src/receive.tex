@@ -1,0 +1,128 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+cm}{/*}
+\PY{c+cm}{ * Source code of the receiving Sun SPOT. This source code is part of our Cobot}
+\PY{c+cm}{ * project (for the robotics course on the University of Amsterdam).}
+\PY{c+cm}{ *}
+\PY{c+cm}{ * Authors: Lucas Swartsenburg, Harm Dermois}
+\PY{c+cm}{ **/}
+\PY{k+kn}{package} \PY{n}{org}\PY{o}{.}\PY{n+na}{sunspotworld}\PY{o}{.}\PY{n+na}{demo}\PY{o}{;}
+
+\PY{k+kn}{import} \PY{n+nn}{com.sun.spot.resources.Resources}\PY{o}{;}
+\PY{k+kn}{import} \PY{n+nn}{com.sun.spot.resources.transducers.*}\PY{o}{;}
+\PY{k+kn}{import} \PY{n+nn}{com.sun.spot.sensorboard.*}\PY{o}{;}
+
+\PY{k+kn}{import} \PY{n+nn}{com.sun.spot.util.Utils}\PY{o}{;}
+
+\PY{k+kn}{import} \PY{n+nn}{java.io.IOException}\PY{o}{;}
+
+\PY{k+kn}{import} \PY{n+nn}{javax.microedition.midlet.MIDlet}\PY{o}{;}
+\PY{k+kn}{import} \PY{n+nn}{javax.microedition.midlet.MIDletStateChangeException}\PY{o}{;}
+
+\PY{c+cm}{/**}
+\PY{c+cm}{ * This class uses the radio to receive broadcasted data from any Sun SPOT.}
+\PY{c+cm}{ */}
+\PY{k+kd}{public} \PY{k+kd}{class} \PY{n+nc}{receive} \PY{k+kd}{extends} \PY{n}{javax}\PY{o}{.}\PY{n+na}{microedition}\PY{o}{.}\PY{n+na}{midlet}\PY{o}{.}\PY{n+na}{MIDlet} \PY{o}{\PYZob{}}
+
+    \PY{k+kd}{private} \PY{n}{ITriColorLEDArray} \PY{n}{leds} \PY{o}{=}
+        \PY{o}{(}\PY{n}{ITriColorLEDArray}\PY{o}{)} \PY{n}{Resources}\PY{o}{.}\PY{n+na}{lookup}\PY{o}{(}\PY{n}{ITriColorLEDArray}\PY{o}{.}\PY{n+na}{class}\PY{o}{)}\PY{o}{;}
+    \PY{n}{IIOPin} \PY{n}{pins}\PY{o}{[}\PY{o}{]} \PY{o}{=} \PY{n}{EDemoBoard}\PY{o}{.}\PY{n+na}{getInstance}\PY{o}{(}\PY{o}{)}\PY{o}{.}\PY{n+na}{getIOPins}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+    \PY{n}{IIOPin} \PY{n}{send\PYZus{}pin} \PY{o}{=} \PY{n}{pins}\PY{o}{[}\PY{n}{EDemoBoard}\PY{o}{.}\PY{n+na}{D2}\PY{o}{]}\PY{o}{;}
+    \PY{n}{IIOPin} \PY{n}{send\PYZus{}data\PYZus{}pin} \PY{o}{=} \PY{n}{pins}\PY{o}{[}\PY{n}{EDemoBoard}\PY{o}{.}\PY{n+na}{D3}\PY{o}{]}\PY{o}{;}
+    \PY{n}{IIOPin} \PY{n}{receive\PYZus{}pin} \PY{o}{=} \PY{n}{pins}\PY{o}{[}\PY{n}{EDemoBoard}\PY{o}{.}\PY{n+na}{D0}\PY{o}{]}\PY{o}{;}
+    \PY{n}{IIOPin} \PY{n}{receive\PYZus{}data\PYZus{}pin} \PY{o}{=} \PY{n}{pins}\PY{o}{[}\PY{n}{EDemoBoard}\PY{o}{.}\PY{n+na}{D1}\PY{o}{]}\PY{o}{;}
+
+    \PY{k+kd}{private} \PY{k+kd}{static} \PY{k+kd}{final} \PY{k+kt}{int} \PY{n}{DRIVE} \PY{o}{=} \PY{l+m+mi}{1}\PY{o}{;}
+    \PY{k+kd}{private} \PY{k+kd}{static} \PY{k+kd}{final} \PY{k+kt}{int} \PY{n}{REVERSE} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{;}
+    \PY{k+kd}{private} \PY{k+kd}{static} \PY{k+kd}{final} \PY{k+kt}{int} \PY{n}{LEFT} \PY{o}{=} \PY{l+m+mi}{3}\PY{o}{;}
+    \PY{k+kd}{private} \PY{k+kd}{static} \PY{k+kd}{final} \PY{k+kt}{int} \PY{n}{RIGHT} \PY{o}{=} \PY{l+m+mi}{4}\PY{o}{;}
+    \PY{k+kd}{private} \PY{k+kd}{static} \PY{k+kd}{final} \PY{k+kt}{int} \PY{n}{STOP} \PY{o}{=} \PY{l+m+mi}{5}\PY{o}{;}
+
+    \PY{k+kd}{public} \PY{k+kt}{int} \PY{n}{sleep\PYZus{}interval} \PY{o}{=} \PY{l+m+mi}{50}\PY{o}{;}
+    \PY{k+kd}{public} \PY{k+kt}{int} \PY{n}{error\PYZus{}threshold} \PY{o}{=} \PY{l+m+mi}{2000}\PY{o}{;}
+
+    \PY{k+kd}{protected} \PY{k+kt}{void} \PY{n+nf}{startApp}\PY{o}{(}\PY{o}{)} \PY{o}{\PYZob{}}
+        \PY{c+c1}{// Listen for downloads/commands over USB connection}
+        \PY{k}{new} \PY{n}{com}\PY{o}{.}\PY{n+na}{sun}\PY{o}{.}\PY{n+na}{spot}\PY{o}{.}\PY{n+na}{service}\PY{o}{.}\PY{n+na}{BootloaderListenerService}\PY{o}{(}\PY{o}{)}
+                \PY{o}{.}\PY{n+na}{getInstance}\PY{o}{(}\PY{o}{)}\PY{o}{.}\PY{n+na}{start}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+        \PY{n}{leds}\PY{o}{.}\PY{n+na}{setColor}\PY{o}{(}\PY{n}{LEDColor}\PY{o}{.}\PY{n+na}{MAUVE}\PY{o}{)}\PY{o}{;}
+        \PY{n}{leds}\PY{o}{.}\PY{n+na}{setOn}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+        \PY{n}{send\PYZus{}pin}\PY{o}{.}\PY{n+na}{setAsOutput}\PY{o}{(}\PY{k+kc}{true}\PY{o}{)}\PY{o}{;}
+        \PY{n}{send\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{setAsOutput}\PY{o}{(}\PY{k+kc}{true}\PY{o}{)}\PY{o}{;}
+        \PY{n}{receive\PYZus{}pin}\PY{o}{.}\PY{n+na}{setAsOutput}\PY{o}{(}\PY{k+kc}{false}\PY{o}{)}\PY{o}{;}
+        \PY{n}{receive\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{setAsOutput}\PY{o}{(}\PY{k+kc}{false}\PY{o}{)}\PY{o}{;}
+
+        \PY{n}{send\PYZus{}pin}\PY{o}{.}\PY{n+na}{setLow}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+        \PY{n}{send\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{setLow}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+        \PY{k}{for}\PY{o}{(}\PY{o}{;}\PY{o}{;}\PY{o}{)} \PY{o}{\PYZob{}}
+            \PY{k}{if}\PY{o}{(}\PY{n}{receive\PYZus{}pin}\PY{o}{.}\PY{n+na}{isHigh}\PY{o}{(}\PY{o}{)} \PY{o}{&}\PY{o}{&} \PY{n}{receive\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{isHigh}\PY{o}{(}\PY{o}{)}\PY{o}{)} \PY{o}{\PYZob{}}
+                \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"Start receive."}\PY{o}{)}\PY{o}{;}
+                \PY{k+kt}{int} \PY{n}{c} \PY{o}{=} \PY{n}{bitbang\PYZus{}receive}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+                \PY{k}{if}\PY{o}{(}\PY{n}{c}\PY{o}{=}\PY{o}{=}\PY{n}{DRIVE}\PY{o}{)}\PY{o}{\PYZob{}}
+                    \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"DRIVE"}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{if}\PY{o}{(}\PY{n}{c}\PY{o}{=}\PY{o}{=}\PY{n}{REVERSE}\PY{o}{)}\PY{o}{\PYZob{}}
+                    \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"REVERSE"}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{if}\PY{o}{(}\PY{n}{c}\PY{o}{=}\PY{o}{=}\PY{n}{LEFT}\PY{o}{)}\PY{o}{\PYZob{}}
+                    \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"LEFT"}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+                \PY{k}{if}\PY{o}{(}\PY{n}{c}\PY{o}{=}\PY{o}{=}\PY{n}{RIGHT}\PY{o}{)}\PY{o}{\PYZob{}}
+                    \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{l+s}{"RIGHT"}\PY{o}{)}\PY{o}{;}
+                \PY{o}{\PYZcb{}}
+
+                \PY{n}{System}\PY{o}{.}\PY{n+na}{out}\PY{o}{.}\PY{n+na}{println}\PY{o}{(}\PY{n}{c}\PY{o}{)}\PY{o}{;}
+            \PY{o}{\PYZcb{}}
+        \PY{o}{\PYZcb{}}
+    \PY{o}{\PYZcb{}}
+
+    \PY{k+kd}{public} \PY{k+kt}{int} \PY{n+nf}{bitbang\PYZus{}receive}\PY{o}{(}\PY{o}{)} \PY{o}{\PYZob{}}
+        \PY{k+kt}{int} \PY{n}{received} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;}
+        \PY{k+kt}{int} \PY{n}{error} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;}
+
+        \PY{n}{send\PYZus{}pin}\PY{o}{.}\PY{n+na}{setLow}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+        \PY{n}{send\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{setHigh}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+        \PY{n}{Utils}\PY{o}{.}\PY{n+na}{sleep}\PY{o}{(}\PY{k}{this}\PY{o}{.}\PY{n+na}{sleep\PYZus{}interval}\PY{o}{)}\PY{o}{;}
+
+        \PY{k}{for} \PY{o}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{7}\PY{o}{;} \PY{n}{i} \PY{o}{>}\PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;} \PY{n}{i}\PY{o}{-}\PY{o}{-}\PY{o}{)} \PY{o}{\PYZob{}}
+            \PY{k}{while} \PY{o}{(}\PY{n}{receive\PYZus{}pin}\PY{o}{.}\PY{n+na}{isLow}\PY{o}{(}\PY{o}{)}\PY{o}{)}
+                \PY{k}{if}\PY{o}{(}\PY{o}{+}\PY{o}{+}\PY{n}{error} \PY{o}{>} \PY{k}{this}\PY{o}{.}\PY{n+na}{error\PYZus{}threshold}\PY{o}{)}
+                    \PY{k}{return} \PY{o}{-}\PY{l+m+mi}{1}\PY{o}{;}
+            \PY{n}{error} \PY{o}{=} \PY{l+m+mi}{0}\PY{o}{;}
+
+            \PY{n}{received} \PY{o}{|}\PY{o}{=} \PY{n}{receive\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{isHigh}\PY{o}{(}\PY{o}{)} \PY{o}{?} \PY{l+m+mi}{1} \PY{o}{<}\PY{o}{<} \PY{n}{i} \PY{o}{:} \PY{l+m+mi}{0}\PY{o}{;}
+
+            \PY{n}{send\PYZus{}pin}\PY{o}{.}\PY{n+na}{setHigh}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+            \PY{n}{Utils}\PY{o}{.}\PY{n+na}{sleep}\PY{o}{(}\PY{k}{this}\PY{o}{.}\PY{n+na}{sleep\PYZus{}interval}\PY{o}{)}\PY{o}{;}
+            \PY{n}{send\PYZus{}pin}\PY{o}{.}\PY{n+na}{setLow}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+            \PY{n}{Utils}\PY{o}{.}\PY{n+na}{sleep}\PY{o}{(}\PY{k}{this}\PY{o}{.}\PY{n+na}{sleep\PYZus{}interval}\PY{o}{)}\PY{o}{;}
+        \PY{o}{\PYZcb{}}
+        \PY{n}{send\PYZus{}data\PYZus{}pin}\PY{o}{.}\PY{n+na}{setLow}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+        \PY{k}{return} \PY{n}{received}\PY{o}{;}
+    \PY{o}{\PYZcb{}}
+
+    \PY{k+kd}{protected} \PY{k+kt}{void} \PY{n+nf}{pauseApp}\PY{o}{(}\PY{o}{)} \PY{o}{\PYZob{}}
+    \PY{o}{\PYZcb{}}
+
+    \PY{c+cm}{/**}
+\PY{c+cm}{     * Called if the MIDlet is terminated by the system.}
+\PY{c+cm}{     * I.e. if startApp throws any exception other than MIDletStateChangeException,}
+\PY{c+cm}{     * if the isolate running the MIDlet is killed with Isolate.exit(), or}
+\PY{c+cm}{     * if VM.stopVM() is called.}
+\PY{c+cm}{     *}
+\PY{c+cm}{     * It is not called if MIDlet.notifyDestroyed() was called.}
+\PY{c+cm}{     *}
+\PY{c+cm}{     * @param unconditional If true when this method is called, the MIDlet must}
+\PY{c+cm}{     *    cleanup and release all resources. If false the MIDlet may throw}
+\PY{c+cm}{     *    MIDletStateChangeException  to indicate it does not want to be destroyed}
+\PY{c+cm}{     *    at this time.}
+\PY{c+cm}{     */}
+    \PY{k+kd}{protected} \PY{k+kt}{void} \PY{n+nf}{destroyApp}\PY{o}{(}\PY{k+kt}{boolean} \PY{n}{unconditional}\PY{o}{)} \PY{o}{\PYZob{}}
+    \PY{o}{\PYZcb{}}
+\PY{o}{\PYZcb{}}
+\end{Verbatim}
