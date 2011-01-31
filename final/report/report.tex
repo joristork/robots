@@ -35,13 +35,15 @@ Lucas Swartsenburg (6174388) \and Sander van Veen (6167969)}
 Sun SPOT used as the ``remote control'' of the Jobot.}
 \end{figure}
 
-\abstract{This is our final report for the robotics course 2011 of the
-University of Amsterdam. Our project is to create a communication channel
-between a Jobot and Sun SPOT, and communicate wirelessly between multiple Sun
-SPOTs. Communication also includes bit banging, error checking and programming
-the devices to handle the transmission properly, emitting low-level signals to
-command the servo's using our C driver and, last but not least, we composed a
-toolchain to program our C driver on the Jobot.}
+\abstract{This is our final report for the 2011 robotics project at the
+University of Amsterdam. Our goal was to write a C driver for the Jobotl; to
+create a communications channel between a Jobot and Sun SPOT; and to communicate
+wirelessly between multiple Sun SPOT / Jobot pairs. We succeeded with respect to
+the first two goals. Our communications implementation includes a deterministic
+bit banging protocol that involves error checking and handshaking. Our robot
+driver code generates low-level signals to command and coordinate the robot's
+servos.  Last, but not least, we composed an efficient toolchain to program our
+C driver on the Jobot.}
 
 \pagebreak
 
