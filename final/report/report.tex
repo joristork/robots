@@ -5,7 +5,10 @@
     colorlinks=false,
     pdfborder={0 0 0},
 }
-\newcommand{\tsup}[1]{\ensuremath{\sp{\text{#1}}}}
+
+\newcommand{\tsup}[1]{\ensuremath{
+    \sp{\text{#1}}
+}}
 
 \include{colors}
 
@@ -24,14 +27,21 @@ Lucas Swartsenburg (6174388) \and Sander van Veen (6167969)}
 % Disable page number of title page
 \thispagestyle{empty}
 
-\abstract{}
-
 \begin{figure}[H]
 \label{fig:cobot_sunspot_final}
 \centering
-\includegraphics[width=0.8\textwidth]{img/sunspot_cobot_final_together.png}
+\includegraphics[width=0.95\textwidth]{img/sunspot_cobot_final_together.png}
+\caption{On the left is a Jobot attached to the Sun SPOT and on the right is a
+Sun SPOT used as the ``remote control'' of the Jobot.}
 \end{figure}
 
+\abstract{This is our final report for the robotics course 2011 of the
+University of Amsterdam. Our project is to create a communication channel
+between a Jobot and Sun SPOT, and communicate wirelessly between multiple Sun
+SPOTs. Communication also includes bit banging, error checking and programming
+the devices to handle the transmission properly, emitting low-level signals to
+command the servo's using our C driver and, last but not least, we composed a
+toolchain to program our C driver on the Jobot.}
 
 \pagebreak
 
@@ -97,15 +107,19 @@ This section provides an overview of the materials used in this project. More
 detailed specifications of materials used in this project are listed in appendix
 \ref{app:robot-hardware}, as relevant.
 
-\subsubsection{Cobot}
+\subsubsection{Cobot} % {{{
 
 \begin{figure}[h]
     \centering
-    \subfloat[front]{\label{fig:cobotface}\includegraphics[width=0.4\textwidth]{img/cobot_face_sensor.png}}
-    \subfloat[topview]{\label{fig:cobottop}\includegraphics[width=0.4\textwidth]{img/cobot_top_view.png}}
+    \subfloat[front]{\label{fig:cobotface}
+    \includegraphics[width=0.4\textwidth]{img/cobot_face_sensor.png}}
+    \subfloat[topview]{\label{fig:cobottop}
+    \includegraphics[width=0.4\textwidth]{img/cobot_top_view.png}}
     \caption{The Cobot}
     \label{fig:cobotviews}
 \end{figure}
+
+% }}}
 
 The Cobot, the centrepiece of our project, is an adapted ``Jobot'',
 re-christened to reflect the fact that our team reprogrammed the device in a
@@ -172,7 +186,11 @@ around a rectangle.
 \input{src/hemisson}
 
 \noindent We developed this utility to verify that communication over the
-Hemisson's RS-232 COM port had been successful. When we started to develop code for the Cobot, the utility was initially useless, since the Cobot did not have a program in place to interpret the commands sent through the RS-232 COM port. The Cobot had to be programmed from scratch. Once we had written the necessary software handlers on the Cobot, though, our utility became useful once again.
+Hemisson's RS-232 COM port had been successful. When we started to develop code
+for the Cobot, the utility was initially useless, since the Cobot did not have a
+program in place to interpret the commands sent through the RS-232 COM port. The
+Cobot had to be programmed from scratch. Once we had written the necessary
+software handlers on the Cobot, though, our utility became useful once again.
 
 % }}}
 
@@ -271,7 +289,7 @@ to get the program running.
 % }}}
 
 \subsubsection{Controlling the actuators} % {{{
-\label{sub:Cobot implementation}
+\label{sub:Controlling the actuators}
 
 Since there was no manual or documentation available about the toolchain, nor
 about the internals of the Jobot, the first week's progress of this assignment
@@ -329,7 +347,7 @@ In order to understand the Sun SPOT sensors and communication functions, we
 first wanted to develop a two-way transmission system that passes information
 regarding one device's tilt to another device. We quickly learned that this
 required the use of threads, since the devices often froze due to
-desynchronisation without threads. 
+desynchronisation without threads.
 
 Once the threads were implemented, we began to successfully transmit the tilt
 information between two Sun SPOTs. This would then serve as the basis for
@@ -387,15 +405,13 @@ I/O}
 
 \subsubsection{Bit banging: hardware bus} % {{{
 
-At this stage the Cobot was ready to drive and we had tested our bit-banging
-algorithms between the Sun SPOTs. We could finally start putting the pieces
-together, another challenge as it turned out.  The main obstacle lay in the
-different voltages, described earlier in this section, which prevented a direct
-connection between the Cobot's and the Sun SPOT's I/O ports. The solution lay in
-assembling a potential divider, using the following equation: 
-
-\begin{equation}
-\label{eq:voltage} U = I*R \end{equation}
+At this stage we had both the Cobot ready to drive and had tested our
+bit-banging algorithms between the Sun SPOTs. We could finally start putting the
+pieces together, another challenge as it turned out.  The main obstacle lay in
+the different voltages, described earlier in this section, which prevented a
+direct connection between the Cobot's and the Sun SPOT's I/O ports. The solution
+lay in assembling a potential divider, using the following equation:
+\begin{equation} \label{eq:voltage} U = I*R \end{equation}
 
 \begin{figure}[H]
     \label{fig:voltage_divider}
@@ -524,6 +540,22 @@ anyone wishing to implement a driver for a robot.
 \subsubsection{Cobot's handshake and start} % {{{
 \label{ssub:Cobot's handshake and start}
 
+In order to start the communication between the Cobot and Sun SPOT in a proper
+way, we implemented a handshake protocol to ensure the Cobot and Sun SPOT are in
+the same state. Before we implemented the handshake, the Sun SPOT or Cobot sent
+some data to its output pins which caused the other device to do some unwanted
+action. To prevent this from happening, the handshake protocol ensures both
+devices are ready for action.
+
+The handshake is simple: put both pins up on both devices and wait until both
+pins on both devices are down. This handshake protocol is defined as a state
+machine. The Sun SPOT requires the Cobot's output pins to be high. Once those
+pins are high, the Sun SPOT raises both pins. The Cobot detects both pins of the
+Sun SPOT are high and will wait until the Sun SPOT's pins are both low again.
+The Sun SPOT waits a few milliseconds before lowering its pins. When the Sun
+SPOT has lowered its pins, the Cobot will lower its pins and the handshake is
+completed. Below is the initialisation code of the Cobot:
+
 \input{src/cobot-start}
 
 % }}}
@@ -593,6 +625,7 @@ the other Sun SPOT. Thread 2 is as follows:
 \input{src/sending}
 
 \noindent The leds are set accordingly.
+
 % }}}
 
 \subsubsection{Receive movement and communicate with Cobot} % {{{
@@ -852,6 +885,7 @@ Harm):
 
 % }}}
 
+% }}}
 
 \bibliographystyle{plain}
 \bibliography{cited}
