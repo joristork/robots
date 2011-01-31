@@ -35,13 +35,13 @@ Lucas Swartsenburg (6174388) \and Sander van Veen (6167969)}
 \end{figure}
 
 \abstract{This is our final report for the 2011 robotics project at the
-University of Amsterdam. Our goal was to write a C driver for the Jobotl; to
+University of Amsterdam. Our goal was to write a C driver for the Jobot; to
 create a communications channel between a Jobot and Sun SPOT; and to communicate
 wirelessly between multiple Sun SPOT / Jobot pairs. We succeeded with respect to
 the first two goals. Our communications implementation includes a deterministic
 bit banging protocol that involves error checking and handshaking. Our robot
 driver code generates low-level signals to command and coordinate the robot's
-servos.  Last, but not least, we composed an efficient toolchain to program our
+servos. Last, but not least, we composed an efficient toolchain to program our
 C driver on the Jobot.}
 
 \pagebreak
@@ -569,7 +569,7 @@ completed. Below is the initialisation code of the Cobot:
 For this project we used one Sun SPOT to determine the movement of the robot (by
 measuring the tilt) and sending that information using a wireless connection to
 the other Sun SPOT. The other Sun SPOT receives the datagram and uses
-bit banging to pass the relevant movement information to the Cobot. 
+bit banging to pass the relevant movement information to the Cobot.
 
 Both Sun SPOTs start up a \texttt{BootloaderListenerService}, so that we can
 read the debug output in real-time on our computer, a useful feature. Both
@@ -703,7 +703,7 @@ taking initiatives and persevering to achieve one's project goals.
 \noindent \textbf{Future}: With the code as it stands, the most logical next step would be to use the sensors on the Cobot to avoid collisions and enable some autonomous wanderings. After this we could use the Sun Spots to let them
 communicate. One Cobot would be the master and the other one the slave. We
 could give the master a route to walk, which the slave would follow, by sending information from the master to the slave. The list goes on
-and on. There were so many other things we wanted to do, only time stands in our way! 
+and on. There were so many other things we wanted to do, only time stands in our way!
 
 % }}}
 
