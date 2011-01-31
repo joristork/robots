@@ -1,5 +1,5 @@
 /*
- * Source code of the receiving Sun SPOT. This source code is part of our Cobot
+ * Source code of the sending Sun SPOT. This source code is part of our Cobot
  * project (for the robotics course on the University of Amsterdam).
  *
  * Authors: Lucas Swartsenburg, Harm Dermois
