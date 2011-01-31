@@ -1,0 +1,281 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+cm}{/*}
+\PY{c+cm}{ * Team America's Cobot}
+\PY{c+cm}{ *}
+\PY{c+cm}{ * This is a Microcontroller 18F452 program, which controls a Jobot containing}
+\PY{c+cm}{ * three servo's and a communication channel between the microcontroller and a}
+\PY{c+cm}{ * SunSpot. This channel uses the microcontroller pins D4, D5, D6 and D7. There}
+\PY{c+cm}{ * are four motions supported by this program: forward, backward, rotate left}
+\PY{c+cm}{ * and rotate right. The servo's are controlled by pulses emitted on the}
+\PY{c+cm}{ * microcontroller pins D1, D2 and D3. A short pulse (= 0.6 ms) will rotate a}
+\PY{c+cm}{ * servo clock wise and a long pulse (= 2.0 ms) will rotate a servo counter}
+\PY{c+cm}{ * clock wise.}
+\PY{c+cm}{ *}
+\PY{c+cm}{ * Last modified: Jan 26, 2011}
+\PY{c+cm}{ * Created by:    Sander van Veen <sandervv@gmail.com>,}
+\PY{c+cm}{ *                Lucas Swartsenburg <luuk@noregular.com>}
+\PY{c+cm}{ *}
+\PY{c+cm}{ * This source code is released as public domain.}
+\PY{c+cm}{ */}
+
+\PY{c+c1}{// Microcontroller configuration}
+\PY{c+cp}{#}\PY{c+cp}{if defined(\PYZus{}\PYZus{}PCH\PYZus{}\PYZus{})}
+\PY{c+c1}{// Unfortunately, this include directive is Windows specific, since the PCH}
+\PY{c+c1}{// compiler runs only on Windows.}
+\PY{c+cp}{#}\PY{c+cp}{include "C:\PYZbs{}pch\PYZbs{}Devices\PYZbs{}18f452.h"}
+\PY{c+cp}{#}\PY{c+cp}{fuses HS,PUT,PROTECT,NOBROWNOUT,LVP,NOWDT}
+\PY{c+cp}{#}\PY{c+cp}{use delay(clock=20000000)}
+\PY{c+cp}{#}\PY{c+cp}{use rs232(baud=9600, xmit=PIN\PYZus{}C6, rcv=PIN\PYZus{}C7)  }\PY{c+c1}{// Jumpers: 8 to 11, 7 to 12}
+\PY{c+cp}{#}\PY{c+cp}{endif}
+
+\PY{c+cp}{#}\PY{c+cp}{define DEBUG\PYZus{}MODE 0}
+
+\PY{c+cp}{#}\PY{c+cp}{define PIN\PYZus{}ACK        PIN\PYZus{}D4}
+\PY{c+cp}{#}\PY{c+cp}{define PIN\PYZus{}RST        PIN\PYZus{}D5}
+\PY{c+cp}{#}\PY{c+cp}{define PIN\PYZus{}SENDER\PYZus{}ACK PIN\PYZus{}D6}
+\PY{c+cp}{#}\PY{c+cp}{define PIN\PYZus{}SENDER\PYZus{}DAT PIN\PYZus{}D7}
+
+\PY{c+c1}{// Signal time spans (used to control the servo's)}
+\PY{k+kt}{int} \PY{n}{pulse\PYZus{}cw} \PY{o}{=} \PY{l+m+mi}{6}\PY{p}{;}   \PY{c+c1}{// = 0.6 ms}
+\PY{k+kt}{int} \PY{n}{pulse\PYZus{}ccw} \PY{o}{=} \PY{l+m+mi}{20}\PY{p}{;} \PY{c+c1}{// = 2.0 ms}
+\PY{k+kt}{int} \PY{n}{period} \PY{o}{=} \PY{l+m+mi}{200}\PY{p}{;}   \PY{c+c1}{// = 20 ms}
+
+\PY{k+kt}{void} \PY{n+nf}{wait}\PY{p}{(}\PY{k+kt}{char} \PY{n}{count}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{k+kt}{char} \PY{n}{i}\PY{p}{;}
+    \PY{k}{for}\PY{p}{(}\PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;} \PY{n}{i} \PY{o}{<} \PY{n}{count} \PY{o}{&}\PY{o}{&} \PY{o}{!}\PY{n}{kbhit}\PY{p}{(}\PY{p}{)}\PY{p}{;} \PY{n}{i}\PY{o}{+}\PY{o}{+}\PY{p}{)} \PY{p}{\PYZob{}}
+        \PY{n}{delay\PYZus{}us}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{;}
+    \PY{p}{\PYZcb{}}
+\PY{p}{\PYZcb{}}
+
+\PY{c+cp}{#}\PY{c+cp}{define STATE\PYZus{}FORWARD  0}
+\PY{c+cp}{#}\PY{c+cp}{define STATE\PYZus{}BACKWARD 1}
+\PY{c+cp}{#}\PY{c+cp}{define STATE\PYZus{}LEFT     2}
+\PY{c+cp}{#}\PY{c+cp}{define STATE\PYZus{}RIGHT    3}
+\PY{c+cp}{#}\PY{c+cp}{define STATE\PYZus{}STOPPED  4}
+
+\PY{k+kt}{void} \PY{n+nf}{backward}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{n}{output\PYZus{}high}\PY{p}{(}\PY{n}{PIN\PYZus{}D1}\PY{p}{)}\PY{p}{;}
+    \PY{n}{wait}\PY{p}{(}\PY{n}{pulse\PYZus{}cw}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{output\PYZus{}high}\PY{p}{(}\PY{n}{PIN\PYZus{}D2}\PY{p}{)}\PY{p}{;}
+    \PY{n}{output\PYZus{}low}\PY{p}{(}\PY{n}{PIN\PYZus{}D1}\PY{p}{)}\PY{p}{;}
+    \PY{n}{wait}\PY{p}{(}\PY{n}{pulse\PYZus{}ccw}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{output\PYZus{}low}\PY{p}{(}\PY{n}{PIN\PYZus{}D2}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{wait}\PY{p}{(}\PY{n}{period} \PY{o}{-} \PY{n}{pulse\PYZus{}cw} \PY{o}{-} \PY{n}{pulse\PYZus{}ccw}\PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{void} \PY{n+nf}{forward}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{n}{output\PYZus{}high}\PY{p}{(}\PY{n}{PIN\PYZus{}D2}\PY{p}{)}\PY{p}{;}
+    \PY{n}{wait}\PY{p}{(}\PY{n}{pulse\PYZus{}cw}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{output\PYZus{}high}\PY{p}{(}\PY{n}{PIN\PYZus{}D1}\PY{p}{)}\PY{p}{;}
+    \PY{n}{output\PYZus{}low}\PY{p}{(}\PY{n}{PIN\PYZus{}D2}\PY{p}{)}\PY{p}{;}
+    \PY{n}{wait}\PY{p}{(}\PY{n}{pulse\PYZus{}ccw}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{output\PYZus{}low}\PY{p}{(}\PY{n}{PIN\PYZus{}D1}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{wait}\PY{p}{(}\PY{n}{period} \PY{o}{-} \PY{n}{pulse\PYZus{}cw} \PY{o}{-} \PY{n}{pulse\PYZus{}ccw}\PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{void} \PY{n+nf}{rotateRight}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{n}{output\PYZus{}high}\PY{p}{(}\PY{n}{PIN\PYZus{}D1}\PY{p}{)}\PY{p}{;}
+    \PY{n}{output\PYZus{}high}\PY{p}{(}\PY{n}{PIN\PYZus{}D2}\PY{p}{)}\PY{p}{;}
+    \PY{n}{output\PYZus{}high}\PY{p}{(}\PY{n}{PIN\PYZus{}D3}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{wait}\PY{p}{(}\PY{n}{pulse\PYZus{}cw}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{output\PYZus{}low}\PY{p}{(}\PY{n}{PIN\PYZus{}D1}\PY{p}{)}\PY{p}{;}
+    \PY{n}{output\PYZus{}low}\PY{p}{(}\PY{n}{PIN\PYZus{}D2}\PY{p}{)}\PY{p}{;}
+    \PY{n}{output\PYZus{}low}\PY{p}{(}\PY{n}{PIN\PYZus{}D3}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{wait}\PY{p}{(}\PY{n}{period} \PY{o}{-} \PY{n}{pulse\PYZus{}cw}\PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{void} \PY{n+nf}{rotateLeft}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{n}{output\PYZus{}high}\PY{p}{(}\PY{n}{PIN\PYZus{}D1}\PY{p}{)}\PY{p}{;}
+    \PY{n}{output\PYZus{}high}\PY{p}{(}\PY{n}{PIN\PYZus{}D2}\PY{p}{)}\PY{p}{;}
+    \PY{n}{output\PYZus{}high}\PY{p}{(}\PY{n}{PIN\PYZus{}D3}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{wait}\PY{p}{(}\PY{n}{pulse\PYZus{}ccw}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{output\PYZus{}low}\PY{p}{(}\PY{n}{PIN\PYZus{}D1}\PY{p}{)}\PY{p}{;}
+    \PY{n}{output\PYZus{}low}\PY{p}{(}\PY{n}{PIN\PYZus{}D2}\PY{p}{)}\PY{p}{;}
+    \PY{n}{output\PYZus{}low}\PY{p}{(}\PY{n}{PIN\PYZus{}D3}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{wait}\PY{p}{(}\PY{n}{period} \PY{o}{-} \PY{n}{pulse\PYZus{}ccw}\PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{void} \PY{n+nf}{stop}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{n}{wait}\PY{p}{(}\PY{n}{period}\PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+
+\PY{c+cp}{#}\PY{c+cp}{ifndef DEBUG\PYZus{}MODE}
+\PY{c+cp}{#}\PY{c+cp}{define debug printf}
+\PY{c+cp}{#}\PY{c+cp}{else}
+\PY{k+kt}{void} \PY{n+nf}{debug}\PY{p}{(}\PY{k+kt}{char} \PY{o}{*}\PY{n}{str}\PY{p}{)} \PY{p}{\PYZob{}} \PY{p}{\PYZcb{}}
+\PY{c+cp}{#}\PY{c+cp}{endif}
+
+\PY{k+kt}{int} \PY{n+nf}{get\PYZus{}sender\PYZus{}ack}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{k}{return} \PY{n}{INPUT}\PY{p}{(}\PY{n}{PIN\PYZus{}SENDER\PYZus{}ACK}\PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{int} \PY{n+nf}{get\PYZus{}sender\PYZus{}data}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{k}{return} \PY{n}{INPUT}\PY{p}{(}\PY{n}{PIN\PYZus{}SENDER\PYZus{}DAT}\PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{void} \PY{n+nf}{get\PYZus{}input}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{k}{if}\PY{p}{(} \PY{n}{INPUT}\PY{p}{(}\PY{n}{PIN\PYZus{}SENDER\PYZus{}ACK}\PY{p}{)} \PY{p}{)}
+        \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Input D6 (ACK): 1}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+    \PY{k}{else}
+        \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Input D6 (ACK): 0}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+
+    \PY{k}{if}\PY{p}{(} \PY{n}{INPUT}\PY{p}{(}\PY{n}{PIN\PYZus{}SENDER\PYZus{}DAT}\PY{p}{)} \PY{p}{)}
+        \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Input D7 (DAT): 1}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+    \PY{k}{else}
+        \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Input D7 (DAT): 0}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{void} \PY{n+nf}{set\PYZus{}output}\PY{p}{(}\PY{k+kt}{int} \PY{n}{state}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{n}{get\PYZus{}input}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+
+    \PY{k}{switch}\PY{p}{(}\PY{n}{state}\PY{p}{)} \PY{p}{\PYZob{}}
+        \PY{k}{case} \PY{l+m+mi}{0}:
+            \PY{n}{OUTPUT\PYZus{}LOW}\PY{p}{(}\PY{n}{PIN\PYZus{}ACK}\PY{p}{)}\PY{p}{;}
+            \PY{n}{OUTPUT\PYZus{}LOW}\PY{p}{(}\PY{n}{PIN\PYZus{}RST}\PY{p}{)}\PY{p}{;}
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Output D4 (ACK): 0}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Output D5 (DAT): 0}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+        \PY{k}{break}\PY{p}{;}
+        \PY{k}{case} \PY{l+m+mi}{1}:
+            \PY{n}{OUTPUT\PYZus{}HIGH}\PY{p}{(}\PY{n}{PIN\PYZus{}ACK}\PY{p}{)}\PY{p}{;}
+            \PY{n}{OUTPUT\PYZus{}LOW}\PY{p}{(}\PY{n}{PIN\PYZus{}RST}\PY{p}{)}\PY{p}{;}
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Output D4 (ACK): 1}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Output D5 (DAT): 0}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+        \PY{k}{break}\PY{p}{;}
+        \PY{k}{case} \PY{l+m+mi}{2}:
+            \PY{n}{OUTPUT\PYZus{}LOW}\PY{p}{(}\PY{n}{PIN\PYZus{}ACK}\PY{p}{)}\PY{p}{;}
+            \PY{n}{OUTPUT\PYZus{}HIGH}\PY{p}{(}\PY{n}{PIN\PYZus{}RST}\PY{p}{)}\PY{p}{;}
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Output D4 (ACK): 0}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Output D5 (DAT): 1}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+        \PY{k}{break}\PY{p}{;}
+        \PY{k}{case} \PY{l+m+mi}{3}:
+            \PY{n}{OUTPUT\PYZus{}HIGH}\PY{p}{(}\PY{n}{PIN\PYZus{}ACK}\PY{p}{)}\PY{p}{;}
+            \PY{n}{OUTPUT\PYZus{}HIGH}\PY{p}{(}\PY{n}{PIN\PYZus{}RST}\PY{p}{)}\PY{p}{;}
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Output D4 (ACK): 1}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Output D5 (DAT): 1}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+        \PY{k}{break}\PY{p}{;}
+    \PY{p}{\PYZcb{}}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{char} \PY{n}{input\PYZus{}char}\PY{p}{;}
+
+\PY{k+kt}{int} \PY{n}{i}\PY{p}{;}
+
+\PY{c+c1}{// Buffer for data receiving}
+\PY{k+kt}{int} \PY{n}{data\PYZus{}previous}\PY{p}{,} \PY{n}{data\PYZus{}current}\PY{p}{,} \PY{n}{data\PYZus{}received}\PY{p}{,} \PY{n}{receive\PYZus{}round}\PY{p}{;}
+\PY{k+kt}{int} \PY{n}{b}\PY{p}{,} \PY{n}{bit\PYZus{}count} \PY{o}{=} \PY{l+m+mi}{3}\PY{p}{;}
+
+\PY{k+kt}{void} \PY{n+nf}{receive\PYZus{}data}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{c+c1}{// Clear data buffers}
+    \PY{n}{data\PYZus{}received} \PY{o}{=} \PY{n}{data\PYZus{}previous} \PY{o}{=} \PY{n}{data\PYZus{}current} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;}
+
+    \PY{c+c1}{// Receive two times (= "rounds") three bits. Most significant bits are}
+    \PY{c+c1}{// transmitted first (thus from left to right)}
+    \PY{k}{for}\PY{p}{(} \PY{n}{receive\PYZus{}round} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;} \PY{n}{receive\PYZus{}round} \PY{o}{<} \PY{l+m+mi}{2}\PY{p}{;} \PY{n}{receive\PYZus{}round}\PY{o}{+}\PY{o}{+} \PY{p}{)} \PY{p}{\PYZob{}}
+        \PY{k}{for}\PY{p}{(}\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;} \PY{n}{b} \PY{o}{<} \PY{n}{bit\PYZus{}count}\PY{p}{;} \PY{n}{b}\PY{o}{+}\PY{o}{+}\PY{p}{)} \PY{p}{\PYZob{}}
+            \PY{c+c1}{//printf("round: %d, b: %d\PYZbs{}n", receive\PYZus{}round, bit\PYZus{}count - b);}
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{get\PYZus{}sender\PYZus{}ack() first}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+            \PY{k}{while}\PY{p}{(}\PY{o}{!}\PY{n}{get\PYZus{}sender\PYZus{}ack}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                \PY{n}{wait}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{get\PYZus{}sender\PYZus{}data()}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+            \PY{n}{data\PYZus{}current} \PY{o}{|}\PY{o}{=} \PY{n}{get\PYZus{}sender\PYZus{}data}\PY{p}{(}\PY{p}{)} \PY{o}{<}\PY{o}{<} \PY{p}{(}\PY{n}{bit\PYZus{}count}\PY{o}{-}\PY{n}{b}\PY{o}{-}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+
+            \PY{c+c1}{// First round is simply storing the data and emits an acknowledge}
+            \PY{c+c1}{// signal (= 1). The second round is used for error checking. The}
+            \PY{c+c1}{// second round will emit an acknowledge signal when the data is}
+            \PY{c+c1}{// properly transmitted / received. The second round will send an}
+            \PY{c+c1}{// acknowledge and reset signal (= 3), when the current data bit is}
+            \PY{c+c1}{// not matching data of the previous round.}
+            \PY{k}{if}\PY{p}{(}\PY{n}{receive\PYZus{}round} \PY{o}{=}\PY{o}{=} \PY{l+m+mi}{0}
+                    \PY{o}{|}\PY{o}{|} \PY{p}{(}\PY{n}{data\PYZus{}previous} \PY{o}{&} \PY{p}{(}\PY{l+m+mi}{1}\PY{o}{<}\PY{o}{<}\PY{p}{(}\PY{n}{bit\PYZus{}count}\PY{o}{-}\PY{n}{b}\PY{o}{-}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                            \PY{o}{=}\PY{o}{=} \PY{p}{(}\PY{n}{data\PYZus{}current} \PY{o}{&} \PY{p}{(}\PY{l+m+mi}{1}\PY{o}{<}\PY{o}{<}\PY{p}{(}\PY{n}{bit\PYZus{}count}\PY{o}{-}\PY{n}{b}\PY{o}{-}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+            \PY{k}{else} \PY{p}{\PYZob{}}
+                \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Error during transmission}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+                \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{;}
+
+                \PY{c+c1}{// Wait until the sender sees the acknowledge and reset signal.}
+                \PY{c+c1}{// When the sender emits his acknowledge signal, the receive}
+                \PY{c+c1}{// procedure is restarted.}
+                \PY{k}{while}\PY{p}{(}\PY{n}{get\PYZus{}sender\PYZus{}ack}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                    \PY{n}{wait}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+                \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+                \PY{k}{return} \PY{n}{receive\PYZus{}data}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+            \PY{p}{\PYZcb{}}
+
+            \PY{n}{debug}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{get\PYZus{}sender\PYZus{}ack() last}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+            \PY{k}{while}\PY{p}{(}\PY{n}{get\PYZus{}sender\PYZus{}ack}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                \PY{n}{wait}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+
+            \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+        \PY{p}{\PYZcb{}}
+
+        \PY{c+c1}{//printf("R%d data: %d\PYZbs{}n-----\PYZbs{}n", receive\PYZus{}round, data\PYZus{}current);}
+
+        \PY{n}{data\PYZus{}previous} \PY{o}{=} \PY{n}{data\PYZus{}current}\PY{p}{;}
+        \PY{n}{data\PYZus{}current} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;}
+    \PY{p}{\PYZcb{}}
+
+    \PY{n}{data\PYZus{}received} \PY{o}{=} \PY{n}{data\PYZus{}previous}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{void} \PY{n+nf}{start\PYZus{}handshake}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{n}{printf}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Hello sender (start handshake)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+    \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{printf}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Waiting for sender handshake.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+    \PY{k}{while}\PY{p}{(}\PY{o}{!}\PY{n}{get\PYZus{}sender\PYZus{}ack}\PY{p}{(}\PY{p}{)} \PY{o}{|}\PY{o}{|} \PY{o}{!}\PY{n}{get\PYZus{}sender\PYZus{}data}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{wait}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{printf}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Waiting for sender to finish the handshake.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+    \PY{k}{while}\PY{p}{(}\PY{n}{get\PYZus{}sender\PYZus{}ack}\PY{p}{(}\PY{p}{)} \PY{o}{|}\PY{o}{|} \PY{n}{get\PYZus{}sender\PYZus{}data}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{wait}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+
+    \PY{n}{printf}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Handshake completed}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+    \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{void} \PY{n+nf}{main}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}
+    \PY{c+c1}{// Be nice, say hello to the user}
+    \PY{n}{printf}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Hello, this is 18f452}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{)}\PY{p}{;}
+
+    \PY{c+c1}{// Set microcontroller output pin states}
+    \PY{c+c1}{// Get microcontroller input pin states}
+    \PY{n}{set\PYZus{}output}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+    \PY{n}{get\PYZus{}input}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+
+    \PY{c+c1}{// Start handshake with the sender. This call is blocking, which will ensure}
+    \PY{c+c1}{// the sender and this microcontroller do not send or receive data while the}
+    \PY{c+c1}{// other is booting / resetting.}
+    \PY{n}{start\PYZus{}handshake}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+
+    \PY{k}{for}\PY{p}{(}\PY{p}{;}\PY{p}{;}\PY{p}{)} \PY{p}{\PYZob{}}
+        \PY{n}{receive\PYZus{}data}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+        \PY{n}{printf}\PY{p}{(}\PY{l+s}{"}\PY{l+s}{Received data: %d}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{"}\PY{p}{,} \PY{n}{data\PYZus{}received}\PY{p}{)}\PY{p}{;}
+
+        \PY{c+c1}{// Continue the movement until the sender emits an acknowledge signal,}
+        \PY{c+c1}{// which means the sender is trying to send new data.}
+        \PY{k}{while}\PY{p}{(}\PY{o}{!}\PY{n}{get\PYZus{}sender\PYZus{}ack}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{p}{\PYZob{}}
+            \PY{k}{switch}\PY{p}{(}\PY{n}{data\PYZus{}received}\PY{p}{)} \PY{p}{\PYZob{}}
+                \PY{k}{case} \PY{n}{STATE\PYZus{}FORWARD}:  \PY{n}{forward}\PY{p}{(}\PY{p}{)}\PY{p}{;}     \PY{k}{break}\PY{p}{;}
+                \PY{k}{case} \PY{n}{STATE\PYZus{}BACKWARD}: \PY{n}{backward}\PY{p}{(}\PY{p}{)}\PY{p}{;}    \PY{k}{break}\PY{p}{;}
+                \PY{k}{case} \PY{n}{STATE\PYZus{}LEFT}:     \PY{n}{rotateLeft}\PY{p}{(}\PY{p}{)}\PY{p}{;}  \PY{k}{break}\PY{p}{;}
+                \PY{k}{case} \PY{n}{STATE\PYZus{}RIGHT}:    \PY{n}{rotateRight}\PY{p}{(}\PY{p}{)}\PY{p}{;} \PY{k}{break}\PY{p}{;}
+                \PY{k}{case} \PY{n}{STATE\PYZus{}STOPPED}:  \PY{n}{stop}\PY{p}{(}\PY{p}{)}\PY{p}{;}        \PY{k}{break}\PY{p}{;}
+            \PY{p}{\PYZcb{}}
+        \PY{p}{\PYZcb{}}
+    \PY{p}{\PYZcb{}}
+\PY{p}{\PYZcb{}}
+\end{Verbatim}

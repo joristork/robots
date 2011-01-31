@@ -1,5 +1,5 @@
 \documentclass[a4paper,10pt]{article} % {{{
-\usepackage{listings,amssymb,amsmath,amsthm,graphicx,float,hyperref}
+\usepackage{listings,amssymb,amsmath,amsthm,graphicx,float,hyperref,wrapfig,subfig}
 
 \hypersetup{
     colorlinks=false,
@@ -22,6 +22,13 @@ Lucas Swartsenburg (6174388) \and Sander van Veen (6167969)}
 \maketitle
 
 \abstract{}
+
+\begin{figure}[H]
+\label{fig:cobot_sunspot_final}
+\centering
+\includegraphics[width=0.8\textwidth]{img/sunspot_cobot_final_together.png}
+\end{figure}
+
 
 \pagebreak
 
@@ -93,6 +100,23 @@ This section provides an overview of the materials used in this project. More
 detailed specifications of materials used in this project are listed in appendix
 \ref{app:robot-hardware}, as relevant.
 
+\subsubsection{Cobot}
+
+\begin{figure}[h]
+    \centering
+    \subfloat[front]{\label{fig:cobotface}\includegraphics[width=0.4\textwidth]{img/cobot_face_sensor.png}}
+    \subfloat[topview]{\label{fig:cobottop}\includegraphics[width=0.4\textwidth]{img/cobot_top_view.png}}
+    \caption{The Cobot}
+    \label{fig:cobotviews}
+\end{figure}
+\subsection{Hardware} % {{{
+
+The Cobot, the centrepiece of our project, is an adapted ``Jobot'',
+re-christened to reflect the fact that our team reprogrammed the device in a
+C-like language. The Jobot/Cobot is a battery powered, PIC microcontroller-based
+mobile robot. It is about 10cm high and 25cm across. We disposed over three
+Jobot/Cobot devices.
+
 \subsection{Hardware} % {{{
 
 Two hardware devices formed the centrepiece of this project:
@@ -107,24 +131,52 @@ Two hardware devices formed the centrepiece of this project:
     matchbox.
 \end{itemize}
 
-\noindent Other hardware included:
+%\noindent Other hardware included:
+%
+% \begin{itemize}
+%     \item a portable digital oscilloscope, for measuring voltages on the various
+%     I/O pins on the SUN SPOTs and microcontroller boards (as well as the odd
+%     misbehaving battery);
+%     \item a USB compatible Microchip programming device designed to load compiled code
+%     onto the 8 bit PIC microcontroller;
+%     \item an 8P8C type connector attached on the port location marked ``J1'' on
+%     one of the Cobot' microcontroller boards;
+%     \item a USB to RS-232 adapter cable;
+%     \item standard soldering equipment;
+%     \item pins and wires adapted for the Sun SPOTs' as well as the Cobots' I/O
+%     connectors; and
+%     \item two potential dividers built by our university department for the
+%     purpose of converting a 5V input voltage from the Cobot's microcontroller
+%     board to the 3V output voltage specified for the Sun SPOTs;
+% \end{itemize}
 
-\begin{itemize}
-    \item a portable digital oscilloscope, for measuring voltages on the various
-    I/O pins on the SUN SPOTs and microcontroller boards (as well as the odd
-    misbehaving battery);
-    \item a USB compatible Microchip programming device designed to load compiled code
-    onto the 8 bit PIC microcontroller;
-    \item an 8P8C type connector attached on the port location marked ``J1'' on
-    one of the Cobot' microcontroller boards;
-    \item a USB to RS-232 adapter cable;
-    \item standard soldering equipment;
-    \item pins and wires adapted for the Sun SPOTs' as well as the Cobots' I/O
-    connectors; and
-    \item two potential dividers built by our university department for the
-    purpose of converting a 5V input voltage from the Cobot's microcontroller
-    board to the 3V output voltage specified for the Sun SPOTs;
-\end{itemize}
+Then, the Sun SPOT: the device intended to enhance the Cobot's sensing and
+communications capabilities. Sun SPOTs are relatively new, battery powered
+wireless sensor network devices from the Sun Labs stable. Our team received one
+set, comprising three Sun SPOTs.
+
+\subsubsection{Other hardware}
+
+\noindent In addition to these two key components, our project relied heavily on
+several hardware tools and devices, as follows: We used a portable digital
+oscilloscope to measure voltages on the various I/O pins on the SUN SPOTs and
+microcontroller boards (as well testing the odd misbehaving battery). A USB
+compatible Microchip programming device served to load compiled code onto the
+Cobot, via a specially attached 8P8C type connector on Cobot's microcontroller
+board. We sourced a USB to RS-232 adapter cable to make the serial connection to
+the Cobot. For the various I/O connections we made use of standard soldering
+equipment. Department staff helped build pins and wires adapted for the Sun
+SPOTs' as well as the Cobots' I/O connectors, and provided two potential
+dividers for the bit banging bus.
+
+\subsubsection{Software}
+
+A number of off-the-shelf software tools complemented a software toolchain
+developed especially by our team for this project. The former notably included
+Microchip's compiler for the Cobot microcontroller, and Sun's development toolkit
+for the Sun SPOT platform. Our own toolchain included scripts written in Python,
+and an assemblage of open source UNIX-like command line utilities to link up the
+software development, compilation and upload stages in the programming cycle.
 
 % }}}
 
@@ -133,25 +185,21 @@ Two hardware devices formed the centrepiece of this project:
 
 In order to see if a Cobot or Hemisson is performing some action, it is wise to
 write debug information to a file or serial port. In this case, the serial port
-is available on both robots, which will provide us a ``real-time'' view of the
-robot's current and next actions to perform.
+was available on both robots, providing a ``real-time'' view of the
+robot's successive actions.
 
 Sander developed some python code to be able to command the Hemisson robot using
 a python console connected in combination with a serial port. The following code
 is an implementation of most of the features available in the Hemisson GUI.
-This code has two advantages: platform independent (Mac and Linux could also
-command the Hemisson) and enables the user to automate certain actions (e.g to
-create a loop to let the Hemisson drive around a rectangle).
+This code has two advantages: it is platform independent (enabling Mac and Linux
+PCs to send commands the Hemisson) and enables the user to automate certain
+actions, such as creating a software loop that causes the Hemisson to drive
+around a rectangle.
 
 \input{src/hemisson}
 
-\noindent This code was developed to demonstrate the communication over the
-RS-232 COM port was successful. When we started to develop code for the Cobot,
-we did not need this code any more, since the Cobot had no code running to
-interpret the commands sent through the RS-232 COM port. We had to code the
-Cobot from scratch, however this Hemisson code was not useless, because it did
-provide us with the information needed to establish a RS-232 COM port
-connection successfully.
+\noindent We developed this utility to verify that communication over the
+Hemisson's RS-232 COM port had been successful. When we started to develop code for the Cobot, the utility was initially useless, since the Cobot did not have a program in place to interpret the commands sent through the RS-232 COM port. The Cobot had to be programmed from scratch. Once we had written the necessary software handlers on the Cobot, though, our utility became useful once again.
 
 % }}}
 
@@ -190,24 +238,23 @@ $ sshfs USERNAME@deze.science.uva.nl:~/ ~/sremote -C -o cache=no
 
 The argument \texttt{-C} enables data compression during the transfer and
 \texttt{-o cache=no} disables the file system cache (e.g. stat will respond with
-the most recent data). If we did not disable the file system cache, the overall
-duration of the toolchain is larger due to the default four seconds file system
-cache. These four seconds are visible when the Mac machine running the Windows
-VM was waiting for the source file to update and the second time when the Linux
-machine was waiting for the hex file to update. Disabling the file system cache
-reduced the overall toolchain process by four to eight seconds. Data compression
-did not reduce the overall process that much, but we used it because we were
-transferring text files (and those benefit for compression mostly).
+the most recent data). With the file system cache left enabled, the overall
+duration of the toolchain would have been larger due to the default four-second
+file system cache. These four seconds were visible when the Mac machine running
+the Windows VM waited for the source file to update, and again when the Linux
+machine waited for the compiled hex file to update. Disabling the file system
+cache reduced the overall toolchain process by four to eight seconds. Data
+compression did not significantly reduce the overall process duration. We used
+it because the transfers consisted largely of text files, which are especially
+susceptible to compression.
 
-Once we had the shared directory mounted on both the Linux and Mac machine, we
-could transfer data between the Windows virtual machine and the Linux machine.
-\footnote{Windows does not support SSHFS easily, and because we weren't working
-actively a Windows machine, we started a virtual machine on the Mac.} The
-Windows virtual machine started the compilation daemon (using \texttt{\$ python
-compile.py}) and the Linux machine started the programming daemon (using
+Once we had the shared directory mounted on both the Linux and the Mac machine, we
+were able to transfer data between those two.
+\footnote{SSHFS is not easily employed from within Windows: this was our motivation for running Windows as a virtual machine on a Mac, which offers a more convenient implementation of SSHFS.} The
+Windows virtual machine ran the compilation daemon (using \texttt{\$ python
+compile.py}) and the Linux machine ran the programming daemon (using
 \texttt{python upload.py}).\footnote{See appendix for the source code of these
-daemons.} Both daemons use the modification time of the source respectively the
-compiled hex file to determine if the daemon should perform an action.
+daemons.} Both daemons use the respective modification times of the source and compiled hex files to trigger the necessary toolchain actions.
 
 The programmer daemon uses the ``piklab'' package (in Debian-based
 distributions: \texttt{sudo apt-get install piklab}) to write the hex file to
@@ -591,7 +638,7 @@ Before the second Sun SPOT starts receiving, it first needs to get a handshake
 from the Cobot. The handshake is given when the Sunspot receives two high
 signals on the digital pins that are used for input. If the Sunspot receives a
 high signal on the reset input pin after the handshake, the Cobot didn't receive
-the bits like they were send. When this happens, the same byte is send again
+the bits like they were send. When this happens, the same bits are send again
 (twice for checking) to the Cobot. Every step of the bit banging process has to
 get conformation from the Cobot that everything is OK. This is done by setting
 the pins in a certain way. For more information about how the initial handshake
@@ -652,21 +699,22 @@ Also, the robots mainly use a COM port to do the programming which is mostly not
 available any more on the newer computers and laptops. But I think the efforts
 we made this year will make it proceed more smoothly in the coming years. This
 project taught us more than just how to work with program robots but also the
-hardships you have to deal with if were to start your own project. In the end we
-were thinking out of the box and the hard work did pay off. Because we succeeded
-in execute our code on the Jobot.
+hardships you have to deal with if were to start your own project.
 
-With all the code we have right now the most logical step would be to use Cobots
-and let them communicate. One Cobot would be the master and the other one the
-slave. We would give the master a route to walk and we would want the slave to
-follow the master. After this we could use the sensors on the Cobot to avoid
-collision and let it autonomously wander. While still sending information to the
-slave to follow it. The list goes on and on. There were so many other things we
-wanted to do, but cause of lack of time we could not. \\
+\noindent \textbf{Future}: With all the code we have right now the most logical
+step would be using the sensors on the Cobot to avoid collisions and let it
+autonomously wander. After this we could use the Sun Spots to let them
+communicate. One Cobot would be the master and the other one the slave. We
+would give the master a route to walk and we would want the slave to follow the
+master. By sending information from the master to the slave. The list goes on
+and on. There were so many other things we wanted to do, but cause of lack of
+time we could not. \\
 
 \noindent \textbf{Conclusion}: We have not met our initial goals, but we did
 managed to meet all our revised goals. Which was to get the Cobot to run a
 program we wrote ourselves and to get it to communicate with the Sun SPOT.
+In the end thinking out of the box and the hard work did pay off. Because we succeeded
+in execute our code on the Jobot.
 
 % }}}
 
@@ -706,11 +754,12 @@ Flash. The sensor board contains:
     \item One 3-axis accelerometer (with two range settings: 2G or 6G).
     \item One temperature sensor.
     \item One light sensor.
-    \item Eight tri-color LEDs.
-    \item Six analog inputs readable by an ADC.
-    \item Two momentary switches.
-    \item Five general purpose I/O pins.
-    \item Four high current output pins.
+    \item 8 tri-color LEDs;
+    \item 6 analog inputs;
+    \item 2 momentary switches;
+    \item 5 general purpose I/O pins;
+    \item 4 high current output pins;
+    \item $3.7V$ rechargeable $750 mAh$
     \item $2.4 GHz$ IEEE $802.15.4$ radio with integrated antenna;
     \item $AT91$ timer chip;
     \item USB interface;
@@ -810,6 +859,44 @@ Harm):
     \item Apache Ant (Latest version);
     \item Sun SPOT manager;
 \end{itemize}
+
+% }}}
+
+\section{Produced source code} % {{{
+\label{sec:Produced source code}
+
+\subsection{Cobot source code} % {{{
+\label{sub:Cobot source code}
+
+\input{src/cobot}
+
+% }}}
+
+\subsection{Sun SPOT sender source code} % {{{
+\label{sub:Sun SPOT sender source code}
+
+\input{src/send}
+
+% }}}
+
+\subsection{Sun SPOT receiver source code} % {{{
+\label{sub:Sun SPOT receiver source code}
+
+\input{src/receive}
+
+% }}}
+
+\subsection{Compiler daemon source code} % {{{
+\label{sub:Compiler daemon source code}
+
+\input{src/compile}
+
+% }}}
+
+\subsection{Upload daemon source code} % {{{
+\label{sub:Upload daemon source code}
+
+\input{src/upload}
 
 % }}}
 

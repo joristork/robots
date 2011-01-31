@@ -1,0 +1,52 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c}{#!/usr/bin/env python}
+\PY{k+kn}{import} \PY{n+nn}{os}
+\PY{k+kn}{import} \PY{n+nn}{sys}
+\PY{k+kn}{from} \PY{n+nn}{time} \PY{k+kn}{import} \PY{n}{sleep}\PY{p}{,} \PY{n}{gmtime}\PY{p}{,} \PY{n}{strftime}
+
+\PY{c}{# This script is used program an hex file on the 16-bit microcontroller 18F452.}
+\PY{c}{# This script will monitor an hex file (defined below) for modification (by}
+\PY{c}{# comparing the time of last modification) and, if it is modified, upload the}
+\PY{c}{# source file to the microcontroller.}
+\PY{c}{#}
+\PY{c}{# Created by Sander van Veen <sandervv@gmail.com>, Jan 27, 2011.}
+\PY{c}{# This script is public domain; feel free to do anything with it you want.}
+\PY{c}{#}
+\PY{c}{# Example invocation: python upload.py}
+\PY{c}{#}
+\PY{c}{# See also the included Makefile for information about the software used to}
+\PY{c}{# program the microcontroller.}
+
+\PY{c}{# Hex file to monitor}
+\PY{n}{hex\PYZus{}file} \PY{o}{=} \PY{l+s}{'}\PY{l+s}{ex\PYZus{}led.HEX}\PY{l+s}{'}
+
+\PY{c}{# Log files used during compilation/uploading}
+\PY{n}{build\PYZus{}log} \PY{o}{=} \PY{l+s}{'}\PY{l+s}{ex\PYZus{}led.log}\PY{l+s}{'}
+
+\PY{n}{old\PYZus{}mtime} \PY{o}{=} \PY{l+m+mi}{0}
+
+\PY{k}{while} \PY{n+nb+bp}{True}\PY{p}{:}
+    \PY{n}{mtime} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{stat}\PY{p}{(}\PY{n}{hex\PYZus{}file}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{8}\PY{p}{]}
+
+    \PY{c}{# Only upload newer versions of the hex file}
+    \PY{k}{if} \PY{n}{mtime} \PY{o}{>} \PY{n}{old\PYZus{}mtime}\PY{p}{:}
+        \PY{n}{f} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{build\PYZus{}log}\PY{p}{,} \PY{l+s}{'}\PY{l+s}{a}\PY{l+s}{'}\PY{p}{)}
+        \PY{n}{f}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{Upload: }\PY{l+s+si}{%s}\PY{l+s}{ (started)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{'} \PY{o}{%} \PY{n}{strftime}\PY{p}{(}\PY{l+s}{'}\PY{l+s+si}{%X}\PY{l+s}{ }\PY{l+s+si}{%x}\PY{l+s}{'}\PY{p}{)}\PY{p}{)}
+        \PY{n}{f}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+
+        \PY{c}{# Run the programmer (see Makefile)}
+        \PY{n}{exit\PYZus{}code} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{system}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{make}\PY{l+s}{'}\PY{p}{)}
+
+        \PY{n}{f} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{build\PYZus{}log}\PY{p}{,} \PY{l+s}{'}\PY{l+s}{a}\PY{l+s}{'}\PY{p}{)}
+
+        \PY{k}{if} \PY{n}{exit\PYZus{}code}\PY{p}{:}
+            \PY{n}{f}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{Upload: }\PY{l+s+si}{%s}\PY{l+s}{ (failed; check your USB/COM cable and}\PY{l+s}{'} \PYZbs{}
+                    \PY{o}{+} \PY{l+s}{'}\PY{l+s}{ programming switch)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{'} \PY{p}{)} \PY{o}{%} \PY{n}{strftime}\PY{p}{(}\PY{l+s}{'}\PY{l+s+si}{%X}\PY{l+s}{ }\PY{l+s+si}{%x}\PY{l+s}{'}\PY{p}{)}\PY{p}{)}
+        \PY{k}{else}\PY{p}{:}
+            \PY{n}{old\PYZus{}mtime} \PY{o}{=} \PY{n}{mtime}
+            \PY{n}{f}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{Upload: }\PY{l+s+si}{%s}\PY{l+s}{ (success)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{'} \PY{o}{%} \PY{n}{strftime}\PY{p}{(}\PY{l+s}{'}\PY{l+s+si}{%X}\PY{l+s}{ }\PY{l+s+si}{%x}\PY{l+s}{'}\PY{p}{)}\PY{p}{)}
+
+        \PY{n}{f}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s}{'}\PY{l+s}{-----}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{'}\PY{p}{)}
+        \PY{n}{f}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+    \PY{n}{sleep}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
