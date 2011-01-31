@@ -660,21 +660,21 @@ Also, the robots mainly use a COM port to do the programming which is mostly not
 available any more on the newer computers and laptops. But I think the efforts
 we made this year will make it proceed more smoothly in the coming years. This
 project taught us more than just how to work with program robots but also the
-hardships you have to deal with if were to start your own project. In the end we
-were thinking out of the box and the hard work did pay off. Because we succeeded
-in execute our code on the Jobot.
+hardships you have to deal with if were to start your own project. 
 
-With all the code we have right now the most logical step would be to use Cobots
-and let them communicate. One Cobot would be the master and the other one the
+\noindent \textbf{Future}With all the code we have right now the most logical
+step would be using the sensors on the Cobot to avoid collisions and let it
+ autonomously wander.  After this we could use the Sun Spots to let them
+communicate. One Cobot would be the master and the other one the
 slave. We would give the master a route to walk and we would want the slave to
-follow the master. After this we could use the sensors on the Cobot to avoid
-collision and let it autonomously wander. While still sending information to the
-slave to follow it. The list goes on and on. There were so many other things we
-wanted to do, but cause of lack of time we could not. \\
+follow the master.  By sending information from the master to the slave. The list goes on and on. There were so many other things we wanted to do, but
+ cause of lack of time we could not. \\
 
 \noindent \textbf{Conclusion}: We have not met our initial goals, but we did
 manage to meet all our revised goals. Which was to get the Cobot to run a
 program we wrote ourselves and to get it to communicate with the Sun SPOT.
+In the end thinking out of the box and the hard work did pay off. Because we succeeded
+in execute our code on the Jobot.
 
 % }}}
 
@@ -714,18 +714,23 @@ Flash. The sensor board contains:
     \item One 3-axis accelerometer (with two range settings: 2G or 6G).
     \item One temperature sensor.
     \item One light sensor.
-    \item Eight tri-color LEDs.
-    \item Six analog inputs readable by an ADC.
-    \item Two momentary switches.
-    \item Five general purpose I/O pins.
-    \item Four high current output pins.
+    \item 8 tri-color LEDs;
+    \item 6 analog inputs;
+    \item 2 momentary switches;
+    \item 5 general purpose I/O pins;
+    \item 4 high current output pins;    
+    \item $3.7V$ rechargeable $750 mAh$
     \item $2.4 GHz$ IEEE $802.15.4$ radio with integrated antenna;
     \item $AT91$ timer chip;
     \item USB interface;
     \item $2G/6G$ three-axis accelerometer;
     \item One temperature sensor;
-    \item One light sensor;
-    \item $3.7V$ rechargeable $750 mAh$ lithium-ion battery;
+    \item One light sensor;    
+    %\item Eight tri-color LEDs.
+    %\item Six analog inputs readable by an ADC.
+    %\item Two momentary switches.
+    %\item Five general purpose I/O pins.
+    %\item Four high current output pins. lithium-ion battery;
 \end{itemize}
 
 We also have a radio sensor board. The Sun SPOTs use a fully capable Java ME
